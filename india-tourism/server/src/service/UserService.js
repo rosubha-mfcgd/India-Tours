@@ -42,13 +42,15 @@ async loginUser(email,mobile,loginOTP)
             console.log(' user logged in successfully');
             return constants.YES;
           }else{
-            console.log('User is signed up already');
-             return constants.EXISTS;
+            console.log('Login failed');
+             return constants.NO;
           }
         }catch(err){
         
         logNginx(err.stack)
       }
+      console.log('Login failed');
+      return constants.NO;
 }
 async validateOTP(email,mobile,otp)
 {

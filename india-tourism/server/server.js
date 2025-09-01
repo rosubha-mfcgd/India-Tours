@@ -147,13 +147,13 @@ app.post("/api/loginUser", async(req,res) =>{
                         }
           else
                         {
-                           res.status(400).send({message: "Login failed. Try again .",
+                           res.status(400).send({message: "Login failed. Try again",
                             "access_token":req.body.access_token,code: "N"});
                         }
         }else{
          
           console.log('Token not found..');
-          res.status(400).send({message: "Account signup failed"});
+          res.status(400).send({message: "User Login failed, Try again"});
         }
     }});
 
