@@ -110,12 +110,12 @@ const LoginSignup =() => {
                 
                 setAction("Login");
                 const req_data = {
-                    name:name,
                     email:email,
                     mobile:mobile,
                     access_token:codeResponse.access_token
                 };
                 
+
             },
             onError: (error) => console.log('Login Failed:', error)
         });          
