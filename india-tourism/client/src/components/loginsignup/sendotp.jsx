@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import mobile_icon from '../Assets/input/mobile.png';
 import email_icon from '../Assets/input/email.png';
 import { useNavigate,useLocation } from 'react-router-dom';
+import '../../styles/loginsignup.css';
 import Box from '@mui/material/Box';
 import {
     TextField
@@ -39,8 +40,12 @@ const Sendotp = ()=>{
                           "mobile":location.state.mobile,
                          "access_token":location.state.access_token 
                         }});
+                    }else{
+                      setErrorMessage(res_data.message);
                     }
-                }
+                }else{
+                      setErrorMessage('Could not login the user, try again !!');
+                    }
 
      }
 
@@ -49,6 +54,10 @@ return (
 
     <Box className='centre-div'>
 <div className = "container">
+   {errorMessage ? 
+                         (<div className='error-div-at-top'>{errorMessage}</div>):
+                        (<div></div>)
+                    }
 <div className='inputs'>
      <div className='input'>
                 <img src={mobile_icon} alt=""/>
