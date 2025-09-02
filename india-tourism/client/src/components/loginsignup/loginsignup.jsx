@@ -10,7 +10,7 @@ import mobile_icon from '../Assets/input/mobile.png';
 import Loading from "../Utilities/Loading/Loading.js";
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import { useNavigate } from 'react-router-dom';
-import {signupUser} from '../admin/admin';
+import {signupUser,loginUser} from '../admin/admin';
 
 import {
     TextField,
@@ -59,7 +59,7 @@ const LoginSignup =() => {
         
 
   
-
+        //SIGNUP A NEW USER
         const googlesignup = useGoogleLogin ({
             client_id:process.env.REACT_APP_CLIENT_ID,
             onSuccess: async(codeResponse) => {
@@ -81,7 +81,7 @@ const LoginSignup =() => {
                     console.log('resdata code...',resdata.code);
                    let access_token = resdata.access_token;
                     if(access_token){
-                        if(resdata.code === 'E'||resdata.code === 'N')
+                        if(resdata.code != 'Y')
                         {
                             setErrorMessage(resdata.message);
                         }
@@ -104,18 +104,46 @@ const LoginSignup =() => {
             onError: (error) => console.log('Login Failed:', error)
         });
     
+        //LOGIN USER
         const googleLogin =  useGoogleLogin({
             client_id:process.env.REACT_APP_CLIENT_ID,
             onSuccess: async(codeResponse) => {
-                
-                setAction("Login");
+                setAction("Send Otp");
+                       // navigate('sendotp', { replace: true });
+               // setAction("Login");
+                setButtonclick(true);
                 const req_data = {
                     email:email,
                     mobile:mobile,
                     access_token:codeResponse.access_token
                 };
+                try{
+                let resdata = await loginUser(req_data);
                 
-
+                if(resdata)
+                {
+                      console.log('resdata access token...',resdata.access_token);
+                    console.log('resdata code...',resdata.code);
+                   let access_token = resdata.access_token;
+                    if(access_token){
+                        if(resdata.status != 200 && resdata.code != 'Y')
+                        {
+                            setErrorMessage(resdata.message);
+                        }
+                        else{
+                        navigate('/sendotp',{state:{
+                             "mobile":mobile,
+                            "email":email,
+                            "access_token":access_token}});
+                        }
+                    }
+                }
+            }catch(error){
+                  setButtonclick(false); // Hide spinner after fetch (success or error)
+            }
+            finally{
+                  setButtonclick(false); // Hide spinner after fetch (success or error)
+            }
             },
             onError: (error) => console.log('Login Failed:', error)
         });          
@@ -220,9 +248,7 @@ const LoginSignup =() => {
 
                         {action === 'Login'?
                         <div className='submit-container'>
-                    <div className="submit" onClick={()=>{setAction("Send Otp");
-                        navigate('sendotp', { replace: true });
-                    }}>Send Otp</div>
+                    <div className="submit" onClick={()=>{googleLogin();}}>Send Otp</div>
                     <div className={action==="Login"?"submit gray":"submit"} 
                         onClick={()=>{setAction("Sign Up");
                         navigate('-1');

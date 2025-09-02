@@ -131,9 +131,9 @@ app.post("/api/loginUser", async(req,res) =>{
      //To be changed next
       session.access_token = req.body.access_token;
        console.log('saving access token to session...',session.access_token);
-        if(!session.signuptoken)
+        if(!session.logintoken)
         {
-          throw new Error("No signup token found...");
+          throw new Error("No Login token found...");
         }
      const result =  await doLogin(req,res);
      
@@ -142,7 +142,7 @@ app.post("/api/loginUser", async(req,res) =>{
           console.log('result is....',result);
           if(result === 'Y')
                         {
-                        res.status(201).send({ message: "Login successful",
+                        res.status(200).send({ message: "Login successful",
                             "access_token":req.body.access_token,code: "Y"});
                         }
           else
