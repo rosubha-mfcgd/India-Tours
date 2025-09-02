@@ -12,7 +12,7 @@ const Sendotp = ()=>{
      const location = useLocation();
     
      const[otp,setOtp] = useState('');
-     
+       const [errorMessage, setErrorMessage] = useState('');
      const handleOTPChange  = (event) =>{
                     setOtp(event.target.value);
             }

@@ -64,6 +64,8 @@ const validateOTP = async(req,res) =>{
      else{
          res.status(400).send({ message: "OTP is invalid", "otpValid":isValidOTP});
           }
+      }else{
+        res.status(400).send({ message: "OTP is invalid", "otpValid":isValidOTP});
       }
     }
 

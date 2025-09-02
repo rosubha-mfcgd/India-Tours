@@ -81,7 +81,7 @@ const LoginSignup =() => {
                     console.log('resdata code...',resdata.code);
                    let access_token = resdata.access_token;
                     if(access_token){
-                        if(resdata.code != 'Y')
+                        if( resdata.status != 200 && resdata.code != 'Y')
                         {
                             setErrorMessage(resdata.message);
                         }
@@ -95,7 +95,8 @@ const LoginSignup =() => {
                     }
                 }
             }catch(error){
-                setButtonclick(false); // Hide spinner after fetch (success or error)
+                console.log(error);
+                
             }finally {
                 setButtonclick(false); // Hide spinner after fetch (success or error)
              }
@@ -139,7 +140,7 @@ const LoginSignup =() => {
                     }
                 }
             }catch(error){
-                  setButtonclick(false); // Hide spinner after fetch (success or error)
+                 console.log(error);
             }
             finally{
                   setButtonclick(false); // Hide spinner after fetch (success or error)
@@ -150,7 +151,7 @@ const LoginSignup =() => {
          useEffect(()=>
            {
 
-               if(buttonclick && errorMessage != '')
+               if(buttonclick && errorMessage === '')
                 {
                     setIsLoading(true);
                 }else{
