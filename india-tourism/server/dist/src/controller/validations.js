@@ -59,16 +59,15 @@ const validateOTP = (req, res) => __awaiter(void 0, void 0, void 0, function* ()
                 res.status(200).send({ "message": "OTP is valid", "otpValid": isValidOTP });
             }
             else {
-                console.log('sending back invalid OTP ...', isValidOTP);
-                res.status(200).send({ "message": "OTP is invalid", "otpValid": isValidOTP });
+                //  console.log('sending back invalid OTP ...',isValidOTP);
+                res.status(400).send({ "message": "OTP is invalid, try again !!", "otpValid": isValidOTP });
             }
         }
         else {
-            res.status(200).send({ "message": "OTP is invalid", "otpValid": "N" });
+            res.status(400).send({ "message": "OTP is invalid, try again !!", "otpValid": "N" });
         }
     }
     catch (e) {
-        console.log(e.stack);
         logNginx(e.stack);
         res.status(400).send(e.message);
     }

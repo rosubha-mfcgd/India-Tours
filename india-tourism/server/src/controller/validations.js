@@ -45,6 +45,7 @@ const signupvalidate =async (req, res,next)  =>
 const validateOTP = async(req,res) =>{
     let {email,mobile,otp} = req.body;
     console.log('req body....',req.body);
+    try{
     if ((email === undefined || email === "") || (mobile === undefined || mobile === "")){
         throw new Error("Email / Mobile Number not found")
       }
@@ -59,17 +60,22 @@ const validateOTP = async(req,res) =>{
 
       console.log('isValidOTP...',isValidOTP);
       
-     if(isValidOTP === constants.YES){
-         res.status(200).send({ message: "OTP is valid", "otpValid":isValidOTP});
+     if(isValidOTP == constants.YES)
+      {
+         res.status(200).send({ "message": "OTP is valid", "otpValid":isValidOTP});
       }
      else{
-         res.status(400).send({ message: "OTP is invalid", "otpValid":isValidOTP});
-          }
-      }else{
-        res.status(400).send({ message: "OTP is invalid", "otpValid":isValidOTP});
+       //  console.log('sending back invalid OTP ...',isValidOTP);
+         res.status(400).send({ "message": "OTP is invalid, try again !!", "otpValid":isValidOTP});
       }
+      }else{
+        res.status(400).send({ "message": "OTP is invalid, try again !!", "otpValid":"N"});
+      }
+    }catch(e){
+      logNginx(e.stack);
+      res.status(400).send(e.message);
     }
-
+  }
 module.exports = {
     signupvalidate,validateOTP
 }

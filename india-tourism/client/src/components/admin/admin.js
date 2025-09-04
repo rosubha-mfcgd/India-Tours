@@ -55,7 +55,7 @@ export const validateOTPForLogin = async(data) =>{
 );
 return response.data;
 }catch(err){
-     console.error('Error while otp validation:::', err);
+     console.error('Error while otp validation:::', err.stack);
     throw err;
 }
 

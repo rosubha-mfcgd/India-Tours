@@ -5,7 +5,7 @@ import TodoForm from './TodoForm';
 import './styles/App.css';
 import LoginSignup from  './components/loginsignup/loginsignup.jsx'
 import sendotp from './components/loginsignup/sendotp.jsx'
-import welcome from './components/tourpages/welcome.jsx'
+import Welcome from './components/tourpages/welcome.jsx'
 import hillstationtourism from './components/tourpages/hillstationtourism.jsx'
 const App = () => {
   const [todos, setTodos] = useState([]);
@@ -16,7 +16,7 @@ const App = () => {
       <Routes>
       <Route path='/' Component={LoginSignup}></Route>
       <Route path='sendotp' Component={sendotp}></Route>
-      <Route path='welcome' Component={welcome}></Route>
+      <Route path='welcome' Component={Welcome}></Route>
       <Route path='hillstation' Component={hillstationtourism}></Route>
     </Routes>
       

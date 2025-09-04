@@ -1,14 +1,25 @@
 import React from "react";
 import NavBar from '../navigationTabs/navBar.jsx';
-const welcome =()=>{
+import UserProfile from '../userprofile/userprofile.jsx';
+import '../../styles/loginsignup.css';
+import { useLocation } from 'react-router-dom';
+const Welcome =()=>{
 
-    
+     const location = useLocation();
+     const { name,email,mobile } = location.state || {};
     return (
    
-    <div className="container">
+    <div>
+        <div>
+
+            <UserProfile name = {name} email={email} mobile={mobile}/>
+        </div>
+<div className='underline'></div>
+         <div className="center-container">
          <NavBar/>
-          <div>  Welcome</div>
+         
+          </div>
     </div>)
 }
 
-export default welcome;
+export default Welcome;

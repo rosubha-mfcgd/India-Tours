@@ -1,0 +1,112 @@
+Category
+============
+
+db.category.insertMany([
+  {
+    categoryID: 1,
+    categoryName: "Hill stations",
+    categoryDesc:"Hill stations"
+  },
+  {
+    categoryID: 2,
+    categoryName: "Sea beach",
+    categoryDesc:"Sea beach"
+  },
+{
+    categoryID: 3,
+    categoryName: "Desert",
+    categoryDesc:"Desert"
+  },
+
+{
+    categoryID: 4,
+    categoryName: "Jungle safari",
+    categoryDesc:"Jungle safari"
+  },
+
+{
+    categoryID: 5,
+    categoryName: "Religious places",
+    categoryDesc:"Religious places"
+  },
+ {
+    categoryID: 6,
+    categoryName: "City Vibes",
+    categoryDesc:"City Vibes"
+ },
+{
+    categoryID: 7,
+    categoryName: "Office Trips",
+    categoryDesc:"Office Trips"
+  },
+
+ {
+    categoryID: 8,
+    categoryName: "Health Treatments",
+    categoryDesc:"Health Treatments"
+  },
+{
+    categoryID: 9,
+    categoryName: "Search my option",
+    categoryDesc:"Search my option"
+  }
+
+ 
+]);
+
+City
+============
+db.city.insertMany([
+  {
+    citycode: 1,
+    cityname: "Kolkata"
+  },
+{
+    citycode: 2,
+    cityname: "Mumbai"
+  },
+{
+    citycode: 3,
+    cityname: "Delhi"
+  },
+{
+    citycode: 4,
+    cityname: "Kolkata"
+  },
+{
+    citycode: 5,
+    cityname: "Hyderabad"
+  },
+
+
+]);
+
+Location
+============
+
+City
+============
+db.location.insertMany([
+  {
+    locationID: 1,
+    cityname: "Kolkata"
+  },
+{
+    citycode: 2,
+    cityname: "Mumbai"
+  },
+{
+    citycode: 3,
+    cityname: "Delhi"
+  },
+{
+    citycode: 4,
+    cityname: "Kolkata"
+  },
+{
+    citycode: 5,
+    cityname: "Hyderabad"
+  },
+
+
+]);

@@ -65,7 +65,7 @@ app.use(session({secret:'xcfsaqarpl',// A secret used to sign the session ID coo
 const userRouter = require("./dist/routers/routers");
 //code for using implemented routes
 app.use("/api", userRouter);
-app.use("/", userRouter);
+
 
 // Connect to MongoDBl
 mongoose.connect(process.env.MONGO_DB_URI, 

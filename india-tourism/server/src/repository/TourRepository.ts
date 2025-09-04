@@ -1,6 +1,7 @@
 import { FilterQuery, UpdateQuery } from 'mongoose';
 import { ToursModel } from '../model/tours';
-import { ITourDetails } from '../repository/TourEntityState';
+import { CategoryModel } from '../model/category';
+import { Category, ITourDetails } from '../repository/TourEntityState';
 
 export class TourRepository
 {
@@ -28,5 +29,9 @@ async create(toursData:Partial<ITourDetails>): Promise<ITourDetails>{
   async delete(id: string): Promise<ITourDetails | null> {
     return ToursModel.findByIdAndDelete(id).exec();
   }
+
+  async findAllCategories(query: FilterQuery<Category>={}):Promise<Category[]>{
+        return CategoryModel.find(query).exec();
+   }
 }
 

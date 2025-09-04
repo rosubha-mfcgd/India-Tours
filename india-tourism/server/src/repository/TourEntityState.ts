@@ -77,7 +77,7 @@ export interface ITourDetails extends Document{
     tourManagerId:{
          type: Number,
          required: true,
-    },
+    }
 
 }
 
@@ -115,6 +115,15 @@ export interface Category extends Document{
      
   }
 
+  export interface City extends Document{
+    cityCode:{
+       type: Number,
+      required: true
+    },
+    
+    cityDesc: String
+    
+  }
    export interface Hotels extends Document{
     hotelCode:{
        type: Number,
@@ -196,7 +205,11 @@ export interface Category extends Document{
     },
     backupcontact: String,
     officeLocationID : Number,
-    Description : String
+    Description : String,
+    cityCode: {
+       type: Number,
+      required: true
+    }
         
   }
   export interface Reviews  extends Document{
