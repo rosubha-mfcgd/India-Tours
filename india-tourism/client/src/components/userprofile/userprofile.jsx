@@ -1,5 +1,4 @@
 import React, { useState, useRef , useEffect} from 'react';
-import { Link } from 'react-router';
 import ReactDOM from 'react-dom/client';
  import CircularProgress from '@mui/material/CircularProgress';
 import '../../styles/loginsignup.css';
@@ -10,7 +9,7 @@ import mobile_icon from '../Assets/input/mobile.png';
 import Loading from "../Utilities/Loading/Loading.js";
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import { useNavigate } from 'react-router-dom';
-import {signupUser,loginUser} from '../admin/admin';
+import {getPoints} from '../admin/admin';
 import AppBar from '@mui/material/AppBar';
 import Toolbar from '@mui/material/Toolbar';
 import Typography from '@mui/material/Typography';
@@ -27,6 +26,7 @@ import {
     Paper,
     Modal,
      Snackbar,
+     Link,
      CssBaseline,
   } from "@mui/material";
 import IconButton from '@mui/material/IconButton';
@@ -36,11 +36,41 @@ import MenuIcon from '@mui/icons-material/Menu'; // Or any other icon
 
 
 
-const UserProfile = ({name,email,mobile}) =>{
+const UserProfile = ({name,email,mobile,access_token}) =>{
 const [anchorEl, setAnchorEl] = useState(null);
-    const open = Boolean(anchorEl);
+const [dateTime, setDateTime] = useState(new Date());
+const [points,setPoints] = useState(0);
+const open = Boolean(anchorEl);
 
-    return (
+useEffect(()=>{
+
+  const fetchPoints = async()=>{
+   const req_data = {
+                    name:name,
+                    email:email,
+                    mobile:mobile,
+                    access_token:access_token
+                };
+  let userPoint = await getPoints(req_data);
+  console.log('userPoint....',userPoint);
+  if(userPoint)
+  {
+    setPoints(userPoint.points);
+  }else{
+    setPoints("NF");
+  }
+};
+fetchPoints();
+
+},[]);
+
+useEffect(()=>{
+const timer = setInterval(() => {
+      setDateTime(new Date());
+    }, 1000); // Update every second for a live clock
+return () => clearInterval(timer); // Clean up the interval on unmount
+});
+return (
         <div>
              <div>
                 <CssBaseline/>
@@ -65,7 +95,15 @@ const [anchorEl, setAnchorEl] = useState(null);
             </Box>
 
             <Box>
-                <Typography variant="h4" component="h2" gutterBottom>Points 50</Typography>
+                <Typography variant="h4" component="h2" gutterBottom>Points {points}</Typography>
+                <Link 
+                href="#" sx={{ color: 'white' } }gutterBottom>Share with friend</Link>
+            </Box>
+              
+              <p>{dateTime.toLocaleDateString()} {dateTime.toLocaleTimeString()}</p>
+               
+            <Box>
+              
             </Box>
             <Box>
                  <IconButton

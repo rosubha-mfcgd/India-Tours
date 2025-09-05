@@ -11,6 +11,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.TourRepository = void 0;
 const tours_1 = require("../model/tours");
+const category_1 = require("../model/category");
 class TourRepository {
     create(toursData) {
         return __awaiter(this, void 0, void 0, function* () {
@@ -41,6 +42,11 @@ class TourRepository {
     delete(id) {
         return __awaiter(this, void 0, void 0, function* () {
             return tours_1.ToursModel.findByIdAndDelete(id).exec();
+        });
+    }
+    findAllCategories() {
+        return __awaiter(this, arguments, void 0, function* (query = {}) {
+            return category_1.CategoryModel.find(query).exec();
         });
     }
 }

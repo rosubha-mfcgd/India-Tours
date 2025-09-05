@@ -90,5 +90,26 @@ class UserService {
             }
         });
     }
+    getPoints(email, mobile) {
+        return __awaiter(this, void 0, void 0, function* () {
+            let points = 0;
+            try {
+                const userRepo = new UserRepository();
+                let user = yield userRepo.findOne({ "emailID": email, "mobile": mobile });
+                if (user) {
+                    console.log('found user profile...');
+                    points = user.points;
+                }
+                else {
+                    console.log('could not find user profile...');
+                    points = 0;
+                }
+            }
+            catch (err) {
+                logNginx(err.stack);
+            }
+            return points;
+        });
+    }
 }
 module.exports = UserService;

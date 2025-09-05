@@ -45,5 +45,10 @@ class UserRepository {
             return user_1.UserModel.findByIdAndDelete(id).exec();
         });
     }
+    findPoints(query) {
+        return __awaiter(this, void 0, void 0, function* () {
+            return user_1.UserModel.findOne(query).exec();
+        });
+    }
 }
 exports.UserRepository = UserRepository;

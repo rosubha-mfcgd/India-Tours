@@ -31,4 +31,9 @@ export class UserRepository
   async delete(id: string): Promise<IUser | null> {
     return UserModel.findByIdAndDelete(id).exec();
   }
+ async findPoints(query: FilterQuery<IUser>):Promise<IUser|null>{
+        return UserModel.findOne(query).exec();
+   }
+
+
 }

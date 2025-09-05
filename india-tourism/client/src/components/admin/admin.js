@@ -60,3 +60,22 @@ return response.data;
 }
 
 }
+
+export const getPoints = async(data) =>{
+     try{
+    const headers = {
+            "Content-type": "application/json; charset=UTF-8",
+            "Authorization":"Bearer "+data.access_token
+            };
+            const response = await axios.post(
+        process.env.REACT_APP_SERVER_URI + "getPoints",
+        data,
+       {headers}
+);
+return response.data;
+}catch(err){
+     console.error('Error while fetching user points:::', err.stack);
+    throw err;
+}
+
+}

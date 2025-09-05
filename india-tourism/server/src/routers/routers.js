@@ -8,6 +8,7 @@ require("../logNginx");
 const { doSignup } = require("../controller/signup");
 const {checkAuthenticated} = require("../middlewares/auth");
 const {signupvalidate,validateOTP} = require("../controller/validations");
+const {getPoints} = require("../controller/userprofile");
 const router = express.Router();
 
 
@@ -15,5 +16,8 @@ const router = express.Router();
 router.post("/dosignup",signupvalidate,doSignup);
 
 router.post("/validateOTP",checkAuthenticated,validateOTP);
+
+router.post("/getPoints",checkAuthenticated,getPoints);
+
 
 module.exports = router 
