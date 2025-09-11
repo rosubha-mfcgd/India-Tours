@@ -13,7 +13,7 @@ async signupUser(email,mobile,name,signUpOTP)
 {
   try{
   const userRepo = new UserRepository();
-  let user = await userRepo.findOne({"emailID": email,"mobile":mobile, "name":name });
+  let user = await userRepo.findOne({"emailID": email,"mobile":mobile, "name":name});
           if (!user) {
             console.log('Creating user entity..');
             user = await userRepo.create({"emailID": email,"mobile":mobile, "name":name,"signedUpFlag":"N",

@@ -11,42 +11,14 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.TourRepository = void 0;
 const tours_1 = require("../model/tours");
-const category_1 = require("../model/category");
-class TourRepository {
-    create(toursData) {
-        return __awaiter(this, void 0, void 0, function* () {
-            const tour = new tours_1.ToursModel(toursData);
-            return tour.save();
-        });
+const BaseRepository_1 = require("./BaseRepository");
+class TourRepository extends BaseRepository_1.BaseRepository {
+    constructor() {
+        super(tours_1.ToursModel);
     }
     findById(id) {
         return __awaiter(this, void 0, void 0, function* () {
             return tours_1.ToursModel.findById(id).exec();
-        });
-    }
-    findOne(query) {
-        return __awaiter(this, void 0, void 0, function* () {
-            return tours_1.ToursModel.findOne(query).exec();
-        });
-    }
-    findAll() {
-        return __awaiter(this, arguments, void 0, function* (query = {}) {
-            return tours_1.ToursModel.find(query).exec();
-        });
-    }
-    update(id, updateData) {
-        return __awaiter(this, void 0, void 0, function* () {
-            return tours_1.ToursModel.findByIdAndUpdate(id, updateData, { new: true }).exec();
-        });
-    }
-    delete(id) {
-        return __awaiter(this, void 0, void 0, function* () {
-            return tours_1.ToursModel.findByIdAndDelete(id).exec();
-        });
-    }
-    findAllCategories() {
-        return __awaiter(this, arguments, void 0, function* (query = {}) {
-            return category_1.CategoryModel.find(query).exec();
         });
     }
 }

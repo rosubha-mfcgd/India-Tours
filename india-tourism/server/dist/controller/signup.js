@@ -37,7 +37,8 @@ const doSignup = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
                 isSignUp = constants.NO;
             }
         }).catch(error => {
-            console.log('Error in user signup ');
+            console.log(error);
+            console.log('Error in user signup... ');
             res.json({ message: "Account signup failed",
                 "access_token": req.body.access_token });
             throw error;

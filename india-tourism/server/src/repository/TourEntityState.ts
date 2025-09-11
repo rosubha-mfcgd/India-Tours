@@ -1,4 +1,4 @@
-import { Document, Model } from 'mongoose';
+import { Document } from 'mongoose';
 
 export interface IUser extends Document{
      name:{
@@ -81,7 +81,7 @@ export interface ITourDetails extends Document{
 
 }
 
-export interface Category extends Document{
+export interface ICategory extends Document{
     categoryID:{
        type: Number,
       required: true
@@ -95,10 +95,10 @@ export interface Category extends Document{
        type: String,
       required: true,
       trim: true,
-    },
+    }
   }
 
-  export interface Location extends Document{
+  export interface ILocation extends Document{
     locationID:{
        type: Number,
       required: true
@@ -115,7 +115,7 @@ export interface Category extends Document{
      
   }
 
-  export interface City extends Document{
+  export interface ICity extends Document{
     cityCode:{
        type: Number,
       required: true
@@ -124,7 +124,7 @@ export interface Category extends Document{
     cityDesc: String
     
   }
-   export interface Hotels extends Document{
+   export interface IHotels extends Document{
     hotelCode:{
        type: Number,
       required: true
@@ -136,7 +136,7 @@ export interface Category extends Document{
     },
   }
 
-   export interface Points extends Document{
+   export interface IPoints extends Document{
     points:{
        type: Number,
       required: true
@@ -157,28 +157,7 @@ export interface Category extends Document{
     
   }
 
-  export interface Points extends Document{
-    points:{
-       type: Number,
-      required: true
-    },
-    offer:{
-       type: String,
-      required: true,
-      trim: true,
-    },
-
-    isLimitedOffer:{
-       type: String,
-      required: true,
-      trim: true,
-    },
-    startDate: Date,
-    endDate: Date
-    
-  }
-
-  export interface OfficeLocation extends Document{
+  export interface IOfficeLocation extends Document{
     tourManagerId:{
        type: Number,
       required: true
@@ -190,7 +169,7 @@ export interface Category extends Document{
     
   }
 
-  export interface TourManager extends Document{
+  export interface ITourManager extends Document{
     tourManagerId:{
        type: Number,
       required: true
@@ -212,7 +191,7 @@ export interface Category extends Document{
     }
         
   }
-  export interface Reviews  extends Document{
+  export interface IReviews  extends Document{
     tourManagerId:{
        type: Number,
       required: true

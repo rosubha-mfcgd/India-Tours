@@ -11,38 +11,14 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.UserRepository = void 0;
 const user_1 = require("../model/user");
-class UserRepository {
+const BaseRepository_1 = require("./BaseRepository");
+class UserRepository extends BaseRepository_1.BaseRepository {
     constructor() {
-    }
-    create(userData) {
-        return __awaiter(this, void 0, void 0, function* () {
-            const user = new user_1.UserModel(userData);
-            return user.save();
-        });
+        super(user_1.UserModel);
     }
     findById(id) {
         return __awaiter(this, void 0, void 0, function* () {
             return user_1.UserModel.findById(id).exec();
-        });
-    }
-    findOne(query) {
-        return __awaiter(this, void 0, void 0, function* () {
-            return user_1.UserModel.findOne(query).exec();
-        });
-    }
-    findAll() {
-        return __awaiter(this, arguments, void 0, function* (query = {}) {
-            return user_1.UserModel.find(query).exec();
-        });
-    }
-    update(id, updateData) {
-        return __awaiter(this, void 0, void 0, function* () {
-            return user_1.UserModel.findByIdAndUpdate(id, updateData, { new: true }).exec();
-        });
-    }
-    delete(id) {
-        return __awaiter(this, void 0, void 0, function* () {
-            return user_1.UserModel.findByIdAndDelete(id).exec();
         });
     }
     findPoints(query) {

@@ -1,7 +1,7 @@
 import { Schema, model } from 'mongoose';
-import { Category } from '../repository/TourEntityState';
+import { ICategory } from '../repository/TourEntityState';
 
-const categorySchema = new Schema<Category>({
+const categorySchema = new Schema<ICategory>({
 
      categoryID:{
        type: Number,
@@ -20,4 +20,4 @@ const categorySchema = new Schema<Category>({
   
     });
 
-export const CategoryModel = model<Category>('Category',categorySchema);
+export const CategoryModel = model<ICategory>('Category',categorySchema);

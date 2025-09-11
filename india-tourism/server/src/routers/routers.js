@@ -9,6 +9,7 @@ const { doSignup } = require("../controller/signup");
 const {checkAuthenticated} = require("../middlewares/auth");
 const {signupvalidate,validateOTP} = require("../controller/validations");
 const {getPoints} = require("../controller/userprofile");
+const {getCategories} = require("../controller/tripDetails");
 const router = express.Router();
 
 
@@ -19,5 +20,6 @@ router.post("/validateOTP",checkAuthenticated,validateOTP);
 
 router.post("/getPoints",checkAuthenticated,getPoints);
 
+router.get("/getCategories",checkAuthenticated,getCategories);
 
 module.exports = router 
