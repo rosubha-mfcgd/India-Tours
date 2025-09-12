@@ -96,11 +96,22 @@ return (
 
             <Box>
                 <Typography variant="h4" component="h2" gutterBottom>Points {points}</Typography>
+                
+                 <Link 
+                href="#" sx={{ color: 'white',marginRight: '20px' } }gutterBottom>Redeem</Link>
+                
                 <Link 
-                href="#" sx={{ color: 'white' } }gutterBottom>Share with friend</Link>
+                href="#" sx={{ color: 'white' } } 
+                 
+                gutterBottom>Share your points</Link>
+   
             </Box>
               
-              <p>{dateTime.toLocaleDateString()} {dateTime.toLocaleTimeString()}</p>
+              <p>{dateTime.toLocaleDateString('en-US', {
+  year: 'numeric',
+  month: 'long',
+  day: 'numeric',
+})} {dateTime.toLocaleTimeString()}</p>
                
             <Box>
               

@@ -56,7 +56,7 @@ async validateOTP(email,mobile,otp)
 {
   try{
   const userRepo = new UserRepository();
- // console.log("Error message is...",this.errorMsg);
+ 
   let user = await userRepo.findOne({"emailID": email,"mobile":mobile, "otp":otp });
 
   console.log('user....',user);
@@ -65,10 +65,12 @@ async validateOTP(email,mobile,otp)
      console.log('valid otp');
     let _id = user._id;
     console.log('Update signed up flag to Yes');
-   let  user2 = await userRepo.update(_id,{"signedUpFlag":"Y"});
-   if(user2)
-   {
-        return constants.YES;
+   let  user2 = await userRepo.update(_id,{$set:{"signedUpFlag":"Y"}});
+    if(user2)
+    {
+     console.log('update status successfully ...');
+     return constants.YES;
+    
    }
     else
       {

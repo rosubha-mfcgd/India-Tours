@@ -1,54 +1,64 @@
 Category
 ============
 
-db.category.insertMany([
+db.categories.insertMany([
   {
     categoryID: 1,
     categoryName: "Hill stations",
-    categoryDesc:"Hill stations"
+    categoryDesc:"Hill stations",
+    image:"../../../public/hillstation.png"
   },
   {
     categoryID: 2,
     categoryName: "Sea beach",
-    categoryDesc:"Sea beach"
+    categoryDesc:"Sea beach",
+    image:"../../../public/seabeach.png"
+
   },
 {
     categoryID: 3,
     categoryName: "Desert",
-    categoryDesc:"Desert"
+    categoryDesc:"Desert",
+    image:"../../../public/desert.png"
   },
 
 {
     categoryID: 4,
     categoryName: "Jungle safari",
-    categoryDesc:"Jungle safari"
+    categoryDesc:"Jungle safari",
+    image:"../../../public/junglesafari.png"
   },
 
 {
     categoryID: 5,
     categoryName: "Religious places",
-    categoryDesc:"Religious places"
+    categoryDesc:"Religious places",
+    image:"../../../public/religiousplaces.png"
   },
  {
     categoryID: 6,
     categoryName: "City Vibes",
-    categoryDesc:"City Vibes"
+    categoryDesc:"City Vibes",
+    image:"../../../public/cityvibes.png"
  },
 {
     categoryID: 7,
     categoryName: "Office Trips",
-    categoryDesc:"Office Trips"
+    categoryDesc:"Office Trips",
+    image:"../../../public/officetrips.png"
   },
 
  {
     categoryID: 8,
     categoryName: "Health Treatments",
-    categoryDesc:"Health Treatments"
+    categoryDesc:"Health Treatments",
+    image:"../../../public/healthtreatments.png"
   },
 {
     categoryID: 9,
     categoryName: "Search my option",
-    categoryDesc:"Search my option"
+    categoryDesc:"Search my option",
+    image:"../../../public/searchmyoption.png"
   }
 
  
@@ -81,10 +91,9 @@ db.city.insertMany([
 
 ]);
 
-Location
-============
 
-City
+
+Location
 ============
 db.location.insertMany([
   {

@@ -21,9 +21,10 @@ export abstract class BaseRepository<T extends Document> implements IRepository<
         }
        return null;
     }
-    async update(id: string, item: T | any): Promise<boolean> {
+    async update(id: string, item: T | any): Promise<T|any> {
        const result = await this._model.updateOne({ _id: id }, item);
-    return result.modifiedCount > 0;
+       console.log('result count...',result.modifiedCount);
+       return this._model;
     }
    async delete(id: string): Promise<boolean> {
         const result = await this._model.deleteOne({ _id: id });

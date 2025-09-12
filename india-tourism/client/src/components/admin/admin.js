@@ -79,3 +79,22 @@ return response.data;
 }
 
 }
+
+export const getCategories = async(data) =>{
+     try{
+        console.log('data...',data);
+    const headers = {
+            "Content-type": "application/json; charset=UTF-8",
+            "Authorization":"Bearer "+data.access_token
+            };
+            const response = await axios.get(
+        process.env.REACT_APP_SERVER_URI + "getCategories",
+        {headers}
+);
+return response.data;
+}catch(err){
+     console.error('Error while fetching categories:::', err.stack);
+    throw err;
+}
+
+}

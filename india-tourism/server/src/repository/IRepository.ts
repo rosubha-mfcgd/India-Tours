@@ -11,7 +11,7 @@ export interface IRead<T> {
 
 export interface IWrite<T> {
    create(item: Partial<T> | any): Promise<T|null>;
-  update(id: string, item: Partial<T> | any): Promise<boolean>;
+  update(id: string, item: Partial<T> | any): Promise<T|null>;
   delete(id: string): Promise<boolean>;
 }
 

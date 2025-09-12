@@ -125,3 +125,13 @@ min-height: '100vh';
     font-weight: bold;
     color: red;
 }
+/* App.css */
+.rightinfo-container {
+  display: flex; /* Use flexbox for layout */
+}
+
+.original-content {
+  margin-left: 0px; /* Adjust this to match the width of your vertical bar */
+  flex-grow: 1; /* Allow main content to take up remaining space */
+  padding: 10px; /* Add some padding for content */
+}
