@@ -1,5 +1,6 @@
 import { NavLink , useLocation,useNavigate } from "react-router-dom";
 import '../../styles/Navbar.css';
+import '../../styles/Cards.css';
 import { useEffect, useState } from "react";
 import {
     TextField,
@@ -31,7 +32,7 @@ const NavBar = ({access_token}) =>{
      const location = useLocation();
 
      const [items, setItems] = useState('')
-     const [image, setImage] = useState('')
+    
     const navLinkStyles = ({isActive})=>{
             return {
                 fontWeight:isActive?'bold':'normal',
@@ -50,6 +51,7 @@ const NavBar = ({access_token}) =>{
             let mounted = true;
 
             const timer = setTimeout(() =>{
+                
                     const getTripCategories = async () =>{
                     let req_data = {
                         access_token:access_token
@@ -76,19 +78,20 @@ const NavBar = ({access_token}) =>{
 
 
     return (
-        <div>
+        <div className="navbar-grid">
         <nav className="navbar">
+            <Grid container spacing={10} justify="center">
              {items && items.length>0 ?
 
                 items.map((item) => (
-               
-                
-                <Grid item xs = {12} sm = {12} md={4} key={item.categoryID}>
+               <div>
+                 
+                <Grid item xs = {12} sm={4}  key={item.categoryID}>
 
-                    <Card>
+                    <Card className="card">
                     
-                    <CardMedia component= "img" height="140" 
-                    image = {item.image} alt={item.categoryDesc}/>
+                    <CardMedia component= "img" height="250" 
+                    image = {item.image} alt={item.categoryDesc} />
 
                     
                     <CardContent>
@@ -101,10 +104,12 @@ const NavBar = ({access_token}) =>{
               </CardContent>
                     </Card>
                 </Grid>
+                
+                </div>
                 )
                 ):<div>Cannot load categories</div>
              }
-            
+            </Grid>
          {/* <NavLink style={navLinkStyles} to='/hillstation'>Hill Stations</NavLink>
          <NavLink style={navLinkStyles}>Sea Beaches</NavLink>
          <NavLink style={navLinkStyles}>Desert Safari</NavLink>

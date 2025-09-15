@@ -110,17 +110,19 @@ const LoginSignup =() => {
         const googleLogin =  useGoogleLogin({
             client_id:process.env.REACT_APP_CLIENT_ID,
             onSuccess: async(codeResponse) => {
+                console.log('Trying google auth...')
                 setAction("Send Otp");
                        // navigate('sendotp', { replace: true });
                // setAction("Login");
-                setButtonclick(true);
+                
                 const req_data = {
                     email:email,
                     mobile:mobile,
                     access_token:codeResponse.access_token
                 };
                 try{
-                let resdata = await loginUser(req_data);
+                    setButtonclick(true);
+                    let resdata = await loginUser(req_data);
                 
                 if(resdata)
                 {

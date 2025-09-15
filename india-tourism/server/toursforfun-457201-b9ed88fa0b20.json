@@ -1,0 +1,13 @@
+{
+  "type": "service_account",
+  "project_id": "toursforfun-457201",
+  "private_key_id": "b9ed88fa0b20bfccb161b9ceecc1ddb934c5404c",
+  "private_key": "-----BEGIN PRIVATE KEY-----\nMIIEvQIBADANBgkqhkiG9w0BAQEFAASCBKcwggSjAgEAAoIBAQCxDl8AOfGRPZLR\n1TRB3Oy+Hao2MUmd99Gdo/aUdBE8bjITxzzT/YzgL+/+JaBZsDkcRN34GbnEPk/k\nESa63bEPVnxd57xx5SILilPYqj6Eq8GarBfnbQeW0OtA4SvAvqVPAwfP/uFCN1kM\nxSrTqopchsYeQZOBh6Dp75m/W+hsgI7IjUITz659vXcjRtBcAJxO+mRMgR61bI+1\nsmlnBG4tHwaxOtTZT7mpSp+g2U7zSRcCM+ZCoJ56OmsZ1+llM+hYvZ9KiWXeQEz8\ntXoFW9dYyjRf92vhZMrBejA0r+0imyew7o9DicCzUfeBYQCCqzwyPay+qT/4Q0Yz\nScqEcNb9AgMBAAECggEACAZTuJ89BffZdgMzbszEOiBUEkgM7cjz9Nt1QJM7eMFc\nfwL9DHVQc5TDTCyJEPzotGb2py5bT2as7kmiDL7MLfAd4OUGPc9EdMDHPhRb6F10\nf+h5iOFV17hjq+QeEd/81BDvbguU9WWsITpfz4ofjUQFKg06J0PDakw+wVU5ZTl3\nEIulEiDCBAB8N+Q7fzT+AJXYwBUdhNu3+u1i4ZRv4Sc6yNKjANuf/OcPV58hU96r\n4yTYEsf0W5NucH8ESfunrlvxTnJ5NgHoBmMYq70xWAM9c3XD0tbd7Ol5ynw6eyCB\ndWT8ZzxSmy/nV6PGT7kc+pTDidyaKwna7kxIqVcywQKBgQDk0nNNO9pnRSuVjOy1\nVVzVyTd6KSRRsN6cKY/8Mgf4GDyw5/pCF8u8z0CxRS5nbX8GBEgSRj75p+8XIUA+\n6nLuCvbsVCcMlbHtH5VuOVcqlfyfHIOUgLA2aKeGWtxTKUorG2OYnGKcgsWakSgD\nWPZRJtKBy1NtOrvFNDGkrXS5bQKBgQDGFe3OFGOVWsVmtixOumjV0FMwagvZdaNl\nkp/QfufwLzgCS+btLfC9DsBkxpyozudN4jFNvbF/SPYW0HK1+I+X9v2vgpkxOR5q\no/HnLqezwMU9lMOupWStTWltft7O+eRe/O1gTCLCcKBes5ELzOB/DTjTN5UF/oo8\nWczwo18p0QKBgQCtrIXTIxCbvUZdVf77ivTRVs4CrGNilYoAoRMl6Zte1JaL9yZd\nL851WiDR655S5iq5GFrTc/msZ6fyuEwY9L2Sq0PLD/wrcxr+zTAP3vmn2vtIkM3V\n0u7r/PbZ5PDBNd+TZFBtrpSyEheFP5NNJyKdaYfw97A0gZWvEfRz9ytW6QKBgC5u\ngXmm6djemBsFZMlnhJ9p37YfhXuJya1Le06iELgKOXTAWfcKp72JMavtqlcfeLSW\n6ruwVWTis1yRq/Hfu7kBWmHDmSkinHCe0VtBYmoOK63NqzjK6Bh/ZtEVxiB6Dv/9\nBZ9m+Vbek5jfOoarlYvyi3lnM/VdvwV6f0GA6hOhAoGAENpWhrSrOaZ1VI1jCJVm\n838UPAcrAXhvwo0EOt4+9VzqBkhpEltZYI4yIqaRHNt7cXLoZW5sAbOzXahEDoYt\nSz481cm0t6eMTO3rSj5nbMdgqcpCDnpxzuSVZFS1+scvKixyf9mb9fm+cAxgT4oc\nwTelZZO78oKEW+3kpecQfJc=\n-----END PRIVATE KEY-----\n",
+  "client_email": "india-tours@toursforfun-457201.iam.gserviceaccount.com",
+  "client_id": "105305853388440460282",
+  "auth_uri": "https://accounts.google.com/o/oauth2/auth",
+  "token_uri": "https://oauth2.googleapis.com/token",
+  "auth_provider_x509_cert_url": "https://www.googleapis.com/oauth2/v1/certs",
+  "client_x509_cert_url": "https://www.googleapis.com/robot/v1/metadata/x509/india-tours%40toursforfun-457201.iam.gserviceaccount.com",
+  "universe_domain": "googleapis.com"
+}

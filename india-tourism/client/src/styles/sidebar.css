@@ -1,0 +1,13 @@
+.sidebar{
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+.Myprofile,
+.RedeemPoints,
+.SharePoints
+ {
+    display: flex;
+    margin-left: 260px;
+    font-size: 2rem;
+}

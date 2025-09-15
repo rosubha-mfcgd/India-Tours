@@ -1,11 +1,15 @@
 const express = require('express');
+
+
+const querystring = require('querystring');
+
 const session = require('express-session');
 //loads environment variables from .env file into process.env
 require("dotenv").config();
 const crypto = require("crypto")
 require("./src/logNginx.js");
 const mongoose = require('mongoose');
-
+const axios = require('axios');
 const cors = require('cors');
 //parses cookies attached to the client request object
 //const cookieParser = require("cookie-parser");
@@ -22,6 +26,10 @@ const GOOGLE_CLIENT_SECRET = process.env.CLIENT_SECRET;
 const GOOGLE_CALLBACK_URL = process.env.GOOGLE_OAUTH_CALLBACK_URL;
 const GOOGLE_ACCESS_TOKEN_URL = process.env.GOOGLE_ACCESS_TOKEN_URL;
 const GOOGLE_REDIRECT_URL = process.env.GOOGLE_OAUTH_CALLBACK_URL;
+const API_CLIENT_ID = process.env.API_CLIENT_ID;
+const API_CLIENT_SECRET = process.env.API_CLIENT_SECRET;
+const GRANT_TYPE = process.env.GRANT_TYPE;
+const API_AUTH_TOKEN_URL = process.env.API_AUTH_TOKEN_URL;
 
 const GOOGLE_OAUTH_SCOPES = [
 
@@ -65,7 +73,6 @@ app.use(session({secret:'xcfsaqarpl',// A secret used to sign the session ID coo
 const userRouter = require("./dist/routers/routers");
 //code for using implemented routes
 app.use("/api", userRouter);
-
 
 // Connect to MongoDBl
 mongoose.connect(process.env.MONGO_DB_URI, 
@@ -172,10 +179,8 @@ try{
 
   console.log(data);
   // exchange authorization code for access token & id_token
-  const response = await fetch(GOOGLE_ACCESS_TOKEN_URL, {
-    method: "POST",
-
-    body: JSON.stringify(data),
+  const response = await axios.post(GOOGLE_ACCESS_TOKEN_URL, {
+       body: JSON.stringify(data),
   });
   const access_token_data = await response.json();
 
@@ -193,6 +198,30 @@ try{
   res.status(400).send(e.message);
 }
  });
+
+
+//This function generates the oAuth token for API calls
+app.post("/api/token", async(req,res) =>{
+
+   const data = {
+      'client_id':API_CLIENT_ID,
+      'client_secret':API_CLIENT_SECRET,
+      'grant_type' : GRANT_TYPE
+      };
+   await axios.post(API_AUTH_TOKEN_URL,querystring.stringify(data),
+  {
+    headers:{
+      'Content-Type': 'application/x-www-form-urlencoded'
+    }}).then(
+      response => {
+          res.status(200).send(response.data);
+      }
+    ).catch(error =>
+    {
+      logNginx("error in receiving token....",error);
+      res.status(401).send({"error":"Invalid token found"});
+    });
+});
 
 
 // Define routes and middleware
