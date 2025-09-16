@@ -1,7 +1,8 @@
 import { NavLink , useLocation,useNavigate } from "react-router-dom";
 import '../../styles/Navbar.css';
 import '../../styles/Cards.css';
-import { useEffect, useState } from "react";
+import '../../styles/sidebar.css';
+import { useEffect, useState, useContext } from "react";
 import {
     TextField,
     Button,
@@ -23,14 +24,13 @@ import {
   } from "@mui/material";
 
 import { getCategories } from "../admin/admin";
-
-
-
+import { NavContext } from '../navigationContext/navigationContext.jsx';
+import SideBarNotification from './sideBarNotification.jsx'
 const NavBar = ({access_token}) =>{
 
     const navigate = useNavigate();
      const location = useLocation();
-
+    const { notification } = useContext(NavContext);
      const [items, setItems] = useState('')
     
     const navLinkStyles = ({isActive})=>{
@@ -80,7 +80,7 @@ const NavBar = ({access_token}) =>{
     return (
         <div className="navbar-grid">
         <nav className="navbar">
-            <Grid container spacing={10} justify="center">
+            <Grid container spacing={10} justify="center" width="70%">
              {items && items.length>0 ?
 
                 items.map((item) => (
@@ -90,7 +90,7 @@ const NavBar = ({access_token}) =>{
 
                     <Card className="card">
                     
-                    <CardMedia component= "img" height="250" 
+                    <CardMedia component= "img" height="180" 
                     image = {item.image} alt={item.categoryDesc} />
 
                     
@@ -108,12 +108,20 @@ const NavBar = ({access_token}) =>{
                 </div>
                 )
                 ):<div>Cannot load categories</div>
+                
              }
+            
             </Grid>
-         {/* <NavLink style={navLinkStyles} to='/hillstation'>Hill Stations</NavLink>
-         <NavLink style={navLinkStyles}>Sea Beaches</NavLink>
-         <NavLink style={navLinkStyles}>Desert Safari</NavLink>
-         <NavLink style={navLinkStyles}>My Choice</NavLink> */}
+          {notification ?
+               <div style={{position: 'fixed', top:70,right:0}} >    
+               <SideBarNotification/> 
+            </div> 
+            :<div></div>
+             }
+            
+         
+
+      
         </nav>
         </div>
 

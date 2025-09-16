@@ -1,7 +1,9 @@
-import React, { useState, useRef , useEffect} from 'react';
+import React, { useState, useRef , useEffect, useContext} from 'react';
 import ReactDOM from 'react-dom/client';
  import CircularProgress from '@mui/material/CircularProgress';
 import '../../styles/loginsignup.css';
+import NavBar from '../navigationTabs/navBar.jsx';
+
 import email_icon from '../Assets/input/email.png';
 import password_icon from '../Assets/input/password.png';
 import user_icon from '../Assets/input/username.png';
@@ -33,15 +35,22 @@ import IconButton from '@mui/material/IconButton';
 import Menu from '@mui/material/Menu';
 import MenuItem from '@mui/material/MenuItem';
 import MenuIcon from '@mui/icons-material/Menu'; // Or any other icon
-
+import { NavContext } from '../navigationContext/navigationContext.jsx';
 
 
 const UserProfile = ({name,email,mobile,access_token}) =>{
 const [anchorEl, setAnchorEl] = useState(null);
 const [dateTime, setDateTime] = useState(new Date());
 const [points,setPoints] = useState(0);
+const[isOpen,setOpen] = useState(false);
 const open = Boolean(anchorEl);
-
+const {triggerNotification} = useContext(NavContext);
+function toggleSideBar(event)
+{
+  console.log('isOpen',isOpen)
+  setOpen(!isOpen);
+  triggerNotification(!isOpen);
+}
 useEffect(()=>{
 
   const fetchPoints = async()=>{
@@ -59,9 +68,10 @@ useEffect(()=>{
   }else{
     setPoints("NF");
   }
+
+
 };
 fetchPoints();
-
 },[]);
 
 useEffect(()=>{
@@ -70,6 +80,8 @@ const timer = setInterval(() => {
     }, 1000); // Update every second for a live clock
 return () => clearInterval(timer); // Clean up the interval on unmount
 });
+
+
 return (
         <div>
              <div>
@@ -122,10 +134,16 @@ return (
       aria-controls={open ? 'basic-menu' : undefined}
       aria-haspopup="true"
       aria-expanded={open ? 'true' : undefined}
-      onClick={(event) => setAnchorEl(event.currentTarget)}
+      onClick={(event) => {
+        setAnchorEl(event.currentTarget)
+        
+      }}
     >
-      <MenuIcon />
+     
+      <MenuIcon onClick={(event) => {toggleSideBar(event)}} />
+
     </IconButton>
+   
             </Box>
           </Toolbar>
          </AppBar>

@@ -6,59 +6,59 @@ db.categories.insertMany([
     categoryID: 1,
     categoryName: "Hill stations",
     categoryDesc:"Hill stations",
-    image:"../../../public/hillstation.png"
+    image:"/hillstation.png"
   },
   {
     categoryID: 2,
     categoryName: "Sea beach",
     categoryDesc:"Sea beach",
-    image:"../../../public/seabeach.png"
+    image:"/seabeach.png"
 
   },
 {
     categoryID: 3,
     categoryName: "Desert",
     categoryDesc:"Desert",
-    image:"../../../public/desert.png"
+    image:"/desert.png"
   },
 
 {
     categoryID: 4,
     categoryName: "Jungle safari",
     categoryDesc:"Jungle safari",
-    image:"../../../public/junglesafari.png"
+    image:"/junglesafari.png"
   },
 
 {
     categoryID: 5,
     categoryName: "Religious places",
     categoryDesc:"Religious places",
-    image:"../../../public/religiousplaces.png"
+    image:"/religiousplaces.png"
   },
  {
     categoryID: 6,
     categoryName: "City Vibes",
     categoryDesc:"City Vibes",
-    image:"../../../public/cityvibes.png"
+    image:"/cityvibes.png"
  },
 {
     categoryID: 7,
     categoryName: "Office Trips",
     categoryDesc:"Office Trips",
-    image:"../../../public/officetrips.png"
+    image:"/officetrips.png"
   },
 
  {
     categoryID: 8,
     categoryName: "Health Treatments",
     categoryDesc:"Health Treatments",
-    image:"../../../public/healthtreatments.png"
+    image:"/healthtreatments.png"
   },
 {
     categoryID: 9,
     categoryName: "Search my option",
     categoryDesc:"Search my option",
-    image:"../../../public/searchmyoption.png"
+    image:"/searchmyoption.png"
   }
 
  
@@ -66,7 +66,7 @@ db.categories.insertMany([
 
 City
 ============
-db.city.insertMany([
+db.cities.insertMany([
   {
     citycode: 1,
     cityname: "Kolkata"
@@ -87,6 +87,10 @@ db.city.insertMany([
     citycode: 5,
     cityname: "Hyderabad"
   },
+{
+    citycode: 6,
+    cityname: "Pune"
+  },
 
 
 ]);
@@ -95,27 +99,37 @@ db.city.insertMany([
 
 Location
 ============
-db.location.insertMany([
+db.locations.insertMany([
   {
-    locationID: 1,
-    cityname: "Kolkata"
+    categoryID: 1,
+    spotName: "Shimla",
+    desc: "Panoramas of snow-peaked Himalayas. Welcome to the delightful hill resort of Shimla, fondly known as the \'Queen of the Hills.\' Surrounded by the mighty Himalayas, this picturesque destination is renowned for its stunning natural beauty, pleasant weather, awe-inspiring shrines and colonial architecture.",
   },
 {
-    citycode: 2,
-    cityname: "Mumbai"
-  },
-{
-    citycode: 3,
-    cityname: "Delhi"
-  },
-{
-    citycode: 4,
-    cityname: "Kolkata"
-  },
-{
-    citycode: 5,
-    cityname: "Hyderabad"
-  },
+     categoryID: 2,
+    spotName: "Goa",
+    desc: "Goa's beauty lies in its diverse landscapes, from its iconic golden-sand beaches to lush green hinterlands and spice plantations. The state also boasts a unique charm from its Portuguese colonial past, visible in its stunning architecture, and a vibrant cultural mix that blends relaxed coastal vibes with energetic nightlife.",
 
+  },
+{
+     categoryID: 3,
+    spotName: "Rajasthan",
+    desc: "The desert offers a unique experience with camel safaris, camping under starry skies, and local music and dance, providing a stark contrast to the bustling cities but no less wonder.",
+  },
+{
+     categoryID: 4,
+    spotName: "Sunderban Forest",
+    desc: "The Sundarbans forest's beauty lies in its vast, verdant mangrove landscape, a unique labyrinth of islands and waterways teeming with life, including the iconic Royal Bengal tiger. It is a dynamic, living delta where dense greenery contrasts with dark roots and vibrant leaves, creating a \"beautiful forest\" that is a critical ecosystem recognized globally as a UNESCO World Heritage site."
+  },
+{
+     categoryID: 5,
+    spotName: "Kedarnath",
+    desc: "Kedarnath's beauty lies in the breathtaking panoramic views of the snow-capped Garhwal Himalayan peaks and the majestic Kedar Dome, creating a backdrop of pristine wilderness for the ancient Kedarnath Temple. This beauty is amplified by the surrounding lush valleys, gushing rivers like the Mandakini, and vibrant rhododendron forests, all contributing to a tranquil yet adventurous atmosphere that blends natural grandeur with spiritual devotion."
+},
 
+{
+     categoryID: 6,
+    spotName: "Lucknow",
+    desc: "Captivating blend of laid-back charm, rich Nawabi culture, and growing modernity, characterized by its politeness, historical grandeur, and vibrant street life, particularly famous for its unparalleled cuisine and charming hospitality"
+},
 ]);

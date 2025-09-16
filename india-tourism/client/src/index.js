@@ -14,7 +14,7 @@ root.render(
     <meta httpEquiv="Content-Security-Policy" content="script-src 'unsafe-inline' 'unsafe-eval'   
    https://apis.google.com https://www.gstatic.com https://accounts.google.com/gsi/client;"/>
     <BrowserRouter>
-    <GoogleOAuthProvider clientId="{CLIENT_ID}">
+    <GoogleOAuthProvider clientId={CLIENT_ID}>
     <App />
     </GoogleOAuthProvider>
     </BrowserRouter>

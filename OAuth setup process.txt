@@ -1,0 +1,18 @@
+OAuth setup in Google (not used) :- 
+
+https://cloud.google.com/apigee/docs/api-platform/tutorials/secure-calls-your-api-through-oauth-20-client-credentials#apigee-in-cloud-console
+
+OAuth setup in AWS cognito (used) :- 
+
+create User pool - 
+
+User pool name - User pool - 9eqtet
+User pool ID - ap-south-1_SFhO1APXD
+Add application to User pool (as machine-machine communication)
+
+Get jwks file from https://cognito-idp.{region}.amazonaws.com/{userPoolId}/.well-known/jwks.json
+
+https://cognito-idp.ap-south-1.amazonaws.com/ap-south-1_SFhO1APXD/.well-known/jwks.json
+
+
+
