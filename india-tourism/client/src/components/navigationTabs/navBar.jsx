@@ -90,7 +90,7 @@ const NavBar = ({access_token}) =>{
 
                     <Card className="card">
                     
-                    <CardMedia component= "img" height="180" 
+                    <CardMedia component= "img"  height="100"
                     image = {item.image} alt={item.categoryDesc} />
 
                     

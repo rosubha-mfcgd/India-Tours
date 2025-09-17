@@ -24,7 +24,7 @@ import {
      IconButton
      
   } from "@mui/material";
-import MenuIcon from '@mui/icons-material/Menu'; // Example icon
+
 import {ListItem, ListItemButton, ListItemText} 
    from '@mui/material';
   import ChevronRightIcon from '@mui/icons-material/ChevronRight';
@@ -36,11 +36,15 @@ import {ListItem, ListItemButton, ListItemText}
         const handleDrawerClose = () => {
             setOpen(false);
         };
-
+const StyledDrawer = styled(Drawer)(({ theme }) => ({
+  '& .MuiDrawer-paper': {
+    backgroundColor: "#28282B" // Set your desired background color here
+  },
+}));
         return (
             <Box sx={{ display: 'flex' }}>
             
-                <Drawer
+                <StyledDrawer
                     variant="persistent" // Or "temporary", "permanent"
                     anchor="right"
                     open={open} 
@@ -53,7 +57,7 @@ import {ListItem, ListItemButton, ListItemText}
                         </IconButton>
                     </Box>
                     <List>
-                        {['My Profile', 'Share Points', 'My Preferences', 'About Us'].map((text, index) => (
+                        {['My Profile','Share Points', 'My Preferences', 'About Us'].map((text, index) => (
                             <ListItem key={text} disablePadding>
                                 <ListItemButton>
                                     <ListItemText primary={text} />
@@ -61,7 +65,7 @@ import {ListItem, ListItemButton, ListItemText}
                             </ListItem>
                         ))}
                     </List>
-                </Drawer>
+                </StyledDrawer>
                 {/* Main content of your application */}
                 <Box component="main" sx={{ flexGrow: 1, p: 3 }}>
                     {/* Your application's main content goes here */}

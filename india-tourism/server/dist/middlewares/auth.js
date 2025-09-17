@@ -1,9 +1,9 @@
 "use strict";
 require("../logNginx");
 const crypto = require("crypto");
-const session = require('express-session');
 const jwksConfig = require('../../certs/jwks.json');
 const jsonwebtoken = require('jsonwebtoken');
+const session = require('express-session');
 const GOOGLE_CLIENT_ID = process.env.CLIENT_ID;
 const GOOGLE_CLIENT_SECRET = process.env.CLIENT_SECRET;
 const GOOGLE_ACCESS_TOKEN_URL = process.env.GOOGLE_ACCESS_TOKEN_URL;

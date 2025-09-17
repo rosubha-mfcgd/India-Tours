@@ -6,13 +6,38 @@ OAuth setup in AWS cognito (used) :-
 
 create User pool - 
 
-User pool name - User pool - 9eqtet
-User pool ID - ap-south-1_SFhO1APXD
+curl -X POST https://ap-south-1up5izdcsr.auth.ap-south-1.amazoncognito.com/oauth2/token -H "Content-Type: application/x-www-form-urlencoded" -d "grant_type=client_credentials&client_id=7hfslar2h3tnqmjnol6pbgpau9&client_secret=2vm6teivr7vp1jgsro0ad4pqor8poqhk6efvmiliso0uu11ulf0&scope=default-m2m-resource-server-jknyl9/read"
+
+User pool name - User pool - tcvvkk
+User pool ID - ap-south-1_Up5IZDcSr
 Add application to User pool (as machine-machine communication)
 
-Get jwks file from https://cognito-idp.{region}.amazonaws.com/{userPoolId}/.well-known/jwks.json
-
-https://cognito-idp.ap-south-1.amazonaws.com/ap-south-1_SFhO1APXD/.well-known/jwks.json
+Get jwks file from https://cognito-idp.ap-south-1.amazonaws.com/ap-south-1_Up5IZDcSr/.well-known/jwks.json
 
 
+LocalStack setup :-
 
+Open a Command Prompt: Launch your command prompt or PowerShell.
+Run the LocalStack Docker Command: 
+Enter the following command and press Enter to start the LocalStack container:
+
+docker run --rm -it -p 4566:4566 localstack/localstack
+
+1. Wait for Download and Startup: The first time you run this command, it may take a few minutes to download the Docker image. Once downloaded, LocalStack will start within the container. 
+2. Verify Installation: Once the logs show that LocalStack is running, you can verify it by configuring your AWS CLI to use LocalStack. 
+
+
+
+1. Install the AWS CLI: If you don't have it installed, download and run the AWS CLI Installer for your environment. 
+2. Set the Endpoint URL: Configure your AWS CLI to point to the LocalStack endpoint. 
+You can do this by setting an endpoint URL for your AWS CLI commands: 
+
+aws --endpoint-url=http://localhost:4566 s3 ls
+
+This command lists the S3 buckets in your LocalStack environment. 
+ 
+
+
+Test AWS IAM user :- TestAWSUser
+Account ID/alias - 157208622016/rosubha2025
+password-IndiaTours2025@

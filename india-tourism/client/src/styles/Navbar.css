@@ -59,3 +59,8 @@
      overflow: 'auto';
      border: '1px solid #ccc';
   }
+
+  .img-navbar {
+  max-width: 25%;
+  height: auto;
+}

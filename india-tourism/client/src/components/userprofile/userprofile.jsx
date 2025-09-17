@@ -108,15 +108,6 @@ return (
 
             <Box>
                 <Typography variant="h4" component="h2" gutterBottom>Points {points}</Typography>
-                
-                 <Link 
-                href="#" sx={{ color: 'white',marginRight: '20px' } }gutterBottom>Redeem</Link>
-                
-                <Link 
-                href="#" sx={{ color: 'white' } } 
-                 
-                gutterBottom>Share your points</Link>
-   
             </Box>
               
               <p>{dateTime.toLocaleDateString('en-US', {
