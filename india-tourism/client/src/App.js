@@ -14,10 +14,11 @@ const App = () => {
     
    
       <Routes>
-      <Route path='/' Component={LoginSignup}></Route>
+      <Route path='signup' Component={LoginSignup}></Route>
       <Route path='sendotp' Component={sendotp}></Route>
       <Route path='welcome' Component={Welcome}></Route>
-      <Route path='hillstation' Component={TripList}></Route>
+      <Route path='/' Component={Welcome}></Route>
+      <Route path='searchtrip' Component={TripList}></Route>
     </Routes>
       
     

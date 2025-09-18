@@ -48,11 +48,7 @@ const NavBar = ({access_token}) =>{
             };
           };
 
-          const showList = ({categoryID}) =>{
-            
-
-
-          }
+         
 
           useEffect(()=>{
             let mounted = true;
@@ -60,10 +56,8 @@ const NavBar = ({access_token}) =>{
             const timer = setTimeout(() =>{
                 
                     const getTripCategories = async () =>{
-                    let req_data = {
-                        access_token:access_token
-                    }
-                    let categories = await getCategories(req_data);
+                   
+                    let categories = await getCategories();
 
                     if(categories)
                     {
@@ -99,7 +93,7 @@ const NavBar = ({access_token}) =>{
                     
                     <CardMedia component= "img"  height="100"
                     image = {item.image} alt={item.categoryDesc} 
-                    onClick={}
+                    
                     />
 
                     

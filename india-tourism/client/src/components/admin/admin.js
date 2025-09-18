@@ -113,7 +113,7 @@ export const getPoints = async(data) =>{
 return res_data;
 }
 
-export const getCategories = async(data) =>{
+export const getCategories = async() =>{
     let res_data = "failed to fetch categories";
      try{
         let access_token = await getApiAccessToken();

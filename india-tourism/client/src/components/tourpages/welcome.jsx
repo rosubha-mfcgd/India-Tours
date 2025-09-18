@@ -1,6 +1,7 @@
 import React, { useEffect,useState,useContext } from "react";
 import { NavProvider } from '../navigationContext/navigationContext.jsx';
 import NavBar from '../navigationTabs/navBar.jsx';
+import Header from '../header/header.jsx';
 import UserProfile from '../userprofile/userprofile.jsx';
 import '../../styles/loginsignup.css';
 
@@ -10,8 +11,6 @@ const Welcome =()=>{
      const location = useLocation();
      const { name,email,mobile,access_token} = location.state || {};
 
-
-     
    return (
    
     <div>
@@ -19,10 +18,10 @@ const Welcome =()=>{
         <div>
            
         <div>
-            
-            <UserProfile name = {name} email={email} mobile={mobile}
-             access_token={access_token}/>
-             
+            {access_token?
+              <UserProfile name = {name} email={email} mobile={mobile}
+                access_token={access_token}/>:<Header/>
+            } 
            
         </div>
         <div className="center-container">
