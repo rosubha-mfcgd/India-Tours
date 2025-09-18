@@ -9,6 +9,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 const { CategoryRepository } = require('../../dist/repository/CategoryRepository');
+const { TourRepository } = require('../repository/TourRepository');
 require("../logNginx");
 class TourDetailService {
     constructor() {
@@ -29,6 +30,23 @@ class TourDetailService {
                 logNginx(err.stack);
             }
             return categories;
+        });
+    }
+    getToursByCategoryId(categoryId) {
+        return __awaiter(this, void 0, void 0, function* () {
+            let plannedTours = [];
+            try {
+                const tourRepository = new TourRepository();
+                plannedTours = yield tourRepository.find({ "categoryID": Number(categoryId), "startDate": { $gt: new Date() } });
+                if (plannedTours && plannedTours.length > 0) {
+                    console.log('plannedTours...', plannedTours);
+                }
+            }
+            catch (err) {
+                console.log(err.stack);
+                logNginx(err.stack);
+            }
+            return plannedTours;
         });
     }
 }

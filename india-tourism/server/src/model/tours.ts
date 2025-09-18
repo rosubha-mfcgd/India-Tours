@@ -2,8 +2,8 @@ import { Schema, model } from 'mongoose';
 import { ITourDetails } from '../repository/TourEntityState';
 
 const toursSchema = new Schema<ITourDetails>({
-    locationID:{
-       type: Number,
+    locationName:{
+       type: String,
       required: true,
       trim: true,
     },
@@ -11,8 +11,8 @@ const toursSchema = new Schema<ITourDetails>({
        type: Number,
       required: true
     },
-    operatorID:{
-       type: Number,
+    tourManagerId:{
+       type: String,
       required: true,
       trim: true,
     },
@@ -21,15 +21,15 @@ const toursSchema = new Schema<ITourDetails>({
       required: true
       },
     package_cost:{
-        type: Number,
+        type: String,
       required: true,
     },
     ticket_cost:{
-        type: Number,
+        type: String,
       required: true,
     },
     max_tourist:{
-         type: Number,
+         type: String,
          required: true,
     },
 
@@ -46,10 +46,9 @@ const toursSchema = new Schema<ITourDetails>({
          type: String,
          required: true,
     },
-    tourManagerId:{
-         type: Number,
-         required: true,
+    desc: {
+      type : String
     }
     });
 
-export const ToursModel = model<ITourDetails>('Tours',toursSchema);
+export const ToursModel = model<ITourDetails>('Tourdetails',toursSchema);

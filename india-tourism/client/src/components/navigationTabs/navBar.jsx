@@ -47,6 +47,13 @@ const NavBar = ({access_token}) =>{
             fontWeight: isActive ? "bold" : ""
             };
           };
+
+          const showList = ({categoryID}) =>{
+            
+
+
+          }
+
           useEffect(()=>{
             let mounted = true;
 
@@ -91,7 +98,9 @@ const NavBar = ({access_token}) =>{
                     <Card className="card">
                     
                     <CardMedia component= "img"  height="100"
-                    image = {item.image} alt={item.categoryDesc} />
+                    image = {item.image} alt={item.categoryDesc} 
+                    onClick={}
+                    />
 
                     
                     <CardContent>

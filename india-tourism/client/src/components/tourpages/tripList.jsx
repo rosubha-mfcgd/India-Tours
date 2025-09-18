@@ -4,7 +4,7 @@ function randomIntFromInterval(min, max) { // min and max included
   }
 
   
-const Hillstationtourism = () =>{
+const TripList = ({categoryid}) =>{
     const[photo,setPhoto] = useState('');
     const image = "hillstation.png";
    
@@ -26,4 +26,4 @@ const Hillstationtourism = () =>{
     
 }
 
-export default Hillstationtourism
+export default TripList

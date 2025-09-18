@@ -107,7 +107,7 @@ return (
             </Box>
 
             <Box>
-                <Typography variant="h4" component="h2" gutterBottom>Points {points}</Typography>
+                <Typography variant="body2"  gutterBottom>Points {points}</Typography>
             </Box>
               
               <p>{dateTime.toLocaleDateString('en-US', {

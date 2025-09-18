@@ -3,8 +3,8 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.ToursModel = void 0;
 const mongoose_1 = require("mongoose");
 const toursSchema = new mongoose_1.Schema({
-    locationID: {
-        type: Number,
+    locationName: {
+        type: String,
         required: true,
         trim: true,
     },
@@ -12,8 +12,8 @@ const toursSchema = new mongoose_1.Schema({
         type: Number,
         required: true
     },
-    operatorID: {
-        type: Number,
+    tourManagerId: {
+        type: String,
         required: true,
         trim: true,
     },
@@ -22,15 +22,15 @@ const toursSchema = new mongoose_1.Schema({
         required: true
     },
     package_cost: {
-        type: Number,
+        type: String,
         required: true,
     },
     ticket_cost: {
-        type: Number,
+        type: String,
         required: true,
     },
     max_tourist: {
-        type: Number,
+        type: String,
         required: true,
     },
     startDate: {
@@ -45,9 +45,8 @@ const toursSchema = new mongoose_1.Schema({
         type: String,
         required: true,
     },
-    tourManagerId: {
-        type: Number,
-        required: true,
+    desc: {
+        type: String
     }
 });
-exports.ToursModel = (0, mongoose_1.model)('Tours', toursSchema);
+exports.ToursModel = (0, mongoose_1.model)('Tourdetails', toursSchema);

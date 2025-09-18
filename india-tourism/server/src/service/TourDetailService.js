@@ -1,4 +1,5 @@
 const {CategoryRepository} = require ('../../dist/repository/CategoryRepository');
+const { TourRepository } = require('../repository/TourRepository');
 require("../logNginx");
 
 class TourDetailService{
@@ -27,6 +28,27 @@ async getCategories()
         
       }
   return categories;
+  }  
+
+  async getToursByCategoryId(categoryId)
+{
+  let plannedTours = [];
+  try{
+   const tourRepository = new TourRepository();
+   
+      plannedTours = await tourRepository.find({"categoryID":Number(categoryId), "startDate":{$gt: new Date()}});
+      
+      if(plannedTours && plannedTours.length >0){
+         console.log('plannedTours...',plannedTours);
+           
+      }
+    }
+    catch(err){
+         console.log(err.stack);
+        logNginx(err.stack);
+        
+      }
+  return plannedTours;
   }  
 
 }

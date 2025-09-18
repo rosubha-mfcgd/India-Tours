@@ -31,8 +31,8 @@ export interface IUser extends Document{
     tourmanagerId : String
 }
 export interface ITourDetails extends Document{
-    locationID:{
-       type: Number,
+    locationName:{
+       type: String,
       required: true,
       trim: true,
     },
@@ -41,10 +41,10 @@ export interface ITourDetails extends Document{
       required: true,
       trim: true,
     },
-    operatorID:{
-       type: Number,
-      required: true,
-      trim: true,
+     tourManagerId:{
+         type: String,
+         required: true,
+         trim: true,
     },
     triplength:{
          type: String,
@@ -59,11 +59,11 @@ export interface ITourDetails extends Document{
           required: true
       },
     package_cost:{
-        type: Number,
+        type: String,
       required: true,
     },
     max_tourist:{
-         type: Number,
+         type: String,
          required: true,
     },
      domesticOrInternational:{
@@ -71,15 +71,13 @@ export interface ITourDetails extends Document{
          required: true,
     },
     ticket_cost:{
-         type: Number,
+         type: String,
          required: true,
     },
-    tourManagerId:{
-         type: Number,
-         required: true,
+    desc: {
+      type : String
     }
-
-}
+  }
 
 export interface ICategory extends Document{
     categoryID:{
@@ -159,7 +157,7 @@ export interface ICategory extends Document{
 
   export interface IOfficeLocation extends Document{
     tourManagerId:{
-       type: Number,
+       type: String,
       required: true
     },
     officeLocation:{
@@ -171,7 +169,7 @@ export interface ICategory extends Document{
 
   export interface ITourManager extends Document{
     tourManagerId:{
-       type: Number,
+       type: String,
       required: true
     },
     tourManagerName:{
@@ -183,17 +181,16 @@ export interface ICategory extends Document{
       required: true
     },
     backupcontact: String,
-    officeLocationID : Number,
-    Description : String,
+    desc : String,
     cityCode: {
        type: Number,
       required: true
-    }
-        
+    },
+    websiteURL: String
   }
   export interface IReviews  extends Document{
     tourManagerId:{
-       type: Number,
+       type: String,
       required: true
     },
     reviews:{
