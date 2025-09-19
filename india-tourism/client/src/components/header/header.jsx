@@ -105,7 +105,7 @@ return (
               </Typography>
 
             <Box>
-                <Typography variant="body2"  gutterBottom>Sign In/Sign Up</Typography>
+              <Link href="signup" sx={{ color: 'white' }}>Sign In</Link>
             </Box>
 
           

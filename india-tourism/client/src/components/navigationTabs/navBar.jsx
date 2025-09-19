@@ -26,8 +26,10 @@ import {
 import { getCategories } from "../admin/admin";
 import { NavContext } from '../navigationContext/navigationContext.jsx';
 import SideBarNotification from './sideBarNotification.jsx'
+import FavoriteIcon from '@mui/icons-material/Favorite';
 const NavBar = ({access_token}) =>{
 
+    
     const navigate = useNavigate();
      const location = useLocation();
     const { notification } = useContext(NavContext);
@@ -92,11 +94,8 @@ const NavBar = ({access_token}) =>{
                     <Card className="card">
                     
                     <CardMedia component= "img"  height="100"
-                    image = {item.image} alt={item.categoryDesc} 
-                    
-                    />
-
-                    
+                    image = {item.image} alt={item.categoryDesc}/>
+                                     
                     <CardContent>
                         <Typography gutterBottom variant="body1" component="div">
                 {item.categoryName}
@@ -104,6 +103,7 @@ const NavBar = ({access_token}) =>{
               <Typography variant="body2" color="text.secondary">
                 {item.categoryDesc}
               </Typography>
+                <FavoriteIcon sx={{ color: '#ece2e2ff' }} />
               </CardContent>
                     </Card>
                 </Grid>
@@ -121,11 +121,7 @@ const NavBar = ({access_token}) =>{
             </div> 
             :<div></div>
              }
-            
-         
-
-      
-        </nav>
+            </nav>
         </div>
 
     )
