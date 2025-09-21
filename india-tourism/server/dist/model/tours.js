@@ -47,6 +47,9 @@ const toursSchema = new mongoose_1.Schema({
     },
     desc: {
         type: String
+    },
+    itinerary: {
+        type: String
     }
 });
 exports.ToursModel = (0, mongoose_1.model)('Tourdetails', toursSchema);

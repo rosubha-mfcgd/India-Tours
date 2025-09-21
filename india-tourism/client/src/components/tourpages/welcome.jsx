@@ -36,19 +36,32 @@ const Welcome =()=>{
         }
      }
 
-       const showDetails = (tourDetails) =>{
+       const showDetails = (tourDetails,tourManager) =>{
         if(tourDetails){
        //tourDetails =   prepareDetails(tourDetails);
       console.log('location....',tourDetails.locationName)
-      console.log('tourManager name....',tourDetails.tourManagerName)
+      console.log('tourManager name....',tourManager.tourManagerName)
       console.log('tripLength....',tourDetails.tripLength)
       console.log('start date....',tourDetails.startDate)
       console.log('end date....',tourDetails.endDate)
       console.log('image....',tourDetails.image)
         if(tourDetails)
         {
-         
-          setTripDetailsParam(tourDetails);
+         let tourDtls = {"locationName":tourDetails.locationName,
+            "tourManagerName":tourManager.tourManagerName,
+            "triplength":tourDetails.triplength,
+            "image":tourDetails.image,
+            "desc":tourDetails.desc,
+            "contact":tourManager.contact,            
+            "startDate":tourDetails.startDate,
+            "endDate":tourDetails.endDate,
+            "package_cost":tourDetails.package_cost,
+            "max_tourist":tourDetails.max_tourist,
+            "ticket_cost":tourDetails.ticket_cost,
+            "itinerary": tourDetails.itinerary,
+            "categoryId":tourDetails.categoryId
+        };
+          setTripDetailsParam(tourDtls);
           setShowTripDetails(true);
           setShowTrips(false);
         }else{
@@ -84,7 +97,8 @@ const Welcome =()=>{
            (showTrips)? 
               <TripList access_token={access_token} categoryId={tripListParam} showDetails={showDetails}/>
             : (showTripDetails) ?
-              <TripDetails access_token={access_token} tourDetails={tripDetailsParam}/> 
+              <TripDetails access_token={access_token} tourDetails={tripDetailsParam}
+              triggerDisplayTripsByCatId={triggerDisplayTripsByCatId}/> 
             :
               <NavBar access_token={access_token} triggerDisplayTripsByCatId={triggerDisplayTripsByCatId}/>
           }

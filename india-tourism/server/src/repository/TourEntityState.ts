@@ -76,6 +76,9 @@ export interface ITourDetails extends Document{
     },
     desc: {
       type : String
+    },
+    itinerary:{
+      type : String
     }
   }
 

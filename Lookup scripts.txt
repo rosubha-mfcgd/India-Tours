@@ -172,7 +172,8 @@ db.tourdetails.insertMany([
 	"domesticOrinternational":"D",
 	"ticket_cost":"20000.00",
 	"desc": "Panoramas of snow-peaked Himalayas. Welcome to the delightful hill resort of Shimla, fondly known as the \'Queen of the Hills.\' Surrounded by the mighty Himalayas, this picturesque destination is renowned for its stunning natural beauty, pleasant weather, awe-inspiring shrines and colonial architecture.",
-	"image":"/hillstations/Shimla.png"
+	"image":"/hillstations/Shimla.png",
+	"itinerary":"The plan is yet to be scheduled and all tourists will be informed accordingly" 
   },
   {
     "locationName": "Nainital",
@@ -186,7 +187,8 @@ db.tourdetails.insertMany([
 	"domesticOrinternational":"D",
 	"ticket_cost":"7000.50",
 	"desc": "This beautiful town in surrounded by seven hills, popularly known as \'Sapta-Shring\' – Ayarpata, Deopata, Handi-Bandi, Naina, Alma, Lariya-Kanta and Sher-Ka-Danda. The majestic mountains and the sparkling waters of the lake add an immense lot to the beauty of the town",
-	"image":"/hillstations/Nainital.png"
+	"image":"/hillstations/Nainital.png",
+	"itinerary":"The plan is yet to be scheduled and all tourists will be informed accordingly"
   },
   {
     "locationName": "Goa",
@@ -200,7 +202,8 @@ db.tourdetails.insertMany([
 	"domesticOrinternational":"D",
 	"ticket_cost":"2000",
 	"desc": "Goa\'s beauty lies in its diverse landscapes, from its iconic golden-sand beaches to lush green hinterlands and spice plantations. The state also boasts a unique charm from its Portuguese colonial past, visible in its stunning architecture, and a vibrant cultural mix that blends relaxed coastal vibes with energetic nightlife.",
-	"image":"/seabeach/Goa.png"
+	"image":"/seabeach/Goa.png",
+	"itinerary":"Will reach Goa on 5th October and travel to Panaji for adventure sports on 6th October"
   },
   {
     "locationName": "Rajasthan",
@@ -214,6 +217,7 @@ db.tourdetails.insertMany([
 	"domesticOrinternational":"D",
 	"ticket_cost":"20000",
 	"desc": "The desert offers a unique experience with camel safaris, camping under starry skies, and local music and dance, providing a stark contrast to the bustling cities but no less wonder.",
-	"image":"/desert/Rajasthan.png"
+	"image":"/desert/Rajasthan.png",
+	"itinerary":"The plan is yet to be scheduled and all tourists will be informed accordingly"
   }
   ]);

@@ -93,11 +93,12 @@ const NavBar = ({access_token,triggerDisplayTripsByCatId}) =>{
                  
                 <Grid item xs = {12} sm={4}  key={item.categoryID}>
 
-                    <Card className="card">
+                    <Card className="card"
+                     onClick={()=>triggerDisplayTripsByCatId(item.categoryID)} style={{ cursor: 'pointer' }}>
                     
                     <CardMedia component= "img"  height="100"
                     image = {item.image} alt={item.categoryDesc} 
-                    onClick={()=>triggerDisplayTripsByCatId(item.categoryID)} style={{ cursor: 'pointer' }}/>
+                     />
                                      
                     <CardContent>
                         <Typography gutterBottom variant="body1" component="div">

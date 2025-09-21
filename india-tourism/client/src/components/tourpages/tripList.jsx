@@ -111,12 +111,12 @@ const TripList = ({access_token,categoryId,showDetails}) =>{
                  
                 <Grid item xs = {12} sm={4}  key={tour.categoryID}>
 
-                    <Card className="card">
+                    <Card className="card" onClick={()=>showDetails(tour,getValuesFromTourManagerMap(tour.tourManagerId),
+                        access_token)} style={{ cursor: 'pointer' }}>
                     
                     <CardMedia component= "img"  height="100"
                     image = {tour.image} alt={tour.desc} 
-                    onClick={()=>showDetails(tour,access_token)}
-                    style={{ cursor: 'pointer' }}
+                                      
                     />
                                      
                     <CardContent>

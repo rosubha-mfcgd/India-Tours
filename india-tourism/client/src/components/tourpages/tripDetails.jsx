@@ -1,4 +1,5 @@
 import React, { useEffect,useState } from "react"; 
+import  { useNavigate } from "react-router-dom"; 
 import '../../styles/TripDetails.css';
 import '../../styles/loginsignup.css';
 
@@ -22,11 +23,17 @@ import '../../styles/loginsignup.css';
     CardContent
   } from "@mui/material";
 
-  const TripDetails = (tourDetails,access_token) =>{
+  const TripDetails = ({tourDetails,triggerDisplayTripsByCatId,access_token}) =>{
 
+  const navigate = useNavigate();
+
+        const goBack = () =>{
+            navigate(-1);
+        }
+  
     function getFieldsForTripDetailsScreen(){
 
-        let detailFields = process.env.REACT_APP_TRIP_DETAIL_FIELDS;
+     let detailFields = process.env.REACT_APP_TRIP_DETAIL_FIELDS;
         console.log('detailFields...',process.env.REACT_APP_TRIP_DETAIL_FIELDS)
        // console.log('detailFields...',detailFields)
         if(detailFields)
@@ -35,9 +42,19 @@ import '../../styles/loginsignup.css';
             return detailFieldArr;
             }
         }
+        function changeDateToWords(dateObject)
+     {
+        const date = new Date(dateObject);
+        console.log('date....',date)
+        console.log('formatted date...', date.toLocaleDateString('en-GB')); // Or 'en-GB' for a different locale
+        return date.toLocaleDateString('en-GB');
+    }
         const detailFlds = getFieldsForTripDetailsScreen();
         console.log('tourDetails...',tourDetails);
     return (
+        <div className="center-container" style={{ display: 'flex', flexDirection: 'column', 
+        justifycontent: 'flex-end',
+        gap: '20px' }}>
         <div className="grid-container">
 
             <div className="grid-item">
@@ -46,18 +63,18 @@ import '../../styles/loginsignup.css';
                     <CardMedia
         component="img"
         style={{ height: "200px",width: "350px" }}
-        image={tourDetails.tourDetails.image}
-        alt={tourDetails.tourDetails.locationName}
+        image={tourDetails.image}
+        alt={tourDetails.locationName}
       />
            </Card>
             <Typography variant="body2" style={{ color: '#FFFFFF' }}>
-                           {tourDetails.tourDetails.desc}
+                           {tourDetails.desc}
                          </Typography>
                  </Grid>
             </div>
             <div className="grid-item">
-                 <Grid item xs = {10} sm={4}>
-                <TableContainer style={{width: "500px"}}>
+                 <Grid item xs = {3} sm={2}>
+                <TableContainer sx={{boxShadow: 'none'}}>
                  <Table>
                     <TableHead>
                         {
@@ -79,72 +96,73 @@ import '../../styles/loginsignup.css';
             </div>
              <div className="grid-item">
                 <Grid item xs = {6} sm={4}>
-                <TableContainer style={{width: "500 px"}}>
+                <TableContainer sx={{boxShadow: 'none'}}>
                  <Table>
                     <TableBody>
                        
                         <TableRow>
                     <TableCell>
                         <Typography variant="body2" style={{ color: '#FFFFFF' }}>
-                        {tourDetails.tourDetails.locationName}    
+                        {tourDetails.locationName}    
                         </Typography>
                     </TableCell>
                     </TableRow>
                     <TableRow>
                       <TableCell>
                         <Typography variant="body2" style={{ color: '#FFFFFF' }}>
-                        {tourDetails.tourDetails.tourManagerName}    
+                        {tourDetails.tourManagerName}    
                         </Typography>
                     </TableCell>
                     </TableRow>
                      <TableRow>
-                      <TableCell>
+                      
+                     <TableCell>
                         <Typography variant="body2" style={{ color: '#FFFFFF' }}>
-                        {tourDetails.tourDetails.triplength}  
-                        </Typography>  
+                        {tourDetails.contact}
+                        </Typography>
+                         
                     </TableCell>
                       </TableRow>
                     <TableRow>
-                     <TableCell>
+                    <TableCell>
                         <Typography variant="body2" style={{ color: '#FFFFFF' }}>
-                        {tourDetails.tourDetails.contact}
-                        </Typography>
-                         
+                        {tourDetails.triplength}  
+                        </Typography>  
                     </TableCell>
                     </TableRow>
                    
                       <TableRow>
                       <TableCell>
                         <Typography variant="body2" style={{ color: '#FFFFFF' }}>
-                        {tourDetails.tourDetails.startDate}  
+                        {changeDateToWords(new Date(tourDetails.startDate))}  
                         </Typography>  
                     </TableCell>
                     </TableRow>
                     <TableRow>
                       <TableCell>
                         <Typography variant="body2" style={{ color: '#FFFFFF' }}>
-                        {tourDetails.tourDetails.endDate}    
+                        {changeDateToWords(new Date(tourDetails.endDate))}    
                         </Typography>
                     </TableCell>
                       </TableRow>
                       <TableRow>
                       <TableCell>
                          <Typography variant="body2" style={{ color: '#FFFFFF' }}>
-                        {tourDetails.tourDetails.package_cost} 
+                        {tourDetails.package_cost} 
                         </Typography>   
                     </TableCell>
                     </TableRow>
                     <TableRow>
                       <TableCell>
                          <Typography variant="body2" style={{ color: '#FFFFFF' }}>
-                        {tourDetails.tourDetails.max_tourist}    
+                        {tourDetails.max_tourist}    
                         </Typography>
                     </TableCell>
                     </TableRow>
                     <TableRow>
                      <TableCell>
                         <Typography variant="body2" style={{ color: '#FFFFFF' }}>
-                        {tourDetails.tourDetails.ticket_cost} 
+                        {tourDetails.ticket_cost} 
                         </Typography>   
                     </TableCell>
                    </TableRow>
@@ -152,7 +170,7 @@ import '../../styles/loginsignup.css';
                      <TableRow>
                      <TableCell>
                         <Typography variant="body2" style={{ color: '#FFFFFF' }}>
-                        {tourDetails.tourDetails.desc} 
+                        {tourDetails.itinerary} 
                         </Typography>   
                     </TableCell>
                    </TableRow>
@@ -162,6 +180,13 @@ import '../../styles/loginsignup.css';
                   </Grid>
                   </div>
                 
+        </div>
+        
+         <div className='submit-container'>
+                    <button type="submit" onClick={()=>{
+                        triggerDisplayTripsByCatId(tourDetails.categoryId)}}>Go Back</button>
+        </div>
+        
         </div>
     );
   }

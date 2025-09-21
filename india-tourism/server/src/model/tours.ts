@@ -48,6 +48,9 @@ const toursSchema = new Schema<ITourDetails>({
     },
     desc: {
       type : String
+    },
+     itinerary:{
+      type : String
     }
     });
 
