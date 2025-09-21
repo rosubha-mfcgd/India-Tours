@@ -27,12 +27,13 @@ import { getCategories } from "../admin/admin";
 import { NavContext } from '../navigationContext/navigationContext.jsx';
 import SideBarNotification from './sideBarNotification.jsx'
 import FavoriteIcon from '@mui/icons-material/Favorite';
-const NavBar = ({access_token}) =>{
+
+const NavBar = ({access_token,triggerDisplayTripsByCatId}) =>{
 
     
     const navigate = useNavigate();
      const location = useLocation();
-    const { notification } = useContext(NavContext);
+    const { notification} = useContext(NavContext);
      const [items, setItems] = useState('')
     
     const navLinkStyles = ({isActive})=>{
@@ -50,6 +51,7 @@ const NavBar = ({access_token}) =>{
             };
           };
 
+       
          
 
           useEffect(()=>{
@@ -94,7 +96,8 @@ const NavBar = ({access_token}) =>{
                     <Card className="card">
                     
                     <CardMedia component= "img"  height="100"
-                    image = {item.image} alt={item.categoryDesc}/>
+                    image = {item.image} alt={item.categoryDesc} 
+                    onClick={()=>triggerDisplayTripsByCatId(item.categoryID)} style={{ cursor: 'pointer' }}/>
                                      
                     <CardContent>
                         <Typography gutterBottom variant="body1" component="div">

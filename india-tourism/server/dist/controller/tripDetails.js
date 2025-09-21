@@ -25,7 +25,21 @@ const getCategories = (req, res) => __awaiter(void 0, void 0, void 0, function* 
 const getToursByCategoryId = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         const parameters = req.query;
-        // Example: If URL is /path?name=John&age=30
+        const categoryId = parameters.categoryId;
+        console.log('category id is....', categoryId);
+        let plannedTours = yield new TourDetailService().getToursByCategoryId(categoryId);
+        if (plannedTours) {
+            console.log('result..', plannedTours);
+            res.status(200).send(plannedTours);
+        }
+    }
+    catch (err) {
+        res.status(400).send({ "errormessage": "could not load any planned Tours by any operator" });
+    }
+});
+const getTourManagers = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    try {
+        //   const parameters = req.query;
         const categoryId = parameters.categoryId;
         console.log('category id is....', categoryId);
         let plannedTours = yield new TourDetailService().getToursByCategoryId(categoryId);

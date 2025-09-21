@@ -1,5 +1,6 @@
 const {CategoryRepository} = require ('../../dist/repository/CategoryRepository');
 const { TourRepository } = require('../repository/TourRepository');
+const { TourManagerRepository } = require('../repository/TourManagerRepository');
 require("../logNginx");
 
 class TourDetailService{
@@ -49,8 +50,28 @@ async getCategories()
         
       }
   return plannedTours;
-  }  
+  }
+
+async getTourManagers()
+{
+  let tourOperators = [];
+  try{
+   const tourMgrRepository = new TourManagerRepository();
+   
+      tourOperators = await tourMgrRepository.find({});
+      
+      if(tourOperators && tourOperators.length >0){
+         console.log('tourOperators...',tourOperators);
+           
+      }
+    }
+    catch(err){
+         console.log(err.stack);
+        logNginx(err.stack);
+        
+      }
+  return tourOperators;
+  } 
 
 }
-
 module.exports = TourDetailService

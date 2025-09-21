@@ -18,7 +18,7 @@ const App = () => {
       <Route path='sendotp' Component={sendotp}></Route>
       <Route path='welcome' Component={Welcome}></Route>
       <Route path='/' Component={Welcome}></Route>
-      <Route path='searchtrip' Component={TripList}></Route>
+      <Route path='/searchtrip' Component={TripList}></Route>
     </Routes>
       
     

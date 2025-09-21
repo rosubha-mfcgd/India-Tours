@@ -10,6 +10,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 };
 const { CategoryRepository } = require('../../dist/repository/CategoryRepository');
 const { TourRepository } = require('../repository/TourRepository');
+const { TourManagerRepository } = require('../repository/TourManagerRepository');
 require("../logNginx");
 class TourDetailService {
     constructor() {
@@ -47,6 +48,23 @@ class TourDetailService {
                 logNginx(err.stack);
             }
             return plannedTours;
+        });
+    }
+    getTourManagers() {
+        return __awaiter(this, void 0, void 0, function* () {
+            let tourOperators = [];
+            try {
+                const tourMgrRepository = new TourManagerRepository();
+                tourOperators = yield tourMgrRepository.find({});
+                if (tourOperators && tourOperators.length > 0) {
+                    console.log('tourOperators...', tourOperators);
+                }
+            }
+            catch (err) {
+                console.log(err.stack);
+                logNginx(err.stack);
+            }
+            return tourOperators;
         });
     }
 }

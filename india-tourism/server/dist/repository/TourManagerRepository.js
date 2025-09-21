@@ -2,34 +2,24 @@
 var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
     function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
     return new (P || (P = Promise))(function (resolve, reject) {
-        function fulfilled(value) { try {
-            step(generator.next(value));
-        }
-        catch (e) {
-            reject(e);
-        } }
-        function rejected(value) { try {
-            step(generator["throw"](value));
-        }
-        catch (e) {
-            reject(e);
-        } }
+        function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
+        function rejected(value) { try { step(generator["throw"](value)); } catch (e) { reject(e); } }
         function step(result) { result.done ? resolve(result.value) : adopt(result.value).then(fulfilled, rejected); }
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.CategoryRepository = void 0;
-const category_1 = require("../model/category");
+exports.TourManagerRepository = void 0;
+const tourmanager_1 = require("../model/tourmanager");
 const BaseRepository_1 = require("./BaseRepository");
-class CategoryRepository extends BaseRepository_1.BaseRepository {
+class TourManagerRepository extends BaseRepository_1.BaseRepository {
     constructor() {
-        super(category_1.CategoryModel);
+        super(tourmanager_1.TourManagerModel);
     }
     findById(id) {
         return __awaiter(this, void 0, void 0, function* () {
-            return category_1.CategoryModel.findById(id).exec();
+            return tourmanager_1.TourManagerModel.findById(id).exec();
         });
     }
 }
-exports.CategoryRepository = CategoryRepository;
+exports.TourManagerRepository = TourManagerRepository;

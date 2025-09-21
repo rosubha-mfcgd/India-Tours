@@ -8,18 +8,21 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
-Object.defineProperty(exports, "__esModule", { value: true });
-exports.TourRepository = void 0;
-const tours_1 = require("../model/tours");
-const BaseRepository_1 = require("./BaseRepository");
-class TourRepository extends BaseRepository_1.BaseRepository {
-    constructor() {
-        super(tours_1.ToursModel);
+const express = require('express');
+const session = require('express-session');
+require("../logNginx");
+const TourDetailService = require('../service/TourDetailService');
+const getRegisteredTourManagers = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    try {
+        let tourManagers = yield new TourDetailService().getTourManagers();
+        if (tourManagers) {
+            console.log('tourManagers..', tourManagers);
+            res.status(200).send(tourManagers);
+        }
     }
-    findById(id) {
-        return __awaiter(this, void 0, void 0, function* () {
-            return tours_1.ToursModel.findById(id).exec();
-        });
+    catch (err) {
+        logNginx(err.stack);
+        res.status(400).send({ "errormessage": "could not find any tour operators" });
     }
-}
-exports.TourRepository = TourRepository;
+});
+module.exports = { getRegisteredTourManagers };

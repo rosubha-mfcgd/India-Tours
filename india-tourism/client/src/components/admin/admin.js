@@ -1,4 +1,5 @@
 import axios from "axios"
+import { useState } from "react";
 
 export const signupUser = async(data) =>{
 
@@ -141,8 +142,8 @@ export const getCategories = async() =>{
 return res_data;
 }
 
-export const showTripList= async(data) =>{
-  let res_data = "failed to fetch categories";
+export const getTripList = async(categoryId) =>{
+  let res_data = "failed to fetch planned tours by categroy id";
      try{
         let access_token = await getApiAccessToken();
         if(access_token){
@@ -154,7 +155,7 @@ export const showTripList= async(data) =>{
             "Authorization":"Bearer "+access_token.data.access_token
             };
             const response = await axios.get(
-        process.env.REACT_APP_SERVER_URI + "getCategories",
+        process.env.REACT_APP_SERVER_URI + "getToursByCategoryId?categoryId="+categoryId,
         {headers});
         if(response)
      {
@@ -169,7 +170,35 @@ export const showTripList= async(data) =>{
 return res_data;
 }
 
+export const getTourManagers = async() =>{
+  let res_data = "failed to fetch tour Managers";
+     try{
+        let access_token = await getApiAccessToken();
+        if(access_token){
+            console.log('access_token found...',access_token.data)
+       // console.log('data...',access_token);
+        
+        const headers = {
+            "Content-type": "application/json; charset=UTF-8",
+            "Authorization":"Bearer "+access_token.data.access_token
+            };
+            const response = await axios.get(
+        process.env.REACT_APP_SERVER_URI + "getTourOperators",
+        {headers});
+        if(response)
+     {
+        res_data = response.data;
+     }
+     }
+     
+}catch(err){
+     console.error('Error while fetching tour managers:::', err.stack);
+    throw err;
+}
+return res_data;
+}
 
+ 
 export const getApiAccessToken= async() =>{
   try{
     const response = await axios.post(
@@ -187,4 +216,7 @@ catch(err){
     throw err;
 }
 }
+
+
+
 

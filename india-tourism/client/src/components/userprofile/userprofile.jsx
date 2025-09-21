@@ -45,7 +45,7 @@ const [points,setPoints] = useState(0);
 const[isOpen,setOpen] = useState(false);
 const open = Boolean(anchorEl);
 const {triggerNotification} = useContext(NavContext);
-function toggleSideBar(event)
+function toggleSideBar()
 {
   console.log('isOpen',isOpen)
   setOpen(!isOpen);
@@ -68,8 +68,6 @@ useEffect(()=>{
   }else{
     setPoints("NF");
   }
-
-
 };
 fetchPoints();
 },[]);
@@ -131,7 +129,7 @@ return (
       }}
     >
      
-      <MenuIcon onClick={(event) => {toggleSideBar(event)}} />
+      <MenuIcon onClick={(event) => {toggleSideBar()}} />
 
     </IconButton>
    
