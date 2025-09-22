@@ -33,6 +33,10 @@ const toursSchema = new mongoose_1.Schema({
         type: String,
         required: true,
     },
+    seats_left: {
+        type: String,
+        required: true,
+    },
     startDate: {
         type: Date,
         required: true,

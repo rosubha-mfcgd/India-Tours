@@ -66,6 +66,10 @@ export interface ITourDetails extends Document{
          type: String,
          required: true,
     },
+    seats_left:{
+         type: String,
+         required: true,
+    },
      domesticOrInternational:{
          type: String,
          required: true,

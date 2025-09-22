@@ -32,7 +32,10 @@ const toursSchema = new Schema<ITourDetails>({
          type: String,
          required: true,
     },
-
+    seats_left:{
+         type: String,
+         required: true,
+    },
     startDate:{
          type: Date,
          required: true,

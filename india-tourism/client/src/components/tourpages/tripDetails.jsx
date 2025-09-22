@@ -23,7 +23,7 @@ import '../../styles/loginsignup.css';
     CardContent
   } from "@mui/material";
 
-  const TripDetails = ({tourDetails,triggerDisplayTripsByCatId,access_token}) =>{
+  const TripDetails = ({tourDetails,triggerDisplayTripsByCatId,openBookingForm,access_token}) =>{
 
   const navigate = useNavigate();
 
@@ -70,6 +70,15 @@ import '../../styles/loginsignup.css';
             <Typography variant="body2" style={{ color: '#FFFFFF' }}>
                            {tourDetails.desc}
                          </Typography>
+            <Typography variant="body2" style={{ color: '#FFFFFF' }}>
+                          This tour is operated by :- <strong>{tourDetails.tourManagerName}</strong>
+                         </Typography>
+            <Typography variant="body2" style={{ color: '#FFFFFF' }}>
+                Operator Contact :- <strong>{tourDetails.contact}</strong>
+             </Typography>
+             <Typography variant="body2" style={{ color: '#FFFFFF' }}>
+                    Operator secondary Contact :- {tourDetails.secondarycontact}
+             </Typography>
                  </Grid>
             </div>
             <div className="grid-item">
@@ -107,22 +116,7 @@ import '../../styles/loginsignup.css';
                         </Typography>
                     </TableCell>
                     </TableRow>
-                    <TableRow>
-                      <TableCell>
-                        <Typography variant="body2" style={{ color: '#FFFFFF' }}>
-                        {tourDetails.tourManagerName}    
-                        </Typography>
-                    </TableCell>
-                    </TableRow>
-                     <TableRow>
-                      
-                     <TableCell>
-                        <Typography variant="body2" style={{ color: '#FFFFFF' }}>
-                        {tourDetails.contact}
-                        </Typography>
-                         
-                    </TableCell>
-                      </TableRow>
+                   
                     <TableRow>
                     <TableCell>
                         <Typography variant="body2" style={{ color: '#FFFFFF' }}>
@@ -160,14 +154,13 @@ import '../../styles/loginsignup.css';
                     </TableCell>
                     </TableRow>
                     <TableRow>
-                     <TableCell>
-                        <Typography variant="body2" style={{ color: '#FFFFFF' }}>
-                        {tourDetails.ticket_cost} 
-                        </Typography>   
+                      <TableCell>
+                         <Typography variant="body2" style={{ color: '#FFFFFF' }}>
+                        {tourDetails.seats_left}    
+                        </Typography>
                     </TableCell>
-                   </TableRow>
-                        
-                     <TableRow>
+                    </TableRow>
+                    <TableRow>
                      <TableCell>
                         <Typography variant="body2" style={{ color: '#FFFFFF' }}>
                         {tourDetails.itinerary} 
@@ -181,12 +174,20 @@ import '../../styles/loginsignup.css';
                   </div>
                 
         </div>
-        
+        <div>
          <div className='submit-container'>
                     <button type="submit" onClick={()=>{
-                        triggerDisplayTripsByCatId(tourDetails.categoryId)}}>Go Back</button>
+                        triggerDisplayTripsByCatId(tourDetails.categoryId)}}
+                        class="button"
+                        >Go Back</button>
+
+                            <button type="submit" onClick={()=>{
+                        openBookingForm(tourDetails)}}
+                       class="button" 
+                        >Book My Trip</button>
         </div>
-        
+      
+        </div>
         </div>
     );
   }
