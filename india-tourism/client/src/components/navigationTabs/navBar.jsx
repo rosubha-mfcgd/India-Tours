@@ -135,6 +135,9 @@ const NavBar = ({access_token,triggerDisplayTripsByCatId}) =>{
               }
               
               </CardContent>
+              <button type="submit" class="button"  onClick={()=>triggerDisplayTripsByCatId(item.categoryID)} 
+                    style={{ cursor: 'pointer',backgroundColor: '#8a77f8ff',color:'#0c0c0fff'}}>
+                        Click to View</button>
                     </Card>
                 </Grid>
                 
