@@ -33,6 +33,29 @@ class TourDetailService {
             return categories;
         });
     }
+    updateCategoryAsFavorite(categoryId, status) {
+        return __awaiter(this, void 0, void 0, function* () {
+            let categories = '';
+            let result = '';
+            try {
+                const categoryRepo = new CategoryRepository();
+                console.log('category Id ...', categoryId);
+                categories = yield categoryRepo.findOne({ categoryID: categoryId });
+                if (categories) {
+                    console.log('categories....', categories);
+                    result = yield categoryRepo.update(categories._id, { favorite: status });
+                    if (result) {
+                        // console.log('categories with favorite....',JSON.stringify(result));
+                        result = yield categoryRepo.findOne({ categoryID: categoryId });
+                    }
+                }
+            }
+            catch (err) {
+                logNginx(err.stack);
+            }
+            return result;
+        });
+    }
     getToursByCategoryId(categoryId) {
         return __awaiter(this, void 0, void 0, function* () {
             let plannedTours = [];

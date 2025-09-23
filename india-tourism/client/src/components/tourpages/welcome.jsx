@@ -89,7 +89,7 @@ const openBookingForm = (tourDetails) =>{
            
    return (
    
-    <div>
+    <div className="center-container">
          <NavProvider>
           
         <div>
@@ -103,7 +103,7 @@ const openBookingForm = (tourDetails) =>{
        
        
         <div className="center-container">
-         <div className="rightinfo-container">
+         <div className="center-container">
            
 
          <div className="original-content">

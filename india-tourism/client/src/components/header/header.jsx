@@ -3,7 +3,7 @@ import ReactDOM from 'react-dom/client';
  import CircularProgress from '@mui/material/CircularProgress';
 import '../../styles/loginsignup.css';
 import NavBar from '../navigationTabs/navBar.jsx';
-
+import { format } from 'date-fns';
 import email_icon from '../Assets/input/email.png';
 import password_icon from '../Assets/input/password.png';
 import user_icon from '../Assets/input/username.png';
@@ -67,7 +67,7 @@ return (
                 <CssBaseline/>
          <AppBar position="static" sx={{ backgroundColor: '#19857b' }}>
             <Toolbar sx={{ justifyContent: 'space-between' }}>
-            <Typography variant="h5" component="div">
+            <Typography variant="h6" component="div">
               India Tours
             </Typography>
             <Box>
@@ -75,36 +75,22 @@ return (
                 Welcome, Guest !!
               </Typography>
               {/* Add other right-aligned elements here */}
+             
             </Box>
-            {/* <Box>
-               <Typography variant="body2">
-                {email}  
-              </Typography> 
-               <Typography variant="body2">
-                {mobile}  
-              </Typography> 
-            </Box> */}
+          <Box> <p>{dateTime.toLocaleTimeString()}</p></Box>
+       
+
+ {/* <Typography variant="body2">
+               About us
+              </Typography> */}
 
             <Box>
-               <Typography variant="body2">
-                Tour Operators  
-              </Typography> 
-               
-            </Box>
-              
-              
-
-              <p>{dateTime.toLocaleDateString('en-US', {
+               <p>{dateTime.toLocaleDateString('en-US', {
   year: 'numeric',
   month: 'long',
   day: 'numeric',
-})} {dateTime.toLocaleTimeString()}</p>
+})}</p>
 
- <Typography variant="body2">
-               About us
-              </Typography>
-
-            <Box>
               <Link href="signup" sx={{ color: 'white' }}>Sign In</Link>
             </Box>
 

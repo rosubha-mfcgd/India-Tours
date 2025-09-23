@@ -100,6 +100,10 @@ export interface ICategory extends Document{
        type: String,
       required: true,
       trim: true,
+    },
+     favorite:{
+       type: String,
+      
     }
   }
 

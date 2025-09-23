@@ -17,5 +17,8 @@ const categorySchema = new mongoose_1.Schema({
         required: true,
         trim: true,
     },
+    favorite: {
+        type: String,
+    }
 });
 exports.CategoryModel = (0, mongoose_1.model)('Category', categorySchema);

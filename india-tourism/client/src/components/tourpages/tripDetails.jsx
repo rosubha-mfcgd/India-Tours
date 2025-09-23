@@ -52,8 +52,9 @@ import '../../styles/loginsignup.css';
         const detailFlds = getFieldsForTripDetailsScreen();
         console.log('tourDetails...',tourDetails);
     return (
-        <div className="center-container" style={{ display: 'flex', flexDirection: 'column', 
-        justifycontent: 'flex-end',
+        <div style={{ display: 'flex', flexDirection: 'column', 
+        justifycontent: 'center',
+        alignitems: 'center',
         gap: '20px' }}>
         <div className="grid-container">
 
@@ -79,11 +80,8 @@ import '../../styles/loginsignup.css';
              <Typography variant="body2" style={{ color: '#FFFFFF' }}>
                     Operator secondary Contact :- {tourDetails.secondarycontact}
              </Typography>
-                 </Grid>
-            </div>
-            <div className="grid-item">
-                 <Grid item xs = {3} sm={2}>
-                <TableContainer sx={{boxShadow: 'none'}}>
+
+               {/* <TableContainer sx={{boxShadow: 'none'}}>
                  <Table>
                     <TableHead>
                         {
@@ -100,19 +98,16 @@ import '../../styles/loginsignup.css';
                     }
                    </TableHead>
                   </Table>
-                </TableContainer>
-                    </Grid>
-            </div>
-             <div className="grid-item">
-                <Grid item xs = {6} sm={4}>
-                <TableContainer sx={{boxShadow: 'none'}}>
+                </TableContainer> */}
+
+                    <TableContainer sx={{boxShadow: 'none'}}>
                  <Table>
                     <TableBody>
                        
                         <TableRow>
                     <TableCell>
                         <Typography variant="body2" style={{ color: '#FFFFFF' }}>
-                        {tourDetails.locationName}    
+                        LocationName : <strong>{tourDetails.locationName}</strong>    
                         </Typography>
                     </TableCell>
                     </TableRow>
@@ -120,7 +115,7 @@ import '../../styles/loginsignup.css';
                     <TableRow>
                     <TableCell>
                         <Typography variant="body2" style={{ color: '#FFFFFF' }}>
-                        {tourDetails.triplength}  
+                       Trip Length : <strong> {tourDetails.triplength}  </strong>
                         </Typography>  
                     </TableCell>
                     </TableRow>
@@ -128,50 +123,61 @@ import '../../styles/loginsignup.css';
                       <TableRow>
                       <TableCell>
                         <Typography variant="body2" style={{ color: '#FFFFFF' }}>
-                        {changeDateToWords(new Date(tourDetails.startDate))}  
+                       Start Date : <strong> {changeDateToWords(new Date(tourDetails.startDate))}</strong>  
                         </Typography>  
                     </TableCell>
                     </TableRow>
                     <TableRow>
                       <TableCell>
                         <Typography variant="body2" style={{ color: '#FFFFFF' }}>
-                        {changeDateToWords(new Date(tourDetails.endDate))}    
+                       End Date : <strong>{changeDateToWords(new Date(tourDetails.endDate))}</strong>    
                         </Typography>
                     </TableCell>
                       </TableRow>
                       <TableRow>
                       <TableCell>
                          <Typography variant="body2" style={{ color: '#FFFFFF' }}>
-                        {tourDetails.package_cost} 
+                      Package Cost/person: <strong> {tourDetails.package_cost}</strong> 
                         </Typography>   
                     </TableCell>
                     </TableRow>
                     <TableRow>
                       <TableCell>
                          <Typography variant="body2" style={{ color: '#FFFFFF' }}>
-                        {tourDetails.max_tourist}    
+                      Max Tourist: <strong> {tourDetails.max_tourist}</strong>    
                         </Typography>
                     </TableCell>
                     </TableRow>
                     <TableRow>
                       <TableCell>
                          <Typography variant="body2" style={{ color: '#FFFFFF' }}>
-                        {tourDetails.seats_left}    
+                        Seats left: <strong>{tourDetails.seats_left}</strong>    
                         </Typography>
                     </TableCell>
                     </TableRow>
                     <TableRow>
                      <TableCell>
                         <Typography variant="body2" style={{ color: '#FFFFFF' }}>
-                        {tourDetails.itinerary} 
+                      Itinerary Details: <strong>{tourDetails.itinerary} </strong>
                         </Typography>   
                     </TableCell>
                    </TableRow>
                   </TableBody>
                   </Table>
                   </TableContainer>
+                 </Grid>
+            </div>
+            {/* <div className="grid-item">
+                 <Grid item xs = {3} sm={2}>
+              
+                    </Grid>
+                    <Grid item xs = {6} sm={4}>
+                
                   </Grid>
-                  </div>
+            </div> */}
+             {/* <div className="grid-item">
+                
+                  </div> */}
                 
         </div>
         <div>

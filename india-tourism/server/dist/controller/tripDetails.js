@@ -22,6 +22,23 @@ const getCategories = (req, res) => __awaiter(void 0, void 0, void 0, function* 
         res.status(400).send({ "errormessage": "could not load categories" });
     }
 });
+const updateFavoriteCategory = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    try {
+        let { categoryId, status } = req.body;
+        let result = yield new TourDetailService().updateCategoryAsFavorite(categoryId, status);
+        if (result) {
+            let data = { "categoryId": categoryId, "isUpdated": false };
+            console.log('result in controller...', result);
+            if (status === result.favorite) {
+                data = { "categoryId": categoryId, "isUpdated": true };
+            }
+            res.status(201).send(data);
+        }
+    }
+    catch (err) {
+        res.status(400).send({ "errormessage": "could not update categories" });
+    }
+});
 const getToursByCategoryId = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         const parameters = req.query;
@@ -52,4 +69,4 @@ const getTourManagers = (req, res) => __awaiter(void 0, void 0, void 0, function
         res.status(400).send({ "errormessage": "could not load any planned Tours by any operator" });
     }
 });
-module.exports = { getCategories, getToursByCategoryId };
+module.exports = { getCategories, getToursByCategoryId, updateFavoriteCategory };

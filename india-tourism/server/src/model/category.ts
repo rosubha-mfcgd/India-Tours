@@ -17,6 +17,10 @@ const categorySchema = new Schema<ICategory>({
       required: true,
       trim: true,
     },
+    favorite:{
+       type: String,
+      
+    }
   
     });
 

@@ -29,7 +29,32 @@ async getCategories()
         
       }
   return categories;
-  }  
+  } 
+
+  async updateCategoryAsFavorite (categoryId,status) {
+    let categories = '';
+    let result = '';
+    try{
+       const categoryRepo = new CategoryRepository();
+      console.log('category Id ...',categoryId);
+      categories = await categoryRepo.findOne({categoryID:categoryId}); 
+      if(categories){
+        console.log('categories....',categories);
+       result = await categoryRepo.update(categories._id,{favorite:status});
+       
+       
+       if(result)
+       {
+         // console.log('categories with favorite....',JSON.stringify(result));
+          result = await categoryRepo.findOne({categoryID:categoryId}); 
+       }      
+       
+      }
+    }catch(err){
+      logNginx(err.stack);
+    }
+    return result;
+  }
 
   async getToursByCategoryId(categoryId)
 {

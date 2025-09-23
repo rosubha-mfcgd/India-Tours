@@ -23,6 +23,7 @@
     "@testing-library/user-event": "^13.5.0",
     "axios": "^0.24.0",
     "crypto": "^1.0.1",
+    "date-fns": "^4.1.0",
     "dotenv": "^17.0.0",
     "firebase": "^11.9.1",
     "gapi-script": "^1.2.0",

@@ -23,7 +23,7 @@ import {
     CardContent
   } from "@mui/material";
 
-import { getCategories } from "../admin/admin";
+import { getCategories,updateAsFavorite } from "../admin/admin";
 import { NavContext } from '../navigationContext/navigationContext.jsx';
 import SideBarNotification from './sideBarNotification.jsx'
 import FavoriteIcon from '@mui/icons-material/Favorite';
@@ -35,7 +35,7 @@ const NavBar = ({access_token,triggerDisplayTripsByCatId}) =>{
      const location = useLocation();
     const { notification} = useContext(NavContext);
      const [items, setItems] = useState('')
-    
+     const [favorite, setFavorite] = useState(false)
     const navLinkStyles = ({isActive})=>{
             return {
                 fontWeight:isActive?'bold':'normal',
@@ -51,9 +51,27 @@ const NavBar = ({access_token,triggerDisplayTripsByCatId}) =>{
             };
           };
 
-       
-         
+       const updateFavorites = async(categoryid, status,event) =>{
 
+        if(status === 'Y') {
+             event.target.style.color='#f04646ff';
+        }else{
+           event.target.style.color='black'; 
+        }
+        let data = {
+                    "categoryId":categoryid,
+                    "status" : status
+                    }
+                    let result = await updateAsFavorite(data);
+                    if(result)
+                    {
+                       console.log('favorite result...',result)
+                    }else{
+                        console.log('could not update favorite')
+                    }
+       }
+         
+       
           useEffect(()=>{
             let mounted = true;
 
@@ -94,10 +112,12 @@ const NavBar = ({access_token,triggerDisplayTripsByCatId}) =>{
                 <Grid item xs = {12} sm={4}  key={item.categoryID}>
 
                     <Card className="card"
-                     onClick={()=>triggerDisplayTripsByCatId(item.categoryID)} style={{ cursor: 'pointer' }}>
+                     >
                     
                     <CardMedia component= "img"  height="100"
                     image = {item.image} alt={item.categoryDesc} 
+                    onClick={()=>triggerDisplayTripsByCatId(item.categoryID)} 
+                    style={{ cursor: 'pointer' }} 
                      />
                                      
                     <CardContent>
@@ -107,7 +127,13 @@ const NavBar = ({access_token,triggerDisplayTripsByCatId}) =>{
               <Typography variant="body2" color="text.secondary">
                 {item.categoryDesc}
               </Typography>
-                <FavoriteIcon sx={{ color: '#ece2e2ff' }} />
+              {(item.favorite === 'Y') ?
+                <FavoriteIcon sx={{ color: '#f04646ff' }} onClick = {(event) => updateFavorites(
+                    item.categoryID,'N',event)} style={{ cursor: 'pointer' }}/>:
+                <FavoriteIcon onClick = {(event) => updateFavorites(
+                    item.categoryID,'Y',event)} style={{ cursor: 'pointer' }}/>
+              }
+              
               </CardContent>
                     </Card>
                 </Grid>

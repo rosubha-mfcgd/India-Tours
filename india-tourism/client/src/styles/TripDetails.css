@@ -3,13 +3,16 @@
   display: grid; /* Enables CSS Grid layout */
   grid-template-columns: repeat(3, 1fr); /* Creates 3 equal-width columns */
   gap: 20px; /* Adds a 20px gap between grid items */
-  
+  justify-content: center;
+   align-items: center;
 }
 
 .grid-item {
   /* Optional: Add styling for individual grid items */
   padding: 10px;
-  border: 1px solid #ddd;
+  border: 0px solid #ddd;
+  justify-content: center;
+   align-items: center;
 }
 .button{
 float:right;
