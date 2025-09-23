@@ -54,5 +54,10 @@ class BaseRepository {
             return this._model.find({}).exec();
         });
     }
+    findAllSortedResults(query) {
+        return __awaiter(this, void 0, void 0, function* () {
+            return this._model.find().sort(query).exec();
+        });
+    }
 }
 exports.BaseRepository = BaseRepository;

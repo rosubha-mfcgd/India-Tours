@@ -16,7 +16,7 @@ async getCategories()
   try{
    const categoryRepo = new CategoryRepository();
    
-      categories = await categoryRepo.findAll();
+      categories = await categoryRepo.findAllSortedResults({favorite:-1});
       
       if(categories && categories.length >0){
          console.log('categories...',categories);
@@ -24,7 +24,7 @@ async getCategories()
       }
     }
     catch(err){
-         console.log(err.stack);
+        // console.log(err.stack);
         logNginx(err.stack);
         
       }

@@ -21,13 +21,13 @@ class TourDetailService {
             let categories = [];
             try {
                 const categoryRepo = new CategoryRepository();
-                categories = yield categoryRepo.findAll();
+                categories = yield categoryRepo.findAllSortedResults({ favorite: -1 });
                 if (categories && categories.length > 0) {
                     console.log('categories...', categories);
                 }
             }
             catch (err) {
-                console.log(err.stack);
+                // console.log(err.stack);
                 logNginx(err.stack);
             }
             return categories;
