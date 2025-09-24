@@ -9,7 +9,7 @@ const getRegisteredTourManagers=async(req,res) =>{
     let tourManagers = await new TourDetailService().getTourManagers();
     if(tourManagers)
     {
-        console.log('tourManagers..',tourManagers);
+        console.log('tourManagers..',tourManagers);changeDateToWords
           res.status(200).send(
                 tourManagers); 
     }
