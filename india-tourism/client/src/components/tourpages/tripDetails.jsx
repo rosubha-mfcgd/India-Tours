@@ -57,7 +57,9 @@ import '../../styles/loginsignup.css';
         alignitems: 'center',
         gap: '20px' }}>
         <div className="grid-container">
-
+      <div className="grid-item">
+        <Grid item xs = {10} sm={4}></Grid>
+      </div>
             <div className="grid-item">
             <Grid item xs = {10} sm={4}>
                  <Card className="card">
@@ -81,25 +83,8 @@ import '../../styles/loginsignup.css';
                     Operator secondary Contact :- {tourDetails.secondarycontact}
              </Typography>
 
-               {/* <TableContainer sx={{boxShadow: 'none'}}>
-                 <Table>
-                    <TableHead>
-                        {
-                           detailFlds &&  detailFlds.length>0 ?
-                          detailFlds.map((details) =>(
-                        <TableRow>
-                    <TableCell>
-                         <Typography variant="body2" style={{ color: '#FFFFFF' }}>
-                        {details} :     
-                        </Typography>
-                    </TableCell>
-                      </TableRow>
-                        )):<div></div>
-                    }
-                   </TableHead>
-                  </Table>
-                </TableContainer> */}
-
+              
+                <div>
                     <TableContainer sx={{boxShadow: 'none'}}>
                  <Table>
                     <TableBody>
@@ -165,6 +150,21 @@ import '../../styles/loginsignup.css';
                   </TableBody>
                   </Table>
                   </TableContainer>
+                  </div>
+                  <div style={{margintop: "20px;"}}>
+         <div className='submit-container'>
+                    <button type="submit" onClick={()=>{
+                        triggerDisplayTripsByCatId(tourDetails.categoryId)}}
+                        class="button"
+                        >Go Back</button>
+
+                            <button type="submit" onClick={()=>{
+                        openBookingForm(tourDetails)}}
+                       class="button" 
+                        >Book My Trip</button>
+        </div>
+      
+        </div>    
                  </Grid>
             </div>
             {/* <div className="grid-item">
@@ -178,22 +178,9 @@ import '../../styles/loginsignup.css';
              {/* <div className="grid-item">
                 
                   </div> */}
-                
+            
         </div>
-        <div>
-         <div className='submit-container'>
-                    <button type="submit" onClick={()=>{
-                        triggerDisplayTripsByCatId(tourDetails.categoryId)}}
-                        class="button"
-                        >Go Back</button>
-
-                            <button type="submit" onClick={()=>{
-                        openBookingForm(tourDetails)}}
-                       class="button" 
-                        >Book My Trip</button>
-        </div>
-      
-        </div>
+        
         </div>
     );
   }

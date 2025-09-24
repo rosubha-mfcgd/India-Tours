@@ -79,14 +79,15 @@ const BookingForm = ({access_token,tourDetails,triggerDisplayTripsByCatId}) =>{
         borderRadius: 2,
         maxWidth: 400,
         margin: 'auto',
-        bgcolor: 'hsla(155, 50%, 39%, 1.00)',
-        cursor: 'pointer'
+        bgcolor: 'hsla(0, 73%, 50%, 1.00)',
+        cursor: 'pointer',
+         animation: 'blink-animation 5s linear infinite;'
       }}
       noValidate
       autoComplete="off" onClick={()=>initBooking() }
      >
          <Typography variant="body2" style={{ color: 'rgba(17, 17, 17, 1)' }}>
-                    Book your trip to {tourDetails.locationName} with {tourDetails.tourManagerName}    
+                  Click me to book your trip to {tourDetails.locationName} with {tourDetails.tourManagerName}    
         </Typography> 
            </Box>
 

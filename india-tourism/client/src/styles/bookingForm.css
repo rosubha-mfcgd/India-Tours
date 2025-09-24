@@ -23,3 +23,28 @@
   align-items: center;    /* Centers vertically */
   height: 40vh; /* Ensures the container takes up the full viewport height */
 }
+
+.blinking-button {
+  /* Basic button styles */
+  background-color: #007bff;
+  color: white;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+
+  /* Animation properties */
+  animation: blink-animation 20s linear infinite; /* Name, duration, timing, iteration count */
+}
+
+@keyframes blink-animation {
+  0% {
+    opacity: 1; /* Fully visible at the start */
+  }
+  50% {
+    opacity: 0; /* Fully transparent at 50% through the animation */
+  }
+  100% {
+    opacity: 1; /* Fully visible at the end, completing the cycle */
+  }
+}
