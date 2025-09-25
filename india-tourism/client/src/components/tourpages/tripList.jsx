@@ -26,7 +26,6 @@ import { getTripList,getTourManagers } from "../admin/admin";
   import FavoriteIcon from '@mui/icons-material/Favorite';
   import SideBarForSorting from '../navigationTabs/sideBarForSorting.jsx';
   import { NavContext } from '../navigationContext/navigationContext.jsx';
-import { Link } from "react-router-dom";
 const TripList = ({access_token,categoryId,showDetails}) =>{
     
    console.log('categoryID is...',categoryId); 
@@ -176,11 +175,9 @@ const TripList = ({access_token,categoryId,showDetails}) =>{
         
       }}
         >
-        <Link to="#">      
-        <Typography  variant="body1" color="text.secondary" 
-      onClick={()=>toggleSideBarForSorting()}>Sort&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</Typography>
-        </Link>
-
+     
+      <MenuIcon onClick={()=>toggleSideBarForSorting()}/>
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
     </IconButton>
    
             </Box>
