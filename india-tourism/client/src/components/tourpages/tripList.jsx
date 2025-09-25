@@ -1,4 +1,4 @@
-import React, { useEffect,useState } from "react";  
+import React, { useContext, useEffect,useState } from "react";  
 
 import '../../styles/loginsignup.css';
 import { getTripList,getTourManagers } from "../admin/admin";
@@ -19,18 +19,34 @@ import { getTripList,getTourManagers } from "../admin/admin";
     Grid,
     Typography,
     CardMedia,
-    CardContent
+    CardContent,
+    IconButton
   } from "@mui/material";
+ import MenuIcon from '@mui/icons-material/Menu'; // Or any other icon
   import FavoriteIcon from '@mui/icons-material/Favorite';
+  import SideBarForSorting from '../navigationTabs/sideBarForSorting.jsx';
+  import { NavContext } from '../navigationContext/navigationContext.jsx';
+import { Link } from "react-router-dom";
 const TripList = ({access_token,categoryId,showDetails}) =>{
     
    console.log('categoryID is...',categoryId); 
     const[tours,setTours] = useState('');
-    const[tourDetails,setTourDetails] = useState('');//combined state variable holding info from tours and tour managers
+  
+    //combined state variable holding info from tours and tour managers
    const [ tourManagers, setTourManagers] = useState('');
     // const { name,email,mobile,categoryId} = location.state || {};
     //const[mount,setMount] = useState(false);
-   
+    const[isOpen,setOpen] = useState(false);
+   const [anchorEl, setAnchorEl] = useState(null);
+   const {triggerSorting,sortTrip} = useContext(NavContext);
+   const open = Boolean(anchorEl);
+
+   function toggleSideBarForSorting()
+{
+  console.log('isOpen',isOpen)
+  setOpen(!isOpen);
+  triggerSorting(!isOpen);
+}
    console.log('categoryId...',categoryId);
 
     const [tourMgrMap, setTourMgrMap] = useState(new Map());
@@ -97,7 +113,7 @@ const TripList = ({access_token,categoryId,showDetails}) =>{
       
     return(
         
-        <div>
+        <div sx={{ display: 'flex',justifyContent:'flex-end'}}>
            
            
              <div className="navbar-grid">
@@ -142,12 +158,40 @@ const TripList = ({access_token,categoryId,showDetails}) =>{
                     </Card>
                 </Grid>
                 
+               
                 </div>
                 ))
                 :<div>Cannot load Tour details</div>
                 
              }
+             <Box  sx={{position: 'fixed', top: '10', right: '0'
+             }}>
+                 <IconButton
+      aria-label="menu"
+       aria-controls={open ? 'basic-menu' : undefined}
+      aria-haspopup="true"
+      aria-expanded={open ? 'true' : undefined}
+      onClick={(event) => {
+        setAnchorEl(event.currentTarget)
+        
+      }}
+        >
+        <Link to="#">      
+        <Typography  variant="body1" color="text.secondary" 
+      onClick={()=>toggleSideBarForSorting()}>Sort&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</Typography>
+        </Link>
+
+    </IconButton>
+   
+            </Box>
+            {
+            sortTrip ? 
+            <div style={{position: 'fixed', top:70,right:0}} >
+                <SideBarForSorting/>
+            </div>:<div></div>
+           }
              </Grid>
+              
              </nav>
              </div>
              </div>

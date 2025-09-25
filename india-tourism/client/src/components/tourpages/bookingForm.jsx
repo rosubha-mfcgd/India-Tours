@@ -26,7 +26,8 @@ import {
     FormControl,  
     Input,
     Switch,
-    InputLabel
+    InputLabel,
+    TextareaAutosize
   } from "@mui/material";
 
 import { getCategories } from "../admin/admin";
@@ -98,11 +99,17 @@ const BookingForm = ({access_token,tourDetails,triggerDisplayTripsByCatId}) =>{
                     <TableBody>
                       <TableRow>
                         <TableCell>
-                            How many people will be travelling ?   
+                           <Typography variant="body2" style={{ color: '#FFFFFF' }}>
+                            How many people will be travelling ?
+                            </Typography>
                         </TableCell>
                         <TableCell>
-                          <TextField id="standard-basic" label="Enter number of travellers" 
-                          variant="standard"onBlur={(event)=>createForms(event)} />    
+                          <TextField id="standard-basic" 
+                          sx={{ color: '#FFFFFF' }}
+                          label="Enter number of travellers" 
+                          variant="standard"
+                          
+                          onBlur={(event)=>createForms(event)} />    
                         </TableCell>
                         </TableRow>
                     </TableBody>
@@ -124,29 +131,40 @@ const BookingForm = ({access_token,tourDetails,triggerDisplayTripsByCatId}) =>{
                    border: "2px solid black;"
                 }}>
                 
-                <h1
+                <h2
                     style={{
-                        color: "solid black"
+                        color: "solid white"
                     }}
                 >
-                <strong>Tourist #{tourist.key}</strong>
-                </h1>
+             <Typography variant="body2" style={{ color: '#FFFFFF' }}> 
+              <strong>Tourist #{tourist.key}</strong>
+
+               </Typography>
+                </h2>
                 <FormControl>
              
-                <InputLabel variant="outlined" fullWidth>Name:</InputLabel>
+                <InputLabel variant="outlined" 
+                style={{ color: '#FFFFFF' }}
+                fullWidth>Name:</InputLabel>
                 <Input id="name" />
                  </FormControl>
                   <FormControl style={{ marginLeft: 5 }}>
-                <InputLabel variant="outlined" fullWidth>Email:</InputLabel>
+                <InputLabel 
+                style={{ color: '#FFFFFF' }}
+                variant="outlined" fullWidth>Email:</InputLabel>
                 <Input id="email" />
                 </FormControl>
                      
                    <FormControl style={{ marginLeft: 5 }}>
-                <InputLabel variant="outlined" fullWidth>Mobile:</InputLabel>
+                <InputLabel 
+                style={{ color: '#FFFFFF' }}
+                variant="outlined" fullWidth>Mobile:</InputLabel>
                 <Input id="mobile" />
                     </FormControl>
                     <FormControl style={{ marginLeft: 5 }}> 
-                  <InputLabel variant="outlined" fullWidth>Age:</InputLabel>
+                  <InputLabel 
+                  style={{ color: '#FFFFFF' }}
+                  variant="outlined" fullWidth>Age:</InputLabel>
                  <Input id="age" />  
                 </FormControl>
               </div>
@@ -154,6 +172,21 @@ const BookingForm = ({access_token,tourDetails,triggerDisplayTripsByCatId}) =>{
           }</div>:<div></div>
         }
         { openBookingForm ? 
+         <div className = "center-container">
+        <Box  component="form">
+             <Typography variant="body2" style={{ color: '#FFFFFF' }}>
+               Any special preferences?
+              </Typography>
+          </Box>
+           <Box  component="form">
+            <TextareaAutosize
+  aria-label="minimum height"
+  minRows={3}
+  placeholder="Enter your preferences?"
+  style={{ width: 500 }}
+/>
+          </Box>
+          
         <div className="button-container">
          <div className='submit-container'>
                     <button type="submit" 
@@ -164,7 +197,7 @@ const BookingForm = ({access_token,tourDetails,triggerDisplayTripsByCatId}) =>{
                        class="button" 
                         >Make Payment</button>
         </div>
-      
+      </div>
         </div>:<div></div>
     }
          </div>

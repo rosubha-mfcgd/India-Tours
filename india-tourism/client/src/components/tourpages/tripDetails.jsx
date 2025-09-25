@@ -46,7 +46,8 @@ import '../../styles/loginsignup.css';
      {
         const date = new Date(dateObject);
         console.log('date....',date)
-        console.log('formatted date...', date.toLocaleDateString('en-GB')); // Or 'en-GB' for a different locale
+        console.log('formatted date...', 
+          date.toLocaleDateString('en-GB')); // Or 'en-GB' for a different locale
         return date.toLocaleDateString('en-GB');
     }
         const detailFlds = getFieldsForTripDetailsScreen();
@@ -167,18 +168,7 @@ import '../../styles/loginsignup.css';
         </div>    
                  </Grid>
             </div>
-            {/* <div className="grid-item">
-                 <Grid item xs = {3} sm={2}>
-              
-                    </Grid>
-                    <Grid item xs = {6} sm={4}>
-                
-                  </Grid>
-            </div> */}
-             {/* <div className="grid-item">
-                
-                  </div> */}
-            
+                     
         </div>
         
         </div>

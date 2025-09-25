@@ -35,7 +35,7 @@ const NavBar = ({access_token,triggerDisplayTripsByCatId}) =>{
      const location = useLocation();
     const { notification} = useContext(NavContext);
      const [items, setItems] = useState('')
-     const [favorite, setFavorite] = useState(false)
+    
     const navLinkStyles = ({isActive})=>{
             return {
                 fontWeight:isActive?'bold':'normal',
@@ -56,7 +56,7 @@ const NavBar = ({access_token,triggerDisplayTripsByCatId}) =>{
         if(status === 'Y') {
              event.target.style.color='#f04646ff';
         }else{
-           event.target.style.color='black'; 
+           event.target.style.color='#140202ff'; 
         }
         let data = {
                     "categoryId":categoryid,

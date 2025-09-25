@@ -5,15 +5,20 @@ export const NavContext = createContext();
 export const NavProvider = ({children}) =>{
     
 const[notification,setNotification] = useState(false);
+const[sortTrip,setSortTrip] = useState(false);
 
     const triggerNotification = (data) => {
     setNotification(data);
     
   };
 
+const triggerSorting = (data) => {
+    setSortTrip(data);
+    
+  };
   
 return (
-    <NavContext.Provider value={{notification, triggerNotification}}>
+    <NavContext.Provider value={{notification, sortTrip,triggerNotification,triggerSorting}}>
       {children}
     </NavContext.Provider>
   );

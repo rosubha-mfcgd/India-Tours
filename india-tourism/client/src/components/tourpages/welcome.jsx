@@ -42,7 +42,7 @@ const openBookingForm = (tourDetails) =>{
     if(tourDetails)
     {
        setShowTripDetails(false);
-          setShowTrips(false);
+      setShowTrips(false);
       setBookTrip(true);
     }else
     {
@@ -102,7 +102,7 @@ const openBookingForm = (tourDetails) =>{
                   </div> 
        
        
-        <div className="center-container">
+       
          <div className="center-container">
            
 
@@ -127,7 +127,7 @@ const openBookingForm = (tourDetails) =>{
          
        </div>
       
-     </div>
+    
      </NavProvider>
     </div>
       )
