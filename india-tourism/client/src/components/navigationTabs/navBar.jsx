@@ -23,7 +23,7 @@ import {
     CardContent
   } from "@mui/material";
 
-import { getCategories,updateAsFavorite } from "../admin/admin";
+import { getCategories,getCities,updateAsFavorite } from "../admin/admin";
 import { NavContext } from '../navigationContext/navigationContext.jsx';
 import SideBarNotification from './sideBarNotification.jsx'
 import FavoriteIcon from '@mui/icons-material/Favorite';
@@ -80,13 +80,16 @@ const NavBar = ({access_token,triggerDisplayTripsByCatId,productID}) =>{
                     const getTripCategories = async (productID) =>{
                    
                     let categories = await getCategories(productID);
-
+                    
                     if(categories)
                     {
                         console.log('categories...',categories);
                         setItems(categories);
                     }
+                   
                 };
+
+                
                 if(items==='')
                 {
                     getTripCategories(productID);

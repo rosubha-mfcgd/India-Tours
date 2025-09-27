@@ -1,5 +1,5 @@
 import { Schema, model } from 'mongoose';
-import {ILocation, ITourManager} from '../repository/AppEntityState';
+import {ILocation} from '../repository/AppEntityState';
 
 const locationSchema = new Schema<ILocation>({
     locationID:{

@@ -1,5 +1,3 @@
-const express = require('express');
-const session = require('express-session');
 require("../logNginx");
 
 const TourDetailService = require('../service/TourDetailService');
@@ -20,6 +18,23 @@ const getRegisteredTourManagers=async(req,res) =>{
                 {"errormessage":"could not find any tour operators"});
 }
 
-} 
+}
 
-module.exports = {getRegisteredTourManagers}
+const getCities = async(req,res) =>{
+     try{
+    let cities = await new TourDetailService().getCities();
+    if(cities)
+    {
+        console.log('cities..',cities);
+          res.status(200).send(
+                cities); 
+    }
+}catch(err)
+{
+    logNginx(err.stack);
+     res.status(400).send(
+                {"errormessage":"could not find any cities"});
+}
+}
+
+module.exports = {getRegisteredTourManagers,getCities}

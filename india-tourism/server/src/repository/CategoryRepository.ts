@@ -1,5 +1,3 @@
-import { FilterQuery, UpdateQuery } from 'mongoose';
-
 import { CategoryModel } from '../model/category';
 import { ICategory } from './AppEntityState';
 import { BaseRepository } from './BaseRepository';

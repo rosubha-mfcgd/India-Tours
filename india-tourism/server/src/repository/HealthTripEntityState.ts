@@ -1,4 +1,4 @@
-import {Document,Model} from 'mongoose'
+import {Document} from 'mongoose'
 
 export interface HazardCodes extends Document 
 {

@@ -13,6 +13,7 @@ import '../../styles/loginsignup.css';
 import TripList from "./tripList.jsx";
 import TripDetails from "./tripDetails.jsx";
 import BookingForm from "./bookingForm.jsx";
+import { getCities } from "../admin/admin";
 const Welcome =()=>{
 
      const location = useLocation();
@@ -22,6 +23,7 @@ const Welcome =()=>{
      const [showTripDetails,setShowTripDetails] = useState(false);
      const [bookTrip,setBookTrip] = useState(false);
      const [showCategories,setShowCategories] = useState(false);
+     const [cityList,setCityList] = useState('');
      const[tripListParam,setTripListParam] = useState('');
      const[productID,setProductID] = useState('');
      const[tripDetailsParam,setTripDetailsParam] = useState('');
@@ -44,12 +46,18 @@ const Welcome =()=>{
         }
      }
 
-     const triggerDisplayTripsByProductId = (productId) =>{
+     const triggerDisplayTripsByProductId = async(productId) =>{
       console.log('productId....',productId)
       setShowCategories(false);
 
         if(productId)
         {
+          if(cityList === ''){
+          let cities = await getCities();
+          if(cities){
+            setCityList(cities);
+          }
+        }
           setProductID(productId);
           setShowCategories(true);
         }else{
@@ -70,7 +78,7 @@ const openBookingForm = (tourDetails) =>{
     }
 }
 
-       const showDetails = (tourDetails,tourManager) =>{
+       const showDetails = async (tourDetails,tourManager) =>{
         if(tourDetails){
        //tourDetails =   prepareDetails(tourDetails);
       console.log('location....',tourDetails.locationName)
@@ -81,6 +89,8 @@ const openBookingForm = (tourDetails) =>{
       console.log('image....',tourDetails.image)
         if(tourDetails)
         {
+
+          
          let tourDtls = {"locationName":tourDetails.locationName,
             "tourManagerName":tourManager.tourManagerName,
             "triplength":tourDetails.triplength,
@@ -131,16 +141,17 @@ const openBookingForm = (tourDetails) =>{
           {
            (showTrips)? 
               <TripList access_token={access_token} categoryId={tripListParam} showDetails={showDetails}
+                cityList = {cityList}
               />
             : (showTripDetails) ?
-              <TripDetails access_token={access_token} tourDetails={tripDetailsParam}
+              <TripDetails access_token={access_token} tourDetails={tripDetailsParam} cityList = {cityList}
               triggerDisplayTripsByCatId={triggerDisplayTripsByCatId} openBookingForm={openBookingForm}/> 
             :(bookTrip)?
             <BookingForm access_token={access_token} tourDetails={tripDetailsParam} 
            triggerDisplayTripsByCatId={triggerDisplayTripsByCatId} />
              :(showCategories) ?
              <NavBar access_token={access_token} 
-             triggerDisplayTripsByCatId={triggerDisplayTripsByCatId} productID={productID}/>:
+             triggerDisplayTripsByCatId={triggerDisplayTripsByCatId} productID={productID} cityList={cityList}/>:
             <Product access_token={access_token} 
              triggerDisplayTripsByProductId={triggerDisplayTripsByProductId} />
           }

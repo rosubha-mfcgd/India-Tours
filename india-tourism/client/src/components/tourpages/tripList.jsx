@@ -26,7 +26,7 @@ import { getTripList,getTourManagers } from "../admin/admin";
   import FavoriteIcon from '@mui/icons-material/Favorite';
   import SideBarForSorting from '../navigationTabs/sideBarForSorting.jsx';
   import { NavContext } from '../navigationContext/navigationContext.jsx';
-const TripList = ({access_token,categoryId,showDetails}) =>{
+const TripList = ({access_token,categoryId,cityList,showDetails}) =>{
     
    console.log('categoryID is...',categoryId); 
     const[tours,setTours] = useState('');
@@ -65,6 +65,18 @@ const TripList = ({access_token,categoryId,showDetails}) =>{
         
     }
 
+    function getCityOfTourOperator(citycode){
+        console.log('city code...',citycode)
+        console.log('city List...',cityList)
+        for(let city of cityList){
+            console.log('citycode...',citycode);
+            if(city.citycode === citycode)
+            {
+                return city.desc;
+            }
+        }
+        return "";
+    }
    
     function changeDateToWords(dateObject)
      {
@@ -90,6 +102,7 @@ const TripList = ({access_token,categoryId,showDetails}) =>{
                                           "contact" : tourManager.contact,
                                           "secondarycontact":tourManager.backupcontact,
                                           "citycode":tourManager.citycode,
+                                          "tourOpLocation": getCityOfTourOperator(tourManager.citycode),
                                           "desc": tourManager.desc,
                                           "website":tourManager.website
                                         });
@@ -186,6 +199,9 @@ const TripList = ({access_token,categoryId,showDetails}) =>{
               </Typography>
                     <Typography variant="body2" color="text.secondary">
                  {getValuesFromTourManagerMap(tour.tourManagerId).contact}
+              </Typography>
+              <Typography variant="body2" color="text.secondary">
+                 {getValuesFromTourManagerMap(tour.tourManagerId).tourOpLocation}
               </Typography>
                  <button type="submit" class="button"  onClick={()=>showDetails(tour,getValuesFromTourManagerMap(tour.tourManagerId))} 
                     style={{ cursor: 'pointer',backgroundColor: '#8a77f8ff',color:'#0c0c0fff'}}>

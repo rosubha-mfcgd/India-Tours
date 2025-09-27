@@ -7,7 +7,7 @@ const {checkAuthenticated} = require("../middlewares/auth");
 const {signupvalidate,validateOTP} = require("../controller/validations");
 const {getPoints} = require("../controller/userprofile");
 const {getCategories,getProducts,getToursByCategoryId,updateFavoriteCategory} = require("../controller/tripDetails");
-const {getRegisteredTourManagers} = require("../controller/tourManagers");
+const {getRegisteredTourManagers, getCities} = require("../controller/tourManagers");
 const router = express.Router();
 
 
@@ -21,6 +21,8 @@ router.post("/getPoints",checkAuthenticated,getPoints);
 router.get("/getCategories",checkAuthenticated,getCategories);
 
 router.get("/getProducts",checkAuthenticated,getProducts);
+
+router.get("/getCities",checkAuthenticated,getCities);
 
 router.get("/getToursByCategoryId",checkAuthenticated,getToursByCategoryId);
 

@@ -23,7 +23,7 @@ import '../../styles/loginsignup.css';
     CardContent
   } from "@mui/material";
 
-  const TripDetails = ({tourDetails,triggerDisplayTripsByCatId,openBookingForm,access_token}) =>{
+  const TripDetails = ({tourDetails,triggerDisplayTripsByCatId,openBookingForm,cityList,access_token}) =>{
 
   const navigate = useNavigate();
 

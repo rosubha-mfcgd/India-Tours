@@ -2,6 +2,7 @@ const {CategoryRepository} = require ('../../dist/repository/CategoryRepository'
 const { TourRepository } = require('../repository/TourRepository');
 const { TourManagerRepository } = require('../repository/TourManagerRepository');
 const {ProductRepository} = require ('../../dist/repository/ProductRepository');
+const {CityRepository} = require ('../../dist/repository/CityRepository');
 require("../logNginx");
 
 class TourDetailService{
@@ -118,5 +119,26 @@ async getTourManagers()
   return tourOperators;
   } 
 
+
+  async getCities()
+{
+  let cities = [];
+  try{
+   const cityRepository = new CityRepository();
+   
+      cities = await cityRepository.find({});
+      
+      if(cities && cities.length >0){
+         console.log('cities...',cities);
+           
+      }
+    }
+    catch(err){
+         console.log(err.stack);
+        logNginx(err.stack);
+        
+      }
+  return cities;
+  } 
 }
 module.exports = TourDetailService
