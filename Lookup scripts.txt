@@ -153,11 +153,23 @@ db.tourmanagers.insertMany([
 	citycode : 2,
     desc: "We are travelling to Kerala next month",
 	website: "https://travelxploria.com/"
+  },
+  {
+    {
+    tourManagerId: "003",
+    tourManagerName: "Travel for Fun",
+	contact: "+918420044043",
+	backupcontact: "+918420044043",
+	citycode : 2,
+    desc: "We are Shimla to Kerala next month",
+	website: "https://travelxploria.com/"
+  }
   }
 ]);
 
 TourDetails
 ============
+
 
 db.tourdetails.insertMany([
   {
@@ -223,5 +235,149 @@ db.tourdetails.insertMany([
 	"desc": "The desert offers a unique experience with camel safaris, camping under starry skies, and local music and dance, providing a stark contrast to the bustling cities but no less wonder.",
 	"image":"/desert/Rajasthan.png",
 	"itinerary":"The plan is yet to be scheduled and all tourists will be informed accordingly"
+  },
+   {
+    "locationName": "Ladakh",
+    "categoryID": 1,
+	"tourManagerId": "001",
+	"triplength": "3 days 3 night",
+	"startDate" : new Date("2025-11-02"),
+    "endDate": new Date("2025-11-16"),
+	"package_cost": "200000",
+	"max_tourist": "30",
+	"seats_left" : "30",
+	"domesticOrinternational":"D",
+	"ticket_cost":"7000.50",
+	"desc": "Ladakh is defined by its dramatic mountain landscapes, characterized by snow-capped peaks, rugged terrains, and a high-altitude desert environment. This natural grandeur is complemented by the stunningly clear, vibrant blue lakes and unique cultural heritage rooted in Tibetan Buddhism, visible in its ancient monasteries and distinct architecture",
+	"image":"/hillstations/Ladakh.png",
+	"itinerary":"Morning Immerse yourself in Ladakh's royal heritage by visiting Leh Palace, a former royal residence offering stunning views of the city and insights into the region's past.\n Afternoon Experience the spiritual grandeur of Thiksey Monastery, a remarkable architectural marvel that resembles the Potala Palace in Lhasa, Tibet, and provides breathtaking views of the surrounding landscape.\n Evening Delve into the authentic Ladakhi ambiance by exploring Leh Main Market, where you can discover local crafts, textiles, and a true sense of the region's unique culture."
+  },
+  {
+    "locationName": "Gangtok",
+    "categoryID": 1,
+	"tourManagerId": "001",
+	"triplength": "6 days 5 night",
+	"startDate" : new Date("2025-10-30"),
+    "endDate": new Date("2025-11-09"),
+	"package_cost": "20000",
+	"max_tourist": "10",
+	"seats_left" : "10",
+	"domesticOrinternational":"D",
+	"ticket_cost":"7000.50",
+	"desc": "The beauty of Gangtok lies in its stunning natural surroundings, featuring panoramic views of the snow-capped Himalayas, including the majestic Mt. Kanchenjunga, alongside lush valleys and cascading waterfalls. This scenic splendor is complemented by its rich cultural heritage, exemplified by beautiful monasteries, vibrant Buddhist traditions, and friendly locals. The city also offers modern urban charm, a blend of serene landscapes with a lively city center, and a reputation for cleanliness and hospitality.",
+	"image":"/hillstations/Gangtok.png",
+	"itinerary":"Day1:- Morning Immerse yourself in Tibetan Buddhist tradition at the Rumtek Monastery, a significant center for the Karma Kagyu school, and consider a guided tour to fully appreciate its cultural significance.\n Afternoon Enjoy the serene atmosphere of the Jawaharlal Nehru Botanical Garden, a picturesque spot for leisurely walks and appreciating diverse flora, with the option to combine it with a visit to Rumtek Monastery.\n \n Day2 : Morning Explore the unique cultural tapestry of Sikkim, which is celebrated through vibrant festivals and local traditions, potentially offering a glimpse into the region's heritage.Experience the scenic beauty of Tsongmo Lake, a natural wonder surrounded by snowy mountains, accessible through a scenic gondola ride.\n \n Day 3: Morning Pay respects at the Baba Harbhajan Singh Temple, a significant memorial honoring an Indian Army soldier and revered folk hero.\n Visit the Nathula Pass, a historically significant Indo-China border point, while ensuring you obtain the necessary permits in advance through a government-approved travel agency in Gangtok."
+},
+{
+    "locationName": "Shimla",
+    "categoryID": 1,
+	"tourManagerId": "001",
+	"triplength": "3 days",
+	"startDate" : new Date("2025-10-26"),
+    "endDate": new Date("2025-10-29"),
+	"package_cost": "60000.00",
+	"max_tourist": "20",
+	"seats_left" : "15",
+	"domesticOrinternational":"D",
+	"ticket_cost":"20000.00",
+	"desc": "Panoramas of snow-peaked Himalayas. Welcome to the delightful hill resort of Shimla, fondly known as the \'Queen of the Hills.\' Surrounded by the mighty Himalayas, this picturesque destination is renowned for its stunning natural beauty, pleasant weather, awe-inspiring shrines and colonial architecture.",
+	"image":"/hillstations/Shimla.png",
+	"itinerary":"The plan is yet to be scheduled and all tourists will be informed accordingly" 
+  },
+  {
+    "locationName": "Himachal Pradesh",
+    "categoryID": 1,
+	"tourManagerId": "001",
+	"triplength": "3 days",
+	"startDate" : new Date("2025-10-18"),
+    "endDate": new Date("2025-10-30"),
+	"package_cost": "60000.00",
+	"max_tourist": "30",
+	"seats_left" : "7",
+	"domesticOrinternational":"D",
+	"ticket_cost":"20000.00",
+	"desc": "Himachal Pradesh defines beauty through its majestic, snow-capped mountains, a defining feature indicated by its name meaning \"land of snowy mountains\" (Hima+Achala), its rich spiritual heritage as the \"Dev Bhumi\" or abode of gods with countless ancient temples, and its unique, vibrant culture and traditions. This combination of natural grandeur, divine connection, and cultural depth embodies the essence of Himachal\'s beauty.",
+	"image":"/hillstations/Himachal Pradesh.png",
+	"itinerary":"Travel from Delhi or Chandigarh to Shimla. Check into your hotel and rest.  Travel from Delhi or Chandigarh to Shimla.Check into your hotel and rest." 
+  },
+  {
+    "locationName": "Bhutan",
+    "categoryID": 1,
+	"tourManagerId": "001",
+	"triplength": "9 days",
+	"startDate" : new Date("2025-10-18"),
+    "endDate": new Date("2025-10-30"),
+	"package_cost": "60000.00",
+	"max_tourist": "30",
+	"seats_left" : "7",
+	"domesticOrinternational":"I",
+	"ticket_cost":"20000.00",
+	"desc": "The beauty of Bhutan lies in its pristine Himalayan landscapes, a rich, vibrant culture deeply rooted in Buddhism, its unique architecture like the Tiger/'s Nest Monastery",
+	"image":"/hillstations/Bhutan.png",
+	"itinerary":"Itinerary has not been finalized as yet" 
+  },
+  {
+    "locationName": "Nepal",
+    "categoryID": 1,
+	"tourManagerId": "002",
+	"triplength": "14 days",
+	"startDate" : new Date("2025-11-18"),
+    "endDate": new Date("2025-12-02"),
+	"package_cost": "100000.00",
+	"max_tourist": "30",
+	"seats_left" : "5",
+	"domesticOrinternational":"I",
+	"ticket_cost":"30000.00",
+	"desc": "Nepal is one of the most beautiful countries in the world with hilly terrain, untouched natural beauty, and some of the most wonderful people on earth. Just outside the capital, Kathmandu, huge, towering mountains can be seen overlooking the city",
+	"image":"/hillstations/Nepal.png",
+	"itinerary":"Itinerary has not been finalized as yet" 
+  },
+  {
+    "locationName": "Bangkok/Pattaya",
+    "categoryID": 2,
+	"tourManagerId": "003",
+	"triplength": "14 days",
+	"startDate" : new Date("2025-11-18"),
+    "endDate": new Date("2025-11-30"),
+	"package_cost": "100000.00",
+	"max_tourist": "30",
+	"seats_left" : "7",
+	"domesticOrinternational":"I",
+	"ticket_cost":"30000.00",
+	"desc": "The beauty of Bangkok and Pattaya lies in their dynamic combination of cultural landmarks, natural coastal scenery, and vibrant, bustling city life, offering a diverse range of experiences from ancient temples and palaces to stunning beaches, lively night markets, adventurous water sports, and a variety of entertainment and cuisine",
+	"image":"/seabeach/Bangkok Pattaya.png",
+	"itinerary":"Itinerary has not been finalized as yet" 
+  },
+  {
+    "locationName": "SriLanka",
+    "categoryID": 2,
+	"tourManagerId": "001",
+	"triplength": "7 days",
+	"startDate" : new Date("2025-10-18"),
+    "endDate": new Date("2025-10-30"),
+	"package_cost": "100000.00",
+	"max_tourist": "20",
+	"seats_left" : "7",
+	"domesticOrinternational":"I",
+	"ticket_cost":"30000.00",
+	"desc": "Sri Lanka/'s beauty lies in its incredible natural diversity, from pristine beaches and lush tea plantations to misty highlands and ancient jungles. ",
+	"image":"/seabeach/SriLanka.png",
+	"itinerary":"Itinerary has not been finalized as yet" 
+  },
+   {
+    "locationName": "Darjeeling",
+    "categoryID": 1,
+	"tourManagerId": "001",
+	"triplength": "7 days",
+	"startDate" : new Date("2025-10-21"),
+    "endDate": new Date("2025-10-30"),
+	"package_cost": "20000.00",
+	"max_tourist": "20",
+	"seats_left" : "7",
+	"domesticOrinternational":"D",
+	"ticket_cost":"1500.00",
+	"desc": "The beauty of Darjeeling is defined by its iconic tea gardens, its stunning views of the Himalayas, including the snow-capped Mount Kanchenjunga, and the charming colonial architecture of its hill station heritage. It also features the nostalgic allure of the Darjeeling Himalayan Railway (toy train), a UNESCO World Heritage site, and a vibrant blend of Tibetan, Nepali, and British cultures evident in its markets, food, and people. The natural beauty is further enhanced by a diverse array of flora and the captivating scenery of lush valleys and misty mornings.",
+	"image":"/hillstations/Darjeeling.png",
+	"itinerary":"Itinerary has not been finalized as yet" 
   }
-  ]);
+]);	
