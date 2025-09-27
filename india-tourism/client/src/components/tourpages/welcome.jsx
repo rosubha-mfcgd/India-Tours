@@ -3,6 +3,7 @@ import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 
 
 import NavBar from '../navigationTabs/navBar.jsx';
+import Product from '../navigationTabs/products.jsx';
 import Header from '../header/header.jsx';
 import Layout from '../Layout/layout.jsx';
 import UserProfile from '../userprofile/userprofile.jsx';
@@ -11,7 +12,7 @@ import '../../styles/loginsignup.css';
  import {useLocation } from 'react-router-dom';
 import TripList from "./tripList.jsx";
 import TripDetails from "./tripDetails.jsx";
-import BookingForm from "./bookingForm.jsx"
+import BookingForm from "./bookingForm.jsx";
 const Welcome =()=>{
 
      const location = useLocation();
@@ -20,6 +21,7 @@ const Welcome =()=>{
      const [showTrips,setShowTrips] = useState(false);
      const [showTripDetails,setShowTripDetails] = useState(false);
      const [bookTrip,setBookTrip] = useState(false);
+     const [showCategories,setShowCategories] = useState(false);
      const[tripListParam,setTripListParam] = useState('');
      const[tripDetailsParam,setTripDetailsParam] = useState('');
 
@@ -34,6 +36,19 @@ const Welcome =()=>{
           setShowTrips(true);
         }else{
           setShowTrips(false);
+        }
+     }
+
+     const triggerDisplayTripsByProductId = (productId) =>{
+      console.log('productId....',productId)
+      setShowCategories(false);
+
+        if(productId)
+        {
+        //  setTripListParam(categoryId);
+          setShowCategories(true);
+        }else{
+          setShowCategories(false);
         }
      }
 
@@ -110,16 +125,19 @@ const openBookingForm = (tourDetails) =>{
          <Layout access_token={access_token} > {/* Wrap your routes with the Layout component */}
           {
            (showTrips)? 
-              <TripList access_token={access_token} categoryId={tripListParam} showDetails={showDetails}/>
+              <TripList access_token={access_token} categoryId={tripListParam} showDetails={showDetails}
+              />
             : (showTripDetails) ?
               <TripDetails access_token={access_token} tourDetails={tripDetailsParam}
               triggerDisplayTripsByCatId={triggerDisplayTripsByCatId} openBookingForm={openBookingForm}/> 
             :(bookTrip)?
             <BookingForm access_token={access_token} tourDetails={tripDetailsParam} 
            triggerDisplayTripsByCatId={triggerDisplayTripsByCatId} />
-             : 
+             :{showCategories} ?
              <NavBar access_token={access_token} 
-             triggerDisplayTripsByCatId={triggerDisplayTripsByCatId}/>
+             triggerDisplayTripsByCatId={triggerDisplayTripsByCatId}/>:
+            <Product access_token={access_token} 
+             triggerDisplayTripsByProductId={triggerDisplayTripsByProductId}/>
           }
           </Layout>
           </div>

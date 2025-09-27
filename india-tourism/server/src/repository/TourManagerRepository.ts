@@ -1,6 +1,6 @@
 import { TourManagerModel } from '../model/tourmanager';
 
-import { ITourManager } from '../repository/TourEntityState';
+import { ITourManager } from './AppEntityState';
 import { BaseRepository } from './BaseRepository';
 
 export class TourManagerRepository extends BaseRepository<ITourManager>

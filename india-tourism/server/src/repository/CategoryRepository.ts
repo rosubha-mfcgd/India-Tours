@@ -1,7 +1,7 @@
 import { FilterQuery, UpdateQuery } from 'mongoose';
 
 import { CategoryModel } from '../model/category';
-import { ICategory } from '../repository/TourEntityState';
+import { ICategory } from './AppEntityState';
 import { BaseRepository } from './BaseRepository';
 
 export class CategoryRepository extends BaseRepository<ICategory>{

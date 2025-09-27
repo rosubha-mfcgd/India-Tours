@@ -30,7 +30,7 @@ const TripList = ({access_token,categoryId,showDetails}) =>{
     
    console.log('categoryID is...',categoryId); 
     const[tours,setTours] = useState('');
-  
+    const[alltours,setAlltours] = useState('');
     //combined state variable holding info from tours and tour managers
    const [ tourManagers, setTourManagers] = useState('');
     // const { name,email,mobile,categoryId} = location.state || {};
@@ -49,7 +49,10 @@ const TripList = ({access_token,categoryId,showDetails}) =>{
    console.log('categoryId...',categoryId);
 
     const [tourMgrMap, setTourMgrMap] = useState(new Map());
+    const [selectedValue, setSelectedValue] = useState('B');
+
     const tourManagerMap = new Map(tourMgrMap);
+    
     const updateTourMgrMap = (key,value) => {
        
         tourManagerMap.set(key,value);
@@ -57,8 +60,8 @@ const TripList = ({access_token,categoryId,showDetails}) =>{
     }
 
      function getValuesFromTourManagerMap(key) {
-       
-        return tourManagerMap.get(key);
+       console.log('tourMgrMap...',tourMgrMap)
+        return tourMgrMap.get(key);
         
     }
 
@@ -102,13 +105,45 @@ const TripList = ({access_token,categoryId,showDetails}) =>{
                           {
                               console.log('plannedTours...',plannedTours);
                               setTours(plannedTours);
+                              setAlltours(plannedTours);
                           }
                 }
-                    if(tours === '')
-                    {
-                        getTripListByCategoryId(categoryId);
-                    }
+                if(tours === '')
+                {
+                    getTripListByCategoryId(categoryId);
+                }
+         useEffect(()=>{
+            const selectedTours = [];
+            console.log('alltours in useEffect...',alltours)
                 
+                //console.log('selectedValue in useEffect...',selectedValue)
+                    if(tours)
+                    {
+                        if(selectedValue === 'I' || selectedValue === 'D'){
+                        for(let tour of alltours)
+                        {
+                            
+                              //  console.log('tour....',tour);
+                            if(tour.domesticOrinternational === selectedValue)
+                            {
+                                selectedTours.push(tour);
+                                
+                            }
+                        }
+                        }else if(selectedValue === 'B'){
+                            console.log('selectedTours....',selectedTours)
+                             for(let tour of alltours)
+                            {
+                            selectedTours.push(tour);
+                             }
+                         }
+                         
+                         setTours(selectedTours);
+                         console.log('tours....',tours)
+                    } 
+                
+             },
+             [selectedValue]);       
       
     return(
         
@@ -184,7 +219,7 @@ const TripList = ({access_token,categoryId,showDetails}) =>{
             {
             sortTrip ? 
             <div style={{position: 'fixed', top:70,right:0}} >
-                <SideBarForSorting/>
+                <SideBarForSorting selectedValue={selectedValue} setSelectedValue={setSelectedValue}/>
             </div>:<div></div>
            }
              </Grid>

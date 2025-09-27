@@ -142,6 +142,35 @@ export const getCategories = async() =>{
 return res_data;
 }
 
+
+export const getProducts = async() =>{
+    let res_data = "failed to fetch products";
+     try{
+        let access_token = await getApiAccessToken();
+        if(access_token){
+            console.log('access_token found...',access_token.data)
+       // console.log('data...',access_token);
+        
+        const headers = {
+            "Content-type": "application/json; charset=UTF-8",
+            "Authorization":"Bearer "+access_token.data.access_token
+            };
+            const response = await axios.get(
+        process.env.REACT_APP_SERVER_URI + "getProducts",
+        {headers});
+        if(response)
+     {
+        res_data = response.data;
+     }
+     }
+     
+}catch(err){
+     console.error('Error while fetching products:::', err.stack);
+    throw err;
+}
+return res_data;
+}
+
 export const getTripList = async(categoryId) =>{
   let res_data = "failed to fetch planned tours by categroy id";
      try{

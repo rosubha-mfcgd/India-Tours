@@ -1,6 +1,7 @@
 const {CategoryRepository} = require ('../../dist/repository/CategoryRepository');
 const { TourRepository } = require('../repository/TourRepository');
 const { TourManagerRepository } = require('../repository/TourManagerRepository');
+const {ProductRepository} = require ('../../dist/repository/ProductRepository');
 require("../logNginx");
 
 class TourDetailService{
@@ -10,13 +11,13 @@ constructor(){
       this.errorMsg = "Message not found";
     } 
 
-async getCategories()
+async getCategories(productID)
 {
   let categories = [];
   try{
    const categoryRepo = new CategoryRepository();
    
-      categories = await categoryRepo.findAllSortedResults({favorite:-1});
+      categories = await categoryRepo.findAllSortedResultsByParams({"productID":productID},{favorite:-1});
       
       if(categories && categories.length >0){
          console.log('categories...',categories);
@@ -29,6 +30,25 @@ async getCategories()
         
       }
   return categories;
+  } 
+
+  async getProducts()
+{
+  let products = [];
+  try{
+   const productRepo = new ProductRepository();
+   
+      products = await productRepo.findAllSortedResults({favorite:-1});
+      
+      if(products && products.length >0){
+         console.log('products...',products);
+           
+      }
+    }
+    catch(err){
+       logNginx(err.stack);
+       }
+  return products;
   } 
 
   async updateCategoryAsFavorite (categoryId,status) {

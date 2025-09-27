@@ -1,6 +1,6 @@
 import { FilterQuery, UpdateQuery } from 'mongoose';
 import { UserModel } from '../model/user';
-import { IUser } from '../repository/TourEntityState';
+import { IUser } from './AppEntityState';
 import { BaseRepository } from './BaseRepository';
 export class UserRepository extends BaseRepository<IUser>
 {

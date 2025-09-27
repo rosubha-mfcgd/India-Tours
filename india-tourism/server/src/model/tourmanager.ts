@@ -1,5 +1,5 @@
 import { Schema, model } from 'mongoose';
-import {ITourManager} from '../repository/TourEntityState';
+import {ITourManager} from '../repository/AppEntityState';
 
 const tourmanagerSchema = new Schema<ITourManager>({
      tourManagerId:{

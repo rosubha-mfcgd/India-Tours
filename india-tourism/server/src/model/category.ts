@@ -1,5 +1,5 @@
 import { Schema, model } from 'mongoose';
-import { ICategory } from '../repository/TourEntityState';
+import { ICategory } from '../repository/AppEntityState';
 
 const categorySchema = new Schema<ICategory>({
 

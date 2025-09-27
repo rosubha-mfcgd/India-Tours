@@ -1,5 +1,5 @@
 import { Schema, model } from 'mongoose';
-import { IUser } from '../repository/TourEntityState';
+import { IUser } from '../repository/AppEntityState';
 
 const userSchema = new Schema<IUser>({
  

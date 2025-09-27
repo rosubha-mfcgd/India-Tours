@@ -1,7 +1,7 @@
 import { FilterQuery, UpdateQuery } from 'mongoose';
 import { ToursModel } from '../model/tours';
 
-import { ITourDetails } from '../repository/TourEntityState';
+import { ITourDetails } from './AppEntityState';
 import { BaseRepository } from './BaseRepository';
 
 export class TourRepository extends BaseRepository<ITourDetails>

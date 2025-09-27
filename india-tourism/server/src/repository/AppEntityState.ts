@@ -86,6 +86,33 @@ export interface ITourDetails extends Document{
     }
   }
 
+export interface IProduct extends Document{
+    productID:{
+       type: Number,
+      required: true
+    },
+  productName:{
+       type: String,
+      required: true,
+      trim: true,
+    },
+    productDesc:{
+       type: String,
+      required: true,
+      trim: true,
+    },
+    image:{
+      type: String,
+      required: true,
+      trim: true,
+    },
+     favorite:{
+       type: String,
+      
+    }
+  }
+
+
 export interface ICategory extends Document{
     categoryID:{
        type: Number,
@@ -104,6 +131,10 @@ export interface ICategory extends Document{
      favorite:{
        type: String,
       
+    },
+    productID:{
+       type: Number,
+      required: true
     }
   }
 

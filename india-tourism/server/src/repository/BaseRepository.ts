@@ -42,5 +42,8 @@ export abstract class BaseRepository<T extends Document> implements IRepository<
     async findAllSortedResults(query: string): Promise<T[]> {
         return this._model.find().sort(query).exec();
     }
+    async findAllSortedResultsByParams(query: object,filter: string): Promise<T[]> {
+        return this._model.find(query).sort(filter).exec();
+    }
         
 }

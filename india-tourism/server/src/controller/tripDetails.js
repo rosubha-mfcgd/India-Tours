@@ -20,6 +20,23 @@ const getCategories = async(req,res) =>{
     }
 }
 
+const getProducts = async(req,res) =>{
+   
+    try{
+     let products = await new TourDetailService().getProducts();
+     
+     if(products)
+        {
+          console.log('result..',products);
+          res.status(200).send(
+                products);
+     
+    }
+    }catch(err){
+        res.status(400).send(
+                {"errormessage":"could not load products"});
+    }
+}
 
 const updateFavoriteCategory = async(req,res) =>{
     try{
@@ -87,4 +104,4 @@ const getTourManagers = async(req,res) =>{
                 {"errormessage":"could not load any planned Tours by any operator"});
     }
 }
-module.exports = {getCategories,getToursByCategoryId,updateFavoriteCategory}
+module.exports = {getCategories,getToursByCategoryId,updateFavoriteCategory,getProducts}
