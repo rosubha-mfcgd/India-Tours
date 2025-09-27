@@ -5,7 +5,10 @@ require("../logNginx");
 const getCategories = async(req,res) =>{
    
     try{
-     let categories = await new TourDetailService().getCategories();
+        let parameters = req.query;
+        let productID = parameters.productID;
+        
+     let categories = await new TourDetailService().getCategories(productID);
      
      if(categories)
         {

@@ -172,7 +172,10 @@ const BookingForm = ({access_token,tourDetails,triggerDisplayTripsByCatId}) =>{
           }</div>:<div></div>
         }
         { openBookingForm ? 
-         <div className = "center-container">
+         <div className = "center-container" style={{
+                    width: "fit-content",
+                    margin: "auto",
+                  }}>
         <Box  component="form">
              <Typography variant="body2" style={{ color: '#FFFFFF' }}>
                Any special preferences?

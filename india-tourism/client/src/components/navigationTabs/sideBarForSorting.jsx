@@ -100,7 +100,7 @@ const handleChange = (event) => {
                        <option value="50k" label="50k"></option>
                         <option value="100k" label="100k"></option>
                        <option value="500k" label="500k"></option>
-                        <option value="1000k" label="1000k"></option>
+                        <option value="1000k" label=">=1000k"></option>
                         </datalist>
                                 </div>:
                                 text == 'TripLength'?
@@ -113,14 +113,13 @@ const handleChange = (event) => {
                                 
                                 value= {triplengthValue} 
                                 onChange={handleTripLengthSliderChange} 
-                                step='10000'
                                 list="triplengthlist"/>  
                         <datalist id="triplengthlist">
                         <option value="1" label="1"></option>
                         <option value="7" label="7"></option>
                         <option value="14" label="14"></option>
                         <option value="21" label="21"></option>
-                        <option value="31" label="31"></option>
+                        <option value="30" label=">=30"></option>
                         </datalist>
                                 </div>:
                             text === 'DomesticOrInternational'?

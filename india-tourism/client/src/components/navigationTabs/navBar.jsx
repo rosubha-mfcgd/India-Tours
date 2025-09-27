@@ -28,7 +28,7 @@ import { NavContext } from '../navigationContext/navigationContext.jsx';
 import SideBarNotification from './sideBarNotification.jsx'
 import FavoriteIcon from '@mui/icons-material/Favorite';
 
-const NavBar = ({access_token,triggerDisplayTripsByCatId}) =>{
+const NavBar = ({access_token,triggerDisplayTripsByCatId,productID}) =>{
 
     
     const navigate = useNavigate();
@@ -77,9 +77,9 @@ const NavBar = ({access_token,triggerDisplayTripsByCatId}) =>{
 
             const timer = setTimeout(() =>{
                 
-                    const getTripCategories = async () =>{
+                    const getTripCategories = async (productID) =>{
                    
-                    let categories = await getCategories();
+                    let categories = await getCategories(productID);
 
                     if(categories)
                     {
@@ -89,7 +89,7 @@ const NavBar = ({access_token,triggerDisplayTripsByCatId}) =>{
                 };
                 if(items==='')
                 {
-                    getTripCategories();
+                    getTripCategories(productID);
                 }},100);
         
     return () => {

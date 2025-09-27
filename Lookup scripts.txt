@@ -4,7 +4,8 @@ db.products.insertMany([
   {
     productID: 1,
     productName: "Travel and Tourism",
-    productDesc: "Travel anywhere you want with us. We ensure to strive for providing you the best services",
+    productDesc: "Travel anywhere you want with us.\n"+
+	"We ensure to provide you the best services",
     image: "/products/tourism.png"
 	},
   {
@@ -16,7 +17,8 @@ db.products.insertMany([
  {
     productID: 3,
     productName: "Decorate your home",
-    productDesc: "Make your home and walls come alive with outstanding products from us",
+    productDesc: "Make your home and walls come alive with \n"+
+	"outstanding products from us",
     image:"/products/homeDecoration.png"
   }]);
 
@@ -66,8 +68,7 @@ db.categories.insertMany([
     categoryDesc:"Religious places",
     image:"/categories/religiousplaces.png",
 	productID:1
-	
-  },
+},
  {
     categoryID: 6,
     categoryName: "City Vibes",

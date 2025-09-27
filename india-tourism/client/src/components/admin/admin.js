@@ -1,5 +1,5 @@
 import axios from "axios"
-import { useState } from "react";
+
 
 export const signupUser = async(data) =>{
 
@@ -114,7 +114,7 @@ export const getPoints = async(data) =>{
 return res_data;
 }
 
-export const getCategories = async() =>{
+export const getCategories = async(productID) =>{
     let res_data = "failed to fetch categories";
      try{
         let access_token = await getApiAccessToken();
@@ -127,7 +127,7 @@ export const getCategories = async() =>{
             "Authorization":"Bearer "+access_token.data.access_token
             };
             const response = await axios.get(
-        process.env.REACT_APP_SERVER_URI + "getCategories",
+        process.env.REACT_APP_SERVER_URI + "getCategories?productID="+productID,
         {headers});
         if(response)
      {

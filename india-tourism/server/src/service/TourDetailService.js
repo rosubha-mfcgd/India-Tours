@@ -16,8 +16,8 @@ async getCategories(productID)
   let categories = [];
   try{
    const categoryRepo = new CategoryRepository();
-   
-      categories = await categoryRepo.findAllSortedResultsByParams({"productID":productID},{favorite:-1});
+   console.log('productID....',productID)
+      categories = await categoryRepo.findAllSortedResultsByParams({"productID":Number(productID)},{favorite:-1});
       
       if(categories && categories.length >0){
          console.log('categories...',categories);

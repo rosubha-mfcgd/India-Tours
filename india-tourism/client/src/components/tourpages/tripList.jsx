@@ -187,7 +187,9 @@ const TripList = ({access_token,categoryId,showDetails}) =>{
                     <Typography variant="body2" color="text.secondary">
                  {getValuesFromTourManagerMap(tour.tourManagerId).contact}
               </Typography>
-                <FavoriteIcon sx={{ color: '#ece2e2ff' }} />
+                 <button type="submit" class="button"  onClick={()=>showDetails(tour,getValuesFromTourManagerMap(tour.tourManagerId))} 
+                    style={{ cursor: 'pointer',backgroundColor: '#8a77f8ff',color:'#0c0c0fff'}}>
+                       Details</button>
               </CardContent>
                     </Card>
                 </Grid>

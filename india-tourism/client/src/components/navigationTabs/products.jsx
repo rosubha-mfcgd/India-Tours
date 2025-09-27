@@ -23,7 +23,7 @@ import {
     CardContent
   } from "@mui/material";
 
-import { getCategories,updateAsFavorite,getProducts } from "../admin/admin";
+import {updateAsFavorite,getProducts } from "../admin/admin";
 import { NavContext } from '../navigationContext/navigationContext.jsx';
 import SideBarNotification from './sideBarNotification.jsx'
 import FavoriteIcon from '@mui/icons-material/Favorite';
@@ -36,21 +36,7 @@ const Products = ({access_token,triggerDisplayTripsByProductId}) =>{
     const { notification} = useContext(NavContext);
      const [items, setItems] = useState('')
     
-    const navLinkStyles = ({isActive})=>{
-            return {
-                fontWeight:isActive?'bold':'normal',
-                textDecoration:isActive?'none':'underline',
-            }
-        }
-
-        const activeState = ({ isActive, isPending }) => {
-            return {
-            color: isPending ? "rgb(253 230 138)" : "",
-            backgroundColor: isActive ? "rgb(69 26 3)" : "",
-            fontWeight: isActive ? "bold" : ""
-            };
-          };
-
+    
        const updateFavorites = async(categoryid, status,event) =>{
 
         if(status === 'Y') {
@@ -77,7 +63,7 @@ const Products = ({access_token,triggerDisplayTripsByProductId}) =>{
 
             const timer = setTimeout(() =>{
                 
-                    const getProducts = async () =>{
+                    const fetchProducts = async () =>{
                    
                     let products = await getProducts();
 
@@ -89,7 +75,7 @@ const Products = ({access_token,triggerDisplayTripsByProductId}) =>{
                 };
                 if(items==='')
                 {
-                    getProducts();
+                   fetchProducts();
                 }},100);
         
     return () => {
@@ -125,7 +111,7 @@ const Products = ({access_token,triggerDisplayTripsByProductId}) =>{
                 {item.productName}
               </Typography>
               <Typography variant="body2" color="text.secondary">
-                {item.productDesc}
+                {item.productDesc.replace("\n", "<br />").replace("\r", "")}
               </Typography>
               {(item.favorite === 'Y') ?
                 <FavoriteIcon sx={{ color: '#f04646ff' }} onClick = {(event) => updateFavorites(

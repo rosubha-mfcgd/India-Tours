@@ -23,9 +23,14 @@ const Welcome =()=>{
      const [bookTrip,setBookTrip] = useState(false);
      const [showCategories,setShowCategories] = useState(false);
      const[tripListParam,setTripListParam] = useState('');
+     const[productID,setProductID] = useState('');
      const[tripDetailsParam,setTripDetailsParam] = useState('');
 
-  
+    console.log('showTrips....',showTrips);
+    console.log('showTripDetails....',showTripDetails);
+    console.log('bookTrip....',bookTrip);
+    console.log('showCategories....',showCategories);
+
      const triggerDisplayTripsByCatId = (categoryId) =>{
       console.log('categoryId....',categoryId)
       setShowTripDetails(false);
@@ -45,7 +50,7 @@ const Welcome =()=>{
 
         if(productId)
         {
-        //  setTripListParam(categoryId);
+          setProductID(productId);
           setShowCategories(true);
         }else{
           setShowCategories(false);
@@ -133,11 +138,11 @@ const openBookingForm = (tourDetails) =>{
             :(bookTrip)?
             <BookingForm access_token={access_token} tourDetails={tripDetailsParam} 
            triggerDisplayTripsByCatId={triggerDisplayTripsByCatId} />
-             :{showCategories} ?
+             :(showCategories) ?
              <NavBar access_token={access_token} 
-             triggerDisplayTripsByCatId={triggerDisplayTripsByCatId}/>:
+             triggerDisplayTripsByCatId={triggerDisplayTripsByCatId} productID={productID}/>:
             <Product access_token={access_token} 
-             triggerDisplayTripsByProductId={triggerDisplayTripsByProductId}/>
+             triggerDisplayTripsByProductId={triggerDisplayTripsByProductId} />
           }
           </Layout>
           </div>
