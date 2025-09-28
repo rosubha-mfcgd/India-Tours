@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, {useState } from "react";
 import styled from "styled-components";
 import Radio from '@mui/material/Radio';
 import RadioGroup from '@mui/material/RadioGroup';
@@ -36,11 +36,10 @@ import {ListItem, ListItemButton, ListItemText}
   import ChevronRightIcon from '@mui/icons-material/ChevronRight';
 
 import '../../styles/sidebarForSorting.css';
- const SideBarforSorting=({selectedValue,setSelectedValue})=> {
+ const SideBarforSorting=({selectedValue,setSelectedValue,priceValue, setPriceValue,
+    triplengthValue, setTriplengthValue})=> {
    const [open, setOpen] = useState(true);
-   const [priceValue, setPriceValue] = useState(50); // Default value is 50
-    const [triplengthValue, setTriplengthValue] = useState(1); // Default value is 3
-    
+       
      // Handle changes to the slider's value
   const handlePriceSliderChange = (event) => {
     setPriceValue(event.target.value);
@@ -89,31 +88,33 @@ const handleChange = (event) => {
                               {text == 'Price'?
                               <div>
                             <Typography variant="body2" color="common.black">
-                                {text}
+                                {text} - {priceValue}
                             </Typography>
                                                    
                                 <input type="range" 
                                 value= {priceValue} 
-                                onChange={handlePriceSliderChange} list="pricelist"/>  
+                                onChange={handlePriceSliderChange} list="pricelist" 
+                                min="10000" max="1000000"
+                                />  
                                  <datalist id="pricelist">
-                        <option value="10k" label="10k"></option>
-                       <option value="50k" label="50k"></option>
-                        <option value="100k" label="100k"></option>
-                       <option value="500k" label="500k"></option>
-                        <option value="1000k" label=">=1000k"></option>
+                        <option value="10000" label="10k"></option>
+                       <option value="50000" label="50k"></option>
+                        <option value="100000" label="100k"></option>
+                       <option value="500000" label="500k"></option>
+                        <option value="1000000" label=">=1000k"></option>
                         </datalist>
                                 </div>:
                                 text == 'TripLength'?
                               <div>
                             <Typography variant="body2" color="common.black">
-                                {text}
+                                {text} - {triplengthValue}
                             </Typography>
                                                    
                                 <input type="range"
                                 
                                 value= {triplengthValue} 
                                 onChange={handleTripLengthSliderChange} 
-                                list="triplengthlist"/>  
+                                list="triplengthlist" min="1" max="30"/>  
                         <datalist id="triplengthlist">
                         <option value="1" label="1"></option>
                         <option value="7" label="7"></option>

@@ -50,7 +50,8 @@ const TripList = ({access_token,categoryId,cityList,showDetails}) =>{
 
     const [tourMgrMap, setTourMgrMap] = useState(new Map());
     const [selectedValue, setSelectedValue] = useState('B');
-
+    const[priceValue, setPriceValue] = useState('10000000');
+    const [triplengthValue, setTriplengthValue] = useState('30')
     const tourManagerMap = new Map(tourMgrMap);
     
     const updateTourMgrMap = (key,value) => {
@@ -72,7 +73,7 @@ const TripList = ({access_token,categoryId,cityList,showDetails}) =>{
             console.log('citycode...',citycode);
             if(city.citycode === citycode)
             {
-                return city.desc;
+                return city.cityname;
             }
         }
         return "";
@@ -135,9 +136,12 @@ const TripList = ({access_token,categoryId,cityList,showDetails}) =>{
                         if(selectedValue === 'I' || selectedValue === 'D'){
                         for(let tour of alltours)
                         {
-                            
-                              //  console.log('tour....',tour);
-                            if(tour.domesticOrinternational === selectedValue)
+                            let tripLength = (new Date(tour.endDate).getTime() - 
+                            new Date(tour.startDate).getTime())/(24*3600*1000);
+                                console.log('tripLength....',tripLength);
+                            if(tour.domesticOrinternational === selectedValue  && 
+                                Number(tour.package_cost)<=(Number(priceValue)) && 
+                            Number(tripLength)<=Number(triplengthValue))
                             {
                                 selectedTours.push(tour);
                                 
@@ -156,7 +160,10 @@ const TripList = ({access_token,categoryId,cityList,showDetails}) =>{
                     } 
                 
              },
-             [selectedValue]);       
+             [selectedValue,priceValue,triplengthValue]); 
+             
+             
+            
       
     return(
         
@@ -195,14 +202,12 @@ const TripList = ({access_token,categoryId,cityList,showDetails}) =>{
               </Typography>
 
                <Typography variant="body2" color="text.secondary">
-                {getValuesFromTourManagerMap(tour.tourManagerId).tourManagerName}
+                {getValuesFromTourManagerMap(tour.tourManagerId).tourManagerName}- {getValuesFromTourManagerMap(tour.tourManagerId).tourOpLocation}
               </Typography>
                     <Typography variant="body2" color="text.secondary">
                  {getValuesFromTourManagerMap(tour.tourManagerId).contact}
               </Typography>
-              <Typography variant="body2" color="text.secondary">
-                 {getValuesFromTourManagerMap(tour.tourManagerId).tourOpLocation}
-              </Typography>
+              
                  <button type="submit" class="button"  onClick={()=>showDetails(tour,getValuesFromTourManagerMap(tour.tourManagerId))} 
                     style={{ cursor: 'pointer',backgroundColor: '#8a77f8ff',color:'#0c0c0fff'}}>
                        Details</button>
@@ -237,7 +242,9 @@ const TripList = ({access_token,categoryId,cityList,showDetails}) =>{
             {
             sortTrip ? 
             <div style={{position: 'fixed', top:70,right:0}} >
-                <SideBarForSorting selectedValue={selectedValue} setSelectedValue={setSelectedValue}/>
+                <SideBarForSorting selectedValue={selectedValue} setSelectedValue={setSelectedValue} 
+                priceValue={priceValue} setPriceValue={setPriceValue} triplengthValue={triplengthValue} 
+                setTriplengthValue={setTriplengthValue}/>
             </div>:<div></div>
            }
              </Grid>
