@@ -7,12 +7,14 @@ import Product from '../navigationTabs/products.jsx';
 import Header from '../header/header.jsx';
 import Layout from '../Layout/layout.jsx';
 import UserProfile from '../userprofile/userprofile.jsx';
+
 import '../../styles/loginsignup.css';
  import { NavProvider } from '../navigationContext/navigationContext.jsx';
  import {useLocation } from 'react-router-dom';
 import TripList from "./tripList.jsx";
 import TripDetails from "./tripDetails.jsx";
 import BookingForm from "./bookingForm.jsx";
+import PreviewForm from "./previewbooking.jsx";
 import { getCities } from "../admin/admin";
 const Welcome =()=>{
 
@@ -23,11 +25,12 @@ const Welcome =()=>{
      const [showTripDetails,setShowTripDetails] = useState(false);
      const [bookTrip,setBookTrip] = useState(false);
      const [showCategories,setShowCategories] = useState(false);
+     const [previewbooking,setPreviewbooking] = useState(false);
      const [cityList,setCityList] = useState('');
      const[tripListParam,setTripListParam] = useState('');
      const[productID,setProductID] = useState('');
      const[tripDetailsParam,setTripDetailsParam] = useState('');
-
+     const[bookings,setBookings] = useState('');
     console.log('showTrips....',showTrips);
     console.log('showTripDetails....',showTripDetails);
     console.log('bookTrip....',bookTrip);
@@ -45,7 +48,14 @@ const Welcome =()=>{
           setShowTrips(false);
         }
      }
-
+    const triggerDisplayBookings = async(data) =>{
+      if(data){
+        setPreviewbooking(true);
+        setBookings(data);
+      }else{
+        setPreviewbooking(false);
+      }
+    }
      const triggerDisplayTripsByProductId = async(productId) =>{
       console.log('productId....',productId)
       setShowCategories(false);
@@ -64,6 +74,8 @@ const Welcome =()=>{
           setShowCategories(false);
         }
      }
+
+   
 
 const openBookingForm = (tourDetails) =>{
   console.log('tourDetails...',tourDetails);
@@ -148,10 +160,13 @@ const openBookingForm = (tourDetails) =>{
               triggerDisplayTripsByCatId={triggerDisplayTripsByCatId} openBookingForm={openBookingForm}/> 
             :(bookTrip)?
             <BookingForm access_token={access_token} tourDetails={tripDetailsParam} 
-           triggerDisplayTripsByCatId={triggerDisplayTripsByCatId} />
+           triggerDisplayTripsByCatId={triggerDisplayTripsByCatId} 
+           triggerDisplayBookings={triggerDisplayBookings}/>
              :(showCategories) ?
              <NavBar access_token={access_token} 
              triggerDisplayTripsByCatId={triggerDisplayTripsByCatId} productID={productID} cityList={cityList}/>:
+            previewbooking?
+            <PreviewForm access_token={access_token} bookings={bookings}/>:
             <Product access_token={access_token} 
              triggerDisplayTripsByProductId={triggerDisplayTripsByProductId} />
           }

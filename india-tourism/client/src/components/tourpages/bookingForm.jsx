@@ -3,6 +3,9 @@ import '../../styles/Navbar.css';
 import '../../styles/Cards.css';
 import '../../styles/sidebar.css';
 import '../../styles/bookingForm.css';
+import plus from '../Assets/images/plus.png';
+import minus from '../Assets/images/minus.png';
+import CustomButton from '../Utilities/CustomButtons.jsx'
 import { useEffect, useState, useContext } from "react";
 import {
     TextField,
@@ -35,15 +38,16 @@ import { NavContext } from '../navigationContext/navigationContext.jsx';
 import FavoriteIcon from '@mui/icons-material/Favorite';
 import { ClassNames } from "@emotion/react";
 
-const BookingForm = ({access_token,tourDetails,triggerDisplayTripsByCatId}) =>{
+const BookingForm = ({access_token,tourDetails,triggerDisplayBookings}) =>{
     console.log('tourdetails.....',tourDetails);
     const [startBooking,setStartBooking] = useState(false);
     const [touristCount, setTouristCount] = useState('');
     const[openBookingForm,setOpenBookingForm] = useState(false);
+    const [noOfTourist,setNoOfTourist] = useState(1);
     const initBooking = async() =>{
         setStartBooking(true);
     }
-  
+    const [bookingData,setBookingData] = useState('');
     const createForms = async(event) =>
     {
       let result = [];
@@ -51,7 +55,10 @@ const BookingForm = ({access_token,tourDetails,triggerDisplayTripsByCatId}) =>{
       if(parseInt(event.target.value)>0)
       {
         setOpenBookingForm(true);
+      }else{
+        setOpenBookingForm(false);
       }
+      if(openBookingForm){
       for(let count=1;count<=parseInt(event.target.value);count++)
       {
         let data = {"key":count,"value":count}
@@ -59,9 +66,24 @@ const BookingForm = ({access_token,tourDetails,triggerDisplayTripsByCatId}) =>{
       }
       console.log('result...',result)
       setTouristCount(result);
+      let data = new Array(parseInt(event.target.value));
+      
+      
+      
+      for(let index=0;index<event.target.value;index++)
+      {
+        data[index] = {};
+      }
+      console.log('data...',data);
+       setBookingData(data);
     }
-
-
+    
+    }
+    
+    const updateBooking = async(name,index,event) =>{
+        bookingData[index-1][name]= event.target.value;
+        console.log('bookingdata....',bookingData);
+    }
 
 
     return(
@@ -108,9 +130,17 @@ const BookingForm = ({access_token,tourDetails,triggerDisplayTripsByCatId}) =>{
                           sx={{ color: '#FFFFFF' }}
                           label="Enter number of travellers" 
                           variant="standard"
-                          
+                          value={noOfTourist}
                           onBlur={(event)=>createForms(event)} />    
                         </TableCell>
+                         <TableCell>
+                          {/* <img src={plus} width="15%" height="15%" alt="plus"/>  */}
+                          <CustomButton />
+                        
+                        </TableCell>
+                        
+                              
+                       
                         </TableRow>
                     </TableBody>
                 </Table>
@@ -119,11 +149,12 @@ const BookingForm = ({access_token,tourDetails,triggerDisplayTripsByCatId}) =>{
         }
      {
         openBookingForm ?
-        <div style={{border: "2px solid black;" /* 2px width, solid style, black color */}}>
-          
+        <div style={{border: "2px solid black;" }}>
+         <Paper>
           {
             touristCount && touristCount.length >0 ?
             touristCount.map((tourist)=>(
+           
               <div className="head"
                 style={{
                     width: "fit-content",
@@ -136,7 +167,7 @@ const BookingForm = ({access_token,tourDetails,triggerDisplayTripsByCatId}) =>{
                         color: "solid white"
                     }}
                 >
-             <Typography variant="body2" style={{ color: '#FFFFFF' }}> 
+             <Typography variant="body2" style={{ color: '#160101ff' }}> 
               <strong>Tourist #{tourist.key}</strong>
 
                </Typography>
@@ -144,51 +175,52 @@ const BookingForm = ({access_token,tourDetails,triggerDisplayTripsByCatId}) =>{
                 <FormControl>
              
                 <InputLabel variant="outlined" 
-                style={{ color: '#FFFFFF' }}
-                fullWidth>Name:</InputLabel>
-                <Input id="name" />
+                style={{ color: '#080000ff' }}
+                fullWidth>Name</InputLabel>
+                <Input id="name" name="name" onBlur={(event)=>updateBooking("name",tourist.key,event)}/>
                  </FormControl>
                   <FormControl style={{ marginLeft: 5 }}>
+                    
                 <InputLabel 
-                style={{ color: '#FFFFFF' }}
-                variant="outlined" fullWidth>Email:</InputLabel>
-                <Input id="email" />
+                style={{ color: '#0c0000ff' }}
+                variant="outlined" fullWidth>Email</InputLabel>
+                <Input id="email" name="email" onBlur={(event)=>updateBooking("email",tourist.key,event)}/>
                 </FormControl>
                      
                    <FormControl style={{ marginLeft: 5 }}>
+                   
                 <InputLabel 
-                style={{ color: '#FFFFFF' }}
-                variant="outlined" fullWidth>Mobile:</InputLabel>
-                <Input id="mobile" />
+                style={{ color: '#0c0000ff' }}
+                variant="outlined" fullWidth>Mobile</InputLabel>
+                <Input id="mobile" name="mobile" onBlur={(event)=>updateBooking("mobile",tourist.key,event)}/>
                     </FormControl>
                     <FormControl style={{ marginLeft: 5 }}> 
+                      
                   <InputLabel 
-                  style={{ color: '#FFFFFF' }}
-                  variant="outlined" fullWidth>Age:</InputLabel>
-                 <Input id="age" />  
+                  style={{ color: '#080000ff' }}
+                  variant="outlined" fullWidth>Age</InputLabel>
+                 <Input id="age" name="age" onBlur={(event)=>updateBooking("age",tourist.key,event)} />  
+                </FormControl>
+                  <FormControl style={{ marginLeft: 5 }}> 
+                     
+                  <InputLabel 
+                  style={{ color: '#080000ff' }}
+                  variant="outlined" fullWidth>Special request?</InputLabel>
+                 <Input id="specialRequest" name="specialRequest" onBlur={(event)=>updateBooking("specialRequest",tourist.key,event)} />  
                 </FormControl>
               </div>
             )):<div></div>
-          }</div>:<div></div>
+          }</Paper></div>:<div></div>
         }
         { openBookingForm ? 
+       
          <div className = "center-container" style={{
                     width: "fit-content",
                     margin: "auto",
                   }}>
-        <Box  component="form">
-             <Typography variant="body2" style={{ color: '#FFFFFF' }}>
-               Any special preferences?
-              </Typography>
-          </Box>
-           <Box  component="form">
-            <TextareaAutosize
-  aria-label="minimum height"
-  minRows={3}
-  placeholder="Enter your preferences?"
-  style={{ width: 500 }}
-/>
-          </Box>
+                    
+       
+          
           
         <div className="button-container">
          <div className='submit-container'>
@@ -197,8 +229,9 @@ const BookingForm = ({access_token,tourDetails,triggerDisplayTripsByCatId}) =>{
                         >Go Back</button>
 
                             <button type="submit" 
-                       class="button" 
-                        >Make Payment</button>
+                       class="button" onClick={()=>{
+                        triggerDisplayBookings(bookingData)}}>Submit your Booking</button>
+                       
         </div>
       </div>
         </div>:<div></div>

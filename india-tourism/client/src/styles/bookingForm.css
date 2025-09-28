@@ -6,7 +6,18 @@
 .label-one {
   margin-right: 15px;
 }
-
+.addremove-button {
+    background-color: #007bff;
+    padding: 10;
+    border-Radius: 5;
+    align-Items: 'center';
+    margin-Top: 20;
+  }
+  .addremove-buttonText {
+    color: white;
+    font-size: 16;
+  }
+  
 .input-label {
   display: flex;
   flex-direction: row;
@@ -36,7 +47,12 @@
   /* Animation properties */
   animation: blink-animation 20s linear infinite; /* Name, duration, timing, iteration count */
 }
-
+image {
+    flex: 1;
+    width: 50;
+    height: 50;
+    resize: 'contain'
+}
 @keyframes blink-animation {
   0% {
     opacity: 1; /* Fully visible at the start */
@@ -48,3 +64,4 @@
     opacity: 1; /* Fully visible at the end, completing the cycle */
   }
 }
+
