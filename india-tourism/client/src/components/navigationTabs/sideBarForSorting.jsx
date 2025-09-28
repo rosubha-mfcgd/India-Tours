@@ -65,7 +65,17 @@ const handleChange = (event) => {
                 <StyledDrawer
                     variant="persistent" // Or "temporary", "permanent"
                     anchor="right"
-                    open={open} 
+                    open={open}
+                    sx={{
+        width: 240,
+        flexShrink: 0,
+        '& .MuiDrawer-paper': { // Target the Paper component within the Drawer
+          width: 240,
+          boxSizing: 'border-box',
+          backgroundColor: 'lightblue', // Example background color
+          borderRadius: '0 16px 16px 0', // Example rounded corners
+        },
+      }} 
                 >
                     <Box sx={{ display: 'flex', 
                       alignItems: 'center', justifyContent: 'flex-end', 
@@ -94,7 +104,7 @@ const handleChange = (event) => {
                                 <input type="range" 
                                 value= {priceValue} 
                                 onChange={handlePriceSliderChange} list="pricelist" 
-                                min="10000" max="1000000"
+                                min="10000" max="100000"
                                 />  
                                  <datalist id="pricelist">
                         <option value="10000" label="10k"></option>

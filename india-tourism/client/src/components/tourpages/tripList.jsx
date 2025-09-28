@@ -50,7 +50,7 @@ const TripList = ({access_token,categoryId,cityList,showDetails}) =>{
 
     const [tourMgrMap, setTourMgrMap] = useState(new Map());
     const [selectedValue, setSelectedValue] = useState('B');
-    const[priceValue, setPriceValue] = useState('10000000');
+    const[priceValue, setPriceValue] = useState('100000');
     const [triplengthValue, setTriplengthValue] = useState('30')
     const tourManagerMap = new Map(tourMgrMap);
     
