@@ -6,7 +6,7 @@ import '../../styles/bookingForm.css';
 import plus from '../Assets/images/plus.png';
 import minus from '../Assets/images/minus.png';
 import CustomButton from '../Utilities/CustomButtons.jsx'
-import { useEffect, useState, useContext } from "react";
+import { useEffect, useState, useContext,useRef } from "react";
 import {
     TextField,
     Button,
@@ -44,6 +44,7 @@ const BookingForm = ({access_token,tourDetails,triggerDisplayBookings}) =>{
     const [touristCount, setTouristCount] = useState('');
     const[openBookingForm,setOpenBookingForm] = useState(false);
     const [noOfTourist,setNoOfTourist] = useState(1);
+    const inputRef = useRef(null);
     const initBooking = async() =>{
         setStartBooking(true);
     }
@@ -55,8 +56,6 @@ const BookingForm = ({access_token,tourDetails,triggerDisplayBookings}) =>{
       if(parseInt(event.target.value)>0)
       {
         setOpenBookingForm(true);
-      }else{
-        setOpenBookingForm(false);
       }
       if(openBookingForm){
       for(let count=1;count<=parseInt(event.target.value);count++)
@@ -67,9 +66,6 @@ const BookingForm = ({access_token,tourDetails,triggerDisplayBookings}) =>{
       console.log('result...',result)
       setTouristCount(result);
       let data = new Array(parseInt(event.target.value));
-      
-      
-      
       for(let index=0;index<event.target.value;index++)
       {
         data[index] = {};
@@ -85,6 +81,12 @@ const BookingForm = ({access_token,tourDetails,triggerDisplayBookings}) =>{
         console.log('bookingdata....',bookingData);
     }
 
+    useEffect(()=>{
+    if(inputRef.current)
+    {
+      inputRef.current.focus();
+    }
+    },[noOfTourist]);
 
     return(
         
@@ -126,21 +128,19 @@ const BookingForm = ({access_token,tourDetails,triggerDisplayBookings}) =>{
                             </Typography>
                         </TableCell>
                         <TableCell>
-                          <TextField id="standard-basic" 
+                          <TextField id="numberOfTourist" 
                           sx={{ color: '#FFFFFF' }}
                           label="Enter number of travellers" 
                           variant="standard"
                           value={noOfTourist}
-                          onBlur={(event)=>createForms(event)} />    
-                        </TableCell>
+                          onFocus={(event)=>createForms(event)} ref={inputRef}/>    
+
+                         </TableCell>
+
                          <TableCell>
-                          {/* <img src={plus} width="15%" height="15%" alt="plus"/>  */}
-                          <CustomButton />
-                        
-                        </TableCell>
-                        
-                              
-                       
+                           <CustomButton noOfTourist={noOfTourist} setNoOfTourist={setNoOfTourist} 
+                           />
+                          </TableCell>     
                         </TableRow>
                     </TableBody>
                 </Table>
@@ -205,7 +205,7 @@ const BookingForm = ({access_token,tourDetails,triggerDisplayBookings}) =>{
                      
                   <InputLabel 
                   style={{ color: '#080000ff' }}
-                  variant="outlined" fullWidth>Special request?</InputLabel>
+                  variant="outlined" fullWidth>Any Special request?</InputLabel>
                  <Input id="specialRequest" name="specialRequest" onBlur={(event)=>updateBooking("specialRequest",tourist.key,event)} />  
                 </FormControl>
               </div>

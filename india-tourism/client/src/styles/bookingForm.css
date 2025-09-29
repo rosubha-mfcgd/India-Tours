@@ -47,11 +47,11 @@
   /* Animation properties */
   animation: blink-animation 20s linear infinite; /* Name, duration, timing, iteration count */
 }
-image {
+.image-style {
     flex: 1;
     width: 50;
     height: 50;
-    resize: 'contain'
+    resize : 'contain'
 }
 @keyframes blink-animation {
   0% {

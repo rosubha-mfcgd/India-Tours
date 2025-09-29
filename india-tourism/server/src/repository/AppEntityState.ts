@@ -91,7 +91,7 @@ export interface IProduct extends Document{
        type: Number,
       required: true
     },
-  productName:{
+    productName:{
        type: String,
       required: true,
       trim: true,
@@ -231,6 +231,23 @@ export interface ICategory extends Document{
     websiteURL: String
   }
   export interface IReviews  extends Document{
+    tourManagerId:{
+       type: String,
+      required: true
+    },
+    reviews:{
+       type: String,
+      required: true
+    },
+    username:{
+       type: String,
+      required: true
+    },
+    email: String
+           
+  }
+
+    export interface ITourBookings  extends Document{
     tourManagerId:{
        type: String,
       required: true
