@@ -206,7 +206,8 @@ const BookingForm = ({access_token,tourDetails,triggerDisplayBookings}) =>{
                   <InputLabel 
                   style={{ color: '#080000ff' }}
                   variant="outlined" fullWidth>Any Special request?</InputLabel>
-                 <Input id="specialRequest" name="specialRequest" onBlur={(event)=>updateBooking("specialRequest",tourist.key,event)} />  
+                 <Input id="specialRequest" name="specialRequest" 
+                 onBlur={(event)=>updateBooking("specialRequest",tourist.key,event)} />  
                 </FormControl>
               </div>
             )):<div></div>
@@ -230,7 +231,8 @@ const BookingForm = ({access_token,tourDetails,triggerDisplayBookings}) =>{
 
                             <button type="submit" 
                        class="button" onClick={()=>{
-                        triggerDisplayBookings(bookingData)}}>Submit your Booking</button>
+                        triggerDisplayBookings(bookingData,
+                        tourDetails)}}>Submit your Booking</button>
                        
         </div>
       </div>

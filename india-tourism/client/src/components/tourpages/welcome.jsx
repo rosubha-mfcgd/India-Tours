@@ -31,11 +31,13 @@ const Welcome =()=>{
      const[productID,setProductID] = useState('');
      const[tripDetailsParam,setTripDetailsParam] = useState('');
      const[bookings,setBookings] = useState('');
+     const[tourDetailsParam,setTourDetailsParam] = useState('');
+     
     console.log('showTrips....',showTrips);
     console.log('showTripDetails....',showTripDetails);
     console.log('bookTrip....',bookTrip);
     console.log('showCategories....',showCategories);
-
+ console.log('previewbooking....',previewbooking);
      const triggerDisplayTripsByCatId = (categoryId) =>{
       console.log('categoryId....',categoryId)
       setShowTripDetails(false);
@@ -48,10 +50,19 @@ const Welcome =()=>{
           setShowTrips(false);
         }
      }
-    const triggerDisplayBookings = async(data) =>{
+    const triggerDisplayBookings = async(data,tourDetailInfo) =>{
+      
+      console.log('Here...');
+      console.log('data is...',data);
+       console.log('tourDetailInfo is...',tourDetailInfo);
       if(data){
+        setShowTrips(false);
+        setShowTripDetails(false);
+        setBookTrip(false);
+        setShowCategories(false);
         setPreviewbooking(true);
         setBookings(data);
+        setTourDetailsParam(tourDetailInfo);
       }else{
         setPreviewbooking(false);
       }
@@ -92,35 +103,34 @@ const openBookingForm = (tourDetails) =>{
 
        const showDetails = async (tourDetails,tourManager) =>{
         if(tourDetails){
-       //tourDetails =   prepareDetails(tourDetails);
-      console.log('location....',tourDetails.locationName)
-      console.log('tourManager name....',tourManager.tourManagerName)
-      console.log('tripLength....',tourDetails.tripLength)
-      console.log('start date....',tourDetails.startDate)
-      console.log('end date....',tourDetails.endDate)
-      console.log('image....',tourDetails.image)
+            //tourDetails =   prepareDetails(tourDetails);
+            console.log('location....',tourDetails.locationName)
+            console.log('tourManager name....',tourManager.tourManagerName)
+            console.log('tripLength....',tourDetails.tripLength)
+            console.log('start date....',tourDetails.startDate)
+            console.log('end date....',tourDetails.endDate)
+            console.log('image....',tourDetails.image)
         if(tourDetails)
         {
-
-          
-         let tourDtls = {"locationName":tourDetails.locationName,
-            "tourManagerName":tourManager.tourManagerName,
-            "triplength":tourDetails.triplength,
-            "image":tourDetails.image,
-            "desc":tourDetails.desc,
-            "contact":tourManager.contact,            
-            "startDate":tourDetails.startDate,
-            "endDate":tourDetails.endDate,
-            "package_cost":tourDetails.package_cost,
-            "max_tourist":tourDetails.max_tourist,
-            "seats_left":tourDetails.seats_left,
-            "ticket_cost":tourDetails.ticket_cost,
-            "itinerary": tourDetails.itinerary,
-            "categoryId":tourDetails.categoryId
-        };
-          setTripDetailsParam(tourDtls);
-          setShowTripDetails(true);
-          setShowTrips(false);
+   
+            let tourDtls = {"locationName":tourDetails.locationName,
+                "tourManagerName":tourManager.tourManagerName,
+                "triplength":tourDetails.triplength,
+                "image":tourDetails.image,
+                "desc":tourDetails.desc,
+                "contact":tourManager.contact,            
+                "startDate":tourDetails.startDate,
+                "endDate":tourDetails.endDate,
+                "package_cost":tourDetails.package_cost,
+                "max_tourist":tourDetails.max_tourist,
+                "seats_left":tourDetails.seats_left,
+                "ticket_cost":tourDetails.ticket_cost,
+                "itinerary": tourDetails.itinerary,
+                "categoryId":tourDetails.categoryId
+            };
+              setTripDetailsParam(tourDtls);
+              setShowTripDetails(true);
+              setShowTrips(false);
         }else{
           //setTripDetailsParam(tourDetails);
           setShowTripDetails(false);
@@ -156,17 +166,22 @@ const openBookingForm = (tourDetails) =>{
                 cityList = {cityList}
               />
             : (showTripDetails) ?
-              <TripDetails access_token={access_token} tourDetails={tripDetailsParam} cityList = {cityList}
-              triggerDisplayTripsByCatId={triggerDisplayTripsByCatId} openBookingForm={openBookingForm}/> 
+              <TripDetails access_token={access_token} 
+              tourDetails={tripDetailsParam} 
+              cityList = {cityList}
+              triggerDisplayTripsByCatId={triggerDisplayTripsByCatId} 
+              openBookingForm={openBookingForm}/> 
             :(bookTrip)?
             <BookingForm access_token={access_token} tourDetails={tripDetailsParam} 
            triggerDisplayTripsByCatId={triggerDisplayTripsByCatId} 
            triggerDisplayBookings={triggerDisplayBookings}/>
              :(showCategories) ?
              <NavBar access_token={access_token} 
-             triggerDisplayTripsByCatId={triggerDisplayTripsByCatId} productID={productID} cityList={cityList}/>:
-            previewbooking?
-            <PreviewForm access_token={access_token} bookings={bookings}/>:
+             triggerDisplayTripsByCatId={triggerDisplayTripsByCatId} 
+             productID={productID} cityList={cityList}/>:
+            (previewbooking)?
+            <PreviewForm access_token={access_token} bookings={bookings} 
+            tourDetailsParam = {tourDetailsParam}/>:
             <Product access_token={access_token} 
              triggerDisplayTripsByProductId={triggerDisplayTripsByProductId} />
           }
