@@ -37,7 +37,8 @@ import { ClassNames } from "@emotion/react";
 
 const PreviewForm = ({access_token,bookings,tourDetailsParam}) =>{
 
-    
+    const[disable,setDisable] = useState(true);
+
     console.log('bookings...',bookings)
     var sum = 0;
 
@@ -47,6 +48,9 @@ function increment () {
     return sum;
 }
 
+const triggerEditable = () =>{
+    setDisable(false);
+}
     
     return(<div className = "center-container">
             <div style={{border: "2px solid black;" }}>
@@ -56,12 +60,17 @@ function increment () {
                                     <TableBody>
                                       <TableRow>
                                         <TableCell>
-                                    <Typography variant="body2" style={{ color: 'rgba(17, 17, 17, 1)' }}>
+                                    
+                                    <Typography variant="h5" style={{ color: 'rgba(17, 17, 17, 1)' }}>
+                                    Booking details for {tourDetailsParam.locationName} tour by {tourDetailsParam.tourManagerName}
+                                    </Typography>
+                                        </TableCell>
+                                        <TableCell>
+                                         <button type="button" onClick={()=>{
+                        triggerEditable()}}
+                       class="button" 
+                        >Edit </button>
 
-                                    </Typography>
-                                    <Typography variant="body2" style={{ color: 'rgba(17, 17, 17, 1)' }}>
-                                    Booking details for {tourDetailsParam.locationName} with {tourDetailsParam.tourManagerName}
-                                    </Typography>
                                         </TableCell>
                                         </TableRow>
                                         </TableBody>
@@ -91,14 +100,14 @@ function increment () {
                                                 <InputLabel variant="outlined" 
                                                 style={{ color: '#080000ff' }}
                                                 fullWidth>Name</InputLabel>
-                                                <Input id="name" name="name" value = {booking.name} disabled/>
+                                                <Input id="name" name="name" value = {booking.name} disabled={disable}/>
                                                  </FormControl>
                                                   <FormControl style={{ marginLeft: 5 }}>
                                                     
                                                 <InputLabel 
                                                 style={{ color: '#0c0000ff' }}
                                                 variant="outlined" fullWidth>Email</InputLabel>
-                                                <Input id="email" name="email" value = {booking.email} disabled/>
+                                                <Input id="email" name="email" value = {booking.email} disabled={disable}/>
                                                 </FormControl>
                                                      
                                                    <FormControl style={{ marginLeft: 5 }}>
@@ -106,14 +115,14 @@ function increment () {
                                                 <InputLabel 
                                                 style={{ color: '#0c0000ff' }}
                                                 variant="outlined" fullWidth>Mobile</InputLabel>
-                                                <Input id="mobile" name="mobile" value = {booking.mobile} disabled/>
+                                                <Input id="mobile" name="mobile" value = {booking.mobile} disabled={disable}/>
                                                     </FormControl>
                                                     <FormControl style={{ marginLeft: 5 }}> 
                                                       
                                                   <InputLabel 
                                                   style={{ color: '#080000ff' }}
                                                   variant="outlined" fullWidth>Age</InputLabel>
-                                                 <Input id="age" name="age" value = {booking.age} disabled />  
+                                                 <Input id="age" name="age" value = {booking.age} disabled={disable} />  
                                                 </FormControl>
                                                   <FormControl style={{ marginLeft: 5 }}> 
                                                      
@@ -121,7 +130,7 @@ function increment () {
                                                   style={{ color: '#080000ff' }}
                                                   variant="outlined" fullWidth>Any Special request?</InputLabel>
                                                  <Input id="specialRequest" name="specialRequest" 
-                                                value = {booking.specialRequest} disabled />  
+                                                value = {booking.specialRequest} disabled={disable} />  
                                                 </FormControl>
                                               </div>
                            
@@ -129,7 +138,9 @@ function increment () {
                         ):<div></div>
                    }
                     </Paper>
-                  
+                   
+
+                           
               
             </div>
     </div>)

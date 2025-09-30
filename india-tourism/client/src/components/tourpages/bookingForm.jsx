@@ -49,24 +49,24 @@ const BookingForm = ({access_token,tourDetails,triggerDisplayBookings}) =>{
         setStartBooking(true);
     }
     const [bookingData,setBookingData] = useState('');
-    const createForms = async(event) =>
+    const createForms = async(noOfTourists) =>
     {
       let result = [];
-      console.log('value is....',event.target.value)
-      if(parseInt(event.target.value)>0)
+      console.log('value is....',noOfTourists)
+      if(parseInt(noOfTourists)>0)
       {
         setOpenBookingForm(true);
       }
       if(openBookingForm){
-      for(let count=1;count<=parseInt(event.target.value);count++)
+      for(let count=1;count<=parseInt(noOfTourists);count++)
       {
         let data = {"key":count,"value":count}
         result.push(data);
       }
       console.log('result...',result)
       setTouristCount(result);
-      let data = new Array(parseInt(event.target.value));
-      for(let index=0;index<event.target.value;index++)
+      let data = new Array(parseInt(noOfTourists));
+      for(let index=0;index<noOfTourists;index++)
       {
         data[index] = {};
       }
@@ -82,10 +82,10 @@ const BookingForm = ({access_token,tourDetails,triggerDisplayBookings}) =>{
     }
 
     useEffect(()=>{
-    if(inputRef.current)
-    {
-      inputRef.current.focus();
-    }
+      if(document.getElementById('numberOfTourist')){
+          let noofTourists = document.getElementById('numberOfTourist').value;
+          createForms(noofTourists);
+      }
     },[noOfTourist]);
 
     return(
@@ -133,7 +133,7 @@ const BookingForm = ({access_token,tourDetails,triggerDisplayBookings}) =>{
                           label="Enter number of travellers" 
                           variant="standard"
                           value={noOfTourist}
-                          onFocus={(event)=>createForms(event)} ref={inputRef}/>    
+                           />    
 
                          </TableCell>
 
