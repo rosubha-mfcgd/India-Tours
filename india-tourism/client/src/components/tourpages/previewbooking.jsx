@@ -61,7 +61,7 @@ const triggerEditable = () =>{
                                       <TableRow>
                                         <TableCell>
                                     
-                                    <Typography variant="h5" style={{ color: 'rgba(17, 17, 17, 1)' }}>
+                                    <Typography variant="h5" style={{ color: 'hsla(0, 32%, 92%, 1.00)' }}>
                                     Booking details for {tourDetailsParam.locationName} tour by {tourDetailsParam.tourManagerName}
                                     </Typography>
                                         </TableCell>

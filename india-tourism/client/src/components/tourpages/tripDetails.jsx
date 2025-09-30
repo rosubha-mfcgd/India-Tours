@@ -159,7 +159,15 @@ import ChatButton from '../Utilities/ChatButton.jsx';
                   </Table>
                   </TableContainer>
                   </div>
-                  <div style={{margintop: "20px;"}}>
+                  <div className = "center-container" style={{
+                    width: "fit-content",
+                    margin: "auto",
+                  }}>
+                    
+       
+          
+          
+        <div className="button-container">
          <div className='submit-container'>
                     <button type="submit" onClick={()=>{
                         triggerDisplayTripsByCatId(tourDetails.categoryId)}}
@@ -175,7 +183,7 @@ import ChatButton from '../Utilities/ChatButton.jsx';
           {isChatOpen && <ChatWindow onClose={toggleChat} />}
         </div>
 
-         
+         </div>
       
         </div> 
         
