@@ -37,15 +37,17 @@ import { ClassNames } from "@emotion/react";
 
 const PreviewForm = ({access_token,bookings,tourDetailsParam}) =>{
 
-    const[touristCount,setTouristCount] = useState(1);
+    
     console.log('bookings...',bookings)
-     useEffect(() => {
-    let sum = 0;
-    bookings.forEach(booking => {
-      sum += 1;
-    });
-    setTouristCount(sum);
-  }, [bookings]); // Recalculate sum whenever 'data' changes
+    var sum = 0;
+
+function increment () {
+     sum += 1;
+   
+    return sum;
+}
+
+    
     return(<div className = "center-container">
             <div style={{border: "2px solid black;" }}>
                  <Box  component="form" >
@@ -82,7 +84,7 @@ const PreviewForm = ({access_token,bookings,tourDetailsParam}) =>{
                                                         color: "solid white"
                                                     }}
                                                 >
-                                            Tourist #{touristCount}
+                                            Tourist #{increment()}
                                                 </h2>
                                                 <FormControl>
                                              
@@ -122,14 +124,9 @@ const PreviewForm = ({access_token,bookings,tourDetailsParam}) =>{
                                                 value = {booking.specialRequest} disabled />  
                                                 </FormControl>
                                               </div>
-                           // setTouristCount(touristCount+1);
-                            
+                           
                             )
                         ):<div></div>
-                   
-                   
-                   
-                   
                    }
                     </Paper>
                   

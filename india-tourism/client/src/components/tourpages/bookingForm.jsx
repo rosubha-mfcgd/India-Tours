@@ -177,14 +177,14 @@ const BookingForm = ({access_token,tourDetails,triggerDisplayBookings}) =>{
                 <InputLabel variant="outlined" 
                 style={{ color: '#080000ff' }}
                 fullWidth>Name</InputLabel>
-                <Input id="name" name="name" onBlur={(event)=>updateBooking("name",tourist.key,event)}/>
+                <Input id="name" name="name" onChange={(event)=>updateBooking("name",tourist.key,event)}/>
                  </FormControl>
                   <FormControl style={{ marginLeft: 5 }}>
                     
                 <InputLabel 
                 style={{ color: '#0c0000ff' }}
                 variant="outlined" fullWidth>Email</InputLabel>
-                <Input id="email" name="email" onBlur={(event)=>updateBooking("email",tourist.key,event)}/>
+                <Input id="email" name="email" onChange={(event)=>updateBooking("email",tourist.key,event)}/>
                 </FormControl>
                      
                    <FormControl style={{ marginLeft: 5 }}>
@@ -192,14 +192,14 @@ const BookingForm = ({access_token,tourDetails,triggerDisplayBookings}) =>{
                 <InputLabel 
                 style={{ color: '#0c0000ff' }}
                 variant="outlined" fullWidth>Mobile</InputLabel>
-                <Input id="mobile" name="mobile" onBlur={(event)=>updateBooking("mobile",tourist.key,event)}/>
+                <Input id="mobile" name="mobile" onChange={(event)=>updateBooking("mobile",tourist.key,event)}/>
                     </FormControl>
                     <FormControl style={{ marginLeft: 5 }}> 
                       
                   <InputLabel 
                   style={{ color: '#080000ff' }}
                   variant="outlined" fullWidth>Age</InputLabel>
-                 <Input id="age" name="age" onBlur={(event)=>updateBooking("age",tourist.key,event)} />  
+                 <Input id="age" name="age" onChange={(event)=>updateBooking("age",tourist.key,event)} />  
                 </FormControl>
                   <FormControl style={{ marginLeft: 5 }}> 
                      
@@ -207,7 +207,7 @@ const BookingForm = ({access_token,tourDetails,triggerDisplayBookings}) =>{
                   style={{ color: '#080000ff' }}
                   variant="outlined" fullWidth>Any Special request?</InputLabel>
                  <Input id="specialRequest" name="specialRequest" 
-                 onBlur={(event)=>updateBooking("specialRequest",tourist.key,event)} />  
+                 onChange={(event)=>updateBooking("specialRequest",tourist.key,event)} />  
                 </FormControl>
               </div>
             )):<div></div>
