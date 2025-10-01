@@ -2,8 +2,7 @@ import React, { useEffect,useState } from "react";
 import  { useNavigate } from "react-router-dom"; 
 import '../../styles/TripDetails.css';
 import '../../styles/loginsignup.css';
-import ChatButton from '../Utilities/ChatButton.jsx';
-    import ChatWindow from '../Utilities/ChatWindow.jsx';
+
  import {
     TextField,
     Button,
@@ -54,11 +53,7 @@ import ChatButton from '../Utilities/ChatButton.jsx';
         const detailFlds = getFieldsForTripDetailsScreen();
         console.log('tourDetails...',tourDetails);
 
-        const [isChatOpen, setIsChatOpen] = useState(false);
-
-      const toggleChat = () => {
-        setIsChatOpen(!isChatOpen);
-      };
+        
     return (
         <div style={{ display: 'flex', flexDirection: 'column', 
         justifycontent: 'center',
@@ -179,9 +174,7 @@ import ChatButton from '../Utilities/ChatButton.jsx';
                        class="button" 
                         >Book My Trip</button>
 
-                         <ChatButton toggleChat={toggleChat} />
-          {isChatOpen && <ChatWindow onClose={toggleChat} />}
-        </div>
+              </div>
 
          </div>
       

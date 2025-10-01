@@ -12,11 +12,11 @@ const doLogin = async(req,res) => {
 
     console.log('req body',req.body);
   
-    const { email,mobile } = req.body;
+    let { email,mobile,access_token } = req.body;
 
      let isLoggedin = null;
 
-    let access_token = req.body.access_token;
+  
 
     if(access_token)
     {
@@ -51,6 +51,10 @@ const doLogin = async(req,res) => {
        });
 
        return isLoggedin;
+}
+
+const resendOTP = (req,res) =>{
+
 }
 
 module.exports = {doLogin};

@@ -16,6 +16,8 @@ import TripDetails from "./tripDetails.jsx";
 import BookingForm from "./bookingForm.jsx";
 import PreviewForm from "./previewbooking.jsx";
 import { getCities } from "../admin/admin";
+import ChatButton from '../Utilities/ChatButton.jsx';
+import ChatWindow from '../Utilities/ChatWindow.jsx';
 const Welcome =()=>{
 
      const location = useLocation();
@@ -32,7 +34,7 @@ const Welcome =()=>{
      const[tripDetailsParam,setTripDetailsParam] = useState('');
      const[bookings,setBookings] = useState('');
      const[tourDetailsParam,setTourDetailsParam] = useState('');
-     
+     const [isChatOpen, setIsChatOpen] = useState(false);
     console.log('showTrips....',showTrips);
     console.log('showTripDetails....',showTripDetails);
     console.log('bookTrip....',bookTrip);
@@ -138,6 +140,10 @@ const openBookingForm = (tourDetails) =>{
       }
      }
       
+
+      const toggleChat = () => {
+        setIsChatOpen(!isChatOpen);
+      };
            
    return (
    
@@ -145,6 +151,7 @@ const openBookingForm = (tourDetails) =>{
          <NavProvider>
           
         <div>
+           
             <div>
                       {access_token?
                         <UserProfile name = {name} email={email} mobile={mobile}
@@ -154,11 +161,12 @@ const openBookingForm = (tourDetails) =>{
                   </div> 
        
        
-       
+      
          <div className="center-container">
            
 
          <div className="original-content">
+      
          <Layout access_token={access_token} > {/* Wrap your routes with the Layout component */}
           {
            (showTrips)? 
@@ -186,9 +194,12 @@ const openBookingForm = (tourDetails) =>{
              triggerDisplayTripsByProductId={triggerDisplayTripsByProductId} />
           }
           </Layout>
+          
+          <ChatButton toggleChat={toggleChat} />
+                    {isChatOpen && <ChatWindow onClose={toggleChat} />}
           </div>
           </div>
-         
+        
        </div>
       
     

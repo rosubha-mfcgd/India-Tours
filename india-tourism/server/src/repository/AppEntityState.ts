@@ -248,20 +248,48 @@ export interface ICategory extends Document{
   }
 
     export interface ITourBookings  extends Document{
-    tourManagerId:{
-       type: String,
-      required: true
-    },
-    reviews:{
-       type: String,
-      required: true
-    },
-    username:{
-       type: String,
-      required: true
-    },
-    email: String
-           
+    _id: {
+			primaryKey: true,
+			type: Object,
+			required: true
+		},
+		tourManagerId: {
+			type: string,
+			required: true
+		},
+		startDate: {
+			type: string,
+			required: true
+		},
+		endDate: {
+			type: string,
+			required: true
+		},
+		locationName: {
+			type: string,
+			required: true
+		},
+		domesticOrInternational: {
+			type: string,
+			required: true
+		},
+		package_cost: {
+			type: number,
+			required: true
+		},
+		primarybookings: {
+			type: [],
+			required: true
+		},
+		dependantbookings: {
+			type: [],
+			required: true
+		},
+		reviews: {
+			type: [],
+			required: true
+		}
+	           
   }
 
 

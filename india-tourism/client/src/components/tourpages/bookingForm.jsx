@@ -44,8 +44,10 @@ const BookingForm = ({access_token,tourDetails,triggerDisplayBookings}) =>{
     const [touristCount, setTouristCount] = useState('');
     const[openBookingForm,setOpenBookingForm] = useState(false);
     const [noOfTourist,setNoOfTourist] = useState(1);
-    const inputRef = useRef(null);
+    const [bookingPageMessage,setBookingPageMessage] = useState('');
+    
     const initBooking = async() =>{
+      setBookingPageMessage(process.env.REACT_APP_BOOKING_PAGE_MESSAGE);
         setStartBooking(true);
     }
     const [bookingData,setBookingData] = useState('');
@@ -150,8 +152,10 @@ const BookingForm = ({access_token,tourDetails,triggerDisplayBookings}) =>{
      {
         openBookingForm ?
         <div style={{border: "2px solid black;" }}>
+          <Typography variant="body2" style={{ color: '#FFFFFF' }}>{bookingPageMessage}</Typography>
          <Paper>
           {
+            
             touristCount && touristCount.length >0 ?
             touristCount.map((tourist)=>(
            

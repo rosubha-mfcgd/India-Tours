@@ -23,6 +23,7 @@
     "express": "^5.1.0",
     "express-openid-connect": "^2.19.2",
     "express-session": "^1.18.2",
+    "extract-mongo-schema": "^0.2.12",
     "google-auth-library": "^9.15.1",
     "jfile": "^1.1.12",
     "jsonwebtoken": "^9.0.2",

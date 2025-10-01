@@ -7,11 +7,15 @@ import LoginSignup from  './components/loginsignup/loginsignup.jsx'
 import sendotp from './components/loginsignup/sendotp.jsx'
 import Welcome from './components/tourpages/welcome.jsx'
 import TripList from './components/tourpages/tripList.jsx'
+
 const App = () => {
   const [todos, setTodos] = useState([]);
+      
+     
+      
   
   return (
-    
+     
    
       <Routes>
       <Route path='signup' Component={LoginSignup}></Route>
@@ -21,7 +25,7 @@ const App = () => {
       <Route path='/searchtrip' Component={TripList}></Route>
     </Routes>
       
-    
+   
   );
 };
 export default App;
