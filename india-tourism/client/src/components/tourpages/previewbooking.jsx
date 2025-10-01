@@ -49,9 +49,9 @@ function increment () {
 }
 
 const triggerEditable = () =>{
-    setDisable(false);
+    setDisable(!disable);
 }
-    
+  
     return(<div className = "center-container">
             <div style={{border: "2px solid black;" }}>
                  <Box  component="form" >
@@ -64,6 +64,7 @@ const triggerEditable = () =>{
                                     <Typography variant="h5" style={{ color: 'hsla(0, 32%, 92%, 1.00)' }}>
                                     Booking details for {tourDetailsParam.locationName} tour by {tourDetailsParam.tourManagerName}
                                     </Typography>
+                                   
                                         </TableCell>
                                         <TableCell>
                                          <button type="button" onClick={()=>{

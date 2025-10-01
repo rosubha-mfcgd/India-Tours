@@ -1,7 +1,7 @@
 import axios from "axios"
 
 
-export const signupUser = async(data) =>{
+export const signupUser = async(data,retries = 3, delay = 1000) =>{
 
     let res_data = "signup failed";
    try{
@@ -26,13 +26,18 @@ export const signupUser = async(data) =>{
 
 }catch(err){
      console.error('Error while signup:::', err);
+     if(retries>0)
+     {
+        await new Promise(resolve => setTimeout(resolve, delay));
+        return signupUser(data,retries-1,delay);
+     }
     throw err;
 }
  return res_data;
 }
 
 
-export const loginUser = async(data) =>{
+export const loginUser = async(data,retries = 3, delay = 1000) =>{
     let res_data = "login failed";
    try{
     
@@ -56,11 +61,16 @@ export const loginUser = async(data) =>{
    
 }catch(err){
      console.error('Error while Login:::', err);
+      if(retries>0)
+     {
+        await new Promise(resolve => setTimeout(resolve, delay));
+        return loginUser(data,retries-1,delay);
+     }
     throw err;
 }
 return res_data;
 }
-export const validateOTPForLogin = async(data) =>{
+export const validateOTPForLogin = async(data,retries = 3, delay = 1000) =>{
     let res_data = "otp validation failed";
    try{
    
@@ -82,12 +92,17 @@ export const validateOTPForLogin = async(data) =>{
     
 }catch(err){
      console.error('Error while otp validation:::', err.stack);
+      if(retries>0)
+     {
+        await new Promise(resolve => setTimeout(resolve, delay));
+        return validateOTPForLogin(data,retries-1,delay);
+     }
     throw err;
 }
 return res_data;
 }
 
-export const getPoints = async(data) =>{
+export const getPoints = async(data,retries = 3, delay = 1000) =>{
     let res_data = "failed to fetch points";
      try{
          let access_token = await getApiAccessToken();
@@ -104,17 +119,23 @@ export const getPoints = async(data) =>{
     if(response)
      {
         res_data = response.data;
+
      }
      }
      
 }catch(err){
      console.error('Error while fetching user points:::', err.stack);
+      if(retries>0)
+     {
+      await new Promise(resolve => setTimeout(resolve, delay));
+        return getPoints(data,retries-1,delay);
+     }
     throw err;
 }
 return res_data;
 }
 
-export const getCategories = async(productID) =>{
+export const getCategories = async(productID,retries = 3, delay = 1000) =>{
     let res_data = "failed to fetch categories";
      try{
         let access_token = await getApiAccessToken();
@@ -137,13 +158,18 @@ export const getCategories = async(productID) =>{
      
 }catch(err){
      console.error('Error while fetching categories:::', err.stack);
+      if(retries>0)
+     {
+       await new Promise(resolve => setTimeout(resolve, delay));
+        return getCategories(productID,retries-1,delay);
+     }
     throw err;
 }
 return res_data;
 }
 
 
-export const getProducts = async() =>{
+export const getProducts = async(retries = 3, delay = 1000) =>{
     let res_data = "failed to fetch products";
      try{
         let access_token = await getApiAccessToken();
@@ -166,13 +192,18 @@ export const getProducts = async() =>{
      
 }catch(err){
      console.error('Error while fetching products:::', err.stack);
+      if(retries>0)
+     {
+         await new Promise(resolve => setTimeout(resolve, delay));
+        return getProducts(retries-1,delay);
+     }
     throw err;
 }
 return res_data;
 }
 
 
-export const getCities = async() =>{
+export const getCities = async(retries = 3, delay = 1000) =>{
     let res_data = "failed to fetch cities";
      try{
         let access_token = await getApiAccessToken();
@@ -195,13 +226,18 @@ export const getCities = async() =>{
      
 }catch(err){
      console.error('Error while fetching cities:::', err.stack);
+      if(retries>0)
+     {
+      await new Promise(resolve => setTimeout(resolve, delay));
+        return getCities(retries-1,delay);
+     }
     throw err;
 }
 return res_data;
 }
 
 
-export const getTripList = async(categoryId) =>{
+export const getTripList = async(categoryId,retries = 3, delay = 1000) =>{
   let res_data = "failed to fetch planned tours by categroy id";
      try{
         let access_token = await getApiAccessToken();
@@ -224,12 +260,17 @@ export const getTripList = async(categoryId) =>{
      
 }catch(err){
      console.error('Error while fetching categories:::', err.stack);
+      if(retries>0)
+     {
+      await new Promise(resolve => setTimeout(resolve, delay));
+        return getCities(retries-1,delay);
+     }
     throw err;
 }
 return res_data;
 }
 
-export const getTourManagers = async() =>{
+export const getTourManagers = async(retries = 3, delay = 1000) =>{
   let res_data = "failed to fetch tour Managers";
      try{
         let access_token = await getApiAccessToken();
@@ -252,12 +293,17 @@ export const getTourManagers = async() =>{
      
 }catch(err){
      console.error('Error while fetching tour managers:::', err.stack);
+      if(retries>0)
+     {
+      await new Promise(resolve => setTimeout(resolve, delay));
+        return getCities(retries-1,delay);
+     }
     throw err;
 }
 return res_data;
 }
 
-export const updateAsFavorite = async(data) =>{
+export const updateAsFavorite = async(data,retries = 3, delay = 1000) =>{
   let res_data = "failed to fetch tour Managers";
      try{
         let access_token = await getApiAccessToken();
@@ -280,13 +326,18 @@ export const updateAsFavorite = async(data) =>{
      
 }catch(err){
      console.error('Could not update as favorite category:::', err.stack);
+      if(retries>0)
+     {
+      await new Promise(resolve => setTimeout(resolve, delay));
+        return updateAsFavorite(data,retries-1,delay);
+     }
     throw err;
 }
 return res_data;
 }
 
  
-export const getApiAccessToken= async() =>{
+export const getApiAccessToken= async(retries = 3, delay = 1000) =>{
   try{
     const response = await axios.post(
         process.env.REACT_APP_SERVER_URI + "token"
@@ -300,6 +351,11 @@ export const getApiAccessToken= async() =>{
 }
 catch(err){
     console.error('Error while fetching token:::', err.stack);
+     if(retries>0)
+     {
+     await new Promise(resolve => setTimeout(resolve, delay));
+        return getApiAccessToken(retries-1,delay);
+     }
     throw err;
 }
 }

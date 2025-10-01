@@ -1,0 +1,3 @@
+convert mongodb collections to JSON schema :-
+
+https://www.npmjs.com/package/extract-mongo-schema
