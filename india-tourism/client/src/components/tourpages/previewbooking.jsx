@@ -4,6 +4,7 @@ import '../../styles/Cards.css';
 import '../../styles/sidebar.css';
 import '../../styles/bookingForm.css';
 import { useEffect, useState, useContext } from "react";
+import { performTripBooking } from "../admin/admin";
 import {
     TextField,
     Button,
@@ -50,6 +51,38 @@ function increment () {
     }
 const triggerEditable = () =>{
     setDisable(!disable);
+}
+const submitBooking = async()=>{
+
+    let primary_booking = [];
+    let dependantbookings = [];
+    let count = 0;
+    for(let booking of bookings)
+    {
+         if(primary_booking.length===0)
+         {
+            primary_booking[count] = booking;
+         }else{
+            dependantbookings[count-1] = booking;
+         }
+         count++;
+    }
+
+    let data = {tourManagerId:tourDetailsParam.tourManagerId,
+        locationName:tourDetailsParam.locationName,
+        startDate:tourDetailsParam.startDate,
+        endDate:tourDetailsParam.endDate,
+        domesticOrInternational:tourDetailsParam.domesticOrInternational,
+        package_cost:tourDetailsParam.package_cost*(bookings.length),
+        primarybookings:primary_booking,
+        dependantbookings:dependantbookings
+       }
+
+       let result = await performTripBooking(data);
+       if(result){
+        console.log('result...',result);
+       }
+
 }
   
     return(<div className = "center-container">
@@ -154,7 +187,7 @@ const triggerEditable = () =>{
                         >Go Back</button>
 
                             <button type="submit" 
-                       class="button">Confirm Booking</button>
+                       class="button" onClick={() =>submitBooking()}>Confirm Booking</button>
                        
         </div>
       </div>
