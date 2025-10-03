@@ -6,18 +6,18 @@
   const theme = createTheme({
            palette: {
              background: {
-               paper: 'rgba(155, 185, 250, 1)', // Your desired hex color
+               paper: 'rgba(110, 43, 41, 0)', // Your desired hex color
              },
            },
          }); 
       return (
         
-       <ThemeProvider theme = {theme}>
+      
         <div className="original-content">
           
            <main>{children}</main> {/* This is where your page content will be rendered */}
         </div>
-        </ThemeProvider>
+       
       );
     };
 

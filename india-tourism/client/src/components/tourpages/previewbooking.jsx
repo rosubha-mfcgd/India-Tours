@@ -30,24 +30,24 @@ import {
     TextareaAutosize
   } from "@mui/material";
 
-import { getCategories } from "../admin/admin";
-import { NavContext } from '../navigationContext/navigationContext.jsx';
-import FavoriteIcon from '@mui/icons-material/Favorite';
-import { ClassNames } from "@emotion/react";
+
 
 const PreviewForm = ({access_token,bookings,tourDetailsParam}) =>{
 
     const[disable,setDisable] = useState(true);
-
+    const[touristkey,setTouristkey] = useState(0);
     console.log('bookings...',bookings)
     var sum = 0;
 
 function increment () {
      sum += 1;
-   
+   //setTouristkey(sum);
     return sum;
 }
-
+ const updateBooking = async(name,index,event) =>{
+        bookings[index-1][name]= event.target.value;
+        console.log('bookingdata....',bookings);
+    }
 const triggerEditable = () =>{
     setDisable(!disable);
 }
@@ -101,14 +101,18 @@ const triggerEditable = () =>{
                                                 <InputLabel variant="outlined" 
                                                 style={{ color: '#080000ff' }}
                                                 fullWidth>Name</InputLabel>
-                                                <Input id="name" name="name" value = {booking.name} disabled={disable}/>
+                                                <Input id="name" name="name" value = {booking.name} 
+                                                disabled={disable} onChange={(event)=>updateBooking("name",sum,event)}
+                                                
+                                                />
                                                  </FormControl>
                                                   <FormControl style={{ marginLeft: 5 }}>
                                                     
                                                 <InputLabel 
                                                 style={{ color: '#0c0000ff' }}
                                                 variant="outlined" fullWidth>Email</InputLabel>
-                                                <Input id="email" name="email" value = {booking.email} disabled={disable}/>
+                                                <Input id="email" name="email" value = {booking.email} 
+                                                disabled={disable} onChange={(event)=>updateBooking("email",sum,event)}/>
                                                 </FormControl>
                                                      
                                                    <FormControl style={{ marginLeft: 5 }}>
@@ -116,14 +120,16 @@ const triggerEditable = () =>{
                                                 <InputLabel 
                                                 style={{ color: '#0c0000ff' }}
                                                 variant="outlined" fullWidth>Mobile</InputLabel>
-                                                <Input id="mobile" name="mobile" value = {booking.mobile} disabled={disable}/>
+                                                <Input id="mobile" name="mobile" value = {booking.mobile} disabled={disable}
+                                                onChange={(event)=>updateBooking("mobile",sum,event)}/>
                                                     </FormControl>
                                                     <FormControl style={{ marginLeft: 5 }}> 
                                                       
                                                   <InputLabel 
                                                   style={{ color: '#080000ff' }}
                                                   variant="outlined" fullWidth>Age</InputLabel>
-                                                 <Input id="age" name="age" value = {booking.age} disabled={disable} />  
+                                                 <Input id="age" name="age" value = {booking.age} disabled={disable} 
+                                                 onChange={(event)=>updateBooking("age",sum,event)}/>  
                                                 </FormControl>
                                                   <FormControl style={{ marginLeft: 5 }}> 
                                                      
@@ -131,7 +137,8 @@ const triggerEditable = () =>{
                                                   style={{ color: '#080000ff' }}
                                                   variant="outlined" fullWidth>Any Special request?</InputLabel>
                                                  <Input id="specialRequest" name="specialRequest" 
-                                                value = {booking.specialRequest} disabled={disable} />  
+                                                value = {booking.specialRequest} disabled={disable} 
+                                                onChange={(event)=>updateBooking("specialRequest",sum,event)}/>  
                                                 </FormControl>
                                               </div>
                            
@@ -139,6 +146,22 @@ const triggerEditable = () =>{
                         ):<div></div>
                    }
                     </Paper>
+                   
+                   <div className="button-container">
+         <div className='submit-container'>
+                    <button type="submit" 
+                        class="button"
+                        >Go Back</button>
+
+                            <button type="submit" 
+                       class="button">Confirm Booking</button>
+                       
+        </div>
+      </div>
+                   
+                   
+                   
+                   
                    
 
                            

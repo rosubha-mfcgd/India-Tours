@@ -124,10 +124,10 @@ const NavBar = ({access_token,triggerDisplayTripsByCatId,productID}) =>{
                      />
                                      
                     <CardContent>
-                        <Typography gutterBottom variant="body1" component="div">
+                        <Typography gutterBottom variant="body1" component="div" sx={{whiteSpace: 'pre-wrap'}}>
                 {item.categoryName}
               </Typography>
-              <Typography variant="body2" color="text.secondary">
+              <Typography variant="body2" color="text.secondary" sx={{whiteSpace: 'pre-wrap'}}>
                 {item.categoryDesc}
               </Typography>
               {(item.favorite === 'Y') ?

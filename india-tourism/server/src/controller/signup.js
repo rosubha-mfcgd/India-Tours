@@ -7,7 +7,7 @@ const UserService = require('../service/UserService');
 const constants = require("../utils/constants");
  const subject = process.env.SIGNUP_EMAIL_SUBJECT;
 const body = process.env.SIGNUP_EMAIL_BODY;
-const doSignup = async (req,res) => {
+const doSignup = async (req,res,retries = 3, delay = 1000) => {
   console.log('req body',req.body);
   
     const { email,mobile,name } = req.body;
@@ -40,7 +40,11 @@ const doSignup = async (req,res) => {
                     });
               
       }catch(err){
-        
+         if(retries>0)
+        {
+          await new Promise(resolve => setTimeout(resolve, delay));
+          return doSignup(req,res,retries-1,delay);
+        }
         logNginx(err.stack)
       }
       return isSignUp;

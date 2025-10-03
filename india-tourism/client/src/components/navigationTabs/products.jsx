@@ -110,8 +110,8 @@ const Products = ({access_token,triggerDisplayTripsByProductId}) =>{
                         <Typography gutterBottom variant="body1" component="div">
                 {item.productName}
               </Typography>
-              <Typography variant="body2" color="text.secondary">
-                {item.productDesc.replace("\n", "<br />").replace("\r", "")}
+              <Typography variant="body2" color="text.secondary" sx={{ whiteSpace: 'pre-wrap' }}>
+                {item.productDesc}
               </Typography>
               {(item.favorite === 'Y') ?
                 <FavoriteIcon sx={{ color: '#f04646ff' }} onClick = {(event) => updateFavorites(

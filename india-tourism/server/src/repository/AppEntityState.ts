@@ -257,6 +257,10 @@ export interface ICategory extends Document{
 			type: string,
 			required: true
 		},
+    bookingId: {
+      type: string,
+			required: true
+    },
 		startDate: {
 			type: string,
 			required: true
@@ -286,8 +290,7 @@ export interface ICategory extends Document{
 			required: true
 		},
 		reviews: {
-			type: [],
-			required: true
+			type: []
 		}
 	           
   }

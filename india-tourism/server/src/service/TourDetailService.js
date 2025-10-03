@@ -3,6 +3,7 @@ const { TourRepository } = require('../repository/TourRepository');
 const { TourManagerRepository } = require('../repository/TourManagerRepository');
 const {ProductRepository} = require ('../../dist/repository/ProductRepository');
 const {CityRepository} = require ('../../dist/repository/CityRepository');
+const { BookingRepository } = require('../repository/BookingRepository');
 require("../logNginx");
 
 class TourDetailService{
@@ -140,5 +141,7 @@ async getTourManagers()
       }
   return cities;
   } 
-}
+
+ 
+  }
 module.exports = TourDetailService

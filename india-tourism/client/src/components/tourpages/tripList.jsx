@@ -99,7 +99,8 @@ const TripList = ({access_token,categoryId,cityList,showDetails}) =>{
                                 console.log('tourOps...',tourOps);
                                 tourOps.map((tourManager) =>{
                                     updateTourMgrMap(tourManager.tourManagerId,
-                                        {"tourManagerName":tourManager.tourManagerName,
+                                        {"tourManagerId":tourManager.tourManagerId,
+                                        "tourManagerName":tourManager.tourManagerName,
                                           "contact" : tourManager.contact,
                                           "secondarycontact":tourManager.backupcontact,
                                           "citycode":tourManager.citycode,

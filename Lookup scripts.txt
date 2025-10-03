@@ -413,5 +413,21 @@ db.tourdetails.insertMany([
 	"desc": "The beauty of Darjeeling is defined by its iconic tea gardens, its stunning views of the Himalayas, including the snow-capped Mount Kanchenjunga, and the charming colonial architecture of its hill station heritage. It also features the nostalgic allure of the Darjeeling Himalayan Railway (toy train), a UNESCO World Heritage site, and a vibrant blend of Tibetan, Nepali, and British cultures evident in its markets, food, and people. The natural beauty is further enhanced by a diverse array of flora and the captivating scenery of lush valleys and misty mornings.",
 	"image":"/hillstations/Darjeeling.png",
 	"itinerary":"Itinerary has not been finalized as yet" 
+  },
+  {
+    "locationName": "Maldives",
+    "categoryID": 2,
+	"tourManagerId": "003",
+	"triplength": "14 days",
+	"startDate" : new Date("2025-11-18"),
+    "endDate": new Date("2025-11-30"),
+	"package_cost": "200000.00",
+	"max_tourist": "30",
+	"seats_left" : "7",
+	"domesticOrinternational":"I",
+	"ticket_cost":"30000.00",
+	"desc": "The beauty of the Maldives is defined by its pristine natural setting, featuring over 1,000 coral islands with white sandy beaches, crystal-clear turquoise waters, and vibrant, diverse marine life within its surrounding reefs",
+	"image":"/seabeach/Bangkok Pattaya.png",
+	"itinerary":"Itinerary has not been finalized as yet" 
   }
 ]);	

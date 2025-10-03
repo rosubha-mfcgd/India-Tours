@@ -2,11 +2,7 @@ import { Schema, model } from 'mongoose';
 import {ITourBookings} from '../repository/AppEntityState';
 
 const tourBookingSchema = new Schema<ITourBookings>({
-     _id: {
-			primaryKey: true,
-			type: Object,
-			required: true
-		},
+     
 		tourManagerId: {
 			type: String,
 			required: true
@@ -19,6 +15,10 @@ const tourBookingSchema = new Schema<ITourBookings>({
 			type: String,
 			required: true
 		},
+		bookingId: {
+      	type: String,
+			required: true
+   		 },
 		locationName: {
 			type: String,
 			required: true
@@ -40,8 +40,7 @@ const tourBookingSchema = new Schema<ITourBookings>({
 			required: true
 		},
 		reviews: {
-			type: [],
-			required: true
+			type: []
 		}});
 
 export const TourBookingModel = model<ITourBookings>('TourBookings',tourBookingSchema);

@@ -2,7 +2,7 @@ require("../logNginx");
 
 const TourDetailService = require('../service/TourDetailService');
 
-const getRegisteredTourManagers=async(req,res) =>{
+const getRegisteredTourManagers=async(req,res,retries = 3, delay = 1000) =>{
     try{
     let tourManagers = await new TourDetailService().getTourManagers();
     if(tourManagers)
@@ -13,6 +13,11 @@ const getRegisteredTourManagers=async(req,res) =>{
     }
 }catch(err)
 {
+     if(retries>0)
+        {
+          await new Promise(resolve => setTimeout(resolve, delay));
+          return getRegisteredTourManagers(req,res,retries-1,delay);
+        }
     logNginx(err.stack);
      res.status(400).send(
                 {"errormessage":"could not find any tour operators"});
@@ -20,7 +25,7 @@ const getRegisteredTourManagers=async(req,res) =>{
 
 }
 
-const getCities = async(req,res) =>{
+const getCities = async(req,res,retries = 3, delay = 1000) =>{
      try{
     let cities = await new TourDetailService().getCities();
     if(cities)
@@ -31,6 +36,11 @@ const getCities = async(req,res) =>{
     }
 }catch(err)
 {
+     if(retries>0)
+        {
+          await new Promise(resolve => setTimeout(resolve, delay));
+          return getCities(req,res,retries-1,delay);
+        }
     logNginx(err.stack);
      res.status(400).send(
                 {"errormessage":"could not find any cities"});

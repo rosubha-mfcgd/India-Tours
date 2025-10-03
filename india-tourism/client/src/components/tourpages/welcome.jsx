@@ -117,6 +117,7 @@ const openBookingForm = (tourDetails) =>{
    
             let tourDtls = {"locationName":tourDetails.locationName,
                 "tourManagerName":tourManager.tourManagerName,
+                "tourManagerId":tourManager.tourManagerId,
                 "triplength":tourDetails.triplength,
                 "image":tourDetails.image,
                 "desc":tourDetails.desc,
@@ -170,7 +171,8 @@ const openBookingForm = (tourDetails) =>{
          <Layout access_token={access_token} > {/* Wrap your routes with the Layout component */}
           {
            (showTrips)? 
-              <TripList access_token={access_token} categoryId={tripListParam} showDetails={showDetails}
+              <TripList access_token={access_token} categoryId={tripListParam} 
+              showDetails={showDetails}
                 cityList = {cityList}
               />
             : (showTripDetails) ?

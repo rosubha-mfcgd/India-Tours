@@ -2,7 +2,7 @@ const TourDetailService = require('../service/TourDetailService');
 require("../logNginx");
 
 
-const getCategories = async(req,res) =>{
+const getCategories = async(req,res,retries = 3, delay = 1000) =>{
    
     try{
         let parameters = req.query;
@@ -18,12 +18,17 @@ const getCategories = async(req,res) =>{
      
     }
     }catch(err){
+            if(retries>0)
+            {
+                 await new Promise(resolve => setTimeout(resolve, delay));
+                return getCategories(req,res,retries-1,delay);
+            }
         res.status(400).send(
                 {"errormessage":"could not load categories"});
     }
 }
 
-const getProducts = async(req,res) =>{
+const getProducts = async(req,res,retries = 3, delay = 1000) =>{
    
     try{
      let products = await new TourDetailService().getProducts();
@@ -36,12 +41,17 @@ const getProducts = async(req,res) =>{
      
     }
     }catch(err){
+         if(retries>0)
+        {
+          await new Promise(resolve => setTimeout(resolve, delay));
+          return getProducts(req,res,retries-1,delay);
+        }
         res.status(400).send(
                 {"errormessage":"could not load products"});
     }
 }
 
-const updateFavoriteCategory = async(req,res) =>{
+const updateFavoriteCategory = async(req,res,retries = 3, delay = 1000) =>{
     try{
         let {categoryId, status} = req.body;
      let result = await new TourDetailService().updateCategoryAsFavorite(categoryId,status);
@@ -59,12 +69,18 @@ const updateFavoriteCategory = async(req,res) =>{
                 data);
      }
     }catch(err){
+         if(retries>0)
+            {
+                 await new Promise(resolve => setTimeout(resolve, delay));
+                return updateFavoriteCategory(req,res,retries-1,delay);
+            }
+
         res.status(400).send(
                 {"errormessage":"could not update categories"});
     }
 }
 
-const getToursByCategoryId = async(req,res) =>{
+const getToursByCategoryId = async(req,res,retries = 3, delay = 1000) =>{
    
     try{
         const parameters = req.query;
@@ -81,12 +97,17 @@ const getToursByCategoryId = async(req,res) =>{
      
     }
     }catch(err){
+          if(retries>0)
+            {
+                 await new Promise(resolve => setTimeout(resolve, delay));
+                return getToursByCategoryId(req,res,retries-1,delay);
+            }
         res.status(400).send(
                 {"errormessage":"could not load any planned Tours by any operator"});
     }
 }
 
-const getTourManagers = async(req,res) =>{
+const getTourManagers = async(req,res,retries = 3, delay = 1000) =>{
    
     try{
      //   const parameters = req.query;
@@ -103,8 +124,13 @@ const getTourManagers = async(req,res) =>{
      
     }
     }catch(err){
+        if(retries>0)
+            {
+                 await new Promise(resolve => setTimeout(resolve, delay));
+                return getTourManagers(req,res,retries-1,delay);
+            }
         res.status(400).send(
                 {"errormessage":"could not load any planned Tours by any operator"});
     }
 }
-module.exports = {getCategories,getToursByCategoryId,updateFavoriteCategory,getProducts}
+module.exports = {getCategories,getToursByCategoryId,updateFavoriteCategory,getProducts,getTourManagers}

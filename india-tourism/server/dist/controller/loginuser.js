@@ -19,9 +19,8 @@ const subject = process.env.SIGNUP_EMAIL_SUBJECT;
 const body = process.env.LOGIN_EMAIL_BODY;
 const doLogin = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     console.log('req body', req.body);
-    const { email, mobile } = req.body;
+    let { email, mobile, access_token } = req.body;
     let isLoggedin = null;
-    let access_token = req.body.access_token;
     if (access_token) {
         session.access_token = access_token;
     }
@@ -47,4 +46,6 @@ const doLogin = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     });
     return isLoggedin;
 });
+const resendOTP = (req, res) => {
+};
 module.exports = { doLogin };
