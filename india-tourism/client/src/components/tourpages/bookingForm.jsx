@@ -43,6 +43,7 @@ const BookingForm = ({access_token,tourDetails,triggerDisplayBookings}) =>{
     const initBooking = async() =>{
       setBookingPageMessage(process.env.REACT_APP_BOOKING_PAGE_MESSAGE);
         setStartBooking(true);
+        createForms(1);
     }
     const [bookingData,setBookingData] = useState('');
     const createForms = async(noOfTourists) =>
@@ -210,7 +211,7 @@ const BookingForm = ({access_token,tourDetails,triggerDisplayBookings}) =>{
             )):<div></div>
           }</Paper></div>:<div></div>
         }
-        { openBookingForm ? 
+        { startBooking ? 
        
          <div className = "center-container" style={{
                     width: "fit-content",
