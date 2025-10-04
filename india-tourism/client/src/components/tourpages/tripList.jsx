@@ -106,7 +106,8 @@ const TripList = ({access_token,categoryId,cityList,showDetails}) =>{
                                           "citycode":tourManager.citycode,
                                           "tourOpLocation": getCityOfTourOperator(tourManager.citycode),
                                           "desc": tourManager.desc,
-                                          "website":tourManager.website
+                                          "website":tourManager.website,
+                                          "categoryId":categoryId
                                         });
                                 }
                             );
@@ -152,8 +153,8 @@ const TripList = ({access_token,categoryId,cityList,showDetails}) =>{
                             console.log('selectedTours....',selectedTours)
                              for(let tour of alltours)
                             {
-                            selectedTours.push(tour);
-                             }
+                                  selectedTours.push(tour);
+                            }
                          }
                          
                          setTours(selectedTours);
@@ -182,7 +183,8 @@ const TripList = ({access_token,categoryId,cityList,showDetails}) =>{
                  
                 <Grid item xs = {12} sm={4}  key={tour.categoryID}>
 
-                    <Card className="card" onClick={()=>showDetails(tour,getValuesFromTourManagerMap(tour.tourManagerId),
+                    <Card className="card" onClick={()=>showDetails(tour,
+                    getValuesFromTourManagerMap(tour.tourManagerId),
                         access_token)} style={{ cursor: 'pointer' }}>
                     
                     <CardMedia component= "img"  height="100"
@@ -208,7 +210,10 @@ const TripList = ({access_token,categoryId,cityList,showDetails}) =>{
                     <Typography variant="body2" color="text.secondary">
                  {getValuesFromTourManagerMap(tour.tourManagerId).contact}
               </Typography>
-              
+             
+                    <Typography variant="body2" color="text.secondary">
+                 {tour.domesticOrinternational == "D"? "Domestic":"International"}
+              </Typography>
                  <button type="submit" class="button"  onClick={()=>showDetails(tour,getValuesFromTourManagerMap(tour.tourManagerId))} 
                     style={{ cursor: 'pointer',backgroundColor: '#8a77f8ff',color:'#0c0c0fff'}}>
                        Details</button>

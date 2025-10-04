@@ -287,19 +287,19 @@ return res_data;
 }
 
 export const performTripBooking = async(data) =>{
-  let res_data = "failed to fetch tour Managers";
+  let res_data = "failed to fetch bookings";
      try{
         let access_token = await getApiAccessToken();
         if(access_token){
             console.log('access_token found...',access_token.data)
-       // console.log('data...',access_token);
+        console.log('data...',data);
         
         const headers = {
             "Content-type": "application/json; charset=UTF-8",
             "Authorization":"Bearer "+access_token.data.access_token
             };
             const response = await axios.post(
-        process.env.REACT_APP_SERVER_URI + "updateFavoriteCategory",
+        process.env.REACT_APP_SERVER_URI + "performBookings",
             data, {headers});
         if(response)
      {
@@ -308,7 +308,7 @@ export const performTripBooking = async(data) =>{
      }
      
 }catch(err){
-     console.error('Could not update as favorite category:::', err.stack);
+     console.error('Could not update trip bookings:::', err.stack);
      throw err;
 }
 return res_data;

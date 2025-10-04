@@ -106,6 +106,16 @@ import '../../styles/loginsignup.css';
                        Trip Length : <strong> {tourDetails.triplength}  </strong>
                         </Typography>  
                     </TableCell>
+
+                    </TableRow>
+                     <TableRow>
+                    <TableCell>
+                        <Typography variant="body2" style={{ color: '#FFFFFF' }}>
+                       Trip Type : <strong> {tourDetails.domesticOrInternational === "D"? "Domestic"
+                       :"International"}  </strong>
+                        </Typography>  
+                    </TableCell>
+                    
                     </TableRow>
                    
                       <TableRow>

@@ -28,7 +28,12 @@ import {
     Input,
     Switch,
     InputLabel,
-    TextareaAutosize
+    TextareaAutosize,
+    Dialog,
+    DialogTitle,
+    DialogContent,
+    DialogContentText,
+    DialogActions
   } from "@mui/material";
 
 
@@ -36,7 +41,13 @@ import {
 const PreviewForm = ({access_token,bookings,tourDetailsParam}) =>{
 
     const[disable,setDisable] = useState(true);
-    const[touristkey,setTouristkey] = useState(0);
+   const [dialogOpen, setDialogOpen] = useState(false);
+    const[bookingId, setBookingId] = useState('');
+  const handleClickOpenOrClose = () => {
+    setDialogOpen(!dialogOpen);
+  };
+
+  
     console.log('bookings...',bookings)
     var sum = 0;
 
@@ -75,19 +86,50 @@ const submitBooking = async()=>{
         domesticOrInternational:tourDetailsParam.domesticOrInternational,
         package_cost:tourDetailsParam.package_cost*(bookings.length),
         primarybookings:primary_booking,
-        dependantbookings:dependantbookings
+        dependantbookings:dependantbookings,
+
        }
 
+       console.log('data...',data);
        let result = await performTripBooking(data);
        if(result){
         console.log('result...',result);
+        setBookingId(result.bookingid);
+        
        }
-
+       
 }
-  
+  useEffect (() =>{
+    if(bookingId != '')
+    {
+        handleClickOpenOrClose();
+    }
+  },[bookingId])
+
+
     return(<div className = "center-container">
             <div style={{border: "2px solid black;" }}>
                  <Box  component="form" >
+                    {dialogOpen?
+                     <Dialog
+        open={dialogOpen}
+        onClose={handleClickOpenOrClose}
+        aria-labelledby="dialog-title"
+        aria-describedby="dialog-description"
+      >
+        <DialogTitle id="dialog-title">{tourDetailsParam.tourManagerName} Confirmation</DialogTitle>
+        <DialogContent>
+          <DialogContentText id="dialog-description">
+            Your booking has been confirmed with bookingId {bookingId}
+          </DialogContentText>
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={handleClickOpenOrClose}>Cancel</Button>
+          <Button onClick={handleClickOpenOrClose} autoFocus>
+            Agree
+          </Button>
+        </DialogActions>
+      </Dialog>:<div></div>}
                               <TableContainer>
                                 <Table>
                                     <TableBody>

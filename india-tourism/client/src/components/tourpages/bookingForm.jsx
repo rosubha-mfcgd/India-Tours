@@ -3,8 +3,6 @@ import '../../styles/Navbar.css';
 import '../../styles/Cards.css';
 import '../../styles/sidebar.css';
 import '../../styles/bookingForm.css';
-import plus from '../Assets/images/plus.png';
-import minus from '../Assets/images/minus.png';
 import CustomButton from '../Utilities/CustomButtons.jsx'
 import { useEffect, useState, useContext,useRef } from "react";
 import {
@@ -33,16 +31,12 @@ import {
     TextareaAutosize
   } from "@mui/material";
 
-import { getCategories } from "../admin/admin";
-import { NavContext } from '../navigationContext/navigationContext.jsx';
-import FavoriteIcon from '@mui/icons-material/Favorite';
-import { ClassNames } from "@emotion/react";
 
 const BookingForm = ({access_token,tourDetails,triggerDisplayBookings}) =>{
     console.log('tourdetails.....',tourDetails);
     const [startBooking,setStartBooking] = useState(false);
-    const [touristCount, setTouristCount] = useState('');
-    const[openBookingForm,setOpenBookingForm] = useState(false);
+    const [touristCount, setTouristCount] = useState(1);
+    const[openBookingForm,setOpenBookingForm] = useState(true);
     const [noOfTourist,setNoOfTourist] = useState(1);
     const [bookingPageMessage,setBookingPageMessage] = useState('');
     
@@ -72,7 +66,7 @@ const BookingForm = ({access_token,tourDetails,triggerDisplayBookings}) =>{
       {
         data[index] = {};
       }
-      console.log('data...',data);
+      //console.log('data...',data);
        setBookingData(data);
     }
     
@@ -111,8 +105,7 @@ const BookingForm = ({access_token,tourDetails,triggerDisplayBookings}) =>{
          animation: 'blink-animation 5s linear infinite;'
       }}
       noValidate
-      autoComplete="off" onClick={()=>initBooking() }
-     >
+      autoComplete="off" onClick={()=>initBooking() }>
          <Typography variant="body2" style={{ color: 'rgba(17, 17, 17, 1)' }}>
                   Click me to book your trip to {tourDetails.locationName} with {tourDetails.tourManagerName}    
         </Typography> 

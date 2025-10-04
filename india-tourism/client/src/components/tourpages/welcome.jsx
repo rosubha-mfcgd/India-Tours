@@ -112,6 +112,8 @@ const openBookingForm = (tourDetails) =>{
             console.log('start date....',tourDetails.startDate)
             console.log('end date....',tourDetails.endDate)
             console.log('image....',tourDetails.image)
+            console.log('domesticOrInternational....',tourDetails.domesticOrinternational)
+            console.log('categoryId....',tourDetails.categoryId)
         if(tourDetails)
         {
    
@@ -129,8 +131,11 @@ const openBookingForm = (tourDetails) =>{
                 "seats_left":tourDetails.seats_left,
                 "ticket_cost":tourDetails.ticket_cost,
                 "itinerary": tourDetails.itinerary,
-                "categoryId":tourDetails.categoryId
+                "categoryId":tourDetails.categoryId,
+                "domesticOrInternational":tourDetails.domesticOrinternational
             };
+
+            console.log('tourDetails is...',tourDtls)
               setTripDetailsParam(tourDtls);
               setShowTripDetails(true);
               setShowTrips(false);
