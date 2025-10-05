@@ -7,6 +7,8 @@ import CustomButton from '../Utilities/CustomButtons.jsx'
 import { useEffect, useState, useContext,useRef } from "react";
 import { styled } from '@mui/material/styles';
 import {getBookingsByBookingId} from "../admin/admin";
+import SideBarNotification from '../navigationTabs/sideBarNotification.jsx';
+import { NavContext } from '../navigationContext/navigationContext.jsx';
 import {
     TextField,
     Button,
@@ -44,7 +46,7 @@ const BookingForm = ({access_token,tourDetails,triggerDisplayBookings}) =>{
     const [bookingid,setBookingid] = useState('');
      const [bookingData,setBookingData] = useState('');
      const[currentBooking,setCurrentBooking] = useState('');
-   //  const inputRef = useRef(null);
+  const { notification} = useContext(NavContext);
     const CssTextField = styled(TextField)({
       '& label': {
         color: '#FFFF', // Default label color
@@ -338,6 +340,12 @@ const BookingForm = ({access_token,tourDetails,triggerDisplayBookings}) =>{
         </div>:<div></div>
     }
          </div>
+         {notification ?
+                        <div style={{position: 'fixed', top:70,right:0}} >    
+                        <SideBarNotification/> 
+                     </div> 
+                     :<div></div>
+                      }
          </div> 
           
     );

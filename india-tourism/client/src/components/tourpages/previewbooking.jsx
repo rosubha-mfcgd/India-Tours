@@ -6,6 +6,8 @@ import '../../styles/bookingForm.css';
 import { useEffect, useState, useContext } from "react";
 import { performTripBooking,updateBookingsByBookingId } from "../admin/admin";
 import success_animation from '../Assets/images/success_animation.gif';
+import SideBarNotification from '../navigationTabs/sideBarNotification.jsx';
+import { NavContext } from '../navigationContext/navigationContext.jsx';
 import {
     TextField,
     Button,
@@ -45,6 +47,7 @@ const PreviewForm = ({access_token,bookings,tourDetailsParam}) =>{
     const [dialogOpen, setDialogOpen] = useState(false);
     const[bookingId, setBookingId] = useState('');
     const[bookingUpdateId, setBookingUpdateId] = useState('');
+      const { notification} = useContext(NavContext);
     const handleClickOpenOrClose = () => {
         
         setDialogOpen(!dialogOpen);
@@ -284,6 +287,12 @@ const submitBooking = async()=>{
                        
         </div>
       </div>
+        {notification ?
+                     <div style={{position: 'fixed', top:70,right:0}} >    
+                     <SideBarNotification/> 
+                  </div> 
+                  :<div></div>
+                   }
       </div>
     </div>)
 }

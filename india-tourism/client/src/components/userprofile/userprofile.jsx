@@ -57,9 +57,10 @@ useEffect(()=>{
                     access_token:access_token
                 };
   let userPoint = await getPoints(req_data);
-  console.log('userPoint....',userPoint);
+  
   if(userPoint)
   {
+    console.log('userPoint....',userPoint);
     setPoints(userPoint.points);
   }else{
     setPoints("NF");
