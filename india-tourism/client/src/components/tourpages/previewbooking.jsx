@@ -4,7 +4,8 @@ import '../../styles/Cards.css';
 import '../../styles/sidebar.css';
 import '../../styles/bookingForm.css';
 import { useEffect, useState, useContext } from "react";
-import { performTripBooking } from "../admin/admin";
+import { performTripBooking,updateBookingsByBookingId } from "../admin/admin";
+import success_animation from '../Assets/images/success_animation.gif';
 import {
     TextField,
     Button,
@@ -41,11 +42,12 @@ import {
 const PreviewForm = ({access_token,bookings,tourDetailsParam}) =>{
 
     const[disable,setDisable] = useState(true);
-   const [dialogOpen, setDialogOpen] = useState(false);
+    const [dialogOpen, setDialogOpen] = useState(false);
     const[bookingId, setBookingId] = useState('');
-  const handleClickOpenOrClose = () => {
-    setDialogOpen(!dialogOpen);
-  };
+    const[bookingUpdateId, setBookingUpdateId] = useState('');
+    const handleClickOpenOrClose = () => {
+        setDialogOpen(!dialogOpen);
+    };
 
   
     console.log('bookings...',bookings)
@@ -67,36 +69,58 @@ const submitBooking = async()=>{
 
     let primary_booking = [];
     let dependantbookings = [];
-    let count = 0;
+    let primarycount = 0;
+    let depcount = 0;
     for(let booking of bookings)
     {
          if(primary_booking.length===0)
          {
-            primary_booking[count] = booking;
-         }else{
-            dependantbookings[count-1] = booking;
-         }
-         count++;
+            primary_booking[primarycount] = booking;
+            primarycount++;
+         }else
+        {
+            dependantbookings[depcount] = booking;
+            depcount++;
+        }
+        
     }
-
-    let data = {tourManagerId:tourDetailsParam.tourManagerId,
-        locationName:tourDetailsParam.locationName,
-        startDate:tourDetailsParam.startDate,
-        endDate:tourDetailsParam.endDate,
-        domesticOrInternational:tourDetailsParam.domesticOrInternational,
-        package_cost:tourDetailsParam.package_cost*(bookings.length),
-        primarybookings:primary_booking,
-        dependantbookings:dependantbookings,
-
-       }
-
-       console.log('data...',data);
+    if(!tourDetailsParam.bookingid)
+    {
+         let data = {tourManagerId:tourDetailsParam.tourManagerId,
+                locationName:tourDetailsParam.locationName,
+                startDate:tourDetailsParam.startDate,
+                endDate:tourDetailsParam.endDate,
+                domesticOrInternational:tourDetailsParam.domesticOrInternational,
+                package_cost:(tourDetailsParam.package_cost)*(bookings.length),
+                primarybookings:primary_booking,
+                dependantbookings:dependantbookings,
+            }
        let result = await performTripBooking(data);
        if(result){
-        console.log('result...',result);
-        setBookingId(result.bookingid);
-        
+          console.log('result...',result);
+          setBookingId(result.bookingid);
        }
+    }else{
+          let data = {tourManagerId:tourDetailsParam.tourManagerId,
+                locationName:tourDetailsParam.locationName,
+                startDate:tourDetailsParam.startDate,
+                endDate:tourDetailsParam.endDate,
+                domesticOrInternational:tourDetailsParam.domesticOrInternational,
+                package_cost:(tourDetailsParam.package_cost)*(bookings.length),
+                primarybookings:primary_booking,
+                dependantbookings:dependantbookings,
+                bookingId:tourDetailsParam.bookingid
+            }
+            console.log('request data....',data);
+       let result = await updateBookingsByBookingId(data);
+       if(result)
+        {
+          console.log('result...',result);
+        //  setBookingId(result.bookingId);
+          setBookingUpdateId(result.bookingId);
+       }
+
+    }
        
 }
   useEffect (() =>{
@@ -104,7 +128,11 @@ const submitBooking = async()=>{
     {
         handleClickOpenOrClose();
     }
-  },[bookingId])
+    if(bookingUpdateId != '')
+    {
+        handleClickOpenOrClose();
+    }
+  },[bookingId,bookingUpdateId])
 
 
     return(<div className = "center-container">
@@ -119,15 +147,24 @@ const submitBooking = async()=>{
       >
         <DialogTitle id="dialog-title">{tourDetailsParam.tourManagerName} Confirmation</DialogTitle>
         <DialogContent>
+              {!tourDetailsParam.bookingid?
           <DialogContentText id="dialog-description">
-            Your booking has been confirmed with bookingId {bookingId}
+          
+           Bingo !! Your booking has been confirmed with bookingId {bookingId}
+          </DialogContentText>:
+          <DialogContentText id="dialog-description">
+          
+           Yaay !! Your bookingId {bookingId} has been updated. 
           </DialogContentText>
+            }
         </DialogContent>
         <DialogActions>
           <Button onClick={handleClickOpenOrClose}>Cancel</Button>
           <Button onClick={handleClickOpenOrClose} autoFocus>
             Agree
           </Button>
+          {dialogOpen?
+          <img src={success_animation} alt="" width="40" height="40"/>:<div></div>}
         </DialogActions>
       </Dialog>:<div></div>}
                               <TableContainer>
@@ -135,11 +172,14 @@ const submitBooking = async()=>{
                                     <TableBody>
                                       <TableRow>
                                         <TableCell>
-                                    
-                                    <Typography variant="h5" style={{ color: 'hsla(0, 32%, 92%, 1.00)' }}>
-                                    Booking details for {tourDetailsParam.locationName} tour by {tourDetailsParam.tourManagerName}
-                                    </Typography>
-                                   
+                                    {!tourDetailsParam.bookingid?
+                                        <Typography variant="h5" style={{ color: 'hsla(0, 32%, 92%, 1.00)' }}>
+                                            Booking details for {tourDetailsParam.locationName} tour by {tourDetailsParam.tourManagerName}
+                                        </Typography>:
+                                        <Typography variant="h5" style={{ color: 'hsla(0, 32%, 92%, 1.00)' }}>
+                                            Booking ID {tourDetailsParam.bookingid} updates for  {tourDetailsParam.locationName} tour by {tourDetailsParam.tourManagerName}
+                                        </Typography>
+                                    }
                                         </TableCell>
                                         <TableCell>
                                          <button type="button" onClick={()=>{
@@ -176,8 +216,9 @@ const submitBooking = async()=>{
                                                 <InputLabel variant="outlined" 
                                                 style={{ color: '#080000ff' }}
                                                 fullWidth>Name</InputLabel>
-                                                <Input id="name" name="name" value = {booking.name} 
-                                                disabled={disable} onChange={(event)=>updateBooking("name",sum,event)}
+                                                <Input id="name" name="name" defaultValue = {booking.name} 
+                                                disabled={disable} 
+                                                onChange={(event)=>updateBooking("name",sum,event)}
                                                 
                                                 />
                                                  </FormControl>
@@ -186,8 +227,9 @@ const submitBooking = async()=>{
                                                 <InputLabel 
                                                 style={{ color: '#0c0000ff' }}
                                                 variant="outlined" fullWidth>Email</InputLabel>
-                                                <Input id="email" name="email" value = {booking.email} 
-                                                disabled={disable} onChange={(event)=>updateBooking("email",sum,event)}/>
+                                                <Input id="email" name="email" defaultValue = {booking.email} 
+                                                disabled={disable} 
+                                                onChange={(event)=>updateBooking("email",sum,event)}/>
                                                 </FormControl>
                                                      
                                                    <FormControl style={{ marginLeft: 5 }}>
@@ -195,7 +237,8 @@ const submitBooking = async()=>{
                                                 <InputLabel 
                                                 style={{ color: '#0c0000ff' }}
                                                 variant="outlined" fullWidth>Mobile</InputLabel>
-                                                <Input id="mobile" name="mobile" value = {booking.mobile} disabled={disable}
+                                                <Input id="mobile" name="mobile" defaultValue = {booking.mobile} 
+                                                disabled={disable}
                                                 onChange={(event)=>updateBooking("mobile",sum,event)}/>
                                                     </FormControl>
                                                     <FormControl style={{ marginLeft: 5 }}> 
@@ -203,7 +246,8 @@ const submitBooking = async()=>{
                                                   <InputLabel 
                                                   style={{ color: '#080000ff' }}
                                                   variant="outlined" fullWidth>Age</InputLabel>
-                                                 <Input id="age" name="age" value = {booking.age} disabled={disable} 
+                                                 <Input id="age" name="age" defaultValue = {booking.age} 
+                                                 disabled={disable} 
                                                  onChange={(event)=>updateBooking("age",sum,event)}/>  
                                                 </FormControl>
                                                   <FormControl style={{ marginLeft: 5 }}> 
@@ -212,7 +256,7 @@ const submitBooking = async()=>{
                                                   style={{ color: '#080000ff' }}
                                                   variant="outlined" fullWidth>Any Special request?</InputLabel>
                                                  <Input id="specialRequest" name="specialRequest" 
-                                                value = {booking.specialRequest} disabled={disable} 
+                                                defaultValue = {booking.specialRequest} disabled={disable} 
                                                 onChange={(event)=>updateBooking("specialRequest",sum,event)}/>  
                                                 </FormControl>
                                               </div>
@@ -229,19 +273,11 @@ const submitBooking = async()=>{
                         >Go Back</button>
 
                             <button type="submit" 
-                       class="button" onClick={() =>submitBooking()}>Confirm Booking</button>
+                       class="button" onClick={submitBooking}>Confirm Booking</button>
                        
         </div>
       </div>
-                   
-                   
-                   
-                   
-                   
-
-                           
-              
-            </div>
+      </div>
     </div>)
 }
 

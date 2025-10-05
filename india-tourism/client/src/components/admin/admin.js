@@ -259,7 +259,7 @@ return res_data;
 }
 
 export const updateAsFavorite = async(data) =>{
-  let res_data = "failed to fetch tour Managers";
+  let res_data = "failed to update the cateogry as favorite";
      try{
         let access_token = await getApiAccessToken();
         if(access_token){
@@ -313,6 +313,68 @@ export const performTripBooking = async(data) =>{
 }
 return res_data;
 }
+
+
+export const getBookingsByBookingId = async(data) =>{
+  let res_data = "failed to fetch bookings by booking id";
+     try{
+        let access_token = await getApiAccessToken();
+        if(access_token){
+            console.log('access_token found...',access_token.data)
+        console.log('data...',data);
+        
+        const headers = {
+                 "Content-type": "application/json; charset=UTF-8",
+                 "Authorization":"Bearer "+access_token.data.access_token
+            };
+        
+        const response = await axios.post(
+                        process.env.REACT_APP_SERVER_URI + "getBookingsByBookingId",
+                        data, {headers});
+        
+         if(response)
+         {
+            res_data = response.data;
+         }
+     }
+     
+}catch(err){
+     console.error('Could not find bookings:::', err.stack);
+     throw err;
+}
+return res_data;
+}
+
+export const updateBookingsByBookingId = async(data) =>{
+  let res_data = "failed to update bookings by booking id";
+     try{
+        let access_token = await getApiAccessToken();
+        if(access_token){
+            console.log('access_token found...',access_token.data)
+        console.log('data...',data);
+        
+        const headers = {
+                 "Content-type": "application/json; charset=UTF-8",
+                 "Authorization":"Bearer "+access_token.data.access_token
+            };
+        
+        const response = await axios.post(
+                        process.env.REACT_APP_SERVER_URI + "updateBookingsByBookingId",
+                        data, {headers});
+        
+         if(response)
+         {
+            res_data = response.data;
+         }
+     }
+     
+}catch(err){
+     console.error('Could not find bookings:::', err.stack);
+     throw err;
+}
+return res_data;
+}
+
 
  
 export const getApiAccessToken= async() =>{

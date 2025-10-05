@@ -17,7 +17,7 @@ const UserService = require('../service/UserService');
 const constants = require("../utils/constants");
 const subject = process.env.SIGNUP_EMAIL_SUBJECT;
 const body = process.env.SIGNUP_EMAIL_BODY;
-const doSignup = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+const doSignup = (req_1, res_1, ...args_1) => __awaiter(void 0, [req_1, res_1, ...args_1], void 0, function* (req, res, retries = 3, delay = 1000) {
     console.log('req body', req.body);
     const { email, mobile, name } = req.body;
     let isSignUp = null;
@@ -45,6 +45,10 @@ const doSignup = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
         });
     }
     catch (err) {
+        if (retries > 0) {
+            yield new Promise(resolve => setTimeout(resolve, delay));
+            return doSignup(req, res, retries - 1, delay);
+        }
         logNginx(err.stack);
     }
     return isSignUp;

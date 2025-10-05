@@ -10,7 +10,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 };
 const UserService = require('../service/UserService');
 require("../logNginx");
-const getPoints = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+const getPoints = (req_1, res_1, ...args_1) => __awaiter(void 0, [req_1, res_1, ...args_1], void 0, function* (req, res, retries = 3, delay = 1000) {
     try {
         let { email, mobile } = req.body;
         let points = yield new UserService().getPoints(email, mobile);
@@ -19,6 +19,10 @@ const getPoints = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
         }
     }
     catch (error) {
+        if (retries > 0) {
+            yield new Promise(resolve => setTimeout(resolve, delay));
+            return getPoints(req, res, retries - 1, delay);
+        }
         res.status(400).send({ "points": "N/A", "mobile": req.body.mobile, "name": req.body.name, "email": req.body.email });
     }
 });

@@ -10,7 +10,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 };
 const TourDetailService = require('../service/TourDetailService');
 require("../logNginx");
-const getCategories = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+const getCategories = (req_1, res_1, ...args_1) => __awaiter(void 0, [req_1, res_1, ...args_1], void 0, function* (req, res, retries = 3, delay = 1000) {
     try {
         let parameters = req.query;
         let productID = parameters.productID;
@@ -21,10 +21,14 @@ const getCategories = (req, res) => __awaiter(void 0, void 0, void 0, function* 
         }
     }
     catch (err) {
+        if (retries > 0) {
+            yield new Promise(resolve => setTimeout(resolve, delay));
+            return getCategories(req, res, retries - 1, delay);
+        }
         res.status(400).send({ "errormessage": "could not load categories" });
     }
 });
-const getProducts = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+const getProducts = (req_1, res_1, ...args_1) => __awaiter(void 0, [req_1, res_1, ...args_1], void 0, function* (req, res, retries = 3, delay = 1000) {
     try {
         let products = yield new TourDetailService().getProducts();
         if (products) {
@@ -33,10 +37,14 @@ const getProducts = (req, res) => __awaiter(void 0, void 0, void 0, function* ()
         }
     }
     catch (err) {
+        if (retries > 0) {
+            yield new Promise(resolve => setTimeout(resolve, delay));
+            return getProducts(req, res, retries - 1, delay);
+        }
         res.status(400).send({ "errormessage": "could not load products" });
     }
 });
-const updateFavoriteCategory = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+const updateFavoriteCategory = (req_1, res_1, ...args_1) => __awaiter(void 0, [req_1, res_1, ...args_1], void 0, function* (req, res, retries = 3, delay = 1000) {
     try {
         let { categoryId, status } = req.body;
         let result = yield new TourDetailService().updateCategoryAsFavorite(categoryId, status);
@@ -50,10 +58,14 @@ const updateFavoriteCategory = (req, res) => __awaiter(void 0, void 0, void 0, f
         }
     }
     catch (err) {
+        if (retries > 0) {
+            yield new Promise(resolve => setTimeout(resolve, delay));
+            return updateFavoriteCategory(req, res, retries - 1, delay);
+        }
         res.status(400).send({ "errormessage": "could not update categories" });
     }
 });
-const getToursByCategoryId = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+const getToursByCategoryId = (req_1, res_1, ...args_1) => __awaiter(void 0, [req_1, res_1, ...args_1], void 0, function* (req, res, retries = 3, delay = 1000) {
     try {
         const parameters = req.query;
         const categoryId = parameters.categoryId;
@@ -65,10 +77,14 @@ const getToursByCategoryId = (req, res) => __awaiter(void 0, void 0, void 0, fun
         }
     }
     catch (err) {
+        if (retries > 0) {
+            yield new Promise(resolve => setTimeout(resolve, delay));
+            return getToursByCategoryId(req, res, retries - 1, delay);
+        }
         res.status(400).send({ "errormessage": "could not load any planned Tours by any operator" });
     }
 });
-const getTourManagers = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+const getTourManagers = (req_1, res_1, ...args_1) => __awaiter(void 0, [req_1, res_1, ...args_1], void 0, function* (req, res, retries = 3, delay = 1000) {
     try {
         //   const parameters = req.query;
         const categoryId = parameters.categoryId;
@@ -80,7 +96,11 @@ const getTourManagers = (req, res) => __awaiter(void 0, void 0, void 0, function
         }
     }
     catch (err) {
+        if (retries > 0) {
+            yield new Promise(resolve => setTimeout(resolve, delay));
+            return getTourManagers(req, res, retries - 1, delay);
+        }
         res.status(400).send({ "errormessage": "could not load any planned Tours by any operator" });
     }
 });
-module.exports = { getCategories, getToursByCategoryId, updateFavoriteCategory, getProducts };
+module.exports = { getCategories, getToursByCategoryId, updateFavoriteCategory, getProducts, getTourManagers };

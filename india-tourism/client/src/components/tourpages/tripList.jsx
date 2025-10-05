@@ -212,7 +212,7 @@ const TripList = ({access_token,categoryId,cityList,showDetails}) =>{
               </Typography>
              
                     <Typography variant="body2" color="text.secondary">
-                 {tour.domesticOrinternational == "D"? "Domestic":"International"}
+                 {tour.domesticOrinternational === "D"? "Domestic":"International"}
               </Typography>
                  <button type="submit" class="button"  onClick={()=>showDetails(tour,getValuesFromTourManagerMap(tour.tourManagerId))} 
                     style={{ cursor: 'pointer',backgroundColor: '#8a77f8ff',color:'#0c0c0fff'}}>

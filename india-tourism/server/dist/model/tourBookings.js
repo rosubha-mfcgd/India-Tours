@@ -8,11 +8,11 @@ const tourBookingSchema = new mongoose_1.Schema({
         required: true
     },
     startDate: {
-        type: String,
+        type: Date,
         required: true
     },
     endDate: {
-        type: String,
+        type: Date,
         required: true
     },
     bookingId: {

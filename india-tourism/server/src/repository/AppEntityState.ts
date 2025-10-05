@@ -262,11 +262,11 @@ export interface ICategory extends Document{
 			required: true
     },
 		startDate: {
-			type: string,
+			type: Date,
 			required: true
 		},
 		endDate: {
-			type: string,
+			type: Date,
 			required: true
 		},
 		locationName: {
