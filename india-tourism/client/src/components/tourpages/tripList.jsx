@@ -25,7 +25,9 @@ import { getTripList,getTourManagers } from "../admin/admin";
  import MenuIcon from '@mui/icons-material/Menu'; // Or any other icon
   import FavoriteIcon from '@mui/icons-material/Favorite';
   import SideBarForSorting from '../navigationTabs/sideBarForSorting.jsx';
+  import SideBarNotification from '../navigationTabs/sideBarNotification.jsx';
   import { NavContext } from '../navigationContext/navigationContext.jsx';
+
 const TripList = ({access_token,categoryId,cityList,showDetails}) =>{
     
    console.log('categoryID is...',categoryId); 
@@ -38,6 +40,7 @@ const TripList = ({access_token,categoryId,cityList,showDetails}) =>{
     const[isOpen,setOpen] = useState(false);
    const [anchorEl, setAnchorEl] = useState(null);
    const {triggerSorting,sortTrip} = useContext(NavContext);
+    const { notification} = useContext(NavContext);
    const open = Boolean(anchorEl);
 
    function toggleSideBarForSorting()
@@ -254,7 +257,12 @@ const TripList = ({access_token,categoryId,cityList,showDetails}) =>{
             </div>:<div></div>
            }
              </Grid>
-              
+               {notification ?
+               <div style={{position: 'fixed', top:70,right:0}} >    
+               <SideBarNotification/> 
+            </div> 
+            :<div></div>
+             }
              </nav>
              </div>
              </div>

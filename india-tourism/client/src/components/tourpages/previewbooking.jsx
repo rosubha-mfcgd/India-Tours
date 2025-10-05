@@ -46,7 +46,14 @@ const PreviewForm = ({access_token,bookings,tourDetailsParam}) =>{
     const[bookingId, setBookingId] = useState('');
     const[bookingUpdateId, setBookingUpdateId] = useState('');
     const handleClickOpenOrClose = () => {
+        
         setDialogOpen(!dialogOpen);
+        if(dialogOpen)
+        {
+            setBookingId('');
+            setBookingUpdateId('');
+            setDisable(true)
+        }
     };
 
   

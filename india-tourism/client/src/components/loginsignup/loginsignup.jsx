@@ -179,9 +179,16 @@ const LoginSignup =() => {
               <div className="center-container">
       
                 {isLoading ? (
-                  <div className="centered-div">
-                     <CircularProgress/>
-                     </div>
+                  <Box
+      sx={{
+        display: 'flex',
+        justifyContent: 'center',
+        alignItems: 'center',
+        minHeight: '100vh', // Optional: Centers vertically within the viewport
+      }}
+    >
+                     <CircularProgress />
+                     </Box>
                 ):(
                    
                <div className = "container">

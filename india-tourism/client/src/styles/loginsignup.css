@@ -109,10 +109,12 @@
     color:#676767;
 }
 .centre-div{
-display: flex;
+display: grid;
 justify-content: center;
+place-items: center;
 align-items: 'center';
 min-height: '100vh'; 
+min-width: '100vw';
 }
 
 .error-div-at-top {

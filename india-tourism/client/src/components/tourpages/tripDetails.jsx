@@ -1,9 +1,11 @@
-import React, { useEffect,useState } from "react"; 
+import React, { useEffect,useState,useContext } from "react"; 
 import  { useNavigate } from "react-router-dom"; 
 import '../../styles/TripDetails.css';
 import '../../styles/loginsignup.css';
+import SideBarNotification from '../navigationTabs/sideBarNotification.jsx';
+import { NavContext } from '../navigationContext/navigationContext.jsx';
 
- import {
+import {
     TextField,
     Button,
     Table,
@@ -52,7 +54,7 @@ import '../../styles/loginsignup.css';
     }
         const detailFlds = getFieldsForTripDetailsScreen();
         console.log('tourDetails...',tourDetails);
-
+        const { notification} = useContext(NavContext);
         
     return (
         <div style={{ display: 'flex', flexDirection: 'column', 
@@ -192,6 +194,12 @@ import '../../styles/loginsignup.css';
         
            
                  </Grid>
+                    {notification ?
+                                <div style={{position: 'fixed', top:70,right:0}} >    
+                                <SideBarNotification/> 
+                             </div> 
+                             :<div></div>
+                              }
             </div>
                      
         </div>
