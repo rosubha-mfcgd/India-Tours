@@ -232,7 +232,9 @@ const submitBooking = async()=>{
                                                 <Input id="name" name="name" defaultValue = {booking.name} 
                                                 disabled={disable} 
                                                 onChange={(event)=>updateBooking("name",sum,event)}
-                                                
+                                               inputProps={{
+         maxLength: 10,
+     }}
                                                 />
                                                  </FormControl>
                                                   <FormControl style={{ marginLeft: 5 }}>
@@ -240,7 +242,11 @@ const submitBooking = async()=>{
                                                 <InputLabel 
                                                 style={{ color: '#0c0000ff' }}
                                                 variant="outlined" fullWidth>Email</InputLabel>
-                                                <Input id="email" name="email" defaultValue = {booking.email} 
+                                                <Input id="email" name="email" 
+                                                defaultValue = {booking.email} 
+                                                inputProps={{
+         maxLength: 50,
+     }}
                                                 disabled={disable} 
                                                 onChange={(event)=>updateBooking("email",sum,event)}/>
                                                 </FormControl>
@@ -251,7 +257,9 @@ const submitBooking = async()=>{
                                                 style={{ color: '#0c0000ff' }}
                                                 variant="outlined" fullWidth>Mobile</InputLabel>
                                                 <Input id="mobile" name="mobile" defaultValue = {booking.mobile} 
-                                                disabled={disable}
+                                                disabled={disable} inputProps={{
+         maxLength: 10,
+     }}
                                                 onChange={(event)=>updateBooking("mobile",sum,event)}/>
                                                     </FormControl>
                                                     <FormControl style={{ marginLeft: 5 }}> 
@@ -260,7 +268,9 @@ const submitBooking = async()=>{
                                                   style={{ color: '#080000ff' }}
                                                   variant="outlined" fullWidth>Age</InputLabel>
                                                  <Input id="age" name="age" defaultValue = {booking.age} 
-                                                 disabled={disable} 
+                                                 disabled={disable}  inputProps={{
+                                                                       maxLength: 2,
+                                                                   }}
                                                  onChange={(event)=>updateBooking("age",sum,event)}/>  
                                                 </FormControl>
                                                   <FormControl style={{ marginLeft: 5 }}> 
@@ -268,7 +278,9 @@ const submitBooking = async()=>{
                                                   <InputLabel 
                                                   style={{ color: '#080000ff' }}
                                                   variant="outlined" fullWidth>Any Special request?</InputLabel>
-                                                 <Input id="specialRequest" name="specialRequest" 
+                                                 <Input id="specialRequest" name="specialRequest"  inputProps={{
+                                                      maxLength: 100,
+                                                  }}
                                                 defaultValue = {booking.specialRequest} disabled={disable} 
                                                 onChange={(event)=>updateBooking("specialRequest",sum,event)}/>  
                                                 </FormControl>

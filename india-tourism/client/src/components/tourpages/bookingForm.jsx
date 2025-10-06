@@ -333,41 +333,51 @@ const BookingForm = ({access_token,tourDetails,triggerDisplayBookings}) =>{
                 style={{ color: '#080000ff' }}
                 fullWidth>Name</InputLabel>
                 <Input id="name" name="name" 
-                defaultValue={tourist.value.name}/>
+                defaultValue={tourist.value.name}   inputProps={{
+         maxLength: 20,
+     }}/>
                  </FormControl>
                   <FormControl style={{ marginLeft: 5 }}>
                     
                 <InputLabel 
-                style={{ color: '#0c0000ff' }}
+                style={{ color: '#0c0000ff' }} 
                 variant="outlined" fullWidth>Email</InputLabel>
                 <Input id="email" name="email" 
-                 defaultValue={tourist.value.email}
+                 defaultValue={tourist.value.email}  inputProps={{
+         maxLength: 50,
+     }}
                 />
                 </FormControl>
                      
                    <FormControl style={{ marginLeft: 5 }}>
                    
                 <InputLabel 
-                style={{ color: '#0c0000ff' }}
+                style={{ color: '#0c0000ff' }} 
                 variant="outlined" fullWidth>Mobile</InputLabel>
                 <Input id="mobile" name="mobile" 
-                defaultValue={tourist.value.mobile}/>
+                defaultValue={tourist.value.mobile}  inputProps={{
+         maxLength: 10,
+     }}/>
                     </FormControl>
                     <FormControl style={{ marginLeft: 5 }}> 
                       
                   <InputLabel 
-                  style={{ color: '#080000ff' }}
+                  style={{ color: '#080000ff' }} 
                   variant="outlined" fullWidth>Age</InputLabel>
                  <Input id="age" name="age" 
-                 defaultValue={tourist.value.age} />  
+                 defaultValue={tourist.value.age}  inputProps={{
+         maxLength: 2,
+     }}/>  
                 </FormControl>
                   <FormControl style={{ marginLeft: 5 }}> 
                      
                   <InputLabel 
-                  style={{ color: '#080000ff' }}
+                  style={{ color: '#080000ff' }} 
                   variant="outlined" fullWidth>Any Special request?</InputLabel>
                  <Input id="specialRequest" name="specialRequest" 
-                  defaultValue={tourist.value.specialRequest}
+                  defaultValue={tourist.value.specialRequest}  inputProps={{
+         maxLength: 100,
+     }}
                  />  
                 </FormControl>
               </div>
