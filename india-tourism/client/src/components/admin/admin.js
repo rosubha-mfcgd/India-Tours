@@ -281,7 +281,7 @@ export const updateAsFavorite = async(data) =>{
      
 }catch(err){
      console.error('Could not update as favorite category:::', err.stack);
-     throw err;
+    // throw err;
 }
 return res_data;
 }
@@ -298,18 +298,19 @@ export const performTripBooking = async(data) =>{
             "Content-type": "application/json; charset=UTF-8",
             "Authorization":"Bearer "+access_token.data.access_token
             };
-            const response = await axios.post(
+            let response = await axios.post(
         process.env.REACT_APP_SERVER_URI + "performBookings",
             data, {headers});
         if(response)
      {
+        console.log('response....',response);
         res_data = response.data;
      }
      }
      
 }catch(err){
      console.error('Could not update trip bookings:::', err.stack);
-     throw err;
+    // throw err;
 }
 return res_data;
 }
@@ -339,8 +340,8 @@ export const getBookingsByBookingId = async(data) =>{
      }
      
 }catch(err){
-     console.error('Could not find bookings:::', err.stack);
-     throw err;
+     console.error('Could not find bookings:::');
+    // throw err;
 }
 return res_data;
 }
@@ -370,7 +371,7 @@ export const updateBookingsByBookingId = async(data) =>{
      
 }catch(err){
      console.error('Could not find bookings:::', err.stack);
-     throw err;
+    // throw err;
 }
 return res_data;
 }

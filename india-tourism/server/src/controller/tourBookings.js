@@ -9,10 +9,11 @@ const performBookings = async(req,res,retries = 3, delay = 1000) =>{
         try{
                 let tourBookingService =  new TourBookingService();
                 
-            let bookings = await tourBookingService.createOrUpdateBookings(tourManagerId,locationName,
+            let bookings = await tourBookingService.createBookings(tourManagerId,locationName,
                 startDate,endDate,domesticOrInternational,
                 package_cost,primarybookings,dependantbookings);
                 if(bookings){
+                  console.log('bookings...',bookings);
                 res.status(200).send({"bookingid":bookings});
                 }else{
                     throw err;
@@ -46,7 +47,9 @@ const performBookings = async(req,res,retries = 3, delay = 1000) =>{
                 {
                     res.status(200).send(bookings);
                 }else{
-                    throw err;
+                    res.status(200).send(
+                {
+                  "errormessage":"could not find a booking by booking id "+bookingId});
                 }
 
         }catch(err){

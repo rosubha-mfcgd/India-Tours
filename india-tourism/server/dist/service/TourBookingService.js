@@ -15,42 +15,42 @@ class TourBookingService {
     constructor() {
         this.errorMsg = "Message not found";
     }
-    createOrUpdateBookings(tourManagerId, locationName, startDate, endDate, domesticOrInternational, package_cost, primarybookings, dependantbookings) {
+    createBookings(tourManagerId, locationName, startDate, endDate, domesticOrInternational, package_cost, primarybookings, dependantbookings) {
         return __awaiter(this, void 0, void 0, function* () {
             let bookings = [];
             let bookingId = '';
             try {
                 const bookingRepository = new BookingRepository();
-                let existingBooking = yield bookingRepository.findOne({ "tourManagerId": tourManagerId,
+                // let existingBooking = await bookingRepository.findOne({"tourManagerId": tourManagerId,
+                //     "locationName":locationName,
+                //     "startDate":startDate, 
+                //     "endDate":endDate,
+                //     "domesticOrInternational":domesticOrInternational});
+                // if(!existingBooking)
+                // {
+                bookingId = apputil.generateBookingId();
+                let data = { "tourManagerId": tourManagerId,
                     "locationName": locationName,
                     "startDate": new Date(startDate),
                     "endDate": new Date(endDate),
-                    "domesticOrInternational": domesticOrInternational });
-                if (!existingBooking) {
-                    bookingId = apputil.generateBookingId();
-                    let data = { "tourManagerId": tourManagerId,
-                        "locationName": locationName,
-                        "startDate": new Date(startDate),
-                        "endDate": new Date(endDate),
-                        "domesticOrInternational": domesticOrInternational,
-                        "bookingId": bookingId,
-                        "package_cost": package_cost,
-                        "primarybookings": primarybookings,
-                        "dependantbookings": dependantbookings
-                    };
-                    bookings = yield bookingRepository.create(data);
-                    console.log('User successfully booked with object id ', bookings._id);
-                    if (bookings && bookings.length > 0) {
-                        console.log('bookings...', bookings);
-                    }
+                    "domesticOrInternational": domesticOrInternational,
+                    "bookingId": bookingId,
+                    "package_cost": package_cost,
+                    "primarybookings": primarybookings,
+                    "dependantbookings": dependantbookings
+                };
+                bookings = yield bookingRepository.create(data);
+                console.log('User successfully booked with object id ', bookings);
+                if (bookings) {
+                    console.log('bookings...', bookings);
+                    bookingId = bookings.bookingId;
                 }
-                else {
-                    console.log('User successfully booked with object id ', existingBooking._id);
-                    if (existingBooking && existingBooking.length > 0) {
-                        console.log('bookings...', existingBooking);
-                        bookingId = existingBooking.bookingId;
-                    }
-                }
+                // }else{
+                //      console.log('User already found with object id ',existingBooking._id);
+                //       if(existingBooking){
+                //         console.log('bookings...',existingBooking);
+                //         bookingId = existingBooking.bookingId;
+                //     }
             }
             catch (err) {
                 console.log(err.stack);
@@ -110,6 +110,7 @@ class TourBookingService {
                 let data = { "package_cost": package_cost,
                     "primarybookings": primarybookings,
                     "dependantbookings": dependantbookings };
+                console.log();
                 let updateResult = yield bookingRepository.update(existingbooking._id, data);
                 if (updateResult) {
                     console.log('booking....', result);

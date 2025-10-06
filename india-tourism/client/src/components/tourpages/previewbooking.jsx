@@ -160,18 +160,21 @@ const submitBooking = async()=>{
               {!tourDetailsParam.bookingid?
           <DialogContentText id="dialog-description">
           
-           Bingo !! Your booking has been confirmed with bookingId {bookingId}
+           Bingo !! Your booking has been allocated with bookingId {bookingId}. 
+           Ensure to complete payment by next 48 hours else this booking will be deactivated
           </DialogContentText>:
           <DialogContentText id="dialog-description">
           
            Yaay !! Your bookingId {bookingId} has been updated. 
+           Ensure to complete additional payment by next 48 hours.
+           For adjustment/refund, kindly wait for 5 business days
           </DialogContentText>
             }
         </DialogContent>
         <DialogActions>
           <Button onClick={handleClickOpenOrClose}>Cancel</Button>
           <Button onClick={handleClickOpenOrClose} autoFocus>
-            Agree
+            Proceed to Payment
           </Button>
           {dialogOpen?
           <img src={success_animation} alt="" width="40" height="40"/>:<div></div>}

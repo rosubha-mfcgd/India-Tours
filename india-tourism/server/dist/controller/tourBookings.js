@@ -14,8 +14,9 @@ const performBookings = (req_1, res_1, ...args_1) => __awaiter(void 0, [req_1, r
     const { tourManagerId, locationName, startDate, endDate, domesticOrInternational, package_cost, primarybookings, dependantbookings } = req.body;
     try {
         let tourBookingService = new TourBookingService();
-        let bookings = yield tourBookingService.createOrUpdateBookings(tourManagerId, locationName, startDate, endDate, domesticOrInternational, package_cost, primarybookings, dependantbookings);
+        let bookings = yield tourBookingService.createBookings(tourManagerId, locationName, startDate, endDate, domesticOrInternational, package_cost, primarybookings, dependantbookings);
         if (bookings) {
+            console.log('bookings...', bookings);
             res.status(200).send({ "bookingid": bookings });
         }
         else {
@@ -41,7 +42,9 @@ const getBookingsByBookingId = (req_1, res_1, ...args_1) => __awaiter(void 0, [r
             res.status(200).send(bookings);
         }
         else {
-            throw err;
+            res.status(200).send({
+                "errormessage": "could not find a booking by booking id " + bookingId
+            });
         }
     }
     catch (err) {

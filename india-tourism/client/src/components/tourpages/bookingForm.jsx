@@ -1,13 +1,14 @@
-import React from "react";
 import '../../styles/Navbar.css';
 import '../../styles/Cards.css';
 import '../../styles/sidebar.css';
 import '../../styles/bookingForm.css';
 import CustomButton from '../Utilities/CustomButtons.jsx'
-import { useEffect, useState, useContext,useRef } from "react";
+import { useEffect, useState, useContext} from "react";
 import { styled } from '@mui/material/styles';
 import {getBookingsByBookingId} from "../admin/admin";
 import SideBarNotification from '../navigationTabs/sideBarNotification.jsx';
+
+import failure_animation from '../Assets/images/failure_animation.gif';
 import { NavContext } from '../navigationContext/navigationContext.jsx';
 import {
     TextField,
@@ -32,7 +33,12 @@ import {
     Input,
     Switch,
     InputLabel,
-    TextareaAutosize
+    TextareaAutosize,
+    Dialog,
+    DialogTitle,
+    DialogContent,
+    DialogContentText,
+    DialogActions
   } from "@mui/material";
 
 
@@ -46,6 +52,9 @@ const BookingForm = ({access_token,tourDetails,triggerDisplayBookings}) =>{
     const [bookingid,setBookingid] = useState('');
      const [bookingData,setBookingData] = useState('');
      const[currentBooking,setCurrentBooking] = useState('');
+     const[displayErrorDialog,setDisplayErrorDialog] = useState(false);
+     const[errorMessage,setErrorMessage] = useState('');
+         const [dialogOpen, setDialogOpen] = useState(false);
   const { notification} = useContext(NavContext);
     const CssTextField = styled(TextField)({
       '& label': {
@@ -58,7 +67,18 @@ const BookingForm = ({access_token,tourDetails,triggerDisplayBookings}) =>{
         setStartBooking(true);
         createForms(0);
     }
-   
+   const handleClickOpenOrClose = () => {
+        
+        setDialogOpen(!dialogOpen);
+        if(!dialogOpen)
+        {
+           // setBookingId('');
+            //setBookingUpdateId('');
+            //setDisable(true)
+             setDisplayErrorDialog(false);
+         // setDialogOpen(false);
+        }
+    };
 
     const showCurrentBookings = async(event) =>{
       let bookingid = event.target.value;
@@ -75,7 +95,7 @@ const BookingForm = ({access_token,tourDetails,triggerDisplayBookings}) =>{
             "domesticOrInternational":tourDetails.domesticOrInternational
         }
         let existingBookings = await getBookingsByBookingId(data);
-        if(existingBookings)
+        if(existingBookings &&  !existingBookings.errormessage)
         {
           console.log("existingBookings....",existingBookings)
           console.log("primarybookings length....",existingBookings.primarybookings.length)
@@ -85,6 +105,11 @@ const BookingForm = ({access_token,tourDetails,triggerDisplayBookings}) =>{
                   existingBookings.dependantbookings.length;
          let totalTourists = noOfTourist+existingBookingsCount;
          setNoOfTourist(totalTourists);
+         }
+         else{
+          setErrorMessage('Booking id '+bookingid+' was not found in our system');
+          setDisplayErrorDialog(true);
+          setDialogOpen(true);
          }
       }
     }
@@ -200,7 +225,31 @@ const BookingForm = ({access_token,tourDetails,triggerDisplayBookings}) =>{
                   Click me to book your trip to {tourDetails.locationName} with {tourDetails.tourManagerName}    
         </Typography> 
            </Box>
-
+{displayErrorDialog?
+                     <Dialog
+        open={dialogOpen}
+        onClose={handleClickOpenOrClose}
+        aria-labelledby="dialog-title"
+        aria-describedby="dialog-description"
+      >
+        <DialogTitle id="dialog-title">Error Message From {tourDetails.tourManagerName}</DialogTitle>
+        <DialogContent>
+           
+          <DialogContentText id="dialog-description">
+          
+          {errorMessage}
+          </DialogContentText>
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={handleClickOpenOrClose}>Cancel</Button>
+          <Button onClick={handleClickOpenOrClose} autoFocus>
+           OK
+          </Button>
+          {dialogOpen?
+          <img src={failure_animation} alt="" width="40" height="40"/>:
+          <div></div>}
+        </DialogActions>
+      </Dialog>:<div></div>}
         {startBooking ?
          
               <TableContainer sx={{boxShadow: 'none'}}>
@@ -218,6 +267,11 @@ const BookingForm = ({access_token,tourDetails,triggerDisplayBookings}) =>{
                           sx={{ color: '#FFFFFF' }}
                           label="Enter number of travellers" 
                           defaultValue={noOfTourist}
+                          slotProps={{
+                           htmlInput: {
+                            maxLength: 2, // Set the maximum length to 2 characters
+                             },
+                            }}
                           />    
                          </TableCell>
                          <TableCell sx={{border:"none"}}>
@@ -235,7 +289,11 @@ const BookingForm = ({access_token,tourDetails,triggerDisplayBookings}) =>{
                           sx={{ color: '#FFFFFF' }}
                           label="Booking id (Optional)" 
                            defaultValue={bookingid} 
-                           onBlur={showCurrentBookings}
+                           onBlur={showCurrentBookings}  slotProps={{
+                           htmlInput: {
+                            maxLength: 8, // Set the maximum length to 8 characters
+                             },
+                            }}
                          />
                       </TableRow>
                     </TableBody>
@@ -316,7 +374,7 @@ const BookingForm = ({access_token,tourDetails,triggerDisplayBookings}) =>{
             )):<div></div>
           }</Paper></div>:<div></div>
         }
-        { startBooking ? 
+        { startBooking && touristCount && touristCount.length >0? 
        
          <div className = "center-container" style={{
                     width: "fit-content",
