@@ -36,9 +36,13 @@ const getProducts = async(req,res,retries = 3, delay = 1000) =>{
      if(products)
         {
           console.log('result..',products);
+          if(products)
+          {
           res.status(200).send(
                 products);
-     
+          }else{
+            throw new Error("could not get the product on attempt #:-",retries);
+          }
     }
     }catch(err){
          if(retries>0)

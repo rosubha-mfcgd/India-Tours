@@ -23,12 +23,13 @@ import {
     CardContent
   } from "@mui/material";
 
-import { getCategories,getCities,updateAsFavorite } from "../admin/admin";
+import { getCategories,updateAsFavorite } from "../admin/admin";
 import { NavContext } from '../navigationContext/navigationContext.jsx';
 import SideBarNotification from './sideBarNotification.jsx'
 import FavoriteIcon from '@mui/icons-material/Favorite';
 
-const NavBar = ({access_token,triggerDisplayTripsByCatId,productID}) =>{
+const NavBar = ({access_token,triggerDisplayOptionsByCatId,
+    productID}) =>{
 
     
     const navigate = useNavigate();
@@ -119,7 +120,7 @@ const NavBar = ({access_token,triggerDisplayTripsByCatId,productID}) =>{
                     
                     <CardMedia component= "img"  height="100"
                     image = {item.image} alt={item.categoryDesc} 
-                    onClick={()=>triggerDisplayTripsByCatId(item.categoryID)} 
+                    onClick={()=>triggerDisplayOptionsByCatId(item.categoryID)} 
                     style={{ cursor: 'pointer' }} 
                      />
                                      
@@ -138,7 +139,7 @@ const NavBar = ({access_token,triggerDisplayTripsByCatId,productID}) =>{
               }
               
               </CardContent>
-              <button type="submit" class="button"  onClick={()=>triggerDisplayTripsByCatId(item.categoryID)} 
+              <button type="submit" class="button"  onClick={()=>triggerDisplayOptionsByCatId(item.categoryID)} 
                     style={{ cursor: 'pointer',backgroundColor: '#8a77f8ff',color:'#0c0c0fff'}}>
                         Click to View</button>
                     </Card>

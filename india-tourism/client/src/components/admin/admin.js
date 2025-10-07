@@ -144,6 +144,34 @@ return res_data;
 }
 
 
+export const getOptions = async(productID,categoryID) =>{
+    let res_data = "failed to fetch options";
+     try{
+        let access_token = await getApiAccessToken();
+        if(access_token){
+            console.log('access_token found...',access_token.data)
+        const headers = {
+            "Content-type": "application/json; charset=UTF-8",
+            "Authorization":"Bearer "+access_token.data.access_token
+            };
+            const response = await axios.get(
+        process.env.REACT_APP_SERVER_URI + "searchMyOptions?productID="+
+                productID+"&categoryID="+categoryID,
+        {headers});
+        if(response)
+     {
+        res_data = response.data;
+     }
+     }
+     
+}catch(err){
+     console.error('Error while fetching categories:::', err.stack);
+     throw err;
+}
+return res_data;
+}
+
+
 export const getProducts = async() =>{
     let res_data = "failed to fetch products";
      try{

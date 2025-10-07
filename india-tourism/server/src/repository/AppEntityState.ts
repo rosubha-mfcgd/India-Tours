@@ -138,6 +138,35 @@ export interface ICategory extends Document{
     }
   }
 
+  export interface IOptions extends Document{
+    categoryID:{
+       type: Number,
+      required: true
+    },
+    optionName:{
+       type: String,
+      required: true,
+      trim: true,
+    },
+    optionDesc:{
+       type: String,
+      required: true,
+      trim: true,
+    },
+     favorite:{
+       type: String,
+      
+    },
+    productID:{
+       type: Number,
+      required: true
+    },
+    optionID:{
+       type: Number,
+      required: true
+    }
+  }
+
   export interface ILocation extends Document{
     locationID:{
        type: Number,

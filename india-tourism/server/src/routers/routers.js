@@ -9,6 +9,8 @@ const {getPoints} = require("../controller/userprofile");
 const {getCategories,getProducts,getToursByCategoryId,updateFavoriteCategory} = require("../controller/tripDetails");
 const {getRegisteredTourManagers, getCities} = require("../controller/tourManagers");
 const {performBookings, getBookingsByBookingId,updateBookingsByBookingId} = require("../controller/tourBookings");
+const {getSearchOptions} = require("../controller/searchOptions")
+
 const router = express.Router();
 
 
@@ -34,4 +36,7 @@ router.post("/performBookings",checkAuthenticated,performBookings);
 
 router.post("/getBookingsByBookingId",checkAuthenticated,getBookingsByBookingId);
 router.post("/updateBookingsByBookingId",checkAuthenticated,updateBookingsByBookingId);
+
+router.get("/searchMyOptions",checkAuthenticated,getSearchOptions);
+
 module.exports = router 

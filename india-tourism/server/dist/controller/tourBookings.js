@@ -20,7 +20,7 @@ const performBookings = (req_1, res_1, ...args_1) => __awaiter(void 0, [req_1, r
             res.status(200).send({ "bookingid": bookings });
         }
         else {
-            throw err;
+            throw new Error("could not create a booking on attempt #:-", retries);
         }
     }
     catch (err) {
@@ -70,7 +70,7 @@ const updateBookingsByBookingId = (req_1, res_1, ...args_1) => __awaiter(void 0,
             }
             else {
                 console.log('could not update bookings....');
-                throw err;
+                throw new Error("could not update a booking on attempt #:-", retries);
             }
         }
         else {

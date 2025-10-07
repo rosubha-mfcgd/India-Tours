@@ -16,7 +16,7 @@ const performBookings = async(req,res,retries = 3, delay = 1000) =>{
                   console.log('bookings...',bookings);
                 res.status(200).send({"bookingid":bookings});
                 }else{
-                    throw err;
+                    throw new Error("could not create a booking on attempt #:-",retries);
                 }
        }catch(err){
          if(retries>0)
@@ -88,7 +88,7 @@ const performBookings = async(req,res,retries = 3, delay = 1000) =>{
                         res.status(200).send(updatedbookings);
                     }else{
                         console.log('could not update bookings....')
-                        throw err;
+                       throw new Error("could not update a booking on attempt #:-",retries);
                     }
                 }else{
                     console.log('could not find booking by booking id')

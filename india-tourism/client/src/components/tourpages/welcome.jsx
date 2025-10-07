@@ -4,17 +4,20 @@ import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 
 import NavBar from '../navigationTabs/navBar.jsx';
 import Product from '../navigationTabs/products.jsx';
+import DisplayOptions from '../navigationTabs/showOptions.jsx'
 import Header from '../header/header.jsx';
 import Layout from '../Layout/layout.jsx';
 import UserProfile from '../userprofile/userprofile.jsx';
 
 import '../../styles/loginsignup.css';
  import { NavProvider } from '../navigationContext/navigationContext.jsx';
+
  import {useLocation } from 'react-router-dom';
 import TripList from "./tripList.jsx";
 import TripDetails from "./tripDetails.jsx";
 import BookingForm from "./bookingForm.jsx";
 import PreviewForm from "./previewbooking.jsx";
+ 
 import { getCities } from "../admin/admin";
 import ChatButton from '../Utilities/ChatButton.jsx';
 import ChatWindow from '../Utilities/ChatWindow.jsx';
@@ -28,9 +31,12 @@ const Welcome =()=>{
      const [bookTrip,setBookTrip] = useState(false);
      const [showCategories,setShowCategories] = useState(false);
      const [previewbooking,setPreviewbooking] = useState(false);
+     const [searchOptions,setSearchOptions] = useState(false);
+
      const [cityList,setCityList] = useState('');
      const[tripListParam,setTripListParam] = useState('');
      const[productID,setProductID] = useState('');
+     const[categoryID,setCategoryID] = useState('');
      const[tripDetailsParam,setTripDetailsParam] = useState('');
      const[bookings,setBookings] = useState('');
      const[tourDetailsParam,setTourDetailsParam] = useState('');
@@ -39,16 +45,23 @@ const Welcome =()=>{
     console.log('showTripDetails....',showTripDetails);
     console.log('bookTrip....',bookTrip);
     console.log('showCategories....',showCategories);
- console.log('previewbooking....',previewbooking);
-     const triggerDisplayTripsByCatId = (categoryId) =>{
+    console.log('previewbooking....',previewbooking);
+    
+    const triggerDisplayOptionsByCatId = (categoryId) =>{
       console.log('categoryId....',categoryId)
       setShowTripDetails(false);
 
-        if(categoryId)
+        if(categoryId && categoryId != 9)
         {
           setTripListParam(categoryId);
           setShowTrips(true);
-        }else{
+        }
+        else if(categoryId == 9){
+          setCategoryID(categoryId);
+          setShowCategories(false);
+             setSearchOptions(true);
+        }        
+        else{
           setShowTrips(false);
         }
      }
@@ -88,7 +101,14 @@ const Welcome =()=>{
         }
      }
 
-   
+   const triggerDisplayTasksByOptionID = async(optionID) =>{
+       console.log('optionID....',optionID)
+
+       if(optionID)
+       {
+          console.log('Tasks not defined yet');
+       }
+   }
 
 const openBookingForm = (tourDetails) =>{
   console.log('tourDetails...',tourDetails);
@@ -184,17 +204,20 @@ const openBookingForm = (tourDetails) =>{
               <TripDetails access_token={access_token} 
               tourDetails={tripDetailsParam} 
               cityList = {cityList}
-              triggerDisplayTripsByCatId={triggerDisplayTripsByCatId} 
+              triggerDisplayOptionsByCatId={triggerDisplayOptionsByCatId} 
               openBookingForm={openBookingForm}/> 
             :(bookTrip)?
             <BookingForm access_token={access_token} tourDetails={tripDetailsParam} 
-           triggerDisplayTripsByCatId={triggerDisplayTripsByCatId} 
+           triggerDisplayOptionsByCatId={triggerDisplayOptionsByCatId} 
            triggerDisplayBookings={triggerDisplayBookings}/>
              :(showCategories) ?
              <NavBar access_token={access_token} 
-             triggerDisplayTripsByCatId={triggerDisplayTripsByCatId} 
+             triggerDisplayOptionsByCatId={triggerDisplayOptionsByCatId} 
              productID={productID} cityList={cityList}/>:
-            (previewbooking)?
+             (searchOptions)?
+             <DisplayOptions access_token={access_token} productID={productID} 
+             categoryID={categoryID} triggerDisplayTasksByOptionID={triggerDisplayTasksByOptionID}/>
+            :(previewbooking)?
             <PreviewForm access_token={access_token} bookings={bookings} 
             tourDetailsParam = {tourDetailsParam}/>:
             <Product access_token={access_token} 

@@ -7,7 +7,7 @@ import { useEffect, useState, useContext} from "react";
 import { styled } from '@mui/material/styles';
 import {getBookingsByBookingId} from "../admin/admin";
 import SideBarNotification from '../navigationTabs/sideBarNotification.jsx';
-
+import close_button from '../Assets/images/close-button.png';
 import failure_animation from '../Assets/images/failure_animation.gif';
 import { NavContext } from '../navigationContext/navigationContext.jsx';
 import {
@@ -55,6 +55,7 @@ const BookingForm = ({access_token,tourDetails,triggerDisplayBookings}) =>{
      const[displayErrorDialog,setDisplayErrorDialog] = useState(false);
      const[errorMessage,setErrorMessage] = useState('');
          const [dialogOpen, setDialogOpen] = useState(false);
+         const[showBookingBtn,setShowBookingBtn] = useState(true);
   const { notification} = useContext(NavContext);
     const CssTextField = styled(TextField)({
       '& label': {
@@ -65,6 +66,7 @@ const BookingForm = ({access_token,tourDetails,triggerDisplayBookings}) =>{
    const initBooking = async() =>{
       setBookingPageMessage(process.env.REACT_APP_BOOKING_PAGE_MESSAGE);
         setStartBooking(true);
+        setShowBookingBtn(false);
         createForms(0);
     }
    const handleClickOpenOrClose = () => {
@@ -176,6 +178,8 @@ const BookingForm = ({access_token,tourDetails,triggerDisplayBookings}) =>{
       }
     }
 
+  
+
     const submitBookings = async() =>{
         let noOfTourists = document.getElementById('numberOfTourist').value;
          for(let count = 1;count<=noOfTourists;count++)
@@ -202,7 +206,9 @@ const BookingForm = ({access_token,tourDetails,triggerDisplayBookings}) =>{
     return(
         
             <div className = "center-container">
+              
                     <div className="original-content">
+                      {showBookingBtn ? 
                        <Box
       component="form"
       sx={{
@@ -219,12 +225,13 @@ const BookingForm = ({access_token,tourDetails,triggerDisplayBookings}) =>{
         cursor: 'pointer',
          animation: 'blink-animation 5s linear infinite;'
       }}
-      noValidate
-      autoComplete="off" onClick={()=>initBooking() }>
+      noValidate 
+      autoComplete="off" onClick={initBooking}>
          <Typography variant="body2" style={{ color: 'rgba(17, 17, 17, 1)' }}>
                   Click me to book your trip to {tourDetails.locationName} with {tourDetails.tourManagerName}    
         </Typography> 
-           </Box>
+           </Box>:<div></div>
+              }
 {displayErrorDialog?
                      <Dialog
         open={dialogOpen}
@@ -324,8 +331,11 @@ const BookingForm = ({access_token,tourDetails,triggerDisplayBookings}) =>{
                 >
              <Typography variant="body2" style={{ color: '#160101ff' }}> 
               <strong>Tourist #{tourist.key}</strong>
-
+              <img src={close_button} alt="" height="30" width="30" className='img-style' 
+             />
                </Typography>
+
+              
                 </h2>
                 <FormControl>
              
@@ -380,6 +390,7 @@ const BookingForm = ({access_token,tourDetails,triggerDisplayBookings}) =>{
      }}
                  />  
                 </FormControl>
+                
               </div>
             )):<div></div>
           }</Paper></div>:<div></div>

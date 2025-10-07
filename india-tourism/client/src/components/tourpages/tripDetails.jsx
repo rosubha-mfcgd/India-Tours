@@ -25,7 +25,7 @@ import {
     CardContent
   } from "@mui/material";
 
-  const TripDetails = ({tourDetails,triggerDisplayTripsByCatId,openBookingForm,cityList,access_token}) =>{
+  const TripDetails = ({tourDetails,triggerDisplayOptionsByCatId,openBookingForm,cityList,access_token}) =>{
 
   const navigate = useNavigate();
 
@@ -177,7 +177,7 @@ import {
         <div className="button-container">
          <div className='submit-container'>
                     <button type="submit" onClick={()=>{
-                        triggerDisplayTripsByCatId(tourDetails.categoryId)}}
+                        triggerDisplayOptionsByCatId(tourDetails.categoryId)}}
                         class="button"
                         >Go Back</button>
 

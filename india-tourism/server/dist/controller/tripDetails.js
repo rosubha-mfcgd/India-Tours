@@ -33,7 +33,12 @@ const getProducts = (req_1, res_1, ...args_1) => __awaiter(void 0, [req_1, res_1
         let products = yield new TourDetailService().getProducts();
         if (products) {
             console.log('result..', products);
-            res.status(200).send(products);
+            if (products) {
+                res.status(200).send(products);
+            }
+            else {
+                throw new Error("could not get the product on attempt #:-", retries);
+            }
         }
     }
     catch (err) {
