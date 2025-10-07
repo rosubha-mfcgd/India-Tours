@@ -52,13 +52,7 @@ import {
                     "optionId":optionid,
                     "status" : status
                     }
-                    // let result = await updateAsFavorite(data);
-                    // if(result)
-                    // {
-                    //    console.log('favorite result...',result)
-                    // }else{
-                    //     console.log('could not update favorite')
-                    // }
+                
                     console.log('Option updates coming soon');
        }
 
