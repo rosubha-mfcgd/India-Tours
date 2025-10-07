@@ -69,6 +69,8 @@ const BookingForm = ({access_token,tourDetails,triggerDisplayBookings}) =>{
         setShowBookingBtn(false);
         createForms(0);
     }
+
+
    const handleClickOpenOrClose = () => {
         
         setDialogOpen(!dialogOpen);
@@ -332,6 +334,7 @@ const BookingForm = ({access_token,tourDetails,triggerDisplayBookings}) =>{
              <Typography variant="body2" style={{ color: '#160101ff' }}> 
               <strong>Tourist #{tourist.key}</strong>
               <img src={close_button} alt="" height="30" width="30" className='img-style' 
+
              />
                </Typography>
 

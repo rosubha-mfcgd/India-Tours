@@ -30,7 +30,7 @@ import { getTripList,getTourManagers } from "../admin/admin";
 
 const TripList = ({access_token,categoryId,cityList,showDetails}) =>{
     
-   console.log('categoryID is...',categoryId); 
+   //console.log('categoryID is...',categoryId); 
     const[tours,setTours] = useState('');
     const[alltours,setAlltours] = useState('');
     //combined state variable holding info from tours and tour managers
