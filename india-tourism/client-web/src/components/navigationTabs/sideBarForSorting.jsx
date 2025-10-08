@@ -1,4 +1,4 @@
-import React, {useState } from "react";
+import React, {useEffect, useState } from "react";
 import styled from "styled-components";
 import Radio from '@mui/material/Radio';
 import RadioGroup from '@mui/material/RadioGroup';
@@ -27,19 +27,23 @@ import {
      AppBar,
      Toolbar,
      IconButton,
-     Typography
-     
+     Typography,
+     InputLabel,
+     MenuItem   
   } from "@mui/material";
 
+ import NativeSelect from '@mui/material/NativeSelect';
 import {ListItem, ListItemButton, ListItemText} 
    from '@mui/material';
   import ChevronRightIcon from '@mui/icons-material/ChevronRight';
 
 import '../../styles/sidebarForSorting.css';
- const SideBarforSorting=({selectedValue,setSelectedValue,priceValue, setPriceValue,
-    triplengthValue, setTriplengthValue})=> {
+ const SideBarforSorting=({selectedValue,setSelectedValue,priceValue, 
+  setPriceValue,
+    triplengthValue, setTriplengthValue,cityList,cityvalue,setCityvalue})=> {
+     const[cityFilterList, setCityFilterList] = useState('')
    const [open, setOpen] = useState(true);
-       
+    
      // Handle changes to the slider's value
   const handlePriceSliderChange = (event) => {
     setPriceValue(event.target.value);
@@ -47,7 +51,12 @@ import '../../styles/sidebarForSorting.css';
   const handleTripLengthSliderChange = (event) => {
     setTriplengthValue(event.target.value);
   };
-        const handleDrawerClose = () => {
+  const handleCityValueChange = (event) => {
+
+    console.log('here....')
+    setCityvalue(event.target.value);
+  };
+ const handleDrawerClose = () => {
             setOpen(false);
         };
     const StyledDrawer = styled(Drawer)(({ theme }) => ({
@@ -59,6 +68,8 @@ import '../../styles/sidebarForSorting.css';
 const handleChange = (event) => {
       setSelectedValue(event.target.value);
    }; 
+
+  
   return (
             <Box sx={{ display: 'flex' }}>
             
@@ -90,12 +101,38 @@ const handleChange = (event) => {
                         <Typography variant="body2" color="common.white">Filter </Typography>
                     </Box>
                     <List>
+                      <ListItem>
+                         
+                        <FormControl fullWidth>
+                           <Typography variant="body2" color="common.black">
+                               Tour Operator Location
+                            </Typography>
+
+  <NativeSelect
+    defaultValue={cityvalue}
+    inputProps={{
+      name: 'cities',
+      id: 'uncontrolled-native',
+    }} onChange={handleCityValueChange}
+   >
+{
+ cityList && cityList.length>0?
+cityList.map((city) =>(
+
+<option value={city.citycode}>{city.cityname}</option>
+
+))
+:<option  aria-label="None"  value="0">All</option>
+}
+</NativeSelect>
+</FormControl>
+                      </ListItem>
                         {
                         ['Price', 'TripLength','DomesticOrInternational'] .
                          map((text, index) => ( (
                             <ListItem>
-                              
-                              {text == 'Price'?
+                              {
+                               text == 'Price'?
                               <div>
                             <Typography variant="body2" color="common.black">
                                 {text} - {priceValue}
@@ -146,12 +183,11 @@ const handleChange = (event) => {
         value={selectedValue}
         onChange={handleChange}
       >
-        <FormControlLabel value="I" control={<Radio  />} label="International" />
-        <FormControlLabel value="D" control={<Radio />} label="Domestic" />
-         <FormControlLabel value="B" control={<Radio />} label="Both" />
+        <FormControlLabel value="I" control={<Radio/>} label="International" />
+        <FormControlLabel value="D" control={<Radio/>} label="Domestic" />
+         <FormControlLabel value="B" control={<Radio/>} label="Both" />
      </RadioGroup>
-     {/* <p>Selected value: {selectedValue}</p> */}
-    </FormControl>
+     </FormControl>
 
      </div>:<div></div>
      }  

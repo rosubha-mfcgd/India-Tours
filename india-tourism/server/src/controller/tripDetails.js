@@ -137,4 +137,5 @@ const getTourManagers = async(req,res,retries = 3, delay = 1000) =>{
                 {"errormessage":"could not load any planned Tours by any operator"});
     }
 }
-module.exports = {getCategories,getToursByCategoryId,updateFavoriteCategory,getProducts,getTourManagers}
+module.exports = {getCategories,getToursByCategoryId,updateFavoriteCategory,
+    getProducts,getTourManagers}

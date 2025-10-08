@@ -23,7 +23,7 @@ import { getTripList,getTourManagers } from "../admin/admin";
     IconButton
   } from "@mui/material";
  import MenuIcon from '@mui/icons-material/Menu'; // Or any other icon
-  import FavoriteIcon from '@mui/icons-material/Favorite';
+
   import SideBarForSorting from '../navigationTabs/sideBarForSorting.jsx';
   import SideBarNotification from '../navigationTabs/sideBarNotification.jsx';
   import { NavContext } from '../navigationContext/navigationContext.jsx';
@@ -54,9 +54,10 @@ const TripList = ({access_token,categoryId,cityList,showDetails}) =>{
     const [tourMgrMap, setTourMgrMap] = useState(new Map());
     const [selectedValue, setSelectedValue] = useState('B');
     const[priceValue, setPriceValue] = useState('100000');
-    const [triplengthValue, setTriplengthValue] = useState('30')
+    const [triplengthValue, setTriplengthValue] = useState('30');
+    const [cityvalue, setCityvalue] = useState('0');  
     const tourManagerMap = new Map(tourMgrMap);
-    
+   
     const updateTourMgrMap = (key,value) => {
        
         tourManagerMap.set(key,value);
@@ -93,6 +94,7 @@ const TripList = ({access_token,categoryId,cityList,showDetails}) =>{
        const getTripListByCategoryId = async (categoryId) =>{
                        console.log('categoryId...',categoryId);
                        let tourOps = '';
+                     
                         if(!tourManagers)
                         {
                              tourOps = await getTourManagers();
@@ -114,6 +116,7 @@ const TripList = ({access_token,categoryId,cityList,showDetails}) =>{
                                         });
                                 }
                             );
+
                         }else{
                             console.log('Could not find tour managers');
                         }
@@ -138,6 +141,7 @@ const TripList = ({access_token,categoryId,cityList,showDetails}) =>{
                 //console.log('selectedValue in useEffect...',selectedValue)
                     if(tours)
                     {
+                        
                         if(selectedValue === 'I' || selectedValue === 'D'){
                         for(let tour of alltours)
                         {
@@ -146,26 +150,40 @@ const TripList = ({access_token,categoryId,cityList,showDetails}) =>{
                                 console.log('tripLength....',tripLength);
                             if(tour.domesticOrinternational === selectedValue  && 
                                 Number(tour.package_cost)<=(Number(priceValue)) && 
-                            Number(tripLength)<=Number(triplengthValue))
+                            Number(tripLength)<=Number(triplengthValue) && (
+                                tourManagerMap.get(tour.tourManagerId) && 
+                                ((tourManagerMap.get(tour.tourManagerId)).citycode == cityvalue)||
+                        (tourManagerMap.get(tour.tourManagerId).citycode == '0')
+                        ))
                             {
                                 selectedTours.push(tour);
                                 
                             }
+                           
                         }
+                        
                         }else if(selectedValue === 'B'){
                             console.log('selectedTours....',selectedTours)
                              for(let tour of alltours)
                             {
+                                 let tripLength = (new Date(tour.endDate).getTime() - 
+                            new Date(tour.startDate).getTime())/(24*3600*1000);
+                                if(Number(tour.package_cost)<=(Number(priceValue)) && 
+                            Number(tripLength)<=Number(triplengthValue) && (tourManagerMap.get(tour.tourManagerId) && 
+                            (tourManagerMap.get(tour.tourManagerId)).citycode == cityvalue)||
+                        (tourManagerMap.get(tour.tourManagerId).citycode == '0'))
+                        {
                                   selectedTours.push(tour);
-                            }
-                         }
+                        }
+                        }
+                        }
                          
                          setTours(selectedTours);
                          console.log('tours....',tours)
                     } 
                 
              },
-             [selectedValue,priceValue,triplengthValue]); 
+             [selectedValue,priceValue,triplengthValue,cityvalue]); 
              
              
             
@@ -252,8 +270,10 @@ const TripList = ({access_token,categoryId,cityList,showDetails}) =>{
             sortTrip ? 
             <div style={{position: 'fixed', top:70,right:0}} >
                 <SideBarForSorting selectedValue={selectedValue} setSelectedValue={setSelectedValue} 
-                priceValue={priceValue} setPriceValue={setPriceValue} triplengthValue={triplengthValue} 
-                setTriplengthValue={setTriplengthValue}/>
+                priceValue={priceValue} setPriceValue={setPriceValue} 
+                cityList={cityList}
+                triplengthValue={triplengthValue} 
+                setTriplengthValue={setTriplengthValue} cityvalue={cityvalue} setCityvalue={setCityvalue}/>
             </div>:<div></div>
            }
              </Grid>

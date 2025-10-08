@@ -57,7 +57,8 @@ const StyledDrawer = styled(Drawer)(({ theme }) => ({
                         </IconButton>
                     </Box>
                     <List>
-                        {['My Profile','Share Points', 'My Preferences', 'Tour Operators', 'About Us'].map((text, index) => (
+                        {['My Profile','Share Points', 'My Preferences', 
+                        'Tour Operators', 'About Us'].map((text, index) => (
                             <ListItem key={text} disablePadding>
                                 <ListItemButton>
                                     <ListItemText primary={text} />
