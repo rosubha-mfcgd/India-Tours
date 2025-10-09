@@ -35,7 +35,7 @@ const Sendotp = ()=>{
 
                     if(isValid === 'Y'){
                         navigate('/welcome',{state:{
-                            "name":location.state.name,
+                            "name":res_data.name,
                            "email":location.state.email,
                           "mobile":location.state.mobile,
                          "access_token":location.state.access_token 

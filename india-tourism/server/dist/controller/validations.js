@@ -62,11 +62,14 @@ const validateOTP = (req_1, res_1, ...args_1) => __awaiter(void 0, [req_1, res_1
         if (!otp) {
             throw new Error("OTP not found");
         }
-        let isValidOTP = yield new UserService().validateOTP(email, mobile, otp);
+        let result = yield new UserService().validateOTP(email, mobile, otp);
+        let isValidOTP = (result === constants.NO) ? constants.NO : constants.YES;
         if (isValidOTP) {
             console.log('isValidOTP...', isValidOTP);
             if (isValidOTP == constants.YES) {
-                res.status(200).send({ "message": "OTP is valid", "otpValid": isValidOTP });
+                res.status(200).send({ "message": "OTP is valid", "otpValid": isValidOTP,
+                    "name": result
+                });
             }
             else {
                 //  console.log('sending back invalid OTP ...',isValidOTP);

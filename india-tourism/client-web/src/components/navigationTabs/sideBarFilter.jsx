@@ -38,7 +38,7 @@ import {ListItem, ListItemButton, ListItemText}
   import ChevronRightIcon from '@mui/icons-material/ChevronRight';
 
 import '../../styles/sidebarForSorting.css';
- const SideBarforSorting=({selectedValue,setSelectedValue,priceValue, 
+ const SideBarFilter=({selectedValue,setSelectedValue,priceValue, 
   setPriceValue,
     triplengthValue, setTriplengthValue,cityList,cityvalue,setCityvalue})=> {
      const[cityFilterList, setCityFilterList] = useState('')
@@ -206,4 +206,4 @@ cityList.map((city) =>(
 
 }
 
-export default SideBarforSorting
+export default SideBarFilter

@@ -24,7 +24,7 @@ import { getTripList,getTourManagers } from "../admin/admin";
   } from "@mui/material";
  import MenuIcon from '@mui/icons-material/Menu'; // Or any other icon
 
-  import SideBarForSorting from '../navigationTabs/sideBarForSorting.jsx';
+  import SideBarFilter from '../navigationTabs/sideBarFilter.jsx';
   import SideBarNotification from '../navigationTabs/sideBarNotification.jsx';
   import { NavContext } from '../navigationContext/navigationContext.jsx';
 
@@ -136,7 +136,7 @@ const TripList = ({access_token,categoryId,cityList,showDetails}) =>{
                 }
          useEffect(()=>{
             const selectedTours = [];
-            console.log('alltours in useEffect...',alltours)
+                // console.log('alltours in useEffect...',alltours)
                 
                 //console.log('selectedValue in useEffect...',selectedValue)
                     if(tours)
@@ -269,7 +269,7 @@ const TripList = ({access_token,categoryId,cityList,showDetails}) =>{
             {
             sortTrip ? 
             <div style={{position: 'fixed', top:70,right:0}} >
-                <SideBarForSorting selectedValue={selectedValue} setSelectedValue={setSelectedValue} 
+                <SideBarFilter selectedValue={selectedValue} setSelectedValue={setSelectedValue} 
                 priceValue={priceValue} setPriceValue={setPriceValue} 
                 cityList={cityList}
                 triplengthValue={triplengthValue} 

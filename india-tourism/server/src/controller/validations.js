@@ -64,7 +64,8 @@ const validateOTP = async(req,res,retries = 3, delay = 1000) =>{
       {
         throw new Error("OTP not found")
       }
-    let isValidOTP = await new UserService().validateOTP(email,mobile,otp);
+    let result = await new UserService().validateOTP(email,mobile,otp);
+    let isValidOTP = (result ===  constants.NO)? constants.NO: constants.YES;
     if(isValidOTP)
       {
 
@@ -72,7 +73,9 @@ const validateOTP = async(req,res,retries = 3, delay = 1000) =>{
       
      if(isValidOTP == constants.YES)
       {
-         res.status(200).send({ "message": "OTP is valid", "otpValid":isValidOTP});
+         res.status(200).send({ "message": "OTP is valid", "otpValid":isValidOTP,
+          "name":result
+         });
       }
      else{
        //  console.log('sending back invalid OTP ...',isValidOTP);

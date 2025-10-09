@@ -108,4 +108,5 @@ const getTourManagers = (req_1, res_1, ...args_1) => __awaiter(void 0, [req_1, r
         res.status(400).send({ "errormessage": "could not load any planned Tours by any operator" });
     }
 });
-module.exports = { getCategories, getToursByCategoryId, updateFavoriteCategory, getProducts, getTourManagers };
+module.exports = { getCategories, getToursByCategoryId, updateFavoriteCategory,
+    getProducts, getTourManagers };

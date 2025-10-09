@@ -72,8 +72,8 @@ class UserService {
                     console.log('Update signed up flag to Yes');
                     let user2 = yield userRepo.update(_id, { $set: { "signedUpFlag": "Y" } });
                     if (user2) {
-                        console.log('update status successfully ...');
-                        return constants.YES;
+                        console.log('update status successfully for username ...', user.name);
+                        return user.name;
                     }
                     else {
                         console.log('failed to update status ...');

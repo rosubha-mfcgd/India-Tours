@@ -68,8 +68,8 @@ async validateOTP(email,mobile,otp)
    let  user2 = await userRepo.update(_id,{$set:{"signedUpFlag":"Y"}});
     if(user2)
     {
-     console.log('update status successfully ...');
-     return constants.YES;
+     console.log('update status successfully for username ...',user.name);
+     return user.name;
     
    }
     else
