@@ -1,0 +1,50 @@
+.sidebar{
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+.Myprofile,
+.SharePoints
+ {
+    display: flex;
+    margin-left: 260px;
+    font-size: 2rem;
+}
+
+.parent-container {
+  position: relative; /* Essential for positioning child elements relative to this container */
+  /* Add other styles for your container as needed, e.g., width, height, background-color */
+}
+
+.child-div {
+  position: absolute; /* Takes the element out of the normal document flow */
+  top: 0; /* Positions the top edge of the div at the top edge of its positioned parent */
+  right: 0; /* Positions the right edge of the div at the right edge of its positioned parent */
+  /* Add other styles for your child div as needed, e.g., width, height, padding, background-color */
+}
+
+.sidebar {
+  position: fixed;
+  top: 0;
+  left: -250px; /* Hide by default */
+  width: 250px;
+  height: 100%;
+  background-color: #333;
+  color: white;
+  padding: 1rem;
+  transition: left 0.3s ease;
+  z-index: 1000;
+}
+
+.sidebar.open {
+  right: 0; /* Slide in when open */
+}
+
+.sidebar .close-btn {
+  background: none;
+  color: white;
+  border: none;
+  font-size: 2rem;
+  cursor: pointer;
+  float: right;
+}

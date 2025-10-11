@@ -1,0 +1,8 @@
+#chat_button {
+  width: 300px;
+  overflow: hidden;
+  border: 1px solid green;
+}
+#chat_button img {
+  float: right;
+}
