@@ -9,29 +9,13 @@ import {getOptions,updateAsFavorite} from "../admin/admin.js";
 import SideBarNotification from './sideBarNotification.jsx';
 import { NavContext } from '../navigationContext/navigationContext.jsx';
 import {
-    TextField,
-    Button,
-    Table,
-    TableBody,
-    TableCell,
-    TableContainer,
-    TableHead,
-    TableRow,
-    Paper,
-    Modal,
-    Box,
-    Snackbar,
+   
     Card,
     Grid,
     Typography,
     CardMedia,
     CardContent,
-    FormGroup,
-    FormControl,  
-    Input,
-    Switch,
-    InputLabel,
-    TextareaAutosize
+   
   } from "@mui/material";
 
   const DisplayOptions = ({access_token,triggerDisplayTasksByOptionID,productID,categoryID}) =>{
@@ -86,13 +70,13 @@ import {
      
                },[]);
     return ( 
-    <div className="navbar-grid">
+    <View className="navbar-grid">
         <nav className="navbar">
             <Grid container spacing={10} justify="center" width="70%">
              {items && items.length>0 ?
 
                 items.map((item) => (
-               <div>
+               <View>
                  
                 <Grid item xs = {12} sm={4}  key={item.optionID}>
 
@@ -126,21 +110,21 @@ import {
                     </Card>
                 </Grid>
                 
-                </div>
+                </View>
                 )
-                ):<div>Cannot load options</div>
+                ):<View>Cannot load options</View>
                 
              }
             
             </Grid>
           {notification ?
-               <div style={{position: 'fixed', top:70,right:0}} >    
+               <View style={{position: 'fixed', top:70,right:0}} >    
                <SideBarNotification/> 
-            </div> 
-            :<div></div>
+            </View> 
+            :<View></View>
              }
             </nav>
-        </div>
+        </View>
 
   )}
 

@@ -1,34 +1,22 @@
 import React, { useState, useRef , useEffect} from 'react';
-import { Link } from 'react-router';
-import ReactDOM from 'react-dom/client';
+
  import CircularProgress from '@mui/material/CircularProgress';
 import '../../styles/loginsignup.css';
 import email_icon from '../Assets/input/email.png';
-import password_icon from '../Assets/input/password.png';
+
 import user_icon from '../Assets/input/username.png';
 import mobile_icon from '../Assets/input/mobile.png';
-import Loading from "../Utilities/Loading/Loading.js";
-import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import { useNavigate } from 'react-router-dom';
 import {signupUser,loginUser} from '../admin/admin';
-
+import { View } from 'react-native';
 
 import {
     TextField,  
-    Button,
-    Table,
-    TableBody,
-    TableCell,
-    TableContainer,
-    TableHead,
-    TableRow,
-    Paper,
-    Modal,
     Box,
-    Snackbar,
+   
   } from "@mui/material";
 
-import {jwtDecode} from "jwt-decode"
+
 import { useGoogleLogin } from '@react-oauth/google';
 
 
@@ -38,12 +26,9 @@ const LoginSignup =() => {
         const[name,setName] = useState('');
         const[email,setEmail] = useState('');
         const[mobile,setMobile] = useState('');
-        const [childContent, setChildContent] = useState('');
-        const [signUp,setSignUp] = useState('');
-        const[user,setUser] = useState([]);
-        const [ profile, setProfile ] = useState([]);
+        
         const [isLoading, setIsLoading] = useState(false);
-        const [buttonclick, setButtonclick] = useState(false);
+        const [buttonPress, setButtonPress] = useState(false);
         const [errorMessage, setErrorMessage] = useState('');
         const clientId = process.env.REACT_APP_CLIENT_ID;
         
@@ -73,7 +58,7 @@ const LoginSignup =() => {
                     access_token:codeResponse.access_token
                 };
                 try{
-                    setButtonclick(true);
+                    setButtonPress(true);
                
                     let resdata = await signupUser(req_data);
                
@@ -99,7 +84,7 @@ const LoginSignup =() => {
                 console.log(error);
                 
             }finally {
-                setButtonclick(false); // Hide spinner after fetch (success or error)
+                setButtonPress(false); // Hide spinner after fetch (success or error)
              }
             }, 
             
@@ -121,7 +106,7 @@ const LoginSignup =() => {
                     access_token:codeResponse.access_token
                 };
                 try{
-                    setButtonclick(true);
+                    setButtonPress(true);
                     let resdata = await loginUser(req_data);
                 
                 if(resdata)
@@ -146,7 +131,7 @@ const LoginSignup =() => {
                  console.log(error);
             }
             finally{
-                  setButtonclick(false); // Hide spinner after fetch (success or error)
+                  setButtonPress(false); // Hide spinner after fetch (success or error)
             }
             },
             onError: (error) => console.log('Login Failed:', error)
@@ -154,7 +139,7 @@ const LoginSignup =() => {
          useEffect(()=>
            {
 
-               if(buttonclick && errorMessage === '')
+               if(buttonPress && errorMessage === '')
                 {
                     setIsLoading(true);
                 }else{
@@ -167,19 +152,19 @@ const LoginSignup =() => {
                 }
                 
 
-           },[buttonclick,errorMessage,action]);
+           },[buttonPress,errorMessage,action]);
 
            
         
         
-        // onClick handler function of the button should use window.open instead 
+        // onPress handler function of the button should use window.open instead 
         // of axios or fetch
 
             return (
-              <div className="center-container">
+              <View className="center-container">
       
                 {isLoading ? (
-                  <Box
+                  <View
       sx={{
         display: 'flex',
         justifyContent: 'center',
@@ -188,87 +173,87 @@ const LoginSignup =() => {
       }}
     >
                      <CircularProgress />
-                     </Box>
+                     </View>
                 ):(
                    
-               <div className = "container">
+               <View className = "container">
                
-                        <div className='header'>
-                            <div className='text'>{action}</div>
+                        <View className='header'>
+                            <View className='text'>{action}</View>
                             
-                            <div className='underline'></div>
+                            <View className='underline'></View>
 
-                        </div>
+                        </View>
                          {errorMessage ? 
-                         (<div className='error-div-at-top'>{errorMessage}</div>):
-                        (<div></div>)
+                         (<View className='error-div-at-top'>{errorMessage}</View>):
+                        (<View></View>)
                     }
-                        <div className='inputs'>
+                        <View className='inputs'>
                         
                         {
                         action === 'Sign Up'?
 
                         
-                        <div>
-                            <div className='input'>
+                        <View>
+                            <View className='input'>
                             <img src={user_icon} alt=""/>
-                            <TextField label="Name" value = {name} onChange = {handleNameChange} 
+                            <TextField label="Name" value = {name} onChangeText = {handleNameChange} 
                             variant="outlined"/>
-                        </div>
-                        <div className='input'>
+                        </View>
+                        <View className='input'>
                             <img src={mobile_icon} alt=""/>
-                            <TextField label="Mobile" value = {mobile} onChange = {handleMobileChange} 
+                            <TextField label="Mobile" value = {mobile} onChangeText = {handleMobileChange} 
                             variant="outlined"/>
-                        </div>
-                        <div className='input' >
+                        </View>
+                        <View className='input' >
                             <img src={email_icon} alt=""/>
-                            <TextField label="Email" value = {email} onChange = {handleEmailChange} 
+                            <TextField label="Email" value = {email} onChangeText = {handleEmailChange} 
                             variant="outlined"/>
-                        </div>
-                    </div>:
-                        <div>
-                            <div className='input'>
+                        </View>
+                    </View>:
+                        <View>
+                            <View className='input'>
                             <img src={mobile_icon} alt=""/>
-                            <TextField label="Mobile" value = {mobile} onChange = {handleMobileChange} 
+                            <TextField label="Mobile" value = {mobile} onChangeText = {handleMobileChange} 
                             variant="outlined"/>
-                        </div>
+                        </View>
                         <br/>
-                        <div ALIGN = "center">OR</div>
+                        <View ALIGN = "center">OR</View>
                         <br/>
-                        <div className='input' >
+                        <View className='input' >
                             <img src={email_icon} alt=""/>
-                            <TextField label="Email" value = {email} onChange = {handleEmailChange} 
+                            <TextField label="Email" value = {email} onChangeText = {handleEmailChange} 
                             variant="outlined"/>
-                        </div>
-                        </div>
+                        </View>
+                        </View>
                         }
-                        </div>
+                        </View>
                         {action === 'Sign Up'?
-                            <div className='forgot-password'>Lost Password? <span>Click Here!</span></div>:<br/>
+                            <View className='forgot-password'>Lost Password? <span>Click Here!</span></View>:<br/>
                         }
                         {action === 'Sign Up'?  
-                        <div className='submit-container'>
+                        <View className='submit-container'>
                     
-                        <div className={action==="Login"?"submit gray":"submit"} 
-                        onClick={()=>googlesignup()}>Sign Up</div>
+                        <View className={action==="Login"?"submit gray":"submit"} 
+                        onPress={()=>googlesignup()}>Sign Up</View>
                     
-                            <div className={action==='Sign Up'?'submit gray':'submit'} 
-                            onClick={()=>{setAction("Login");}}>Login</div>
-                        </div>:<br/>
+                            <View className={action==='Sign Up'?'submit gray':'submit'} 
+                            onPress={()=>{setAction("Login");}}>Login</View>
+                        </View>:<br/>
                         }
 
                         {action === 'Login'?
-                        <div className='submit-container'>
-                    <div className="submit" onClick={()=>{googleLogin();}}>Send Otp</div>
-                    <div className={action==="Login"?"submit gray":"submit"} 
-                        onClick={()=>{setAction("Sign Up");
+                        <View className='submit-container'>
+                    <View className="submit" onPress={()=>{googleLogin();}}>Send Otp</View> 
+                    <View className={action==="Login"?"submit gray":"submit"} 
+                        onPress={()=>{setAction("Sign Up");
                         navigate('-1');
-                    }}>Cancel</div>
-                    </div>:<div></div>
+                    }}>Cancel</View> 
+                    </View> :<View></View> 
                         }
-                    </div>
+                    </View> 
                     )}
-                    </div>
+                    </View> 
                 
             );
 };

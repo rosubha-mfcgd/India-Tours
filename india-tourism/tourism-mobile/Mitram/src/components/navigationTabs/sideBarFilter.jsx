@@ -5,32 +5,12 @@ import RadioGroup from '@mui/material/RadioGroup';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import FormControl from '@mui/material/FormControl';
 import FormLabel from '@mui/material/FormLabel';
-import { Link } from "react-router-dom";
-import * as FaIcons from "react-icons/fa";
-import * as AiIcons from "react-icons/ai";
-import { IconContext } from "react-icons/lib";
 import {
-    TextField,
-    Button,
-    Table,
-    TableBody,
-    TableCell,
-    TableContainer,
-    TableHead,
-    TableRow,
-    Paper,
-    Modal,
-     Snackbar,
-     CssBaseline,
      Drawer,
      Box,List,
-     AppBar,
-     Toolbar,
      IconButton,
      Typography,
-     InputLabel,
-     MenuItem   
-  } from "@mui/material";
+    } from "@mui/material";
 
  import NativeSelect from '@mui/material/NativeSelect';
 import {ListItem, ListItemButton, ListItemText} 
@@ -133,7 +113,7 @@ cityList.map((city) =>(
                             <ListItem>
                               {
                                text == 'Price'?
-                              <div>
+                              <View>
                             <Typography variant="body2" color="common.black">
                                 {text} - {priceValue}
                             </Typography>
@@ -150,9 +130,9 @@ cityList.map((city) =>(
                        <option value="500000" label="500k"></option>
                         <option value="1000000" label=">=1000k"></option>
                         </datalist>
-                                </div>:
+                                </View>:
                                 text == 'TripLength'?
-                              <div>
+                              <View>
                             <Typography variant="body2" color="common.black">
                                 {text} - {triplengthValue}
                             </Typography>
@@ -169,9 +149,9 @@ cityList.map((city) =>(
                         <option value="21" label="21"></option>
                         <option value="30" label=">=30"></option>
                         </datalist>
-                                </div>:
+                                </View>:
                             text === 'DomesticOrInternational'?
-                                <div>
+                                <View>
                             <FormControl component="fieldset">
                                 <FormLabel component="legend">
                                <Typography variant="body2" color="common.black">Type of Tour?
@@ -189,7 +169,7 @@ cityList.map((city) =>(
      </RadioGroup>
      </FormControl>
 
-     </div>:<div></div>
+     </View>:<View></View>
      }  
      </ListItem>
     )))}

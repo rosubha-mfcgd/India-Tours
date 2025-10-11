@@ -3,10 +3,10 @@ import mobile_icon from '../Assets/input/mobile.png';
 import email_icon from '../Assets/input/email.png';
 import { useNavigate,useLocation } from 'react-router-dom';
 import '../../styles/loginsignup.css';
-import Box from '@mui/material/Box';
 import {
     TextField
    } from "@mui/material";
+   import { View } from 'react-native';
 import {validateOTPForLogin} from '../admin/admin';
 const Sendotp = ()=>{
    const navigate = useNavigate();
@@ -52,14 +52,14 @@ const Sendotp = ()=>{
 
 return (
 
-    <Box className='centre-div'>
-<div className = "container">
+    <View className='centre-div'>
+<View className = "container">
    {errorMessage ? 
-                         (<div className='error-div-at-top'>{errorMessage}</div>):
-                        (<div></div>)
+                         (<View className='error-div-at-top'>{errorMessage}</View>):
+                        (<View></View>)
                     }
-<div className='inputs'>
-     <div className='input'>
+<View className='inputs'>
+     <View className='input'>
                 <img src={mobile_icon} alt=""/>
               
         <TextField  label="Mobile Number"
@@ -75,8 +75,8 @@ return (
       disabled/>
 
 
-               </div>
-                <div className='input'>
+               </View>
+                <View className='input'>
                 <img src={email_icon} alt=""/>
                  <TextField  label="Email"
                     variant="outlined"
@@ -87,20 +87,20 @@ return (
             fontWeight: 'bold',
           },
         }  } }} disabled/>
-               </div>
-     <div className='input'>
+               </View>
+     <View className='input'>
                 <img src={mobile_icon} alt=""/>
 
-                 <TextField label="OTP" value = {otp} onChange = {handleOTPChange} variant="outlined"/>
-                </div>
-                    <Box className='centre-div'>
-                    <div className='submit-container'>
-                        <div className={"submit"} onClick={()=>{validateOTP()}}>Validate OTP</div>
-                        </div>
-                    </Box>
-    </div>
-</div>
-</Box>
+                 <TextField label="OTP" value = {otp} onChangeText = {handleOTPChange} variant="outlined"/>
+                </View>
+                    <View className='centre-div'>
+                    <View className='submit-container'>
+                        <View className={"submit"} onClick={()=>{validateOTP()}}>Validate OTP</View>
+                        </View>
+                    </View>
+    </View>
+</View>
+</View>
 );
 };
 
