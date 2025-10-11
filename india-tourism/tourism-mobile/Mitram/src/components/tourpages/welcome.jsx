@@ -173,25 +173,25 @@ const openBookingForm = (tourDetails) =>{
            
    return (
    
-    <div className="center-container">
+    <View className="center-container">
          <NavProvider>
           
-        <div>
+        <View>
            
-            <div>
+            <View>
                       {access_token?
                         <UserProfile name = {name} email={email} mobile={mobile}
                           access_token={access_token}/>:<Header/>
                       } 
                      
-                  </div> 
+                  </View> 
        
        
       
-         <div className="center-container">
+         <View className="center-container">
            
 
-         <div className="original-content">
+         <View className="original-content">
       
          <Layout access_token={access_token} > {/* Wrap your routes with the Layout component */}
           {
@@ -227,14 +227,14 @@ const openBookingForm = (tourDetails) =>{
           
           <ChatButton toggleChat={toggleChat} />
                     {isChatOpen && <ChatWindow onClose={toggleChat} />}
-          </div>
-          </div>
+          </View>
+          </View>
         
-       </div>
+       </View>
       
     
      </NavProvider>
-    </div>
+    </View>
       )
 }
 

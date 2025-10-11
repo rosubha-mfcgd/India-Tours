@@ -1,14 +1,11 @@
 import React, { useState, useRef , useEffect, useContext} from 'react';
 import '../../styles/loginsignup.css';
+import { Text, View, StyleSheet } from 'react-native';
 
-import AppBar from '@mui/material/AppBar';
-import Toolbar from '@mui/material/Toolbar';
-import Typography from '@mui/material/Typography';
-import Box from '@mui/material/Box';
-import {
-     Link,
-     CssBaseline,
-  } from "@mui/material";
+import {Appbar,Avatar,Button,Card,Checkbox,Chip,Dialog,Divider,FAB,HelperText,IconButton,List,Menu,
+Modal,Portal,ProgressBar,RadioButton,Searchbar,SegmentedButtons,Snackbar,
+Surface,Switch,Text,TextInput,Tooltip,TouchableRipple} from 'react-native-paper'
+
 import { NavContext } from '../navigationContext/navigationContext.jsx';
 
 
@@ -36,29 +33,24 @@ return () => clearInterval(timer); // Clean up the interval on unmount
 
 
 return (
-        <div>
-             <div>
+        <View>
+             <View>
                 <CssBaseline/>
          <AppBar position="static" sx={{ backgroundColor: '#19857b' }}>
             <Toolbar sx={{ justifyContent: 'space-between' }}>
-            <Typography variant="h6" component="div">
+            <Text variant="h6" component="div">
               India Tours
-            </Typography>
-            <Box>
-              <Typography variant="body1">
+            </Text>
+            <View>
+              <Text variant="body1">
                 Welcome, Guest !!
-              </Typography>
+              </Text>
               {/* Add other right-aligned elements here */}
              
-            </Box>
-          <Box> <p>{dateTime.toLocaleTimeString()}</p></Box>
+            </View>
+          <View> <p>{dateTime.toLocaleTimeString()}</p></View>
        
-
- {/* <Typography variant="body2">
-               About us
-              </Typography> */}
-
-            <Box>
+            <View>
                <p>{dateTime.toLocaleDateString('en-US', {
   year: 'numeric',
   month: 'long',
@@ -66,7 +58,7 @@ return (
 })}</p>
 
               <Link href="signup" sx={{ color: 'white' }}>Sign In</Link>
-            </Box>
+            </View>
 
           
     </Toolbar>

@@ -78,8 +78,8 @@ return () => clearInterval(timer); // Clean up the interval on unmount
 
 
 return (
-        <div>
-             <div>
+        <View>
+             <View>
                 <CssBaseline/>
          <AppBar position="static" sx={{ backgroundColor: '#19857b' }}>
             <Toolbar sx={{ justifyContent: 'space-between' }}>
@@ -120,21 +120,21 @@ return (
       aria-controls={open ? 'basic-menu' : undefined}
       aria-haspopup="true"
       aria-expanded={open ? 'true' : undefined}
-      onClick={(event) => {
+      onPress={(event) => {
         setAnchorEl(event.currentTarget)
         
       }}
     >
      
-      <MenuIcon onClick={(event) => {toggleSideBar()}} />
+      <MenuIcon onPress={toggleSideBar} />
 
     </IconButton>
    
             </Box>
           </Toolbar>
          </AppBar>
-          </div>
-        </div>
+          </View>
+        </View>
     );
   };
 

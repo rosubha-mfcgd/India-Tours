@@ -1,8 +1,8 @@
   import React from 'react';
-
+import { Button } from 'react-native-paper';
     const ChatButton = ({ toggleChat }) => {
       return (
-        <button
+        <Button
           style={{
             position: 'fixed',
             bottom: '20px',
@@ -18,7 +18,7 @@
           onClick={toggleChat}
         >
           Chat with us !!
-        </button>
+        </Button>
       );
     };
 

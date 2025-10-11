@@ -1,6 +1,9 @@
  import React from 'react';
  import '../../styles/loginsignup.css';
- import { createTheme, ThemeProvider } from '@mui/material/styles';
+import {Appbar,Avatar,Button,Card,Checkbox,Chip,Dialog,Divider,FAB,HelperText,IconButton,List,Menu,
+Modal,Portal,ProgressBar,RadioButton,Searchbar,SegmentedButtons,Snackbar,
+Surface,Switch,Text,TextInput,Tooltip,TouchableRipple} from 'react-native-paper'
+}
  const Layout = ({ children }) => {
 
   const theme = createTheme({

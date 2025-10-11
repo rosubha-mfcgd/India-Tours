@@ -145,8 +145,8 @@ const submitBooking = async()=>{
   },[bookingId,bookingUpdateId])
 
 
-    return(<div className = "center-container">
-            <div style={{border: "2px solid black;" }}>
+    return(<View className = "center-container">
+            <View style={{border: "2px solid black;" }}>
                  <Box  component="form" >
                     {dialogOpen?
                      <Dialog
@@ -177,9 +177,9 @@ const submitBooking = async()=>{
             Proceed to Payment
           </Button>
           {dialogOpen?
-          <img src={success_animation} alt="" width="40" height="40"/>:<div></div>}
+          <img src={success_animation} alt="" width="40" height="40"/>:<View></View>}
         </DialogActions>
-      </Dialog>:<div></div>}
+      </Dialog>:<View></View>}
                               <TableContainer>
                                 <Table>
                                     <TableBody>
@@ -210,7 +210,7 @@ const submitBooking = async()=>{
                    {bookings && bookings.length>0 ?
                         bookings.map((booking)=>(
                            
-                                  <div className="head"
+                                  <View className="head"
                                                 style={{
                                                     width: "fit-content",
                                                     margin: "auto",
@@ -284,15 +284,15 @@ const submitBooking = async()=>{
                                                 defaultValue = {booking.specialRequest} disabled={disable} 
                                                 onChange={(event)=>updateBooking("specialRequest",sum,event)}/>  
                                                 </FormControl>
-                                              </div>
+                                              </View>
                            
                             )
-                        ):<div></div>
+                        ):<View></View>
                    }
                     </Paper>
                    
-                   <div className="button-container">
-         <div className='submit-container'>
+                   <View className="button-container">
+         <View className='submit-container'>
                     <button type="submit" 
                         class="button"
                         >Go Back</button>
@@ -300,16 +300,16 @@ const submitBooking = async()=>{
                             <button type="submit" 
                        class="button" onClick={submitBooking}>Confirm Booking</button>
                        
-        </div>
-      </div>
+        </View>
+      </View>
         {notification ?
-                     <div style={{position: 'fixed', top:70,right:0}} >    
+                     <View style={{position: 'fixed', top:70,right:0}} >    
                      <SideBarNotification/> 
-                  </div> 
-                  :<div></div>
+                  </View> 
+                  :<View></View>
                    }
-      </div>
-    </div>)
+      </View>
+    </View>)
 }
 
 export default PreviewForm;

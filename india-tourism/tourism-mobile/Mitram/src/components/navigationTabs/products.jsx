@@ -4,24 +4,10 @@ import '../../styles/Cards.css';
 import '../../styles/sidebar.css';
 import { useEffect, useState, useContext } from "react";
 import {
-    TextField,
-    Button,
-    Table,
-    TableBody,
-    TableCell,
-    TableContainer,
-    TableHead,
-    TableRow,
-    Paper,
-    Modal,
-    Box,
-    Snackbar,
-    Card,
-    Grid,
-    Typography,
-    CardMedia,
-    CardContent
-  } from "@mui/material";
+   Card, Button
+  } from "react-native-paper";
+
+  import { Text, View, StyleSheet } from 'react-native';
 
 import {updateAsFavorite,getProducts } from "../admin/admin";
 import { NavContext } from '../navigationContext/navigationContext.jsx';
@@ -87,61 +73,61 @@ const Products = ({access_token,triggerDisplayTripsByProductId}) =>{
 
 
     return (
-        <div className="navbar-grid">
+        <View  className="navbar-grid">
         <nav className="navbar">
             <Grid container spacing={10} justify="center" width="70%">
              {items && items.length>0 ?
 
                 items.map((item) => (
-               <div>
+               <View >
                  
                 <Grid item xs = {12} sm={4}  key={item.productID}>
 
                     <Card className="card"
                      >
                     
-                    <CardMedia component= "img"  height="100"
-                    image = {item.image} alt={item.productDesc} 
-                    onClick={()=>triggerDisplayTripsByProductId(item.productID)} 
+                    <Card.Cover  height="100"
+                    source = {item.image} alt={item.productDesc} 
+                    onPress={()=>triggerDisplayTripsByProductId(item.productID)} 
                     style={{ cursor: 'pointer' }} 
                      />
                                      
                     <CardContent>
-                        <Typography gutterBottom variant="body1" component="div">
+                        <Text gutterBottom variant="body1" component="div">
                 {item.productName}
-              </Typography>
-              <Typography variant="body2" color="text.secondary" sx={{ whiteSpace: 'pre-wrap' }}>
+              </Text>
+              <Text variant="body2" color="text.secondary" sx={{ whiteSpace: 'pre-wrap' }}>
                 {item.productDesc}
-              </Typography>
+              </Text>
               {(item.favorite === 'Y') ?
-                <FavoriteIcon sx={{ color: '#f04646ff' }} onClick = {(event) => updateFavorites(
+                <FavoriteIcon sx={{ color: '#f04646ff' }} onPress = {(event) => updateFavorites(
                     item.productID,'N',event)} style={{ cursor: 'pointer' }}/>:
-                <FavoriteIcon onClick = {(event) => updateFavorites(
+                <FavoriteIcon onPress = {(event) => updateFavorites(
                     item.productID,'Y',event)} style={{ cursor: 'pointer' }}/>
               }
               
               </CardContent>
-              <button type="submit" class="button"  onClick={()=>triggerDisplayTripsByProductId(item.productID)} 
+              <button type="submit" class="button"  onPress={()=>triggerDisplayTripsByProductId(item.productID)} 
                     style={{ cursor: 'pointer',backgroundColor: '#8a77f8ff',color:'#0c0c0fff'}}>
                         Click to View</button>
                     </Card>
                 </Grid>
                 
-                </div>
+                </View>
                 )
-                ):<div>Cannot load products</div>
+                ):<View >Cannot load products</View>
                 
              }
             
             </Grid>
           {notification ?
-               <div style={{position: 'fixed', top:70,right:0}} >    
+               <View  style={{position: 'fixed', top:70,right:0}} >    
                <SideBarNotification/> 
-            </div> 
-            :<div></div>
+            </View> 
+            :<View ></View>
              }
             </nav>
-        </div>
+        </View>
 
     )
 }

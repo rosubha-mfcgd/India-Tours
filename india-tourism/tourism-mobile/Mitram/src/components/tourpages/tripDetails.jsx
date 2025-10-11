@@ -57,15 +57,15 @@ import {
         const { notification} = useContext(NavContext);
         
     return (
-        <div style={{ display: 'flex', flexDirection: 'column', 
+        <View style={{ display: 'flex', flexDirection: 'column', 
         justifycontent: 'center',
         alignitems: 'center',
         gap: '20px' }}>
-        <div className="grid-container">
-      <div className="grid-item">
+        <View className="grid-container">
+      <View className="grid-item">
         <Grid item xs = {10} sm={4}></Grid>
-      </div>
-            <div className="grid-item">
+      </View>
+            <View className="grid-item">
             <Grid item xs = {10} sm={4}>
                  <Card className="card">
                     <CardMedia
@@ -89,7 +89,7 @@ import {
              </Typography>
 
               
-                <div>
+                <View>
                     <TableContainer sx={{boxShadow: 'none'}}>
                  <Table>
                     <TableBody>
@@ -165,8 +165,8 @@ import {
                   </TableBody>
                   </Table>
                   </TableContainer>
-                  </div>
-                  <div className = "center-container" style={{
+                  </View>
+                  <View className = "center-container" style={{
                     width: "fit-content",
                     margin: "auto",
                   }}>
@@ -174,8 +174,8 @@ import {
        
           
           
-        <div className="button-container">
-         <div className='submit-container'>
+        <View className="button-container">
+         <View className='submit-container'>
                     <button type="submit" onClick={()=>{
                         triggerDisplayOptionsByCatId(tourDetails.categoryId)}}
                         class="button"
@@ -186,25 +186,25 @@ import {
                        class="button" 
                         >Book My Trip</button>
 
-              </div>
+              </View>
 
-         </div>
+         </View>
       
-        </div> 
+        </View> 
         
            
                  </Grid>
                     {notification ?
-                                <div style={{position: 'fixed', top:70,right:0}} >    
+                                <View style={{position: 'fixed', top:70,right:0}} >    
                                 <SideBarNotification/> 
-                             </div> 
-                             :<div></div>
+                             </View> 
+                             :<View></View>
                               }
-            </div>
+            </View>
                      
-        </div>
+        </View>
         
-        </div>
+        </View>
     );
   }
 

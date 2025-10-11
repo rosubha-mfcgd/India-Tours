@@ -10,36 +10,10 @@ import SideBarNotification from '../navigationTabs/sideBarNotification.jsx';
 import close_button from '../Assets/images/close-button.png';
 import failure_animation from '../Assets/images/failure_animation.gif';
 import { NavContext } from '../navigationContext/navigationContext.jsx';
-import {
-    TextField,
-    Button,
-    Table,
-    TableBody,
-    TableCell,
-    TableContainer,
-    TableHead,
-    TableRow,
-    Paper,
-    Modal,
-    Box,
-    Snackbar,
-    Card,
-    Grid,
-    Typography,
-    CardMedia,
-    CardContent,
-    FormGroup,
-    FormControl,  
-    Input,
-    Switch,
-    InputLabel,
-    TextareaAutosize,
-    Dialog,
-    DialogTitle,
-    DialogContent,
-    DialogContentText,
-    DialogActions
-  } from "@mui/material";
+import {Appbar,Avatar,Button,Card,Checkbox,Chip,Dialog,Divider,FAB,HelperText,IconButton,List,Menu,
+Modal,Portal,ProgressBar,RadioButton,Searchbar,SegmentedButtons,Snackbar,
+Surface,Switch,Text,TextInput,Tooltip,TouchableRipple,Paper} from 'react-native-paper';
+
 
 
 const BookingForm = ({access_token,tourDetails,triggerDisplayBookings}) =>{
@@ -207,9 +181,9 @@ const BookingForm = ({access_token,tourDetails,triggerDisplayBookings}) =>{
     
     return(
         
-            <div className = "center-container">
+            <View className = "center-container">
               
-                    <div className="original-content">
+                    <View className="original-content">
                       {showBookingBtn ? 
                        <Box
       component="form"
@@ -232,7 +206,7 @@ const BookingForm = ({access_token,tourDetails,triggerDisplayBookings}) =>{
          <Typography variant="body2" style={{ color: 'rgba(17, 17, 17, 1)' }}>
                   Click me to book your trip to {tourDetails.locationName} with {tourDetails.tourManagerName}    
         </Typography> 
-           </Box>:<div></div>
+           </Box>:<View></View>
               }
 {displayErrorDialog?
                      <Dialog
@@ -256,9 +230,9 @@ const BookingForm = ({access_token,tourDetails,triggerDisplayBookings}) =>{
           </Button>
           {dialogOpen?
           <img src={failure_animation} alt="" width="40" height="40"/>:
-          <div></div>}
+          <View></View>}
         </DialogActions>
-      </Dialog>:<div></div>}
+      </Dialog>:<View></View>}
         {startBooking ?
          
               <TableContainer sx={{boxShadow: 'none'}}>
@@ -308,18 +282,18 @@ const BookingForm = ({access_token,tourDetails,triggerDisplayBookings}) =>{
                     </TableBody>
                 </Table>
             </TableContainer>
-           :<div></div>
+           :<View></View>
         }
      {
         openBookingForm ?
-        <div style={{border: "2px solid black;" }}>
+        <View style={{border: "2px solid black;" }}>
           <Typography variant="body2" style={{ color: '#FFFFFF' }}>{bookingPageMessage}</Typography>
          <Paper>
           {
           touristCount && touristCount.length >0 ?
             touristCount.map((tourist)=>(
            
-              <div className="head"
+              <View className="head"
                 style={{
                     width: "fit-content",
                     margin: "auto",
@@ -331,12 +305,12 @@ const BookingForm = ({access_token,tourDetails,triggerDisplayBookings}) =>{
                         color: "solid white"
                     }}
                 >
-             <Typography variant="body2" style={{ color: '#160101ff' }}> 
+             <Text variant="body2" style={{ color: '#160101ff' }}> 
               <strong>Tourist #{tourist.key}</strong>
-              <img src={close_button} alt="" height="30" width="30" className='img-style' 
+              <Image source={close_button} alt="" height="30" width="30" className='img-style' 
 
              />
-               </Typography>
+               </Text>
 
               
                 </h2>
@@ -394,13 +368,13 @@ const BookingForm = ({access_token,tourDetails,triggerDisplayBookings}) =>{
                  />  
                 </FormControl>
                 
-              </div>
-            )):<div></div>
-          }</Paper></div>:<div></div>
+              </View>
+            )):<View></View>
+          }</Paper></View>:<View></View>
         }
         { startBooking && touristCount && touristCount.length >0? 
        
-         <div className = "center-container" style={{
+         <View className = "center-container" style={{
                     width: "fit-content",
                     margin: "auto",
                   }}>
@@ -408,8 +382,8 @@ const BookingForm = ({access_token,tourDetails,triggerDisplayBookings}) =>{
        
           
           
-        <div className="button-container">
-         <div className='submit-container'>
+        <View className="button-container">
+         <View className='submit-container'>
                     <button type="submit" 
                         class="button"
                         >Go Back</button>
@@ -417,18 +391,18 @@ const BookingForm = ({access_token,tourDetails,triggerDisplayBookings}) =>{
                             <button type="submit" 
                        class="button" onClick={submitBookings}>Submit your Booking</button>
                        
-        </div>
-      </div>
-        </div>:<div></div>
+        </View>
+      </View>
+        </View>:<View></View>
     }
-         </div>
+         </View>
          {notification ?
-                        <div style={{position: 'fixed', top:70,right:0}} >    
+                        <View style={{position: 'fixed', top:70,right:0}} >    
                         <SideBarNotification/> 
-                     </div> 
-                     :<div></div>
+                     </View> 
+                     :<View></View>
                       }
-         </div> 
+         </View> 
           
     );
   }

@@ -3,18 +3,7 @@ import React, { useContext, useEffect,useState } from "react";
 import '../../styles/loginsignup.css';
 import { getTripList,getTourManagers } from "../admin/admin";
  import {
-    TextField,
-    Button,
-    Table,
-    TableBody,
-    TableCell,
-    TableContainer,
-    TableHead,
-    TableRow,
-    Paper,
-    Modal,
     Box,
-    Snackbar,
     Card,
     Grid,
     Typography,

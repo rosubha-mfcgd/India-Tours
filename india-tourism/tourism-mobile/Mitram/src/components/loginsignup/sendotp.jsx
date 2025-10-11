@@ -3,9 +3,10 @@ import mobile_icon from '../Assets/input/mobile.png';
 import email_icon from '../Assets/input/email.png';
 import { useNavigate,useLocation } from 'react-router-dom';
 import '../../styles/loginsignup.css';
-import {
-    TextField
-   } from "@mui/material";
+import {Appbar,Avatar,Button,Card,Checkbox,Chip,Dialog,Divider,FAB,HelperText,IconButton,List,Menu,
+Modal,Portal,ProgressBar,RadioButton,Searchbar,SegmentedButtons,Snackbar,
+Surface,Switch,Text,TextInput,Tooltip,TouchableRipple} from 'react-native-paper'
+
    import { View } from 'react-native';
 import {validateOTPForLogin} from '../admin/admin';
 const Sendotp = ()=>{
