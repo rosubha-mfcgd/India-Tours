@@ -1,8 +1,8 @@
 import loadingSep from "../../../assets/images/loading-separate.gif"
-
+ import { View } from 'react-native';
 const loadingSeparate = () => {
   return (
-    <div
+    <View
       style={{
         display: "flex",
         width: "100%",
@@ -11,7 +11,7 @@ const loadingSeparate = () => {
       }}
     >
       <img src={loadingSep} alt='loading' />
-    </div>
+    </View>
   )
 }
 

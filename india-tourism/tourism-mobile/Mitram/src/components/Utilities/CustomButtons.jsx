@@ -43,7 +43,7 @@ const styles = StyleSheet.create({
            resizeMode: 'contain'
 
         }}
-            source={plus} id="add" onClick= {(event)=> addTourist(event)}/>
+            source={plus} id="add" onPress= {(event)=> addTourist(event)}/>
          
       </View>
           <View>
@@ -57,7 +57,7 @@ const styles = StyleSheet.create({
            resizeMode: 'contain'
 
         }}
-            source={minus} id= "remove" onClick= {(event)=> removeTourist(event)}
+            source={minus} id= "remove" onPress= {(event)=> removeTourist(event)}
           />
           
           

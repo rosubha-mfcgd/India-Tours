@@ -7,18 +7,15 @@ import email_icon from '../Assets/input/email.png';
 
 import user_icon from '../Assets/input/username.png';
 import mobile_icon from '../Assets/input/mobile.png';
-import { useNavigate } from 'react-router-dom';
+  import { useNavigation } from '@react-navigation/native'; 
 import {signupUser,loginUser} from '../admin/admin';
 import { View } from 'react-native';
 
-import {
-    TextField,  
-    Box,
-   
-  } from "@mui/material";
 
 
-import { useGoogleLogin } from '@react-oauth/google';
+import { GoogleSignin, GoogleSigninButton, statusCodes } from 
+'@react-native-google-signin/google-signin';
+
 
 
 const LoginSignup =() => {
@@ -42,21 +39,23 @@ const LoginSignup =() => {
         const handleMobileChange  = (event) =>{
                     setMobile(event.target.value);
             }
-        const navigate = useNavigate();
+        const navigate = useNavigation();
         
 
   
         //SIGNUP A NEW USER
-        const googlesignup = useGoogleLogin ({
-            client_id:process.env.REACT_APP_CLIENT_ID,
-            onSuccess: async(codeResponse) => {
-                
+        const googlesignup = async() =>{
+            try{
+             await GoogleSignin.hasPlayServices();
+             const userInfo = await GoogleSignin.signIn();
+            if(userInfo){
+                console.log('access_token....',userInfo.access_token)
                 setAction("Sign Up");
                 const req_data = {
                     name:name,
                     email:email,
                     mobile:mobile,
-                    access_token:codeResponse.access_token
+                    access_token:userInfo.access_token
                 };
                 try{
                     setButtonPress(true);
@@ -87,15 +86,23 @@ const LoginSignup =() => {
             }finally {
                 setButtonPress(false); // Hide spinner after fetch (success or error)
              }
-            }, 
-            
-            onError: (error) => console.log('Login Failed:', error)
-        });
+            }
+        }catch(err){
+                 
+          // user cancelled the login flow
+          console.log('Login Failed for error code:', error.code)
+        } 
+        }
+
     
         //LOGIN USER
-        const googleLogin =  useGoogleLogin({
-            client_id:process.env.REACT_APP_CLIENT_ID,
-            onSuccess: async(codeResponse) => {
+        const googleLogin =  async() =>{
+
+             try{
+             await GoogleSignin.hasPlayServices();
+             const userInfo = await GoogleSignin.signIn();
+
+          if(userInfo) {
                 console.log('Trying google auth...')
                 setAction("Send Otp");
                        // navigate('sendotp', { replace: true });
@@ -134,9 +141,13 @@ const LoginSignup =() => {
             finally{
                   setButtonPress(false); // Hide spinner after fetch (success or error)
             }
-            },
-            onError: (error) => console.log('Login Failed:', error)
-        });          
+            }
+        }catch(err)
+        {
+           // user cancelled the login flow
+          console.log('Login Failed for error code:', error.code)  
+        }
+        };          
          useEffect(()=>
            {
 
@@ -155,6 +166,13 @@ const LoginSignup =() => {
 
            },[buttonPress,errorMessage,action]);
 
+    useEffect(() => {
+          GoogleSignin.configure({
+            webClientId: process.env.REACT_APP_CLIENT_ID, // client ID of type WEB for your server (needed to verify user ID and get access token)
+            offlineAccess: true, // if you want to access Google API on behalf of the user FROM YOUR SERVER
+        // other configuration options as needed
+      });
+    }, []);
            
         
         
@@ -162,17 +180,14 @@ const LoginSignup =() => {
         // of axios or fetch
 
             return (
-              <View className="center-container">
+              <View style={{ flexDirection: 'row', flexWrap: 'wrap' }}>
       
                 {isLoading ? (
-                  <View
-      sx={{
-        display: 'flex',
+                  <View style={{ display: 'flex',
         justifyContent: 'center',
         alignItems: 'center',
-        minHeight: '100vh', // Optional: Centers vertically within the viewport
-      }}
-    >
+        minHeight: '100vh' }}
+        >
                      <ProgressBar />
                      </View>
                 ):(
@@ -198,24 +213,24 @@ const LoginSignup =() => {
                         <View>
                             <View className='input'>
                             <img src={user_icon} alt=""/>
-                            <TextField label="Name" value = {name} onChangeText = {handleNameChange} 
+                            <TextInput label="Name" value = {name} onChangeText = {handleNameChange} 
                             variant="outlined"/>
                         </View>
                         <View className='input'>
                             <img src={mobile_icon} alt=""/>
-                            <TextField label="Mobile" value = {mobile} onChangeText = {handleMobileChange} 
+                            <TextInput label="Mobile" value = {mobile} onChangeText = {handleMobileChange} 
                             variant="outlined"/>
                         </View>
                         <View className='input' >
                             <img src={email_icon} alt=""/>
-                            <TextField label="Email" value = {email} onChangeText = {handleEmailChange} 
+                            <TextInput label="Email" value = {email} onChangeText = {handleEmailChange} 
                             variant="outlined"/>
                         </View>
                     </View>:
                         <View>
                             <View className='input'>
                             <img src={mobile_icon} alt=""/>
-                            <TextField label="Mobile" value = {mobile} onChangeText = {handleMobileChange} 
+                            <TextInput label="Mobile" value = {mobile} onChangeText = {handleMobileChange} 
                             variant="outlined"/>
                         </View>
                         <br/>
@@ -223,7 +238,7 @@ const LoginSignup =() => {
                         <br/>
                         <View className='input' >
                             <img src={email_icon} alt=""/>
-                            <TextField label="Email" value = {email} onChangeText = {handleEmailChange} 
+                            <TextInput label="Email" value = {email} onChangeText = {handleEmailChange} 
                             variant="outlined"/>
                         </View>
                         </View>
@@ -235,21 +250,36 @@ const LoginSignup =() => {
                         {action === 'Sign Up'?  
                         <View className='submit-container'>
                     
-                        <View className={action==="Login"?"submit gray":"submit"} 
-                        onPress={()=>googlesignup()}>Sign Up</View>
+                        <GoogleSigninButton 
+                          style={{ width: 192, height: 48 }}
+                            size={GoogleSigninButton.Size.Wide}
+                            color={GoogleSigninButton.Color.Dark}
+                    className="submit" onPress={googlesignup}>Sign Up</GoogleSigninButton>
                     
-                            <View className={action==='Sign Up'?'submit gray':'submit'} 
-                            onPress={()=>{setAction("Login");}}>Login</View>
+                            <GoogleSigninButton 
+                            style={{ width: 192, height: 48 }}
+                            size={GoogleSigninButton.Size.Wide}
+                            color={GoogleSigninButton.Color.Dark}
+                            className={action==='Sign Up'?'submit gray':'submit'} 
+                            onPress={()=>{setAction("Login");}}>Login</GoogleSigninButton>
                         </View>:<br/>
                         }
 
                         {action === 'Login'?
                         <View className='submit-container'>
-                    <View className="submit" onPress={()=>{googleLogin();}}>Send Otp</View> 
-                    <View className={action==="Login"?"submit gray":"submit"} 
+                    <GoogleSigninButton 
+                      style={{ width: 192, height: 48 }}
+                            size={GoogleSigninButton.Size.Wide}
+                            color={GoogleSigninButton.Color.Dark}
+                    className="submit" onPress={googleLogin}>Send Otp</GoogleSigninButton> 
+                    <GoogleSigninButton 
+                      style={{ width: 192, height: 48 }}
+                            size={GoogleSigninButton.Size.Wide}
+                            color={GoogleSigninButton.Color.Dark}
+                    className={action==="Login"?"submit gray":"submit"} 
                         onPress={()=>{setAction("Sign Up");
                         navigate('-1');
-                    }}>Cancel</View> 
+                    }}>Cancel</GoogleSigninButton> 
                     </View> :<View></View> 
                         }
                     </View> 
@@ -257,5 +287,5 @@ const LoginSignup =() => {
                     </View> 
                 
             );
-};
+        }
 export default LoginSignup

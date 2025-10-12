@@ -1,23 +1,23 @@
-import { NavLink , useLocation,useNavigate } from "react-router-dom";
+  import { useNavigation, useLocation } from '@react-navigation/native'; 
 import '../../styles/Navbar.css';
 import '../../styles/Cards.css';
 import '../../styles/sidebar.css';
 import { useEffect, useState, useContext } from "react";
-import {
-   Card, Button
-  } from "react-native-paper";
+import {Appbar,Avatar,Button,Card,Checkbox,Chip,Dialog,Divider,FAB,HelperText,IconButton,List,Menu,
+Modal,Portal,ProgressBar,RadioButton,Searchbar,SegmentedButtons,Snackbar,
+Surface,Switch,Text,TextInput,Tooltip,TouchableRipple} from 'react-native-paper'
 
-  import { Text, View, StyleSheet } from 'react-native';
+  import { View } from 'react-native';
 
 import {updateAsFavorite,getProducts } from "../admin/admin";
 import { NavContext } from '../navigationContext/navigationContext.jsx';
 import SideBarNotification from './sideBarNotification.jsx'
-import FavoriteIcon from '@mui/icons-material/Favorite';
+ import { MaterialIcons } from '@react-native-vector-icons/material-icons';
 
 const Products = ({access_token,triggerDisplayTripsByProductId}) =>{
 
     
-    const navigate = useNavigate();
+    const navigate = useNavigation();
      const location = useLocation();
     const { notification} = useContext(NavContext);
      const [items, setItems] = useState('')
@@ -75,13 +75,13 @@ const Products = ({access_token,triggerDisplayTripsByProductId}) =>{
     return (
         <View  className="navbar-grid">
         <nav className="navbar">
-            <Grid container spacing={10} justify="center" width="70%">
+            <View container spacing={10} justify="center" width="70%">
              {items && items.length>0 ?
 
                 items.map((item) => (
-               <View >
+               <View>
                  
-                <Grid item xs = {12} sm={4}  key={item.productID}>
+                <View item xs = {12} sm={4}  key={item.productID}>
 
                     <Card className="card"
                      >
@@ -100,9 +100,14 @@ const Products = ({access_token,triggerDisplayTripsByProductId}) =>{
                 {item.productDesc}
               </Text>
               {(item.favorite === 'Y') ?
-                <FavoriteIcon sx={{ color: '#f04646ff' }} onPress = {(event) => updateFavorites(
-                    item.productID,'N',event)} style={{ cursor: 'pointer' }}/>:
-                <FavoriteIcon onPress = {(event) => updateFavorites(
+                <MaterialIcons name="favorite" color= '#f04646ff' 
+                size={30}
+                onPress = {(event) => updateFavorites(
+                    item.productID,'N',event)} 
+                    style={{ cursor: 'pointer' }}/>:
+                <MaterialIcons name="favorite"  
+                size={30}
+                onPress = {(event) => updateFavorites(
                     item.productID,'Y',event)} style={{ cursor: 'pointer' }}/>
               }
               
@@ -111,7 +116,7 @@ const Products = ({access_token,triggerDisplayTripsByProductId}) =>{
                     style={{ cursor: 'pointer',backgroundColor: '#8a77f8ff',color:'#0c0c0fff'}}>
                         Click to View</button>
                     </Card>
-                </Grid>
+                </View>
                 
                 </View>
                 )
@@ -119,7 +124,7 @@ const Products = ({access_token,triggerDisplayTripsByProductId}) =>{
                 
              }
             
-            </Grid>
+            </View>
           {notification ?
                <View  style={{position: 'fixed', top:70,right:0}} >    
                <SideBarNotification/> 

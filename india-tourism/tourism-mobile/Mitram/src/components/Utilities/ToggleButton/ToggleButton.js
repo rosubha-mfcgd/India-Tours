@@ -2,7 +2,7 @@ import "./ToggleButton.css";
 
 const ToggleButton = (props) => {
 
-  const { checked, name, value, onClick } = props;
+  const { checked, name, value, onPress } = props;
   
   return (
     <input
@@ -11,7 +11,7 @@ const ToggleButton = (props) => {
       value={value}
       type="checkbox"
       id="checkbox"
-      onClick={onClick}
+      onPress={onPress}
       className="switch"
       onChange={() => console.log("I am change")}
     />

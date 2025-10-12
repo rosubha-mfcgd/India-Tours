@@ -1,39 +1,14 @@
 import React, { useState, useRef , useEffect, useContext} from 'react';
-import ReactDOM from 'react-dom/client';
- import CircularProgress from '@mui/material/CircularProgress';
+
 import '../../styles/loginsignup.css';
-import email_icon from '../Assets/input/email.png';
-import password_icon from '../Assets/input/password.png';
-import user_icon from '../Assets/input/username.png';
-import mobile_icon from '../Assets/input/mobile.png';
-import Loading from "../Utilities/Loading/Loading.js";
-import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
-import { useNavigate } from 'react-router-dom';
+
 import {getPoints} from '../admin/admin';
-import AppBar from '@mui/material/AppBar';
-import Toolbar from '@mui/material/Toolbar';
-import Typography from '@mui/material/Typography';
-import Box from '@mui/material/Box';
-import {
-    TextField,
-    Button,
-    Table,
-    TableBody,
-    TableCell,
-    TableContainer,
-    TableHead,
-    TableRow,
-    Paper,
-    Modal,
-     Snackbar,
-     Link,
-     CssBaseline,
-  } from "@mui/material";
-import IconButton from '@mui/material/IconButton';
-import MenuIcon from '@mui/icons-material/Menu'; // Or any other icon
+
+import {Appbar,Avatar,Button,Card,Checkbox,Chip,Dialog,Divider,FAB,HelperText,IconButton,List,Menu,
+Modal,Portal,ProgressBar,RadioButton,Searchbar,SegmentedButtons,Snackbar,
+Surface,Switch,Text,TextInput,Tooltip,TouchableRipple} from 'react-native-paper'
+
 import { NavContext } from '../navigationContext/navigationContext.jsx';
-
-
 const UserProfile = ({name,email,mobile,access_token}) =>{
 const [anchorEl, setAnchorEl] = useState(null);
 const [dateTime, setDateTime] = useState(new Date());
@@ -80,29 +55,29 @@ return () => clearInterval(timer); // Clean up the interval on unmount
 return (
         <View>
              <View>
-                <CssBaseline/>
-         <AppBar position="static" sx={{ backgroundColor: '#19857b' }}>
+               
+         <Appbar position="static" sx={{ backgroundColor: '#19857b' }}>
             <Toolbar sx={{ justifyContent: 'space-between' }}>
-            <Typography variant="h5" component="div">
+            <Text variant="h5" component="div">
               India Tours
-            </Typography>
+            </Text>
             <Box>
-              <Typography variant="body1">
+              <Text variant="body1">
                 Welcome, {name} 
-              </Typography>
+              </Text>
               {/* Add other right-aligned elements here */}
             </Box>
             <Box>
-               <Typography variant="body2">
+               <Text variant="body2">
                 {email}  
-              </Typography> 
-               <Typography variant="body2">
+              </Text> 
+               <Text variant="body2">
                 {mobile}  
-              </Typography> 
+              </Text> 
             </Box>
 
             <Box>
-                <Typography variant="body2"  gutterBottom>Points {points}</Typography>
+                <Text variant="body2"  gutterBottom>Points {points}</Text>
             </Box>
               
               <p>{dateTime.toLocaleDateString('en-US', {
@@ -132,7 +107,7 @@ return (
    
             </Box>
           </Toolbar>
-         </AppBar>
+         </Appbar>
           </View>
         </View>
     );

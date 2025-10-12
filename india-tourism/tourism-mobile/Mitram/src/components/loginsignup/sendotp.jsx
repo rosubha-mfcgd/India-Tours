@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
 import mobile_icon from '../Assets/input/mobile.png';
 import email_icon from '../Assets/input/email.png';
-import { useNavigate,useLocation } from 'react-router-dom';
+
+  import { useNavigation, useLocation } from '@react-navigation/native'; 
 import '../../styles/loginsignup.css';
 import {Appbar,Avatar,Button,Card,Checkbox,Chip,Dialog,Divider,FAB,HelperText,IconButton,List,Menu,
 Modal,Portal,ProgressBar,RadioButton,Searchbar,SegmentedButtons,Snackbar,
@@ -10,7 +11,7 @@ Surface,Switch,Text,TextInput,Tooltip,TouchableRipple} from 'react-native-paper'
    import { View } from 'react-native';
 import {validateOTPForLogin} from '../admin/admin';
 const Sendotp = ()=>{
-   const navigate = useNavigate();
+   const navigate = useNavigation();
      const location = useLocation();
     
      const[otp,setOtp] = useState('');
@@ -63,7 +64,7 @@ return (
      <View className='input'>
                 <img src={mobile_icon} alt=""/>
               
-        <TextField  label="Mobile Number"
+        <TextInput  label="Mobile Number"
       variant="outlined"
       defaultValue=""
       value={location.state.mobile}
@@ -79,7 +80,7 @@ return (
                </View>
                 <View className='input'>
                 <img src={email_icon} alt=""/>
-                 <TextField  label="Email"
+                 <TextInput  label="Email"
                     variant="outlined"
                     defaultValue=""
                     value={location.state.email}
@@ -92,11 +93,11 @@ return (
      <View className='input'>
                 <img src={mobile_icon} alt=""/>
 
-                 <TextField label="OTP" value = {otp} onChangeText = {handleOTPChange} variant="outlined"/>
+                 <TextInput label="OTP" value = {otp} onChangeText = {handleOTPChange} variant="outlined"/>
                 </View>
                     <View className='centre-div'>
                     <View className='submit-container'>
-                        <View className={"submit"} onClick={()=>{validateOTP()}}>Validate OTP</View>
+                        <View className={"submit"} onPress={()=>{validateOTP()}}>Validate OTP</View>
                         </View>
                     </View>
     </View>

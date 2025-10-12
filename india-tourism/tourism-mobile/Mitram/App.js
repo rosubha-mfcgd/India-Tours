@@ -12,12 +12,12 @@ export default function App() {
     <View style={styles.container}>
        <PaperProvider>
            <NativeRouter>
-           <Route path='signup' Component={LoginSignup}></Route>
-           <Route path='sendotp' Component={sendotp}></Route>
-           <Route path='welcome' Component={Welcome}></Route>
-           <Route path='/' Component={Welcome}></Route>
-           <Route path='/searchtrip' Component={TripList}></Route>
-         </NativeRouter>
+            <Route path='signup' Component={LoginSignup}></Route>
+            <Route path='sendotp' Component={sendotp}></Route>
+            <Route path='welcome' Component={Welcome}></Route>
+            <Route path='/' Component={Welcome}></Route>
+            <Route path='/searchtrip' Component={TripList}></Route>
+           </NativeRouter>
          </PaperProvider>
     </View>
   );

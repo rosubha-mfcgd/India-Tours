@@ -1,6 +1,4 @@
 import React, { useEffect,useState,useContext } from "react";  
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
-
 
 import NavBar from '../navigationTabs/navBar.jsx';
 import Product from '../navigationTabs/products.jsx';
@@ -12,7 +10,7 @@ import UserProfile from '../userprofile/userprofile.jsx';
 import '../../styles/loginsignup.css';
  import { NavProvider } from '../navigationContext/navigationContext.jsx';
 
- import {useLocation } from 'react-router-dom';
+  import { useLocation } from '@react-navigation/native'; 
 import TripList from "./tripList.jsx";
 import TripDetails from "./tripDetails.jsx";
 import BookingForm from "./bookingForm.jsx";

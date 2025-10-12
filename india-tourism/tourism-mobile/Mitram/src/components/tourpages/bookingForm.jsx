@@ -4,7 +4,6 @@ import '../../styles/sidebar.css';
 import '../../styles/bookingForm.css';
 import CustomButton from '../Utilities/CustomButtons.jsx'
 import { useEffect, useState, useContext} from "react";
-import { styled } from '@mui/material/styles';
 import {getBookingsByBookingId} from "../admin/admin";
 import SideBarNotification from '../navigationTabs/sideBarNotification.jsx';
 import close_button from '../Assets/images/close-button.png';
@@ -31,7 +30,7 @@ const BookingForm = ({access_token,tourDetails,triggerDisplayBookings}) =>{
          const [dialogOpen, setDialogOpen] = useState(false);
          const[showBookingBtn,setShowBookingBtn] = useState(true);
   const { notification} = useContext(NavContext);
-    const CssTextField = styled(TextField)({
+    const CssTextInput = styled(TextInput)({
       '& label': {
         color: '#FFFF', // Default label color
        }  
@@ -50,11 +49,7 @@ const BookingForm = ({access_token,tourDetails,triggerDisplayBookings}) =>{
         setDialogOpen(!dialogOpen);
         if(!dialogOpen)
         {
-           // setBookingId('');
-            //setBookingUpdateId('');
-            //setDisable(true)
-             setDisplayErrorDialog(false);
-         // setDialogOpen(false);
+           setDisplayErrorDialog(false);
         }
     };
 
@@ -188,7 +183,7 @@ const BookingForm = ({access_token,tourDetails,triggerDisplayBookings}) =>{
                        <Box
       component="form"
       sx={{
-        '& .MuiTextField-root': { m: 1, width: '25ch' },
+        '& .MuiTextInput-root': { m: 1, width: '25ch' },
         display: 'flex',
         flexDirection: 'column',
         alignItems: 'center',
@@ -202,10 +197,11 @@ const BookingForm = ({access_token,tourDetails,triggerDisplayBookings}) =>{
          animation: 'blink-animation 5s linear infinite;'
       }}
       noValidate 
-      autoComplete="off" onClick={initBooking}>
-         <Typography variant="body2" style={{ color: 'rgba(17, 17, 17, 1)' }}>
-                  Click me to book your trip to {tourDetails.locationName} with {tourDetails.tourManagerName}    
-        </Typography> 
+      autoComplete="off" onPress={initBooking}>
+         <Text variant="body2" style={{ color: 'rgba(17, 17, 17, 1)' }}>
+                  Click me to book your trip to {tourDetails.locationName} with 
+                  {tourDetails.tourManagerName}    
+        </Text> 
            </Box>:<View></View>
               }
 {displayErrorDialog?
@@ -224,8 +220,8 @@ const BookingForm = ({access_token,tourDetails,triggerDisplayBookings}) =>{
           </DialogContentText>
         </DialogContent>
         <DialogActions>
-          <Button onClick={handleClickOpenOrClose}>Cancel</Button>
-          <Button onClick={handleClickOpenOrClose} autoFocus>
+          <Button onPress={handleClickOpenOrClose}>Cancel</Button>
+          <Button onPress={handleClickOpenOrClose} autoFocus>
            OK
           </Button>
           {dialogOpen?
@@ -241,12 +237,12 @@ const BookingForm = ({access_token,tourDetails,triggerDisplayBookings}) =>{
                      
                       <TableRow >
                         <TableCell sx={{border:"none"}}>
-                           <Typography variant="body2" style={{ color: '#FFFFFF' }}>
+                           <Text variant="body2" style={{ color: '#FFFFFF' }}>
                             How many people will be travelling ?
-                            </Typography>
+                            </Text>
                         </TableCell>
                         <TableCell sx={{border:"none"}}>
-                          <CssTextField id="numberOfTourist" 
+                          <CssTextInput id="numberOfTourist" 
                           sx={{ color: '#FFFFFF' }}
                           label="Enter number of travellers" 
                           defaultValue={noOfTourist}
@@ -264,11 +260,11 @@ const BookingForm = ({access_token,tourDetails,triggerDisplayBookings}) =>{
                         </TableRow>
                          <TableRow>
                          <TableCell sx={{border:"none"}}>
-                           <Typography variant="body2" style={{ color: '#FFFFFF' }}>
+                           <Text variant="body2" style={{ color: '#FFFFFF' }}>
                             Please enter the booking ID of the trip you want to attend?
-                            </Typography>
+                            </Text>
                         </TableCell>
-                         <CssTextField id="bookingid" 
+                         <CssTextInput id="bookingid" 
                           sx={{ color: '#FFFFFF' }}
                           label="Booking id (Optional)" 
                            defaultValue={bookingid} 
@@ -287,7 +283,7 @@ const BookingForm = ({access_token,tourDetails,triggerDisplayBookings}) =>{
      {
         openBookingForm ?
         <View style={{border: "2px solid black;" }}>
-          <Typography variant="body2" style={{ color: '#FFFFFF' }}>{bookingPageMessage}</Typography>
+          <Text variant="body2" style={{ color: '#FFFFFF' }}>{bookingPageMessage}</Text>
          <Paper>
           {
           touristCount && touristCount.length >0 ?
@@ -389,7 +385,7 @@ const BookingForm = ({access_token,tourDetails,triggerDisplayBookings}) =>{
                         >Go Back</button>
 
                             <button type="submit" 
-                       class="button" onClick={submitBookings}>Submit your Booking</button>
+                       class="button" onPress={submitBookings}>Submit your Booking</button>
                        
         </View>
       </View>

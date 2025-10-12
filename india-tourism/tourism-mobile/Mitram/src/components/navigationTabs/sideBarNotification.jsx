@@ -1,17 +1,14 @@
 import React, { useState } from "react";
-import styled from "styled-components";
 
-import {
-     Drawer,
-     Box,List,
-    IconButton
-     
-  } from "@mui/material";
+import {Appbar,Avatar,Button,Card,Checkbox,
+Chip,Dialog,Divider,FAB,HelperText,IconButton,List,Menu,
+Modal,Portal,ProgressBar,RadioButton,Searchbar,
+SegmentedButtons,Snackbar,
+Surface,Switch,Text,TextInput,
+Tooltip,TouchableRipple} from 
+'react-native-paper'
 
-import {ListItem, ListItemButton, ListItemText} 
-   from '@mui/material';
-  import ChevronRightIcon from '@mui/icons-material/ChevronRight';
-
+import Icon from 'react-native-vector-icons/MaterialIcons';
 
  const SideBarNotification=()=> {
    const [open, setOpen] = useState(true);
@@ -35,8 +32,10 @@ const StyledDrawer = styled(Drawer)(({ theme }) => ({
                     <View sx={{ display: 'flex', 
                       alignItems: 'center', justifyContent: 'flex-end', 
                       padding: 1 }}>
-                        <IconButton onClick={handleDrawerClose}>
-                            <ChevronRightIcon onClick={handleDrawerClose}/>
+                        <IconButton onPress={handleDrawerClose}>
+                           
+
+                            <Icon name="chevron-right" size={30} color="#900"/>
                         </IconButton>
                     </View>
                     <List>

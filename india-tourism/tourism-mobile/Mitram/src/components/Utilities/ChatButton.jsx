@@ -15,7 +15,7 @@ import { Button } from 'react-native-paper';
             borderRadius: '5px',
             cursor: 'pointer',
           }}
-          onClick={toggleChat}
+          onPress={toggleChat}
         >
           Chat with us !!
         </Button>

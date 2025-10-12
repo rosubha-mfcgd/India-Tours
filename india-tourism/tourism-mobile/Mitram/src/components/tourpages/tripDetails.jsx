@@ -1,33 +1,18 @@
 import React, { useEffect,useState,useContext } from "react"; 
-import  { useNavigate } from "react-router-dom"; 
+  import { useNavigation } from '@react-navigation/native';  
 import '../../styles/TripDetails.css';
 import '../../styles/loginsignup.css';
 import SideBarNotification from '../navigationTabs/sideBarNotification.jsx';
 import { NavContext } from '../navigationContext/navigationContext.jsx';
 
-import {
-    TextField,
-    Button,
-    Table,
-    TableBody,
-    TableCell,
-    TableContainer,
-    TableHead,
-    TableRow,
-    Paper,
-    Modal,
-    Box,
-    Snackbar,
-    Card,
-    Grid,
-    Typography,
-    CardMedia,
-    CardContent
-  } from "@mui/material";
+import {Appbar,Avatar,Button,Card,Checkbox,Chip,Dialog,Divider,FAB,HelperText,IconButton,List,Menu,
+Modal,Portal,ProgressBar,RadioButton,Searchbar,SegmentedButtons,Snackbar,
+Surface,Switch,Text,TextInput,Tooltip,TouchableRipple} from 'react-native-paper'
+
 
   const TripDetails = ({tourDetails,triggerDisplayOptionsByCatId,openBookingForm,cityList,access_token}) =>{
 
-  const navigate = useNavigate();
+  const navigate = useNavigation();
 
         const goBack = () =>{
             navigate(-1);
@@ -63,10 +48,10 @@ import {
         gap: '20px' }}>
         <View className="grid-container">
       <View className="grid-item">
-        <Grid item xs = {10} sm={4}></Grid>
+        <View item xs = {10} sm={4}></View>
       </View>
             <View className="grid-item">
-            <Grid item xs = {10} sm={4}>
+            <View item xs = {10} sm={4}>
                  <Card className="card">
                     <CardMedia
         component="img"
@@ -75,18 +60,18 @@ import {
         alt={tourDetails.locationName}
       />
            </Card>
-            <Typography variant="body2" style={{ color: '#FFFFFF' }}>
+            <Text variant="body2" style={{ color: '#FFFFFF' }}>
                            {tourDetails.desc}
-                         </Typography>
-            <Typography variant="body2" style={{ color: '#FFFFFF' }}>
+                         </Text>
+            <Text variant="body2" style={{ color: '#FFFFFF' }}>
                           This tour is operated by :- <strong>{tourDetails.tourManagerName}</strong>
-                         </Typography>
-            <Typography variant="body2" style={{ color: '#FFFFFF' }}>
+                         </Text>
+            <Text variant="body2" style={{ color: '#FFFFFF' }}>
                 Operator Contact :- <strong>{tourDetails.contact}</strong>
-             </Typography>
-             <Typography variant="body2" style={{ color: '#FFFFFF' }}>
+             </Text>
+             <Text variant="body2" style={{ color: '#FFFFFF' }}>
                     Operator secondary Contact :- {tourDetails.secondarycontact}
-             </Typography>
+             </Text>
 
               
                 <View>
@@ -96,70 +81,70 @@ import {
                        
                         <TableRow>
                     <TableCell>
-                        <Typography variant="body2" style={{ color: '#FFFFFF' }}>
+                        <Text variant="body2" style={{ color: '#FFFFFF' }}>
                         LocationName : <strong>{tourDetails.locationName}</strong>    
-                        </Typography>
+                        </Text>
                     </TableCell>
                     </TableRow>
                    
                     <TableRow>
                     <TableCell>
-                        <Typography variant="body2" style={{ color: '#FFFFFF' }}>
+                        <Text variant="body2" style={{ color: '#FFFFFF' }}>
                        Trip Length : <strong> {tourDetails.triplength}  </strong>
-                        </Typography>  
+                        </Text>  
                     </TableCell>
 
                     </TableRow>
                      <TableRow>
                     <TableCell>
-                        <Typography variant="body2" style={{ color: '#FFFFFF' }}>
+                        <Text variant="body2" style={{ color: '#FFFFFF' }}>
                        Trip Type : <strong> {tourDetails.domesticOrInternational === "D"? "Domestic"
                        :"International"}  </strong>
-                        </Typography>  
+                        </Text>  
                     </TableCell>
                     
                     </TableRow>
                    
                       <TableRow>
                       <TableCell>
-                        <Typography variant="body2" style={{ color: '#FFFFFF' }}>
+                        <Text variant="body2" style={{ color: '#FFFFFF' }}>
                        Start Date : <strong> {changeDateToWords(new Date(tourDetails.startDate))}</strong>  
-                        </Typography>  
+                        </Text>  
                     </TableCell>
                     </TableRow>
                     <TableRow>
                       <TableCell>
-                        <Typography variant="body2" style={{ color: '#FFFFFF' }}>
+                        <Text variant="body2" style={{ color: '#FFFFFF' }}>
                        End Date : <strong>{changeDateToWords(new Date(tourDetails.endDate))}</strong>    
-                        </Typography>
+                        </Text>
                     </TableCell>
                       </TableRow>
                       <TableRow>
                       <TableCell>
-                         <Typography variant="body2" style={{ color: '#FFFFFF' }}>
+                         <Text variant="body2" style={{ color: '#FFFFFF' }}>
                       Package Cost/person: <strong> {tourDetails.package_cost}</strong> 
-                        </Typography>   
+                        </Text>   
                     </TableCell>
                     </TableRow>
                     <TableRow>
                       <TableCell>
-                         <Typography variant="body2" style={{ color: '#FFFFFF' }}>
+                         <Text variant="body2" style={{ color: '#FFFFFF' }}>
                       Max Tourist: <strong> {tourDetails.max_tourist}</strong>    
-                        </Typography>
+                        </Text>
                     </TableCell>
                     </TableRow>
                     <TableRow>
                       <TableCell>
-                         <Typography variant="body2" style={{ color: '#FFFFFF' }}>
+                         <Text variant="body2" style={{ color: '#FFFFFF' }}>
                         Seats left: <strong>{tourDetails.seats_left}</strong>    
-                        </Typography>
+                        </Text>
                     </TableCell>
                     </TableRow>
                     <TableRow>
                      <TableCell>
-                        <Typography variant="body2" style={{ color: '#FFFFFF' }}>
+                        <Text variant="body2" style={{ color: '#FFFFFF' }}>
                       Itinerary Details: <strong>{tourDetails.itinerary} </strong>
-                        </Typography>   
+                        </Text>   
                     </TableCell>
                    </TableRow>
                   </TableBody>
@@ -176,12 +161,12 @@ import {
           
         <View className="button-container">
          <View className='submit-container'>
-                    <button type="submit" onClick={()=>{
+                    <button type="submit" onPress={()=>{
                         triggerDisplayOptionsByCatId(tourDetails.categoryId)}}
                         class="button"
                         >Go Back</button>
 
-                            <button type="submit" onClick={()=>{
+                            <button type="submit" onPress={()=>{
                         openBookingForm(tourDetails)}}
                        class="button" 
                         >Book My Trip</button>
@@ -193,7 +178,7 @@ import {
         </View> 
         
            
-                 </Grid>
+                 </View>
                     {notification ?
                                 <View style={{position: 'fixed', top:70,right:0}} >    
                                 <SideBarNotification/> 

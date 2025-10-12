@@ -1,21 +1,21 @@
 import React, {useEffect, useState } from "react";
-import styled from "styled-components";
-import Radio from '@mui/material/Radio';
-import RadioGroup from '@mui/material/RadioGroup';
+
 import FormControlLabel from '@mui/material/FormControlLabel';
 import FormControl from '@mui/material/FormControl';
 import FormLabel from '@mui/material/FormLabel';
-import {
-     Drawer,
-     Box,List,
-     IconButton,
-     Typography,
-    } from "@mui/material";
+
+  import { createDrawerNavigator } from '@react-navigation/drawer';
+        import { NavigationContainer } from '@react-navigation/native';
+
+    import {Appbar,Avatar,Button,Card,Checkbox,Chip,Dialog,Divider,FAB,HelperText,
+      IconButton,List,Menu,
+Modal,Portal,ProgressBar,RadioButton,Searchbar,SegmentedButtons,Snackbar,
+Surface,Switch,Text,TextInput,Tooltip,TouchableRipple} from 'react-native-paper'
+
 
  import NativeSelect from '@mui/material/NativeSelect';
-import {ListItem, ListItemButton, ListItemText} 
-   from '@mui/material';
-  import ChevronRightIcon from '@mui/icons-material/ChevronRight';
+
+  import Icon from 'react-native-vector-icons/FontAwesome';
 
 import '../../styles/sidebarForSorting.css';
  const SideBarFilter=({selectedValue,setSelectedValue,priceValue, 
@@ -23,7 +23,7 @@ import '../../styles/sidebarForSorting.css';
     triplengthValue, setTriplengthValue,cityList,cityvalue,setCityvalue})=> {
      const[cityFilterList, setCityFilterList] = useState('')
    const [open, setOpen] = useState(true);
-    
+    const Drawer = createDrawerNavigator();
      // Handle changes to the slider's value
   const handlePriceSliderChange = (event) => {
     setPriceValue(event.target.value);
@@ -51,7 +51,7 @@ const handleChange = (event) => {
 
   
   return (
-            <Box sx={{ display: 'flex' }}>
+            <View sx={{ display: 'flex' }}>
             
                 <StyledDrawer
                     variant="persistent" // Or "temporary", "permanent"
@@ -68,25 +68,26 @@ const handleChange = (event) => {
         },
       }} 
                 >
-                    <Box sx={{ display: 'flex', 
+                    <View sx={{ display: 'flex', 
                       alignItems: 'center', justifyContent: 'flex-end', 
                       padding: 1 }}>
-                        <IconButton onClick={handleDrawerClose}>
-                            <ChevronRightIcon onClick={handleDrawerClose}/>
+                        <IconButton onPress={handleDrawerClose}>
+                            <Icon name="chevron-right" size={20} color="#900" 
+                            onPress={handleDrawerClose}/>
                         </IconButton>
-                    </Box>
+                    </View>
                     <Box sx={{ display: 'flex', 
                       alignItems: 'center', justifyContent: 'flex-end', 
                       padding: 1 }}>
-                        <Typography variant="body2" color="common.white">Filter </Typography>
+                        <Text variant="body2" color="common.white">Filter </Text>
                     </Box>
                     <List>
                       <ListItem>
                          
                         <FormControl fullWidth>
-                           <Typography variant="body2" color="common.black">
+                           <Text variant="body2" color="common.black">
                                Tour Operator Location
-                            </Typography>
+                            </Text>
 
   <NativeSelect
     defaultValue={cityvalue}
@@ -114,9 +115,9 @@ cityList.map((city) =>(
                               {
                                text == 'Price'?
                               <View>
-                            <Typography variant="body2" color="common.black">
+                            <Text variant="body2" color="common.black">
                                 {text} - {priceValue}
-                            </Typography>
+                            </Text>
                                                    
                                 <input type="range" 
                                 value= {priceValue} 
@@ -133,9 +134,9 @@ cityList.map((city) =>(
                                 </View>:
                                 text == 'TripLength'?
                               <View>
-                            <Typography variant="body2" color="common.black">
+                            <Text variant="body2" color="common.black">
                                 {text} - {triplengthValue}
-                            </Typography>
+                            </Text>
                                                    
                                 <input type="range"
                                 
@@ -154,8 +155,8 @@ cityList.map((city) =>(
                                 <View>
                             <FormControl component="fieldset">
                                 <FormLabel component="legend">
-                               <Typography variant="body2" color="common.black">Type of Tour?
-                                </Typography>
+                               <Text variant="body2" color="common.black">Type of Tour?
+                                </Text>
                                </FormLabel>
       <RadioGroup
         aria-label="options"
@@ -176,10 +177,10 @@ cityList.map((city) =>(
                     </List> 
                 </StyledDrawer>
                 {/* Main content of your application */}
-                <Box component="main" sx={{ flexGrow: 1, p: 3 }}>
+                <View component="main" sx={{ flexGrow: 1, p: 3 }}>
                     {/* Your application's main content goes here */}
-                </Box>
-            </Box>
+                </View>
+            </View>
   );
 
   

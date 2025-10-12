@@ -8,36 +8,11 @@ import { performTripBooking,updateBookingsByBookingId } from "../admin/admin";
 import success_animation from '../Assets/images/success_animation.gif';
 import SideBarNotification from '../navigationTabs/sideBarNotification.jsx';
 import { NavContext } from '../navigationContext/navigationContext.jsx';
-import {
-    TextField,
-    Button,
-    Table,
-    TableBody,
-    TableCell,
-    TableContainer,
-    TableHead,
-    TableRow,
-    Paper,
-    Modal,
-    Box,
-    Snackbar,
-    Card,
-    Grid,
-    Typography,
-    CardMedia,
-    CardContent,
-    FormGroup,
-    FormControl,  
-    Input,
-    Switch,
-    InputLabel,
-    TextareaAutosize,
-    Dialog,
-    DialogTitle,
-    DialogContent,
-    DialogContentText,
-    DialogActions
-  } from "@mui/material";
+ import { View } from 'react-native';
+import {Appbar,Avatar,Button,Card,Checkbox,Chip,Dialog,Divider,FAB,HelperText,IconButton,List,Menu,
+Modal,Portal,ProgressBar,RadioButton,Searchbar,SegmentedButtons,Snackbar,
+Surface,Switch,Text,TextInput,Tooltip,TouchableRipple} from 'react-native-paper'
+
 
 
 
@@ -172,8 +147,8 @@ const submitBooking = async()=>{
             }
         </DialogContent>
         <DialogActions>
-          <Button onClick={handleClickOpenOrClose}>Cancel</Button>
-          <Button onClick={handleClickOpenOrClose} autoFocus>
+          <Button onPress={handleClickOpenOrClose}>Cancel</Button>
+          <Button onPress={handleClickOpenOrClose} autoFocus>
             Proceed to Payment
           </Button>
           {dialogOpen?
@@ -186,16 +161,16 @@ const submitBooking = async()=>{
                                       <TableRow>
                                         <TableCell>
                                     {!tourDetailsParam.bookingid?
-                                        <Typography variant="h5" style={{ color: 'hsla(0, 32%, 92%, 1.00)' }}>
+                                        <Text variant="h5" style={{ color: 'hsla(0, 32%, 92%, 1.00)' }}>
                                             Booking details for {tourDetailsParam.locationName} tour by {tourDetailsParam.tourManagerName}
-                                        </Typography>:
-                                        <Typography variant="h5" style={{ color: 'hsla(0, 32%, 92%, 1.00)' }}>
+                                        </Text>:
+                                        <Text variant="h5" style={{ color: 'hsla(0, 32%, 92%, 1.00)' }}>
                                             Booking ID {tourDetailsParam.bookingid} updates for  {tourDetailsParam.locationName} tour by {tourDetailsParam.tourManagerName}
-                                        </Typography>
+                                        </Text>
                                     }
                                         </TableCell>
                                         <TableCell>
-                                         <button type="button" onClick={()=>{
+                                         <button type="button" onPress={()=>{
                         triggerEditable()}}
                        class="button" 
                         >Edit </button>
@@ -298,7 +273,7 @@ const submitBooking = async()=>{
                         >Go Back</button>
 
                             <button type="submit" 
-                       class="button" onClick={submitBooking}>Confirm Booking</button>
+                       class="button" onPress={submitBooking}>Confirm Booking</button>
                        
         </View>
       </View>

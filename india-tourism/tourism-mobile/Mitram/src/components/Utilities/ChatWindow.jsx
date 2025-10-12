@@ -2,7 +2,7 @@ import React from 'react';
 
     const ChatWindow = ({ onClose }) => {
       return (
-        <div
+        <View
           style={{
             position: 'fixed',
             bottom: '80px',
@@ -16,18 +16,18 @@ import React from 'react';
             zIndex: 999,
           }}
         >
-          <div style={{ padding: '10px', borderBottom: '1px solid #eee', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+          <View style={{ padding: '10px', borderBottom: '1px solid #eee', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
             <span>Live Chat</span>
-            <button onClick={onClose} style={{ background: 'none', border: 'none', fontSize: '1.2em', cursor: 'pointer' }}>X</button>
-          </div>
-          <div style={{ padding: '10px', height: 'calc(100% - 70px)', overflowY: 'auto' }}>
+            <button onPress={onClose} style={{ background: 'none', border: 'none', fontSize: '1.2em', cursor: 'pointer' }}>X</button>
+          </View>
+          <View style={{ padding: '10px', height: 'calc(100% - 70px)', overflowY: 'auto' }}>
             {/* Chat messages and input will go here */}
             <p>Welcome to our chat!</p>
-          </div>
-          <div style={{ padding: '10px', borderTop: '1px solid #eee' }}>
+          </View>
+          <View style={{ padding: '10px', borderTop: '1px solid #eee' }}>
             <input type="text" placeholder="Type your message..." style={{ width: '100%', padding: '5px' }} />
-          </div>
-        </div>
+          </View>
+        </View>
       );
     };
 

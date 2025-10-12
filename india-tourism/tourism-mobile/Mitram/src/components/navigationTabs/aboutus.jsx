@@ -3,11 +3,11 @@ import { NavProvider } from '../navigationContext/navigationContext.jsx';
 import NavBar from '../navigationTabs/navBar.jsx';
 import UserProfile from '../userprofile/userprofile.jsx';
 import '../../styles/loginsignup.css';
-
+ import { View } from 'react-native';
 const Aboutus = () =>{
 
 return (
-      <div className="terms-and-conditions-container">
+      <View className="terms-and-conditions-container">
       <h1>Terms and Conditions</h1>
 
       <section className="section-intro">
@@ -28,7 +28,7 @@ return (
         <label htmlFor="agree">I agree to the Terms and Conditions</label>
         <button disabled={!agreed}>Continue</button> */}
       </section>
-    </div>
+    </View>
   );
 }
 

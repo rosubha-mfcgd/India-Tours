@@ -4,7 +4,7 @@ import { Text, View, StyleSheet } from 'react-native';
 
 import {Appbar,Avatar,Button,Card,Checkbox,Chip,Dialog,Divider,FAB,HelperText,IconButton,List,Menu,
 Modal,Portal,ProgressBar,RadioButton,Searchbar,SegmentedButtons,Snackbar,
-Surface,Switch,Text,TextInput,Tooltip,TouchableRipple} from 'react-native-paper'
+Surface,Switch,TextInput,Tooltip,TouchableRipple} from 'react-native-paper'
 
 import { NavContext } from '../navigationContext/navigationContext.jsx';
 
@@ -35,8 +35,8 @@ return () => clearInterval(timer); // Clean up the interval on unmount
 return (
         <View>
              <View>
-                <CssBaseline/>
-         <AppBar position="static" sx={{ backgroundColor: '#19857b' }}>
+               
+         <Appbar position="static" sx={{ backgroundColor: '#19857b' }}>
             <Toolbar sx={{ justifyContent: 'space-between' }}>
             <Text variant="h6" component="div">
               India Tours
@@ -62,7 +62,7 @@ return (
 
           
     </Toolbar>
-     </AppBar>
+     </Appbar>
      </View>
      </View>
     );

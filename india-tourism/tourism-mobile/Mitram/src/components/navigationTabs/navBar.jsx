@@ -1,38 +1,24 @@
-import { NavLink , useLocation,useNavigate } from "react-router-dom";
+import { useNavigation, useLocation } from '@react-navigation/native'; 
 import '../../styles/Navbar.css';
 import '../../styles/Cards.css';
 import '../../styles/sidebar.css';
 import { useEffect, useState, useContext } from "react";
-import {
-    TextField,
-    Button,
-    Table,
-    TableBody,
-    TableCell,
-    TableContainer,
-    TableHead,
-    TableRow,
-    Paper,
-    Modal,
-    Box,
-    Snackbar,
-    Card,
-    Grid,
-    Typography,
-    CardMedia,
-    CardContent
-  } from "@mui/material";
+ import { View } from 'react-native';
+import {Appbar,Avatar,Button,Card,Checkbox,Chip,Dialog,Divider,FAB,HelperText,IconButton,List,Menu,
+Modal,Portal,ProgressBar,RadioButton,Searchbar,SegmentedButtons,Snackbar,
+Surface,Switch,Text,TextInput,Tooltip,TouchableRipple} from 'react-native-paper'
+
 
 import { getCategories,updateAsFavorite } from "../admin/admin";
 import { NavContext } from '../navigationContext/navigationContext.jsx';
 import SideBarNotification from './sideBarNotification.jsx'
-import FavoriteIcon from '@mui/icons-material/Favorite';
+ import { MaterialIcons } from '@react-native-vector-icons/material-icons';
 
 const NavBar = ({access_token,triggerDisplayOptionsByCatId,
     productID}) =>{
 
     
-    const navigate = useNavigate();
+    const navigate = useNavigation();
      const location = useLocation();
     const { notification} = useContext(NavContext);
      const [items, setItems] = useState('')
@@ -105,61 +91,63 @@ const NavBar = ({access_token,triggerDisplayOptionsByCatId,
 
 
     return (
-        <div className="navbar-grid">
+        <View className="navbar-grid">
         <nav className="navbar">
-            <Grid container spacing={10} justify="center" width="70%">
+           <View style={{ flexDirection: 'row', flexWrap: 'wrap' }}>
              {items && items.length>0 ?
 
                 items.map((item) => (
-               <div>
-                 
-                <Grid item xs = {12} sm={4}  key={item.categoryID}>
-
+               <View>
+                 <View style={{ flexDirection: 'row', flexWrap: 'wrap' }}  xs = {12} sm={4}
+                  key={item.categoryID}>
+               
                     <Card className="card"
                      >
                     
                     <CardMedia component= "img"  height="100"
                     image = {item.image} alt={item.categoryDesc} 
-                    onClick={()=>triggerDisplayOptionsByCatId(item.categoryID)} 
+                    onPress={()=>triggerDisplayOptionsByCatId(item.categoryID)} 
                     style={{ cursor: 'pointer' }} 
                      />
                                      
                     <CardContent>
-                        <Typography gutterBottom variant="body1" component="div" sx={{whiteSpace: 'pre-wrap'}}>
+                        <Text gutterBottom variant="body1" component="div" sx={{whiteSpace: 'pre-wrap'}}>
                 {item.categoryName}
-              </Typography>
-              <Typography variant="body2" color="text.secondary" sx={{whiteSpace: 'pre-wrap'}}>
+              </Text>
+              <Text variant="body2" color="text.secondary" sx={{whiteSpace: 'pre-wrap'}}>
                 {item.categoryDesc}
-              </Typography>
+              </Text>
               {(item.favorite === 'Y') ?
-                <FavoriteIcon sx={{ color: '#f04646ff' }} onClick = {(event) => updateFavorites(
+                <MaterialIcons name="favorite" 
+                color = '#f04646ff' size={30} onPress = {(event) => updateFavorites(
                     item.categoryID,'N',event)} style={{ cursor: 'pointer' }}/>:
-                <FavoriteIcon onClick = {(event) => updateFavorites(
+                <MaterialIcons name="favorite" size={30} 
+                onPress = {(event) => updateFavorites(
                     item.categoryID,'Y',event)} style={{ cursor: 'pointer' }}/>
               }
               
               </CardContent>
-              <button type="submit" class="button"  onClick={()=>triggerDisplayOptionsByCatId(item.categoryID)} 
+              <button type="submit" class="button"  onPress={()=>triggerDisplayOptionsByCatId(item.categoryID)} 
                     style={{ cursor: 'pointer',backgroundColor: '#8a77f8ff',color:'#0c0c0fff'}}>
                         Click to View</button>
                     </Card>
-                </Grid>
+                </View>
                 
-                </div>
+                </View>
                 )
-                ):<div>Cannot load categories</div>
+                ):<View>Cannot load categories</View>
                 
              }
             
-            </Grid>
+            </View>
           {notification ?
-               <div style={{position: 'fixed', top:70,right:0}} >    
+               <View style={{position: 'fixed', top:70,right:0}} >    
                <SideBarNotification/> 
-            </div> 
-            :<div></div>
+            </View> 
+            :<View></View>
              }
             </nav>
-        </div>
+        </View>
 
     )
 }

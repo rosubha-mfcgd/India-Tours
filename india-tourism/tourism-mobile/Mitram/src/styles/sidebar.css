@@ -16,7 +16,7 @@
   /* Add other styles for your container as needed, e.g., width, height, background-color */
 }
 
-.child-div {
+.child-View {
   position: absolute; /* Takes the element out of the normal document flow */
   top: 0; /* Positions the top edge of the div at the top edge of its positioned parent */
   right: 0; /* Positions the right edge of the div at the right edge of its positioned parent */

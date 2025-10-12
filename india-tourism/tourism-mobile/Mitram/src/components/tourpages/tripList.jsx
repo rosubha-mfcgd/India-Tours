@@ -2,16 +2,12 @@ import React, { useContext, useEffect,useState } from "react";
 
 import '../../styles/loginsignup.css';
 import { getTripList,getTourManagers } from "../admin/admin";
- import {
-    Box,
-    Card,
-    Grid,
-    Typography,
-    CardMedia,
-    CardContent,
-    IconButton
-  } from "@mui/material";
- import MenuIcon from '@mui/icons-material/Menu'; // Or any other icon
+ import { View } from 'react-native';
+ import {Appbar,Avatar,Button,Card,Checkbox,Chip,Dialog,Divider,FAB,HelperText,IconButton,List,Menu,
+Modal,Portal,ProgressBar,RadioButton,Searchbar,SegmentedButtons,Snackbar,
+Surface,Switch,Text,TextInput,Tooltip,TouchableRipple} from 'react-native-paper'
+
+ 
 
   import SideBarFilter from '../navigationTabs/sideBarFilter.jsx';
   import SideBarNotification from '../navigationTabs/sideBarNotification.jsx';
@@ -179,21 +175,22 @@ const TripList = ({access_token,categoryId,cityList,showDetails}) =>{
       
     return(
         
-        <div sx={{ display: 'flex',justifyContent:'flex-end'}}>
+        <View sx={{ display: 'flex',justifyContent:'flex-end'}}>
            
            
-             <div className="navbar-grid">
+             <View className="navbar-grid">
         <nav className="navbar">
-            <Grid container spacing={10} justify="center" width="70%">
+            <View style={{ flexDirection: 'row', flexWrap: 'wrap' }}
+             spacing={10} justify="center" width="70%">
              {tours && tours.length>0 ?
 
                 tours.map((tour) => (
                     
-               <div>
+               <View>
                  
-                <Grid item xs = {12} sm={4}  key={tour.categoryID}>
+                <View item xs = {12} sm={4}  key={tour.categoryID}>
 
-                    <Card className="card" onClick={()=>showDetails(tour,
+                    <Card className="card" onPress={()=>showDetails(tour,
                     getValuesFromTourManagerMap(tour.tourManagerId),
                         access_token)} style={{ cursor: 'pointer' }}>
                     
@@ -203,78 +200,78 @@ const TripList = ({access_token,categoryId,cityList,showDetails}) =>{
                     />
                                      
                     <CardContent>
-                        <Typography gutterBottom variant="body1" >
+                        <Text gutterBottom variant="body1" >
                 {tour.categoryName}
-              </Typography>
-              <Typography variant="body2" color="text.secondary">
+              </Text>
+              <Text variant="body2" color="text.secondary">
                 {tour.locationName}
-              </Typography>
+              </Text>
 
-              <Typography variant="body2" color="text.secondary">
+              <Text variant="body2" color="text.secondary">
                 {changeDateToWords(tour.startDate)} - {changeDateToWords(tour.endDate)}
-              </Typography>
+              </Text>
 
-               <Typography variant="body2" color="text.secondary">
+               <Text variant="body2" color="text.secondary">
                 {getValuesFromTourManagerMap(tour.tourManagerId).tourManagerName}- {getValuesFromTourManagerMap(tour.tourManagerId).tourOpLocation}
-              </Typography>
-                    <Typography variant="body2" color="text.secondary">
+              </Text>
+                    <Text variant="body2" color="text.secondary">
                  {getValuesFromTourManagerMap(tour.tourManagerId).contact}
-              </Typography>
+              </Text>
              
-                    <Typography variant="body2" color="text.secondary">
+                    <Text variant="body2" color="text.secondary">
                  {tour.domesticOrinternational === "D"? "Domestic":"International"}
-              </Typography>
-                 <button type="submit" class="button"  onClick={()=>showDetails(tour,getValuesFromTourManagerMap(tour.tourManagerId))} 
+              </Text>
+                 <button type="submit" class="button"  onPress={()=>showDetails(tour,getValuesFromTourManagerMap(tour.tourManagerId))} 
                     style={{ cursor: 'pointer',backgroundColor: '#8a77f8ff',color:'#0c0c0fff'}}>
                        Details</button>
               </CardContent>
                     </Card>
-                </Grid>
+                </View>
                 
                
-                </div>
+                </View>
                 ))
-                :<div>Cannot load Tour details</div>
+                :<View>Cannot load Tour details</View>
                 
              }
-             <Box  sx={{position: 'fixed', top: '10', right: '0'
+             <View  sx={{position: 'fixed', top: '10', right: '0'
              }}>
                  <IconButton
       aria-label="menu"
        aria-controls={open ? 'basic-menu' : undefined}
       aria-haspopup="true"
       aria-expanded={open ? 'true' : undefined}
-      onClick={(event) => {
+      onPress={(event) => {
         setAnchorEl(event.currentTarget)
         
       }}
         >
      
-      <MenuIcon onClick={()=>toggleSideBarForSorting()}/>
+      <MenuIcon onPress={()=>toggleSideBarForSorting()}/>
         &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
     </IconButton>
    
-            </Box>
+            </View>
             {
             sortTrip ? 
-            <div style={{position: 'fixed', top:70,right:0}} >
+            <View style={{position: 'fixed', top:70,right:0}} >
                 <SideBarFilter selectedValue={selectedValue} setSelectedValue={setSelectedValue} 
                 priceValue={priceValue} setPriceValue={setPriceValue} 
                 cityList={cityList}
                 triplengthValue={triplengthValue} 
                 setTriplengthValue={setTriplengthValue} cityvalue={cityvalue} setCityvalue={setCityvalue}/>
-            </div>:<div></div>
+            </View>:<View></View>
            }
-             </Grid>
+             </View>
                {notification ?
-               <div style={{position: 'fixed', top:70,right:0}} >    
+               <View style={{position: 'fixed', top:70,right:0}} >    
                <SideBarNotification/> 
-            </div> 
-            :<div></div>
+            </View> 
+            :<View></View>
              }
              </nav>
-             </div>
-             </div>
+             </View>
+             </View>
         )
 }
 export default TripList;
