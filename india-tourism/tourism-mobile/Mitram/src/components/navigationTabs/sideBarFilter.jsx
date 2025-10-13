@@ -1,23 +1,18 @@
 import React, {useEffect, useState } from "react";
 
-import FormControlLabel from '@mui/material/FormControlLabel';
-import FormControl from '@mui/material/FormControl';
-import FormLabel from '@mui/material/FormLabel';
 
-  import { createDrawerNavigator } from '@react-navigation/drawer';
-        import { NavigationContainer } from '@react-navigation/native';
 
-    import {Appbar,Avatar,Button,Card,Checkbox,Chip,Dialog,Divider,FAB,HelperText,
+import { createDrawerNavigator } from '@react-navigation/drawer';
+import { NavigationContainer } from '@react-navigation/native';
+
+import {Appbar,Avatar,Button,Card,Checkbox,Chip,Dialog,Divider,FAB,HelperText,
       IconButton,List,Menu,
 Modal,Portal,ProgressBar,RadioButton,Searchbar,SegmentedButtons,Snackbar,
 Surface,Switch,Text,TextInput,Tooltip,TouchableRipple} from 'react-native-paper'
+import Slider from '@react-native-community/slider';
+import Icon from 'react-native-vector-icons/FontAwesome';
+import SidebarFilterStyle from  '../stylecomp/sidebarForSorting';
 
-
- import NativeSelect from '@mui/material/NativeSelect';
-
-  import Icon from 'react-native-vector-icons/FontAwesome';
-
-import '../../styles/sidebarForSorting.css';
  const SideBarFilter=({selectedValue,setSelectedValue,priceValue, 
   setPriceValue,
     triplengthValue, setTriplengthValue,cityList,cityvalue,setCityvalue})=> {
@@ -51,13 +46,13 @@ const handleChange = (event) => {
 
   
   return (
-            <View sx={{ display: 'flex' }}>
+            <View style={{ display: 'flex' }}>
             
                 <StyledDrawer
                     variant="persistent" // Or "temporary", "permanent"
                     anchor="right"
                     open={open}
-                    sx={{
+                    style={{
         width: 240,
         flexShrink: 0,
         '& .MuiDrawer-paper': { // Target the Paper component within the Drawer
@@ -68,7 +63,7 @@ const handleChange = (event) => {
         },
       }} 
                 >
-                    <View sx={{ display: 'flex', 
+                    <View style={{ display: 'flex', 
                       alignItems: 'center', justifyContent: 'flex-end', 
                       padding: 1 }}>
                         <IconButton onPress={handleDrawerClose}>
@@ -76,11 +71,11 @@ const handleChange = (event) => {
                             onPress={handleDrawerClose}/>
                         </IconButton>
                     </View>
-                    <Box sx={{ display: 'flex', 
+                    <View style={{ display: 'flex', 
                       alignItems: 'center', justifyContent: 'flex-end', 
                       padding: 1 }}>
                         <Text variant="body2" color="common.white">Filter </Text>
-                    </Box>
+                    </View>
                     <List>
                       <ListItem>
                          
@@ -119,18 +114,19 @@ cityList.map((city) =>(
                                 {text} - {priceValue}
                             </Text>
                                                    
-                                <input type="range" 
+                                <Slider style={SidebarFilterStyle.slider}
                                 value= {priceValue} 
-                                onChange={handlePriceSliderChange} list="pricelist" 
-                                min="10000" max="100000"
+                                onValueChange={handlePriceSliderChange} 
+                                minimumValue={10000} maximumValue={100000} step={20000}
+                                thumbTintColor="#b9e4f4"
                                 />  
-                                 <datalist id="pricelist">
+                      {/* <datalist id="pricelist">
                         <option value="10000" label="10k"></option>
                        <option value="50000" label="50k"></option>
                         <option value="100000" label="100k"></option>
                        <option value="500000" label="500k"></option>
                         <option value="1000000" label=">=1000k"></option>
-                        </datalist>
+                        </datalist> */}
                                 </View>:
                                 text == 'TripLength'?
                               <View>
@@ -138,18 +134,17 @@ cityList.map((city) =>(
                                 {text} - {triplengthValue}
                             </Text>
                                                    
-                                <input type="range"
-                                
+                                <Slider style={SidebarFilterStyle.slider}
                                 value= {triplengthValue} 
-                                onChange={handleTripLengthSliderChange} 
-                                list="triplengthlist" min="1" max="30"/>  
-                        <datalist id="triplengthlist">
+                                onValueChange={handleTripLengthSliderChange} 
+                                min="1" max="30" step={7}/>  
+                        {/* <datalist id="triplengthlist">
                         <option value="1" label="1"></option>
                         <option value="7" label="7"></option>
                         <option value="14" label="14"></option>
                         <option value="21" label="21"></option>
                         <option value="30" label=">=30"></option>
-                        </datalist>
+                        </datalist> */}
                                 </View>:
                             text === 'DomesticOrInternational'?
                                 <View>
@@ -177,7 +172,7 @@ cityList.map((city) =>(
                     </List> 
                 </StyledDrawer>
                 {/* Main content of your application */}
-                <View component="main" sx={{ flexGrow: 1, p: 3 }}>
+                <View component="main" style={{ flexGrow: 1, p: 3 }}>
                     {/* Your application's main content goes here */}
                 </View>
             </View>

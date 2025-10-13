@@ -1,0 +1,16 @@
+
+import { StyleSheet } from 'react-native';
+
+const CardStyle = StyleSheet.create({
+
+
+card : {
+      backgroundcolor: '#f0f0f0',
+      padding: '20px',
+      borderradius: '10px',
+      boxshadow: '0 2px 4px rgba(0,0,0,0.1)',
+      width: 300
+    }
+})
+
+export default CardStyle;

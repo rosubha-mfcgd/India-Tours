@@ -1,16 +1,15 @@
 import React, { useEffect,useState,useContext } from "react"; 
-  import { useNavigation } from '@react-navigation/native';  
-import '../../styles/TripDetails.css';
-import '../../styles/loginsignup.css';
+import { useNavigation } from '@react-navigation/native';  
 import SideBarNotification from '../navigationTabs/sideBarNotification.jsx';
 import { NavContext } from '../navigationContext/navigationContext.jsx';
 
 import {Appbar,Avatar,Button,Card,Checkbox,Chip,Dialog,Divider,FAB,HelperText,IconButton,List,Menu,
 Modal,Portal,ProgressBar,RadioButton,Searchbar,SegmentedButtons,Snackbar,
-Surface,Switch,Text,TextInput,Tooltip,TouchableRipple} from 'react-native-paper'
-
-
-  const TripDetails = ({tourDetails,triggerDisplayOptionsByCatId,openBookingForm,cityList,access_token}) =>{
+Surface,Switch,Text,TextInput,Tooltip,TouchableRipple,DataTable} from 'react-native-paper'
+import LoginSignUpStyle from "../stylecomp/loginsignup";
+import TripDetailsStyle from "../stylecomp/TripDetails";
+const TripDetails = ({tourDetails,triggerDisplayOptionsByCatId,openBookingForm,
+  cityList,access_token}) =>{
 
   const navigate = useNavigation();
 
@@ -75,106 +74,96 @@ Surface,Switch,Text,TextInput,Tooltip,TouchableRipple} from 'react-native-paper'
 
               
                 <View>
-                    <TableContainer sx={{boxShadow: 'none'}}>
-                 <Table>
-                    <TableBody>
+                  
+                 <DataTable>
+                   
                        
-                        <TableRow>
-                    <TableCell>
+                        <DataTable.Row>
+                    <DataTable.Col>
                         <Text variant="body2" style={{ color: '#FFFFFF' }}>
                         LocationName : <strong>{tourDetails.locationName}</strong>    
                         </Text>
-                    </TableCell>
-                    </TableRow>
+                    </DataTable.Col>
+                   </DataTable.Row>
                    
-                    <TableRow>
-                    <TableCell>
+                    <DataTable.Row>
+                    <DataTable.Col>
                         <Text variant="body2" style={{ color: '#FFFFFF' }}>
                        Trip Length : <strong> {tourDetails.triplength}  </strong>
                         </Text>  
-                    </TableCell>
+                    </DataTable.Col>
 
-                    </TableRow>
-                     <TableRow>
-                    <TableCell>
+                    </DataTable.Row>
+                     <DataTable.Row>
+                     <DataTable.Col>
                         <Text variant="body2" style={{ color: '#FFFFFF' }}>
                        Trip Type : <strong> {tourDetails.domesticOrInternational === "D"? "Domestic"
                        :"International"}  </strong>
                         </Text>  
-                    </TableCell>
+                    </DataTable.Col>
                     
-                    </TableRow>
+                    </DataTable.Row>
                    
-                      <TableRow>
-                      <TableCell>
+                      <DataTable.Row>
+                      <DataTable.Col>
                         <Text variant="body2" style={{ color: '#FFFFFF' }}>
                        Start Date : <strong> {changeDateToWords(new Date(tourDetails.startDate))}</strong>  
                         </Text>  
-                    </TableCell>
-                    </TableRow>
-                    <TableRow>
-                      <TableCell>
+                    </DataTable.Col>
+                    </DataTable.Row>
+                    <DataTable.Row>
+                      <DataTable.Col>
                         <Text variant="body2" style={{ color: '#FFFFFF' }}>
                        End Date : <strong>{changeDateToWords(new Date(tourDetails.endDate))}</strong>    
                         </Text>
-                    </TableCell>
-                      </TableRow>
-                      <TableRow>
-                      <TableCell>
+                    </DataTable.Col>
+                      </DataTable.Row>
+                      <DataTable.Row>
+                      <DataTable.Col>
                          <Text variant="body2" style={{ color: '#FFFFFF' }}>
                       Package Cost/person: <strong> {tourDetails.package_cost}</strong> 
                         </Text>   
-                    </TableCell>
-                    </TableRow>
-                    <TableRow>
-                      <TableCell>
+                    </DataTable.Col>
+                    </DataTable.Row>
+                    <DataTable.Row>
+                      <DataTable.Col>
                          <Text variant="body2" style={{ color: '#FFFFFF' }}>
                       Max Tourist: <strong> {tourDetails.max_tourist}</strong>    
                         </Text>
-                    </TableCell>
-                    </TableRow>
-                    <TableRow>
-                      <TableCell>
+                    </DataTable.Col>
+                    </DataTable.Row>
+                    <DataTable.Row>
+                      <DataTable.Col>
                          <Text variant="body2" style={{ color: '#FFFFFF' }}>
                         Seats left: <strong>{tourDetails.seats_left}</strong>    
                         </Text>
-                    </TableCell>
-                    </TableRow>
-                    <TableRow>
-                     <TableCell>
+                    </DataTable.Col>
+                    </DataTable.Row>
+                    <DataTable.Row>
+                     <DataTable.Col>
                         <Text variant="body2" style={{ color: '#FFFFFF' }}>
                       Itinerary Details: <strong>{tourDetails.itinerary} </strong>
                         </Text>   
-                    </TableCell>
-                   </TableRow>
-                  </TableBody>
-                  </Table>
-                  </TableContainer>
+                    </DataTable.Col>
+                   </DataTable.Row>
+                 
+                  </DataTable>
+                 
                   </View>
-                  <View className = "center-container" style={{
-                    width: "fit-content",
-                    margin: "auto",
-                  }}>
-                    
-       
+                  <View style={LoginSignUpStyle.centeredContainer} >
           
-          
-        <View className="button-container">
-         <View className='submit-container'>
-                    <button type="submit" onPress={()=>{
+                    <Button  onPress={()=>{
                         triggerDisplayOptionsByCatId(tourDetails.categoryId)}}
-                        class="button"
-                        >Go Back</button>
+                        style={TripDetails.button}
+                        >Go Back</Button>
 
-                            <button type="submit" onPress={()=>{
+                    
+                    <Button  onPress={()=>{
                         openBookingForm(tourDetails)}}
-                       class="button" 
-                        >Book My Trip</button>
+                       style={TripDetails.button} 
+                        >Book My Trip</Button>
 
-              </View>
-
-         </View>
-      
+             
         </View> 
         
            

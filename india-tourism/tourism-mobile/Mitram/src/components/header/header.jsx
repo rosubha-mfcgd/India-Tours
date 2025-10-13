@@ -1,6 +1,5 @@
 import React, { useState, useRef , useEffect, useContext} from 'react';
-import '../../styles/loginsignup.css';
-import { Text, View, StyleSheet } from 'react-native';
+import { Text, View } from 'react-native';
 
 import {Appbar,Avatar,Button,Card,Checkbox,Chip,Dialog,Divider,FAB,HelperText,IconButton,List,Menu,
 Modal,Portal,ProgressBar,RadioButton,Searchbar,SegmentedButtons,Snackbar,

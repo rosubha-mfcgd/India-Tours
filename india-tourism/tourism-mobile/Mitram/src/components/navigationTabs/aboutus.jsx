@@ -2,7 +2,6 @@ import React, { useEffect,useState,useContext } from "react";
 import { NavProvider } from '../navigationContext/navigationContext.jsx';
 import NavBar from '../navigationTabs/navBar.jsx';
 import UserProfile from '../userprofile/userprofile.jsx';
-import '../../styles/loginsignup.css';
  import { View } from 'react-native';
 const Aboutus = () =>{
 

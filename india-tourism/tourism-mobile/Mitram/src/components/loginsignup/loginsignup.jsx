@@ -2,19 +2,19 @@ import React, { useState, useRef , useEffect} from 'react';
 import {Appbar,Avatar,Button,Card,Checkbox,Chip,Dialog,Divider,FAB,HelperText,IconButton,List,Menu,
 Modal,Portal,ProgressBar,RadioButton,Searchbar,SegmentedButtons,Snackbar,
 Surface,Switch,Text,TextInput,Tooltip,TouchableRipple} from 'react-native-paper'
-import '../../styles/loginsignup.css';
 import email_icon from '../Assets/input/email.png';
 
 import user_icon from '../Assets/input/username.png';
 import mobile_icon from '../Assets/input/mobile.png';
-  import { useNavigation } from '@react-navigation/native'; 
+import { useNavigation } from '@react-navigation/native'; 
 import {signupUser,loginUser} from '../admin/admin';
-import { View } from 'react-native';
+import { View,TouchableOpacity } from 'react-native';
 
+import LoginSignUpStyle from '../stylecomp/loginsignup'; 
 
 
 import { GoogleSignin, GoogleSigninButton, statusCodes } from 
-'@react-native-google-signin/google-signin';
+'@react-native-community/google-signin';
 
 
 
@@ -180,7 +180,7 @@ const LoginSignup =() => {
         // of axios or fetch
 
             return (
-              <View style={{ flexDirection: 'row', flexWrap: 'wrap' }}>
+              <View style={LoginSignUpStyle.centeredContainer}>
       
                 {isLoading ? (
                   <View style={{ display: 'flex',
@@ -192,51 +192,51 @@ const LoginSignup =() => {
                      </View>
                 ):(
                    
-               <View className = "container">
+               <View style={LoginSignUpStyle.container}>
                
-                        <View className='header'>
-                            <View className='text'>{action}</View>
+                        <View style={LoginSignUpStyle.header}>
+                            <View style={LoginSignUpStyle.centeredText}>{action}</View>
                             
                             <View className='underline'></View>
 
                         </View>
                          {errorMessage ? 
-                         (<View className='error-div-at-top'>{errorMessage}</View>):
+                         (<View style={LoginSignUpStyle.errordivattop}>{errorMessage}</View>):
                         (<View></View>)
                     }
-                        <View className='inputs'>
+                        <View style={LoginSignUpStyle.inputs}>
                         
                         {
                         action === 'Sign Up'?
 
                         
                         <View>
-                            <View className='input'>
+                            <View style={LoginSignUpStyle.input}>
                             <img src={user_icon} alt=""/>
                             <TextInput label="Name" value = {name} onChangeText = {handleNameChange} 
                             variant="outlined"/>
                         </View>
-                        <View className='input'>
+                        <View style={LoginSignUpStyle.input}>
                             <img src={mobile_icon} alt=""/>
                             <TextInput label="Mobile" value = {mobile} onChangeText = {handleMobileChange} 
                             variant="outlined"/>
                         </View>
-                        <View className='input' >
+                        <View style={LoginSignUpStyle.input} >
                             <img src={email_icon} alt=""/>
                             <TextInput label="Email" value = {email} onChangeText = {handleEmailChange} 
                             variant="outlined"/>
                         </View>
                     </View>:
                         <View>
-                            <View className='input'>
+                            <View style={LoginSignUpStyle.input}>
                             <img src={mobile_icon} alt=""/>
                             <TextInput label="Mobile" value = {mobile} onChangeText = {handleMobileChange} 
                             variant="outlined"/>
                         </View>
                         <br/>
-                        <View ALIGN = "center">OR</View>
+                        <View style={LoginSignUpStyle.input}>OR</View>
                         <br/>
-                        <View className='input' >
+                        <View style={LoginSignUpStyle.input} >
                             <img src={email_icon} alt=""/>
                             <TextInput label="Email" value = {email} onChangeText = {handleEmailChange} 
                             variant="outlined"/>
@@ -245,23 +245,17 @@ const LoginSignup =() => {
                         }
                         </View>
                         {action === 'Sign Up'?
-                            <View className='forgot-password'>Lost Password? <span>Click Here!</span></View>:<br/>
+                            <View style={LoginSignUpStyle.forgotpassword}>Lost Password? <span>Click Here!</span></View>:<br/>
                         }
                         {action === 'Sign Up'?  
-                        <View className='submit-container'>
+                        <View style={LoginSignUpStyle.submitcontainer}>
                     
                         <GoogleSigninButton 
-                          style={{ width: 192, height: 48 }}
-                            size={GoogleSigninButton.Size.Wide}
-                            color={GoogleSigninButton.Color.Dark}
-                    className="submit" onPress={googlesignup}>Sign Up</GoogleSigninButton>
+                          style={LoginSignUpStyle.submit}
+                          onPress={googlesignup}>Sign Up</GoogleSigninButton>
                     
                             <GoogleSigninButton 
-                            style={{ width: 192, height: 48 }}
-                            size={GoogleSigninButton.Size.Wide}
-                            color={GoogleSigninButton.Color.Dark}
-                            className={action==='Sign Up'?'submit gray':'submit'} 
-                            onPress={()=>{setAction("Login");}}>Login</GoogleSigninButton>
+                           onPress={()=>{setAction("Login");}}>Login</GoogleSigninButton>
                         </View>:<br/>
                         }
 
@@ -271,12 +265,9 @@ const LoginSignup =() => {
                       style={{ width: 192, height: 48 }}
                             size={GoogleSigninButton.Size.Wide}
                             color={GoogleSigninButton.Color.Dark}
-                    className="submit" onPress={googleLogin}>Send Otp</GoogleSigninButton> 
+                    onPress={googleLogin}>Send Otp</GoogleSigninButton> 
                     <GoogleSigninButton 
-                      style={{ width: 192, height: 48 }}
-                            size={GoogleSigninButton.Size.Wide}
-                            color={GoogleSigninButton.Color.Dark}
-                    className={action==="Login"?"submit gray":"submit"} 
+                      
                         onPress={()=>{setAction("Sign Up");
                         navigate('-1');
                     }}>Cancel</GoogleSigninButton> 

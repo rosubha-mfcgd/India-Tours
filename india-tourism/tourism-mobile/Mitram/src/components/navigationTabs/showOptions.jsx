@@ -1,7 +1,9 @@
-import '../../styles/Navbar.css';
-import '../../styles/Cards.css';
-import '../../styles/sidebar.css';
-import '../../styles/bookingForm.css';
+
+import CategoryStyle from '../stylecomp/navbar'; 
+import CardStyle from '../stylecomp/cards'; 
+import SidebarStyle from '../stylecomp/sidebar'; 
+import BookingFormStyle from '../stylecomp/bookingForm'; 
+import { TouchableOpacity } from 'react-native';
 import { useEffect, useState, useContext} from "react";
   import { useNavigation, useLocation } from '@react-navigation/native'; 
  import { MaterialIcons } from '@react-native-vector-icons/material-icons';
@@ -65,8 +67,8 @@ Surface,Switch,Text,TextInput,Tooltip,TouchableRipple} from 'react-native-paper'
      
                },[]);
     return ( 
-    <View className="navbar-grid">
-        <nav className="navbar">
+    <View  style={CategoryStyle.navbargrid}>
+        <div style={CategoryStyle.navbar}>
             <View container spacing={10} justify="center" width="70%">
              {items && items.length>0 ?
 
@@ -75,16 +77,16 @@ Surface,Switch,Text,TextInput,Tooltip,TouchableRipple} from 'react-native-paper'
                  
                 <View item xs = {12} sm={4}  key={item.optionID}>
 
-                    <Card className="card"
-                     >
+                    <Card style={CardStyle.card}>
                     
-                    <CardMedia component= "img"  height="100"
-                    image = {item.image} alt={item.optionDesc} 
+                    <Card.Cover 
+                    source = {item.image} 
+                    height="100"
                     onPress={()=>triggerDisplayTasksByOptionID(item.optionID)} 
                     style={{ cursor: 'pointer' }} 
                      />
                                      
-                    <CardContent>
+                    <Card.Content>
                         <Text gutterBottom variant="body1" component="div" sx={{whiteSpace: 'pre-wrap'}}>
                 {item.optionName}
               </Text>
@@ -98,11 +100,11 @@ Surface,Switch,Text,TextInput,Tooltip,TouchableRipple} from 'react-native-paper'
                     item.optionID,'Y',event)} style={{ cursor: 'pointer' }}/>
               }
               
-              </CardContent>
-              <button type="submit" class="button"  
+              </Card.Content>
+              <TouchableOpacity type="submit" class="button"  
               onPress={()=>triggerDisplayTasksByOptionID(item.optionID)} 
-                    style={{ cursor: 'pointer',backgroundColor: '#8a77f8ff',color:'#0c0c0fff'}}>
-                        Click to View</button>
+            style={{ cursor: 'pointer',backgroundColor: '#8a77f8ff',color:'#0c0c0fff'}}>
+                        Click to View</TouchableOpacity>
                     </Card>
                 </View>
                 
@@ -119,7 +121,7 @@ Surface,Switch,Text,TextInput,Tooltip,TouchableRipple} from 'react-native-paper'
             </View> 
             :<View></View>
              }
-            </nav>
+            </div>
         </View>
 
   )}

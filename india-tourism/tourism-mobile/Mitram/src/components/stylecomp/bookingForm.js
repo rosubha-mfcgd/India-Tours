@@ -1,0 +1,65 @@
+
+import { StyleSheet } from 'react-native';
+
+const BookingFormStyle = StyleSheet.create({
+
+formlabel : {
+  marginright: '10px' /* Adds space to the right of each label */
+},
+
+/* Or, if you want space between specific labels */
+labelone :{
+  marginright: '15px'
+},
+addremovebutton: {
+    backgroundcolor: '#007bff',
+    padding: 10,
+    borderRadius: 5,
+    alignItems: 'center',
+    marginTop: 20
+  },
+addremovebuttonText: {
+    color: white,
+    fontsize: 16
+  },
+  
+inputlabel: {
+  flex: 1,
+  flexdirection: 'row',
+  justifycontent: 'flex-end',
+  textalign: 'right',
+  width: '400px',
+  lineheight: '26px',
+  marginbottom: '10px'
+},
+
+buttoncontainer: {
+  flex: 1,
+  justifycontent: center, /* Centers horizontally */
+  alignitems: center,   /* Centers vertically */
+  height: '40vh' /* Ensures the container takes up the full viewport height */
+},
+
+blinkingbutton: {
+  /* Basic button styles */
+  backgroundcolor: '#007bff',
+  color: 'white',
+  padding: '10px 20px',
+  border: 'none',
+  borderradius: '5px',
+  cursor: 'pointer',
+
+  /* Animation properties */
+  animation: 'blink-animation 20s linear infinite;' /* Name, duration, timing, iteration count */
+},
+imagestyle :{
+    flex: 1,
+    width: 50,
+    height: 50,
+    resize : 'contain'
+},
+imgstyle: {
+ float: 'right'
+ }});
+
+export default BookingFormStyle;

@@ -1,8 +1,12 @@
 import React from "react";
-import '../../styles/Navbar.css';
-import '../../styles/Cards.css';
-import '../../styles/sidebar.css';
-import '../../styles/bookingForm.css';
+
+import LoginSignUpStyle from '../stylecomp/loginsignup';
+import CategoryStyle from '../stylecomp/navbar'; 
+import CardStyle from '../stylecomp/cards'; 
+import SidebarStyle from '../stylecomp/sidebar'; 
+import BookingFormStyle from '../stylecomp/bookingForm'; 
+
+
 import { useEffect, useState, useContext } from "react";
 import { performTripBooking,updateBookingsByBookingId } from "../admin/admin";
 import success_animation from '../Assets/images/success_animation.gif';
@@ -11,7 +15,7 @@ import { NavContext } from '../navigationContext/navigationContext.jsx';
  import { View } from 'react-native';
 import {Appbar,Avatar,Button,Card,Checkbox,Chip,Dialog,Divider,FAB,HelperText,IconButton,List,Menu,
 Modal,Portal,ProgressBar,RadioButton,Searchbar,SegmentedButtons,Snackbar,
-Surface,Switch,Text,TextInput,Tooltip,TouchableRipple} from 'react-native-paper'
+Surface,Switch,Text,TextInput,Tooltip,TouchableRipple,DataTable} from 'react-native-paper'
 
 
 
@@ -101,7 +105,7 @@ const submitBooking = async()=>{
        if(result)
         {
           console.log('result...',result);
-        //  setBookingId(result.bookingId);
+       
           setBookingUpdateId(result.bookingId);
        }
 
@@ -120,9 +124,9 @@ const submitBooking = async()=>{
   },[bookingId,bookingUpdateId])
 
 
-    return(<View className = "center-container">
+    return(<View  style={LoginSignUpStyle.centeredContainer}>
             <View style={{border: "2px solid black;" }}>
-                 <Box  component="form" >
+                 <View  component="form" >
                     {dialogOpen?
                      <Dialog
         open={dialogOpen}
@@ -155,11 +159,11 @@ const submitBooking = async()=>{
           <img src={success_animation} alt="" width="40" height="40"/>:<View></View>}
         </DialogActions>
       </Dialog>:<View></View>}
-                              <TableContainer>
-                                <Table>
-                                    <TableBody>
-                                      <TableRow>
-                                        <TableCell>
+                            
+                                <DataTable>
+                                    
+                                      <DataTable.Row>
+                                        <DataTable.Cell>
                                     {!tourDetailsParam.bookingid?
                                         <Text variant="h5" style={{ color: 'hsla(0, 32%, 92%, 1.00)' }}>
                                             Booking details for {tourDetailsParam.locationName} tour by {tourDetailsParam.tourManagerName}
@@ -168,24 +172,23 @@ const submitBooking = async()=>{
                                             Booking ID {tourDetailsParam.bookingid} updates for  {tourDetailsParam.locationName} tour by {tourDetailsParam.tourManagerName}
                                         </Text>
                                     }
-                                        </TableCell>
-                                        <TableCell>
+                                        </DataTable.Cell>
+                                        <DataTable.Cell>
                                          <button type="button" onPress={()=>{
                         triggerEditable()}}
                        class="button" 
                         >Edit </button>
 
-                                        </TableCell>
-                                        </TableRow>
-                                        </TableBody>
-                                        </Table>
-                                        </TableContainer>
-                                         </Box>
+                                        </DataTable.Cell>
+                                        </DataTable.Row>
+                                      </DataTable>
+                                        
+                                         </View>
                             <Paper>
                    {bookings && bookings.length>0 ?
                         bookings.map((booking)=>(
                            
-                                  <View className="head"
+                                  <View 
                                                 style={{
                                                     width: "fit-content",
                                                     margin: "auto",

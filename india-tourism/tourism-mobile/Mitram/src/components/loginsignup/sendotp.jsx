@@ -3,7 +3,7 @@ import mobile_icon from '../Assets/input/mobile.png';
 import email_icon from '../Assets/input/email.png';
 
   import { useNavigation, useLocation } from '@react-navigation/native'; 
-import '../../styles/loginsignup.css';
+import LoginSignUpStyle from '../stylecomp/loginsignup'; 
 import {Appbar,Avatar,Button,Card,Checkbox,Chip,Dialog,Divider,FAB,HelperText,IconButton,List,Menu,
 Modal,Portal,ProgressBar,RadioButton,Searchbar,SegmentedButtons,Snackbar,
 Surface,Switch,Text,TextInput,Tooltip,TouchableRipple} from 'react-native-paper'
@@ -54,14 +54,14 @@ const Sendotp = ()=>{
 
 return (
 
-    <View className='centre-div'>
-<View className = "container">
+    <View style={LoginSignUpStyle.centrediv}>
+<View style={LoginSignUpStyle.container}>
    {errorMessage ? 
-                         (<View className='error-div-at-top'>{errorMessage}</View>):
+                         (<View style={LoginSignUpStyle.errordivattop}>{errorMessage}</View>):
                         (<View></View>)
                     }
-<View className='inputs'>
-     <View className='input'>
+<View style={LoginSignUpStyle.inputs}>
+     <View style={LoginSignUpStyle.input} >
                 <img src={mobile_icon} alt=""/>
               
         <TextInput  label="Mobile Number"
@@ -78,7 +78,7 @@ return (
 
 
                </View>
-                <View className='input'>
+                <View style={LoginSignUpStyle.input}>
                 <img src={email_icon} alt=""/>
                  <TextInput  label="Email"
                     variant="outlined"
@@ -90,14 +90,16 @@ return (
           },
         }  } }} disabled/>
                </View>
-     <View className='input'>
+     <View style={LoginSignUpStyle.input}>
                 <img src={mobile_icon} alt=""/>
 
-                 <TextInput label="OTP" value = {otp} onChangeText = {handleOTPChange} variant="outlined"/>
+                 <TextInput label="OTP" value = {otp} onChangeText = {handleOTPChange} 
+                 variant="outlined"/>
                 </View>
-                    <View className='centre-div'>
-                    <View className='submit-container'>
-                        <View className={"submit"} onPress={()=>{validateOTP()}}>Validate OTP</View>
+                    <View style={LoginSignUpStyle.centrediv}>
+                    <View style={LoginSignUpStyle.submitcontainer}>
+                        <View style={LoginSignUpStyle.submit} 
+                        onPress={()=>{validateOTP()}}>Validate OTP</View>
                         </View>
                     </View>
     </View>

@@ -1,6 +1,5 @@
 import React, { useContext, useEffect,useState } from "react";  
 
-import '../../styles/loginsignup.css';
 import { getTripList,getTourManagers } from "../admin/admin";
  import { View } from 'react-native';
  import {Appbar,Avatar,Button,Card,Checkbox,Chip,Dialog,Divider,FAB,HelperText,IconButton,List,Menu,
@@ -14,26 +13,24 @@ Surface,Switch,Text,TextInput,Tooltip,TouchableRipple} from 'react-native-paper'
   import { NavContext } from '../navigationContext/navigationContext.jsx';
 
 const TripList = ({access_token,categoryId,cityList,showDetails}) =>{
-    
-   //console.log('categoryID is...',categoryId); 
+     
     const[tours,setTours] = useState('');
     const[alltours,setAlltours] = useState('');
     //combined state variable holding info from tours and tour managers
-   const [ tourManagers, setTourManagers] = useState('');
-    // const { name,email,mobile,categoryId} = location.state || {};
-    //const[mount,setMount] = useState(false);
+    const [ tourManagers, setTourManagers] = useState('');
     const[isOpen,setOpen] = useState(false);
-   const [anchorEl, setAnchorEl] = useState(null);
-   const {triggerSorting,sortTrip} = useContext(NavContext);
+    const [anchorEl, setAnchorEl] = useState(null);
+    const {triggerSorting,sortTrip} = useContext(NavContext);
     const { notification} = useContext(NavContext);
-   const open = Boolean(anchorEl);
+   
+    const open = Boolean(anchorEl);
 
    function toggleSideBarForSorting()
-{
-  console.log('isOpen',isOpen)
-  setOpen(!isOpen);
-  triggerSorting(!isOpen);
-}
+    {
+        console.log('isOpen',isOpen)
+        setOpen(!isOpen);
+        triggerSorting(!isOpen);
+    }
    console.log('categoryId...',categoryId);
 
     const [tourMgrMap, setTourMgrMap] = useState(new Map());
@@ -55,7 +52,8 @@ const TripList = ({access_token,categoryId,cityList,showDetails}) =>{
         
     }
 
-    function getCityOfTourOperator(citycode){
+    function getCityOfTourOperator(citycode)
+    {
         console.log('city code...',citycode)
         console.log('city List...',cityList)
         for(let city of cityList){
@@ -72,7 +70,8 @@ const TripList = ({access_token,categoryId,cityList,showDetails}) =>{
      {
         const date = new Date(dateObject);
         console.log('date....',date)
-        console.log('formatted date...', date.toLocaleDateString('en-GB')); // Or 'en-GB' for a different locale
+        // Or 'en-GB' for a different locale
+        console.log('formatted date...', date.toLocaleDateString('en-GB')); 
         return date.toLocaleDateString('en-GB');
     }
   
@@ -90,7 +89,7 @@ const TripList = ({access_token,categoryId,cityList,showDetails}) =>{
                                 tourOps.map((tourManager) =>{
                                     updateTourMgrMap(tourManager.tourManagerId,
                                         {"tourManagerId":tourManager.tourManagerId,
-                                        "tourManagerName":tourManager.tourManagerName,
+                                         "tourManagerName":tourManager.tourManagerName,
                                           "contact" : tourManager.contact,
                                           "secondarycontact":tourManager.backupcontact,
                                           "citycode":tourManager.citycode,
@@ -101,8 +100,9 @@ const TripList = ({access_token,categoryId,cityList,showDetails}) =>{
                                         });
                                 }
                             );
-
-                        }else{
+                        }
+                        else
+                        {
                             console.log('Could not find tour managers');
                         }
                       
@@ -121,9 +121,7 @@ const TripList = ({access_token,categoryId,cityList,showDetails}) =>{
                 }
          useEffect(()=>{
             const selectedTours = [];
-                // console.log('alltours in useEffect...',alltours)
                 
-                //console.log('selectedValue in useEffect...',selectedValue)
                     if(tours)
                     {
                         
@@ -138,7 +136,7 @@ const TripList = ({access_token,categoryId,cityList,showDetails}) =>{
                             Number(tripLength)<=Number(triplengthValue) && (
                                 tourManagerMap.get(tour.tourManagerId) && 
                                 ((tourManagerMap.get(tour.tourManagerId)).citycode == cityvalue)||
-                        (tourManagerMap.get(tour.tourManagerId).citycode == '0')
+                            (tourManagerMap.get(tour.tourManagerId).citycode == '0')
                         ))
                             {
                                 selectedTours.push(tour);
@@ -147,7 +145,8 @@ const TripList = ({access_token,categoryId,cityList,showDetails}) =>{
                            
                         }
                         
-                        }else if(selectedValue === 'B'){
+                        }
+                        else if(selectedValue === 'B'){
                             console.log('selectedTours....',selectedTours)
                              for(let tour of alltours)
                             {
@@ -156,40 +155,31 @@ const TripList = ({access_token,categoryId,cityList,showDetails}) =>{
                                 if(Number(tour.package_cost)<=(Number(priceValue)) && 
                             Number(tripLength)<=Number(triplengthValue) && (tourManagerMap.get(tour.tourManagerId) && 
                             (tourManagerMap.get(tour.tourManagerId)).citycode == cityvalue)||
-                        (tourManagerMap.get(tour.tourManagerId).citycode == '0'))
-                        {
+                            (tourManagerMap.get(tour.tourManagerId).citycode == '0'))
+                            {
                                   selectedTours.push(tour);
+                            }
                         }
                         }
-                        }
-                         
-                         setTours(selectedTours);
-                         console.log('tours....',tours)
+                       setTours(selectedTours);
+                       console.log('tours....',tours)
                     } 
                 
              },
              [selectedValue,priceValue,triplengthValue,cityvalue]); 
-             
-             
-            
-      
+    
     return(
-        
+    
         <View sx={{ display: 'flex',justifyContent:'flex-end'}}>
-           
-           
-             <View className="navbar-grid">
-        <nav className="navbar">
-            <View style={{ flexDirection: 'row', flexWrap: 'wrap' }}
-             spacing={10} justify="center" width="70%">
-             {tours && tours.length>0 ?
+            <View className="navbar-grid">
+               <nav className="navbar">
+                <View style={{ flexDirection: 'row', flexWrap: 'wrap' }}
+                    spacing={10} justify="center" width="70%">
+                    {tours && tours.length>0 ?
 
-                tours.map((tour) => (
-                    
-               <View>
-                 
-                <View item xs = {12} sm={4}  key={tour.categoryID}>
-
+                        tours.map((tour) => (
+                     <View>
+                    <View item xs = {12} sm={4}  key={tour.categoryID}>
                     <Card className="card" onPress={()=>showDetails(tour,
                     getValuesFromTourManagerMap(tour.tourManagerId),
                         access_token)} style={{ cursor: 'pointer' }}>

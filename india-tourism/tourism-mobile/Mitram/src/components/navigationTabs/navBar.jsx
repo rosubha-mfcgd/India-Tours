@@ -1,14 +1,15 @@
 import { useNavigation, useLocation } from '@react-navigation/native'; 
-import '../../styles/Navbar.css';
-import '../../styles/Cards.css';
-import '../../styles/sidebar.css';
+import CategoryStyle from '../stylecomp/navbar'; 
+import CardStyle from '../stylecomp/cards'; 
+import SidebarStyle from '../stylecomp/sidebar'; 
+import { TouchableOpacity } from 'react-native';
 import { useEffect, useState, useContext } from "react";
  import { View } from 'react-native';
 import {Appbar,Avatar,Button,Card,Checkbox,Chip,Dialog,Divider,FAB,HelperText,IconButton,List,Menu,
 Modal,Portal,ProgressBar,RadioButton,Searchbar,SegmentedButtons,Snackbar,
-Surface,Switch,Text,TextInput,Tooltip,TouchableRipple} from 'react-native-paper'
-
-
+Surface,Switch,TextInput,Tooltip,TouchableRipple} from 'react-native-paper'
+import { NavigationContainer } from '@react-navigation/native';
+import { createStackNavigator } from '@react-navigation/stack';
 import { getCategories,updateAsFavorite } from "../admin/admin";
 import { NavContext } from '../navigationContext/navigationContext.jsx';
 import SideBarNotification from './sideBarNotification.jsx'
@@ -20,6 +21,7 @@ const NavBar = ({access_token,triggerDisplayOptionsByCatId,
     
     const navigate = useNavigation();
      const location = useLocation();
+     const Stack = createStackNavigator();
     const { notification} = useContext(NavContext);
      const [items, setItems] = useState('')
     
@@ -86,13 +88,12 @@ const NavBar = ({access_token,triggerDisplayOptionsByCatId,
         mounted = false; // Set flag to false on cleanup
         clearTimeout(timer); // Clean up the timer
     };
-
-          },[]);
+},[]);
 
 
     return (
-        <View className="navbar-grid">
-        <nav className="navbar">
+        <View style = {CategoryStyle.navbargrid}>
+        <View style={CategoryStyle.navbar}>
            <View style={{ flexDirection: 'row', flexWrap: 'wrap' }}>
              {items && items.length>0 ?
 
@@ -101,10 +102,10 @@ const NavBar = ({access_token,triggerDisplayOptionsByCatId,
                  <View style={{ flexDirection: 'row', flexWrap: 'wrap' }}  xs = {12} sm={4}
                   key={item.categoryID}>
                
-                    <Card className="card"
+                    <Card style = {CardStyle.card}
                      >
                     
-                    <CardMedia component= "img"  height="100"
+                    <Card.Cover component= "img"  height="100"
                     image = {item.image} alt={item.categoryDesc} 
                     onPress={()=>triggerDisplayOptionsByCatId(item.categoryID)} 
                     style={{ cursor: 'pointer' }} 
@@ -127,9 +128,10 @@ const NavBar = ({access_token,triggerDisplayOptionsByCatId,
               }
               
               </CardContent>
-              <button type="submit" class="button"  onPress={()=>triggerDisplayOptionsByCatId(item.categoryID)} 
+              <TouchableOpacity type="submit" class="button"  
+              onPress={()=>triggerDisplayOptionsByCatId(item.categoryID)} 
                     style={{ cursor: 'pointer',backgroundColor: '#8a77f8ff',color:'#0c0c0fff'}}>
-                        Click to View</button>
+                        Click to View</TouchableOpacity>
                     </Card>
                 </View>
                 
@@ -146,7 +148,7 @@ const NavBar = ({access_token,triggerDisplayOptionsByCatId,
             </View> 
             :<View></View>
              }
-            </nav>
+            </View>
         </View>
 
     )

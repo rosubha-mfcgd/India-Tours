@@ -1,7 +1,13 @@
-import '../../styles/Navbar.css';
-import '../../styles/Cards.css';
-import '../../styles/sidebar.css';
-import '../../styles/bookingForm.css';
+
+import CategoryStyle from '../stylecomp/navbar'; 
+import CardStyle from '../stylecomp/cards'; 
+import SidebarStyle from '../stylecomp/sidebar'; 
+import TripDetailsStyle from '../stylecomp/TripDetails'
+import BookingFormStyle from '../stylecomp/bookingForm'; 
+import LoginSignUpStyle from '../stylecomp/loginsignup';
+import { useNavigation } from '@react-navigation/native';  
+
+
 import CustomButton from '../Utilities/CustomButtons.jsx'
 import { useEffect, useState, useContext} from "react";
 import {getBookingsByBookingId} from "../admin/admin";
@@ -11,8 +17,12 @@ import failure_animation from '../Assets/images/failure_animation.gif';
 import { NavContext } from '../navigationContext/navigationContext.jsx';
 import {Appbar,Avatar,Button,Card,Checkbox,Chip,Dialog,Divider,FAB,HelperText,IconButton,List,Menu,
 Modal,Portal,ProgressBar,RadioButton,Searchbar,SegmentedButtons,Snackbar,
-Surface,Switch,Text,TextInput,Tooltip,TouchableRipple,Paper} from 'react-native-paper';
+Surface,Switch,Text,TextInput,Tooltip,TouchableRipple,Paper,DataTable} from 'react-native-paper';
 
+
+
+import { useForm, Controller } from 'react-hook-form';
+import { TouchableOpacity } from 'react-native';
 
 
 const BookingForm = ({access_token,tourDetails,triggerDisplayBookings}) =>{
@@ -27,8 +37,9 @@ const BookingForm = ({access_token,tourDetails,triggerDisplayBookings}) =>{
      const[currentBooking,setCurrentBooking] = useState('');
      const[displayErrorDialog,setDisplayErrorDialog] = useState(false);
      const[errorMessage,setErrorMessage] = useState('');
-         const [dialogOpen, setDialogOpen] = useState(false);
-         const[showBookingBtn,setShowBookingBtn] = useState(true);
+     const [dialogOpen, setDialogOpen] = useState(false);
+     const[showBookingBtn,setShowBookingBtn] = useState(true);
+ 
   const { notification} = useContext(NavContext);
     const CssTextInput = styled(TextInput)({
       '& label': {
@@ -43,6 +54,11 @@ const BookingForm = ({access_token,tourDetails,triggerDisplayBookings}) =>{
         createForms(0);
     }
 
+      const navigate = useNavigation();
+    
+            const goBack = () =>{
+                navigate(-1);
+            }
 
    const handleClickOpenOrClose = () => {
         
@@ -176,13 +192,13 @@ const BookingForm = ({access_token,tourDetails,triggerDisplayBookings}) =>{
     
     return(
         
-            <View className = "center-container">
+            <View  style={LoginSignUpStyle.centeredContainer}>
               
-                    <View className="original-content">
+                    <View>
                       {showBookingBtn ? 
-                       <Box
+                       <View
       component="form"
-      sx={{
+      style={{
         '& .MuiTextInput-root': { m: 1, width: '25ch' },
         display: 'flex',
         flexDirection: 'column',
@@ -202,7 +218,7 @@ const BookingForm = ({access_token,tourDetails,triggerDisplayBookings}) =>{
                   Click me to book your trip to {tourDetails.locationName} with 
                   {tourDetails.tourManagerName}    
         </Text> 
-           </Box>:<View></View>
+           </View>:<View></View>
               }
 {displayErrorDialog?
                      <Dialog
@@ -231,17 +247,16 @@ const BookingForm = ({access_token,tourDetails,triggerDisplayBookings}) =>{
       </Dialog>:<View></View>}
         {startBooking ?
          
-              <TableContainer sx={{boxShadow: 'none'}}>
-                <Table sx={{alignContent:'center', justifyContent: 'center'}}>
-                    <TableBody>
+          <DataTable style={{alignContent:'center', justifyContent: 'center'}}>
+                   
                      
-                      <TableRow >
-                        <TableCell sx={{border:"none"}}>
+                      <DataTable.Row>
+                        <DataTable.Cell style={{border:"none"}}>
                            <Text variant="body2" style={{ color: '#FFFFFF' }}>
                             How many people will be travelling ?
                             </Text>
-                        </TableCell>
-                        <TableCell sx={{border:"none"}}>
+                        </DataTable.Cell>
+                        <DataTable.Cell sx={{border:"none"}}>
                           <CssTextInput id="numberOfTourist" 
                           sx={{ color: '#FFFFFF' }}
                           label="Enter number of travellers" 
@@ -252,18 +267,18 @@ const BookingForm = ({access_token,tourDetails,triggerDisplayBookings}) =>{
                              },
                             }}
                           />    
-                         </TableCell>
-                         <TableCell sx={{border:"none"}}>
+                         </DataTable.Cell>
+                         <DataTable.Cell sx={{border:"none"}}>
                            <CustomButton noOfTourist={noOfTourist} setNoOfTourist={setNoOfTourist} 
                            />
-                          </TableCell>     
-                        </TableRow>
-                         <TableRow>
-                         <TableCell sx={{border:"none"}}>
+                          </DataTable.Cell>     
+                        </DataTable.Row>
+                         <DataTable.Row>
+                         <DataTable.Cell style={{border:"none"}}>
                            <Text variant="body2" style={{ color: '#FFFFFF' }}>
                             Please enter the booking ID of the trip you want to attend?
                             </Text>
-                        </TableCell>
+                        </DataTable.Cell>
                          <CssTextInput id="bookingid" 
                           sx={{ color: '#FFFFFF' }}
                           label="Booking id (Optional)" 
@@ -274,10 +289,10 @@ const BookingForm = ({access_token,tourDetails,triggerDisplayBookings}) =>{
                              },
                             }}
                          />
-                      </TableRow>
-                    </TableBody>
-                </Table>
-            </TableContainer>
+                      </DataTable.Row>
+                   
+                </DataTable>
+           
            :<View></View>
         }
      {
@@ -289,7 +304,7 @@ const BookingForm = ({access_token,tourDetails,triggerDisplayBookings}) =>{
           touristCount && touristCount.length >0 ?
             touristCount.map((tourist)=>(
            
-              <View className="head"
+              <View
                 style={{
                     width: "fit-content",
                     margin: "auto",
@@ -373,19 +388,24 @@ const BookingForm = ({access_token,tourDetails,triggerDisplayBookings}) =>{
          <View className = "center-container" style={{
                     width: "fit-content",
                     margin: "auto",
+                    flex: 1,
+                    justifyContent: 'center', // Centers content vertically
+                    alignItems: 'center',     // Centers content horizontally
+                    backgroundColor: '#f0f0f0', 
                   }}>
                     
        
           
           
-        <View className="button-container">
-         <View className='submit-container'>
-                    <button type="submit" 
-                        class="button"
-                        >Go Back</button>
+        <View style={BookingFormStyle.buttoncontainer}>
+         <View style={LoginSignUpStyle.submitcontainer}>
+                    <TouchableOpacity onPress = {goBack}
+                        style={TripDetailsStyle.button}
+                        >Go Back</TouchableOpacity>
 
-                            <button type="submit" 
-                       class="button" onPress={submitBookings}>Submit your Booking</button>
+                            <TouchableOpacity style={TripDetailsStyle.button}
+                      onPress={submitBookings}>
+                        Submit your Booking</TouchableOpacity>
                        
         </View>
       </View>

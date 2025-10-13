@@ -1,7 +1,5 @@
 import React, { useState, useRef , useEffect, useContext} from 'react';
 
-import '../../styles/loginsignup.css';
-
 import {getPoints} from '../admin/admin';
 
 import {Appbar,Avatar,Button,Card,Checkbox,Chip,Dialog,Divider,FAB,HelperText,IconButton,List,Menu,

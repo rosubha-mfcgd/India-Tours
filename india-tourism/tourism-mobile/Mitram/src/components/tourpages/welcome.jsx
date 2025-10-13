@@ -7,8 +7,7 @@ import Header from '../header/header.jsx';
 import Layout from '../Layout/layout.jsx';
 import UserProfile from '../userprofile/userprofile.jsx';
 
-import '../../styles/loginsignup.css';
- import { NavProvider } from '../navigationContext/navigationContext.jsx';
+import { NavProvider } from '../navigationContext/navigationContext.jsx';
 
   import { useLocation } from '@react-navigation/native'; 
 import TripList from "./tripList.jsx";

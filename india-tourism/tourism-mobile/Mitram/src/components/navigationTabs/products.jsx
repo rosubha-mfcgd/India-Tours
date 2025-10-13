@@ -1,13 +1,14 @@
   import { useNavigation, useLocation } from '@react-navigation/native'; 
-import '../../styles/Navbar.css';
-import '../../styles/Cards.css';
-import '../../styles/sidebar.css';
+
+import CategoryStyle from '../stylecomp/navbar'; 
+import CardStyle from '../stylecomp/cards'; 
+import SidebarStyle from '../stylecomp/sidebar'; 
 import { useEffect, useState, useContext } from "react";
 import {Appbar,Avatar,Button,Card,Checkbox,Chip,Dialog,Divider,FAB,HelperText,IconButton,List,Menu,
 Modal,Portal,ProgressBar,RadioButton,Searchbar,SegmentedButtons,Snackbar,
 Surface,Switch,Text,TextInput,Tooltip,TouchableRipple} from 'react-native-paper'
 
-  import { View } from 'react-native';
+  import { View ,TouchableOpacity} from 'react-native';
 
 import {updateAsFavorite,getProducts } from "../admin/admin";
 import { NavContext } from '../navigationContext/navigationContext.jsx';
@@ -73,8 +74,8 @@ const Products = ({access_token,triggerDisplayTripsByProductId}) =>{
 
 
     return (
-        <View  className="navbar-grid">
-        <nav className="navbar">
+        <View style={CategoryStyle.navbargrid} >
+        <View style={CategoryStyle.navbar} >
             <View container spacing={10} justify="center" width="70%">
              {items && items.length>0 ?
 
@@ -83,7 +84,7 @@ const Products = ({access_token,triggerDisplayTripsByProductId}) =>{
                  
                 <View item xs = {12} sm={4}  key={item.productID}>
 
-                    <Card className="card"
+                    <Card style={CardStyle.card}
                      >
                     
                     <Card.Cover  height="100"
@@ -92,7 +93,7 @@ const Products = ({access_token,triggerDisplayTripsByProductId}) =>{
                     style={{ cursor: 'pointer' }} 
                      />
                                      
-                    <CardContent>
+                    <Card.CardContent>
                         <Text gutterBottom variant="body1" component="div">
                 {item.productName}
               </Text>
@@ -111,10 +112,10 @@ const Products = ({access_token,triggerDisplayTripsByProductId}) =>{
                     item.productID,'Y',event)} style={{ cursor: 'pointer' }}/>
               }
               
-              </CardContent>
-              <button type="submit" class="button"  onPress={()=>triggerDisplayTripsByProductId(item.productID)} 
+              </Card.CardContent>
+              <TouchableOpacity type="submit" class="button"  onPress={()=>triggerDisplayTripsByProductId(item.productID)} 
                     style={{ cursor: 'pointer',backgroundColor: '#8a77f8ff',color:'#0c0c0fff'}}>
-                        Click to View</button>
+                        Click to View</TouchableOpacity>
                     </Card>
                 </View>
                 
@@ -131,7 +132,7 @@ const Products = ({access_token,triggerDisplayTripsByProductId}) =>{
             </View> 
             :<View ></View>
              }
-            </nav>
+            </View>
         </View>
 
     )

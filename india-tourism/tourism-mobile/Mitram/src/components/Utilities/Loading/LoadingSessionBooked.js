@@ -3,9 +3,9 @@ import "./Loading.css"
 
 const LoadingSessionBooked = () => {
   return (
-    <div className='fp-container'>
+    <View className='fp-container'>
       <img src={loadBookingSession} className='fp-loader' alt='loading' />
-    </div>
+    </View>
   )
 }
 

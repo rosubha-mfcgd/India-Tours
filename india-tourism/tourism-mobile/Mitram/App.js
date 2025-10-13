@@ -18,7 +18,7 @@ export default function App() {
             <Route path='/' Component={Welcome}></Route>
             <Route path='/searchtrip' Component={TripList}></Route>
            </NativeRouter>
-         </PaperProvider>
+      </PaperProvider>
     </View>
   );
 }

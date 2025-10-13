@@ -1,7 +1,6 @@
 import React from 'react';
 import { Pressable, Text,  Alert,View, Image,  StyleSheet, ScrollView } from 'react-native';
 import {SafeAreaView, SafeAreaProvider} from 'react-native-safe-area-context';
-import '../../styles/bookingForm.css'; 
 import plus from '../Assets/images/plus.png';
 import minus from '../Assets/images/minus.png';
 const CustomButton = ({noOfTourist,setNoOfTourist}) => {

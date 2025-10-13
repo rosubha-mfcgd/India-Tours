@@ -3,9 +3,9 @@ import "./Loading.css"
 
 const Loading = () => {
   return (
-    <div className='fp-container'>
+    <View className='fp-container'>
       <img src={loadingYoga} className='fp-loader' alt='loading' />
-    </div>
+    </View>
   )
 }
 
