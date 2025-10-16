@@ -8,8 +8,8 @@ import Layout from '../Layout/layout.jsx';
 import UserProfile from '../userprofile/userprofile.jsx';
 
 import { NavProvider } from '../navigationContext/navigationContext.jsx';
-
-  import { useLocation } from '@react-navigation/native'; 
+import {View} from 'react-native'
+  import { useRoute  } from '@react-navigation/native'; 
 import TripList from "./tripList.jsx";
 import TripDetails from "./tripDetails.jsx";
 import BookingForm from "./bookingForm.jsx";
@@ -20,8 +20,8 @@ import ChatButton from '../Utilities/ChatButton.jsx';
 import ChatWindow from '../Utilities/ChatWindow.jsx';
 const Welcome =()=>{
 
-     const location = useLocation();
-     const { name,email,mobile,access_token} = location.state || {};
+     const route = useRoute();
+     const { name,email,mobile,access_token} = route.params || {};
      
      const [showTrips,setShowTrips] = useState(false);
      const [showTripDetails,setShowTripDetails] = useState(false);

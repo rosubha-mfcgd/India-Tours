@@ -22,14 +22,14 @@ const StyledDrawer = styled(Drawer)(({ theme }) => ({
   },
 }));
         return (
-            <View sx={{ display: 'flex' }}>
+            <View style={{ display: 'flex' }}>
             
                 <StyledDrawer
                     variant="persistent" // Or "temporary", "permanent"
                     anchor="right"
                     open={open} 
                 >
-                    <View sx={{ display: 'flex', 
+                    <View style={{ display: 'flex', 
                       alignItems: 'center', justifyContent: 'flex-end', 
                       padding: 1 }}>
                         <IconButton onPress={handleDrawerClose}>
@@ -50,7 +50,7 @@ const StyledDrawer = styled(Drawer)(({ theme }) => ({
                     </List>
                 </StyledDrawer>
                 {/* Main content of your application */}
-                <View component="main" sx={{ flexGrow: 1, p: 3 }}>
+                <View component="main" style={{ flexGrow: 1, p: 3 }}>
                     {/* Your application's main content goes here */}
                 </View>
             </View>

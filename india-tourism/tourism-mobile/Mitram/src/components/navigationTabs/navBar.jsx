@@ -1,15 +1,13 @@
-import { useNavigation, useLocation } from '@react-navigation/native'; 
 import CategoryStyle from '../stylecomp/navbar'; 
 import CardStyle from '../stylecomp/cards'; 
 import SidebarStyle from '../stylecomp/sidebar'; 
 import { TouchableOpacity } from 'react-native';
 import { useEffect, useState, useContext } from "react";
- import { View } from 'react-native';
+ import { View,Text } from 'react-native';
 import {Appbar,Avatar,Button,Card,Checkbox,Chip,Dialog,Divider,FAB,HelperText,IconButton,List,Menu,
 Modal,Portal,ProgressBar,RadioButton,Searchbar,SegmentedButtons,Snackbar,
 Surface,Switch,TextInput,Tooltip,TouchableRipple} from 'react-native-paper'
-import { NavigationContainer } from '@react-navigation/native';
-import { createStackNavigator } from '@react-navigation/stack';
+
 import { getCategories,updateAsFavorite } from "../admin/admin";
 import { NavContext } from '../navigationContext/navigationContext.jsx';
 import SideBarNotification from './sideBarNotification.jsx'
@@ -19,11 +17,10 @@ const NavBar = ({access_token,triggerDisplayOptionsByCatId,
     productID}) =>{
 
     
-    const navigate = useNavigation();
-     const location = useLocation();
-     const Stack = createStackNavigator();
+    
+       
     const { notification} = useContext(NavContext);
-     const [items, setItems] = useState('')
+     const [items, setItems] = useState('');
     
     const navLinkStyles = ({isActive})=>{
             return {
@@ -112,10 +109,10 @@ const NavBar = ({access_token,triggerDisplayOptionsByCatId,
                      />
                                      
                     <CardContent>
-                        <Text gutterBottom variant="body1" component="div" sx={{whiteSpace: 'pre-wrap'}}>
+                        <Text gutterBottom variant="body1" component="div" style={{whiteSpace: 'pre-wrap'}}>
                 {item.categoryName}
               </Text>
-              <Text variant="body2" color="text.secondary" sx={{whiteSpace: 'pre-wrap'}}>
+              <Text variant="body2" color="text.secondary" style={{whiteSpace: 'pre-wrap'}}>
                 {item.categoryDesc}
               </Text>
               {(item.favorite === 'Y') ?

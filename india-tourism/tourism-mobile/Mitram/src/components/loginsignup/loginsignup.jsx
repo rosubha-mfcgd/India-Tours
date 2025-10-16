@@ -1,24 +1,20 @@
 import React, { useState, useRef , useEffect} from 'react';
+ import { Image } from 'react-native';
 import {Appbar,Avatar,Button,Card,Checkbox,Chip,Dialog,Divider,FAB,HelperText,IconButton,List,Menu,
 Modal,Portal,ProgressBar,RadioButton,Searchbar,SegmentedButtons,Snackbar,
 Surface,Switch,Text,TextInput,Tooltip,TouchableRipple} from 'react-native-paper'
-import email_icon from '../Assets/input/email.png';
 
-import user_icon from '../Assets/input/username.png';
-import mobile_icon from '../Assets/input/mobile.png';
-import { useNavigation } from '@react-navigation/native'; 
 import {signupUser,loginUser} from '../admin/admin';
 import { View,TouchableOpacity } from 'react-native';
 
 import LoginSignUpStyle from '../stylecomp/loginsignup'; 
 
 
-import { GoogleSignin, GoogleSigninButton, statusCodes } from 
-'@react-native-community/google-signin';
+import * as Google from 'expo-auth-session/providers/google';
+import * as WebBrowser from 'expo-web-browser';
 
 
-
-const LoginSignup =() => {
+const LoginSignup =({navigation}) => {
 
         const [action,setAction] = useState("Sign Up");
         const[name,setName] = useState('');
@@ -28,6 +24,7 @@ const LoginSignup =() => {
         const [isLoading, setIsLoading] = useState(false);
         const [buttonPress, setButtonPress] = useState(false);
         const [errorMessage, setErrorMessage] = useState('');
+        const [loginOrsignup,setLoginOrSignup] = useState('signup');
         const clientId = process.env.REACT_APP_CLIENT_ID;
         
      const handleNameChange  = (event) =>{
@@ -39,54 +36,21 @@ const LoginSignup =() => {
         const handleMobileChange  = (event) =>{
                     setMobile(event.target.value);
             }
-        const navigate = useNavigation();
-        
-
+       const [request, response, promptAsync] = Google.useAuthRequest({
+   // expoClientId: 'YOUR_EXPO_CLIENT_ID', // Optional, but recommended for better UX
+    iosClientId: process.env.EXPO_PUBLIC_IOS_CLIENT_ID,
+    androidClientId: process.env.EXPO_PUBLIC_ANDROID_CLIENT_ID,
+    webClientId: process.env.REACT_APP_CLIENT_ID,
+    scopes: ['profile', 'email'], // Request necessary scopes
+  });
   
         //SIGNUP A NEW USER
         const googlesignup = async() =>{
             try{
-             await GoogleSignin.hasPlayServices();
-             const userInfo = await GoogleSignin.signIn();
-            if(userInfo){
-                console.log('access_token....',userInfo.access_token)
-                setAction("Sign Up");
-                const req_data = {
-                    name:name,
-                    email:email,
-                    mobile:mobile,
-                    access_token:userInfo.access_token
-                };
-                try{
-                    setButtonPress(true);
-               
-                    let resdata = await signupUser(req_data);
-               
-                    if(resdata){
-                   console.log('resdata access token...',resdata.access_token);
-                    console.log('resdata code...',resdata.code);
-                   let access_token = resdata.access_token;
-                    if(access_token){
-                        if( resdata.status != 200 && resdata.code != 'Y')
-                        {
-                            setErrorMessage(resdata.message);
-                        }
-                        else{
-                        navigate('/sendotp',{state:{
-                             "name":name,
-                            "mobile":mobile,
-                            "email":email,
-                            "access_token":access_token}});
-                        }
-                    }
-                }
-            }catch(error){
-                console.log(error);
-                
-            }finally {
-                setButtonPress(false); // Hide spinner after fetch (success or error)
-             }
-            }
+          
+             setLoginOrSignup('signup');
+             await promptAsync();
+          
         }catch(err){
                  
           // user cancelled the login flow
@@ -99,49 +63,10 @@ const LoginSignup =() => {
         const googleLogin =  async() =>{
 
              try{
-             await GoogleSignin.hasPlayServices();
-             const userInfo = await GoogleSignin.signIn();
-
-          if(userInfo) {
-                console.log('Trying google auth...')
-                setAction("Send Otp");
-                       // navigate('sendotp', { replace: true });
-               // setAction("Login");
-                
-                const req_data = {
-                    email:email,
-                    mobile:mobile,
-                    access_token:codeResponse.access_token
-                };
-                try{
-                    setButtonPress(true);
-                    let resdata = await loginUser(req_data);
-                
-                if(resdata)
-                {
-                      console.log('resdata access token...',resdata.access_token);
-                    console.log('resdata code...',resdata.code);
-                   let access_token = resdata.access_token;
-                    if(access_token){
-                        if(resdata.status != 200 && resdata.code != 'Y')
-                        {
-                            setErrorMessage(resdata.message);
-                        }
-                        else{
-                        navigate('/sendotp',{state:{
-                             "mobile":mobile,
-                            "email":email,
-                            "access_token":access_token}});
-                        }
-                    }
-                }
-            }catch(error){
-                 console.log(error);
-            }
-            finally{
-                  setButtonPress(false); // Hide spinner after fetch (success or error)
-            }
-            }
+     
+                 setLoginOrSignup('login');
+                 promptAsync();
+         
         }catch(err)
         {
            // user cancelled the login flow
@@ -166,13 +91,98 @@ const LoginSignup =() => {
 
            },[buttonPress,errorMessage,action]);
 
+           //This useEffect is triggered when user signup or login
     useEffect(() => {
-          GoogleSignin.configure({
-            webClientId: process.env.REACT_APP_CLIENT_ID, // client ID of type WEB for your server (needed to verify user ID and get access token)
-            offlineAccess: true, // if you want to access Google API on behalf of the user FROM YOUR SERVER
-        // other configuration options as needed
-      });
-    }, []);
+        async function onGoogleAuthSuccess(){
+        console.log('response....',response);
+           if(response?.type === 'success'){
+
+                const {authentication} = response;
+
+                console.log('access_token....',authentication.accessToken)
+                if(loginOrsignup === 'signup')
+                {
+                    setAction("Sign Up");
+
+                    const req_data = {
+                    name:name,
+                    email:email,
+                    mobile:mobile,
+                    access_token:authentication.accessToken
+                };
+                try{
+                    setButtonPress(true);
+               
+                    let resdata = await signupUser(req_data);
+               
+                    if(resdata){
+                        console.log('resdata access token...',resdata.access_token);
+                        console.log('resdata code...',resdata.code);
+                  
+                        let access_token = resdata.access_token;
+                      if(access_token){
+                            if( resdata.status != 200 && resdata.code != 'Y')
+                            {
+                                setErrorMessage(resdata.message);
+                            }
+                        else{
+                        navigation.navigate('/sendotp',{
+                             "name":name,
+                            "mobile":mobile,
+                            "email":email,
+                            "access_token":access_token});
+                        }
+                    }
+                }
+            }catch(error){
+                console.log(error);
+                
+            }
+             }
+                else if(loginOrsignup === 'login')
+                {
+                   setAction("Send Otp"); 
+
+                   const req_data = {
+                    email:email,
+                    mobile:mobile,
+                    access_token:authentication.accessToken
+                };
+                try{
+                    setButtonPress(true);
+                    let resdata = await loginUser(req_data);
+                
+                if(resdata)
+                {
+                   console.log('resdata access token in login flow...',resdata.access_token);
+                   console.log('resdata code ...',resdata.code);
+                   let access_token = resdata.access_token;
+                    if(access_token){
+                        if(resdata.status != 200 && resdata.code != 'Y')
+                        {
+                            setErrorMessage(resdata.message);
+                        }
+                        else{
+                        navigate('/sendotp',{state:{
+                             "mobile":mobile,
+                            "email":email,
+                            "access_token":access_token}});
+                        }
+                    }
+                }
+            }catch(error){
+                 console.log(error);
+            }
+            }
+              setButtonPress(false);  // Hide spinner after fetch (success or error)
+            }else{
+                console.log('invalid response received...')
+            }
+        }
+        if(response){
+            onGoogleAuthSuccess();
+        }
+      }, [response]);
            
         
         
@@ -183,7 +193,7 @@ const LoginSignup =() => {
               <View style={LoginSignUpStyle.centeredContainer}>
       
                 {isLoading ? (
-                  <View style={{ display: 'flex',
+                  <View style={{
         justifyContent: 'center',
         alignItems: 'center',
         minHeight: '100vh' }}
@@ -195,13 +205,13 @@ const LoginSignup =() => {
                <View style={LoginSignUpStyle.container}>
                
                         <View style={LoginSignUpStyle.header}>
-                            <View style={LoginSignUpStyle.centeredText}>{action}</View>
+                            <View style={LoginSignUpStyle.centeredText}><Text>{action}</Text></View>
                             
                             <View className='underline'></View>
 
                         </View>
                          {errorMessage ? 
-                         (<View style={LoginSignUpStyle.errordivattop}>{errorMessage}</View>):
+                         (<View style={LoginSignUpStyle.errordivattop}><Text>{errorMessage}</Text></View>):
                         (<View></View>)
                     }
                         <View style={LoginSignUpStyle.inputs}>
@@ -212,32 +222,32 @@ const LoginSignup =() => {
                         
                         <View>
                             <View style={LoginSignUpStyle.input}>
-                            <img src={user_icon} alt=""/>
+                            <Image source ={require('../Assets/input/username.png')} alt=""/>
                             <TextInput label="Name" value = {name} onChangeText = {handleNameChange} 
                             variant="outlined"/>
                         </View>
                         <View style={LoginSignUpStyle.input}>
-                            <img src={mobile_icon} alt=""/>
+                            <Image source={require('../Assets/input/mobile.png')} alt=""/>
                             <TextInput label="Mobile" value = {mobile} onChangeText = {handleMobileChange} 
                             variant="outlined"/>
                         </View>
                         <View style={LoginSignUpStyle.input} >
-                            <img src={email_icon} alt=""/>
+                            <Image source={require('../Assets/input/email.png')} alt=""/>
                             <TextInput label="Email" value = {email} onChangeText = {handleEmailChange} 
                             variant="outlined"/>
                         </View>
                     </View>:
                         <View>
                             <View style={LoginSignUpStyle.input}>
-                            <img src={mobile_icon} alt=""/>
+                            <Image source={require('../Assets/input/mobile.png')} alt=""/>
                             <TextInput label="Mobile" value = {mobile} onChangeText = {handleMobileChange} 
                             variant="outlined"/>
                         </View>
                         <br/>
-                        <View style={LoginSignUpStyle.input}>OR</View>
+                        <View style={LoginSignUpStyle.input}><Text>OR</Text></View>
                         <br/>
                         <View style={LoginSignUpStyle.input} >
-                            <img src={email_icon} alt=""/>
+                            <Image source={require('../Assets/input/email.png')} alt=""/>
                             <TextInput label="Email" value = {email} onChangeText = {handleEmailChange} 
                             variant="outlined"/>
                         </View>
@@ -245,32 +255,31 @@ const LoginSignup =() => {
                         }
                         </View>
                         {action === 'Sign Up'?
-                            <View style={LoginSignUpStyle.forgotpassword}>Lost Password? <span>Click Here!</span></View>:<br/>
+                            <View style={LoginSignUpStyle.forgotpassword}><Text>Lost Password? <Text>Click Here!</Text></Text></View>:<br/>
                         }
                         {action === 'Sign Up'?  
                         <View style={LoginSignUpStyle.submitcontainer}>
                     
-                        <GoogleSigninButton 
+                        <TouchableOpacity 
                           style={LoginSignUpStyle.submit}
-                          onPress={googlesignup}>Sign Up</GoogleSigninButton>
+                          onPress={googlesignup}><Text>Sign Up</Text></TouchableOpacity>
                     
-                            <GoogleSigninButton 
-                           onPress={()=>{setAction("Login");}}>Login</GoogleSigninButton>
+                            <TouchableOpacity 
+                           onPress={()=>{setAction("Login");}}><Text>Login</Text></TouchableOpacity>
                         </View>:<br/>
                         }
 
                         {action === 'Login'?
                         <View className='submit-container'>
-                    <GoogleSigninButton 
+                    <TouchableOpacity 
                       style={{ width: 192, height: 48 }}
-                            size={GoogleSigninButton.Size.Wide}
-                            color={GoogleSigninButton.Color.Dark}
-                    onPress={googleLogin}>Send Otp</GoogleSigninButton> 
-                    <GoogleSigninButton 
+                           
+                    onPress={googleLogin}><Text>Send Otp</Text></TouchableOpacity> 
+                    <TouchableOpacity 
                       
                         onPress={()=>{setAction("Sign Up");
                         navigate('-1');
-                    }}>Cancel</GoogleSigninButton> 
+                    }}>Cancel</TouchableOpacity> 
                     </View> :<View></View> 
                         }
                     </View> 

@@ -1,8 +1,7 @@
 import React, { useEffect,useState,useContext } from "react"; 
-import { useNavigation } from '@react-navigation/native';  
 import SideBarNotification from '../navigationTabs/sideBarNotification.jsx';
 import { NavContext } from '../navigationContext/navigationContext.jsx';
-
+import { View } from 'react-native';
 import {Appbar,Avatar,Button,Card,Checkbox,Chip,Dialog,Divider,FAB,HelperText,IconButton,List,Menu,
 Modal,Portal,ProgressBar,RadioButton,Searchbar,SegmentedButtons,Snackbar,
 Surface,Switch,Text,TextInput,Tooltip,TouchableRipple,DataTable} from 'react-native-paper'
@@ -11,12 +10,8 @@ import TripDetailsStyle from "../stylecomp/TripDetails";
 const TripDetails = ({tourDetails,triggerDisplayOptionsByCatId,openBookingForm,
   cityList,access_token}) =>{
 
-  const navigate = useNavigation();
 
-        const goBack = () =>{
-            navigate(-1);
-        }
-  
+         
     function getFieldsForTripDetailsScreen(){
 
      let detailFields = process.env.REACT_APP_TRIP_DETAIL_FIELDS;

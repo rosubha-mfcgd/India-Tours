@@ -5,15 +5,12 @@ import SidebarStyle from '../stylecomp/sidebar';
 import TripDetailsStyle from '../stylecomp/TripDetails'
 import BookingFormStyle from '../stylecomp/bookingForm'; 
 import LoginSignUpStyle from '../stylecomp/loginsignup';
-import { useNavigation } from '@react-navigation/native';  
-
-
 import CustomButton from '../Utilities/CustomButtons.jsx'
 import { useEffect, useState, useContext} from "react";
 import {getBookingsByBookingId} from "../admin/admin";
 import SideBarNotification from '../navigationTabs/sideBarNotification.jsx';
-import close_button from '../Assets/images/close-button.png';
-import failure_animation from '../Assets/images/failure_animation.gif';
+
+import {View} from 'react-native'
 import { NavContext } from '../navigationContext/navigationContext.jsx';
 import {Appbar,Avatar,Button,Card,Checkbox,Chip,Dialog,Divider,FAB,HelperText,IconButton,List,Menu,
 Modal,Portal,ProgressBar,RadioButton,Searchbar,SegmentedButtons,Snackbar,
@@ -22,7 +19,7 @@ Surface,Switch,Text,TextInput,Tooltip,TouchableRipple,Paper,DataTable} from 'rea
 
 
 import { useForm, Controller } from 'react-hook-form';
-import { TouchableOpacity } from 'react-native';
+import { TouchableOpacity, Image } from 'react-native';
 
 
 const BookingForm = ({access_token,tourDetails,triggerDisplayBookings}) =>{
@@ -54,10 +51,9 @@ const BookingForm = ({access_token,tourDetails,triggerDisplayBookings}) =>{
         createForms(0);
     }
 
-      const navigate = useNavigation();
-    
+         
             const goBack = () =>{
-                navigate(-1);
+                navigation.navigate(-1);
             }
 
    const handleClickOpenOrClose = () => {
@@ -241,7 +237,7 @@ const BookingForm = ({access_token,tourDetails,triggerDisplayBookings}) =>{
            OK
           </Button>
           {dialogOpen?
-          <img src={failure_animation} alt="" width="40" height="40"/>:
+          <Image source={require('../Assets/images/failure_animation.gif')} alt="" width="40" height="40"/>:
           <View></View>}
         </DialogActions>
       </Dialog>:<View></View>}
@@ -256,9 +252,9 @@ const BookingForm = ({access_token,tourDetails,triggerDisplayBookings}) =>{
                             How many people will be travelling ?
                             </Text>
                         </DataTable.Cell>
-                        <DataTable.Cell sx={{border:"none"}}>
+                        <DataTable.Cell style={{border:"none"}}>
                           <CssTextInput id="numberOfTourist" 
-                          sx={{ color: '#FFFFFF' }}
+                          style={{ color: '#FFFFFF' }}
                           label="Enter number of travellers" 
                           defaultValue={noOfTourist}
                           slotProps={{
@@ -268,7 +264,7 @@ const BookingForm = ({access_token,tourDetails,triggerDisplayBookings}) =>{
                             }}
                           />    
                          </DataTable.Cell>
-                         <DataTable.Cell sx={{border:"none"}}>
+                         <DataTable.Cell style={{border:"none"}}>
                            <CustomButton noOfTourist={noOfTourist} setNoOfTourist={setNoOfTourist} 
                            />
                           </DataTable.Cell>     
@@ -280,7 +276,7 @@ const BookingForm = ({access_token,tourDetails,triggerDisplayBookings}) =>{
                             </Text>
                         </DataTable.Cell>
                          <CssTextInput id="bookingid" 
-                          sx={{ color: '#FFFFFF' }}
+                          style={{ color: '#FFFFFF' }}
                           label="Booking id (Optional)" 
                            defaultValue={bookingid} 
                            onBlur={showCurrentBookings}  slotProps={{
@@ -318,7 +314,8 @@ const BookingForm = ({access_token,tourDetails,triggerDisplayBookings}) =>{
                 >
              <Text variant="body2" style={{ color: '#160101ff' }}> 
               <strong>Tourist #{tourist.key}</strong>
-              <Image source={close_button} alt="" height="30" width="30" className='img-style' 
+              <Image source={require('../Assets/images/close-button.png')} alt="" height="30" width="30" 
+              className='img-style' 
 
              />
                </Text>

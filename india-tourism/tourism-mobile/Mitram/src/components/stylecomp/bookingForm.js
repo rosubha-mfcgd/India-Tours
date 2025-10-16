@@ -19,7 +19,7 @@ addremovebutton: {
     marginTop: 20
   },
 addremovebuttonText: {
-    color: white,
+    color: 'white',
     fontsize: 16
   },
   
@@ -35,8 +35,8 @@ inputlabel: {
 
 buttoncontainer: {
   flex: 1,
-  justifycontent: center, /* Centers horizontally */
-  alignitems: center,   /* Centers vertically */
+  justifycontent: 'center', /* Centers horizontally */
+  alignitems: 'center',   /* Centers vertically */
   height: '40vh' /* Ensures the container takes up the full viewport height */
 },
 

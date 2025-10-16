@@ -1,15 +1,10 @@
 import React, {useEffect, useState } from "react";
-
-
-
 import { createDrawerNavigator } from '@react-navigation/drawer';
-import { NavigationContainer } from '@react-navigation/native';
-
 import {Appbar,Avatar,Button,Card,Checkbox,Chip,Dialog,Divider,FAB,HelperText,
       IconButton,List,Menu,
 Modal,Portal,ProgressBar,RadioButton,Searchbar,SegmentedButtons,Snackbar,
 Surface,Switch,Text,TextInput,Tooltip,TouchableRipple} from 'react-native-paper'
-import Slider from '@react-native-community/slider';
+
 import Icon from 'react-native-vector-icons/FontAwesome';
 import SidebarFilterStyle from  '../stylecomp/sidebarForSorting';
 
@@ -134,10 +129,10 @@ cityList.map((city) =>(
                                 {text} - {triplengthValue}
                             </Text>
                                                    
-                                <Slider style={SidebarFilterStyle.slider}
+                                {/*<Slider style={SidebarFilterStyle.slider}
                                 value= {triplengthValue} 
                                 onValueChange={handleTripLengthSliderChange} 
-                                min="1" max="30" step={7}/>  
+                                min="1" max="30" step={7}/>  */}
                         {/* <datalist id="triplengthlist">
                         <option value="1" label="1"></option>
                         <option value="7" label="7"></option>

@@ -9,7 +9,6 @@ import BookingFormStyle from '../stylecomp/bookingForm';
 
 import { useEffect, useState, useContext } from "react";
 import { performTripBooking,updateBookingsByBookingId } from "../admin/admin";
-import success_animation from '../Assets/images/success_animation.gif';
 import SideBarNotification from '../navigationTabs/sideBarNotification.jsx';
 import { NavContext } from '../navigationContext/navigationContext.jsx';
  import { View } from 'react-native';
@@ -156,7 +155,7 @@ const submitBooking = async()=>{
             Proceed to Payment
           </Button>
           {dialogOpen?
-          <img src={success_animation} alt="" width="40" height="40"/>:<View></View>}
+          <Image source={require('../Assets/images/success_animation.gif')} alt="" width="40" height="40"/>:<View></View>}
         </DialogActions>
       </Dialog>:<View></View>}
                             

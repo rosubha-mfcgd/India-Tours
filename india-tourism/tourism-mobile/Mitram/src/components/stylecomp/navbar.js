@@ -5,13 +5,13 @@ const CategoryStyle = StyleSheet.create({
 
   
 navbargrid: {
-     height: 300,
+     height: '300',
      overflow: 'auto',
      border: '1px solid #ccc'
   },
   navbar: {
       flex: 1,
-    justifycontent: space-between,
+    justifycontent: 'space-between',
     alignitems: 'center',
     backgroundcolor:' #F5F5F5',
     color: '#fff',
@@ -30,7 +30,7 @@ navbargrid: {
   container: {
   
     flexdirection: 'column',
-    margin:auto,
+    margin:'auto',
     width: 600,
     margintop: 200,
     backgroundColor: '#fff',
@@ -57,7 +57,6 @@ underline: {
 },
 inputs:{
     margintop: 55,
-    display: flex,
     flexdirection: 'column',
     gap:25
 },
@@ -65,7 +64,7 @@ inputs:{
 input:{
 
     alignitems: 'center',
-    margin:auto,
+    margin: 'auto',
     width:480,
     height:80,
     backgroundcolor:'#eaeaea',
@@ -75,7 +74,7 @@ input:{
 TextInput: {
     
     alignitems: 'center',
-    margin:auto,
+    margin: 'auto',
     width:480,
     height:80,
     backgroundcolor:'#eaeaea',
@@ -83,7 +82,7 @@ TextInput: {
 },
 
 inputimg: {
-    margin: auto,
+    margin: 'auto',
 },
 
 inputText: {
@@ -141,7 +140,7 @@ submitgray:{
     borderradius: 50,
     fontsize: 19,
     fontweight: 700,
-    cursor: pointer
+    cursor: 'pointer'
 
 },
 
@@ -160,8 +159,8 @@ errordivattop: {
     gap: 9,
     width:100,
     margintop: 30,
-    fontweight: bold,
-    color: red
+    fontweight: 'bold',
+    color: '#e41818ff'
 },
 
 /* App.css */

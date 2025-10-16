@@ -1,8 +1,5 @@
-  import { useNavigation, useLocation } from '@react-navigation/native'; 
-
 import CategoryStyle from '../stylecomp/navbar'; 
 import CardStyle from '../stylecomp/cards'; 
-import SidebarStyle from '../stylecomp/sidebar'; 
 import { useEffect, useState, useContext } from "react";
 import {Appbar,Avatar,Button,Card,Checkbox,Chip,Dialog,Divider,FAB,HelperText,IconButton,List,Menu,
 Modal,Portal,ProgressBar,RadioButton,Searchbar,SegmentedButtons,Snackbar,
@@ -18,9 +15,7 @@ import SideBarNotification from './sideBarNotification.jsx'
 const Products = ({access_token,triggerDisplayTripsByProductId}) =>{
 
     
-    const navigate = useNavigation();
-     const location = useLocation();
-    const { notification} = useContext(NavContext);
+     const { notification} = useContext(NavContext);
      const [items, setItems] = useState('')
     
     
@@ -97,7 +92,7 @@ const Products = ({access_token,triggerDisplayTripsByProductId}) =>{
                         <Text gutterBottom variant="body1" component="div">
                 {item.productName}
               </Text>
-              <Text variant="body2" color="text.secondary" sx={{ whiteSpace: 'pre-wrap' }}>
+              <Text variant="body2" color="text.secondary" style={{ whiteSpace: 'pre-wrap' }}>
                 {item.productDesc}
               </Text>
               {(item.favorite === 'Y') ?

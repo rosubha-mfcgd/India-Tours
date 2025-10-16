@@ -1,5 +1,4 @@
-import loadingSep from "../../../assets/images/loading-separate.gif"
- import { View } from 'react-native';
+ import { View, Image } from 'react-native';
 const loadingSeparate = () => {
   return (
     <View
@@ -10,7 +9,7 @@ const loadingSeparate = () => {
         justifyContent: "center",
       }}
     >
-      <img src={loadingSep} alt='loading' />
+      <Image source={require("../../../assets/images/loading-separate.gif")} alt='loading' />
     </View>
   )
 }

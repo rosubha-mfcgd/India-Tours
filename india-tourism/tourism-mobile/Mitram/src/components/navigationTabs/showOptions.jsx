@@ -5,7 +5,7 @@ import SidebarStyle from '../stylecomp/sidebar';
 import BookingFormStyle from '../stylecomp/bookingForm'; 
 import { TouchableOpacity } from 'react-native';
 import { useEffect, useState, useContext} from "react";
-  import { useNavigation, useLocation } from '@react-navigation/native'; 
+
  import { MaterialIcons } from '@react-native-vector-icons/material-icons';
 import {getOptions,updateAsFavorite} from "../admin/admin.js";
 import SideBarNotification from './sideBarNotification.jsx';
@@ -17,8 +17,7 @@ Surface,Switch,Text,TextInput,Tooltip,TouchableRipple} from 'react-native-paper'
 
   const DisplayOptions = ({access_token,triggerDisplayTasksByOptionID,productID,categoryID}) =>{
 
- const navigate = useNavigation();
-     const location = useLocation();
+
     const { notification} = useContext(NavContext);
      const [items, setItems] = useState('')
 
@@ -87,10 +86,10 @@ Surface,Switch,Text,TextInput,Tooltip,TouchableRipple} from 'react-native-paper'
                      />
                                      
                     <Card.Content>
-                        <Text gutterBottom variant="body1" component="div" sx={{whiteSpace: 'pre-wrap'}}>
+                        <Text gutterBottom variant="body1" component="div" style={{whiteSpace: 'pre-wrap'}}>
                 {item.optionName}
               </Text>
-              <Text variant="body2" color="text.secondary" sx={{whiteSpace: 'pre-wrap'}}>
+              <Text variant="body2" color="text.secondary" style={{whiteSpace: 'pre-wrap'}}>
                 {item.optionDesc}
               </Text>
               {(item.favorite === 'Y') ?

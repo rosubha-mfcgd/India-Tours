@@ -1,7 +1,7 @@
 import React, { useContext, useEffect,useState } from "react";  
 
 import { getTripList,getTourManagers } from "../admin/admin";
- import { View } from 'react-native';
+ import { View , Image} from 'react-native';
  import {Appbar,Avatar,Button,Card,Checkbox,Chip,Dialog,Divider,FAB,HelperText,IconButton,List,Menu,
 Modal,Portal,ProgressBar,RadioButton,Searchbar,SegmentedButtons,Snackbar,
 Surface,Switch,Text,TextInput,Tooltip,TouchableRipple} from 'react-native-paper'
@@ -170,7 +170,7 @@ const TripList = ({access_token,categoryId,cityList,showDetails}) =>{
     
     return(
     
-        <View sx={{ display: 'flex',justifyContent:'flex-end'}}>
+        <View style={{ display: 'flex',justifyContent:'flex-end'}}>
             <View className="navbar-grid">
                <nav className="navbar">
                 <View style={{ flexDirection: 'row', flexWrap: 'wrap' }}
@@ -224,7 +224,7 @@ const TripList = ({access_token,categoryId,cityList,showDetails}) =>{
                 :<View>Cannot load Tour details</View>
                 
              }
-             <View  sx={{position: 'fixed', top: '10', right: '0'
+             <View  style={{position: 'fixed', top: '10', right: '0'
              }}>
                  <IconButton
       aria-label="menu"

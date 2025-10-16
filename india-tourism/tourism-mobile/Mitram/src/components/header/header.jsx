@@ -35,8 +35,8 @@ return (
         <View>
              <View>
                
-         <Appbar position="static" sx={{ backgroundColor: '#19857b' }}>
-            <Toolbar sx={{ justifyContent: 'space-between' }}>
+         <Appbar position="static" style= {{ backgroundColor: '#19857b' }}>
+            <Appbar style= {{ justifyContent: 'space-between' }}>
             <Text variant="h6" component="div">
               India Tours
             </Text>
@@ -47,20 +47,20 @@ return (
               {/* Add other right-aligned elements here */}
              
             </View>
-          <View> <p>{dateTime.toLocaleTimeString()}</p></View>
+          <View> <Text>{dateTime.toLocaleTimeString()}</Text></View>
        
             <View>
-               <p>{dateTime.toLocaleDateString('en-US', {
+              <Text> {dateTime.toLocaleDateString('en-US', {
   year: 'numeric',
   month: 'long',
   day: 'numeric',
-})}</p>
+})}</Text>
 
-              <Link href="signup" sx={{ color: 'white' }}>Sign In</Link>
+              {/* <Link href="signup" style ={{ color: 'white' }}>Sign In</Link> */}
             </View>
 
           
-    </Toolbar>
+    </Appbar>
      </Appbar>
      </View>
      </View>

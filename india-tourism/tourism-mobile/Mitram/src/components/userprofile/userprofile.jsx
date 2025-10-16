@@ -1,10 +1,10 @@
-import React, { useState, useRef , useEffect, useContext} from 'react';
+import React, { useState,  useEffect, useContext} from 'react';
 
 import {getPoints} from '../admin/admin';
-
+import {View,Text} from 'react-native'
 import {Appbar,Avatar,Button,Card,Checkbox,Chip,Dialog,Divider,FAB,HelperText,IconButton,List,Menu,
 Modal,Portal,ProgressBar,RadioButton,Searchbar,SegmentedButtons,Snackbar,
-Surface,Switch,Text,TextInput,Tooltip,TouchableRipple} from 'react-native-paper'
+Surface,Switch,TextInput,Tooltip,TouchableRipple} from 'react-native-paper'
 
 import { NavContext } from '../navigationContext/navigationContext.jsx';
 const UserProfile = ({name,email,mobile,access_token}) =>{
@@ -54,8 +54,8 @@ return (
         <View>
              <View>
                
-         <Appbar position="static" sx={{ backgroundColor: '#19857b' }}>
-            <Toolbar sx={{ justifyContent: 'space-between' }}>
+         <Appbar position="static" style={{ backgroundColor: '#19857b' }}>
+            <Toolbar style={{ justifyContent: 'space-between' }}>
             <Text variant="h5" component="div">
               India Tours
             </Text>
@@ -78,11 +78,11 @@ return (
                 <Text variant="body2"  gutterBottom>Points {points}</Text>
             </Box>
               
-              <p>{dateTime.toLocaleDateString('en-US', {
+              <Text>{dateTime.toLocaleDateString('en-US', {
   year: 'numeric',
   month: 'long',
   day: 'numeric',
-})} {dateTime.toLocaleTimeString()}</p>
+})} {dateTime.toLocaleTimeString()}</Text>
                
             <Box>
               
