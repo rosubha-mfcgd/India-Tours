@@ -128,13 +128,13 @@ const NavBar = ({access_token,triggerDisplayOptionsByCatId,
               <TouchableOpacity type="submit" class="button"  
               onPress={()=>triggerDisplayOptionsByCatId(item.categoryID)} 
                     style={{ cursor: 'pointer',backgroundColor: '#8a77f8ff',color:'#0c0c0fff'}}>
-                        Click to View</TouchableOpacity>
+                      <Text>Click to View</Text></TouchableOpacity>
                     </Card>
                 </View>
                 
                 </View>
                 )
-                ):<View>Cannot load categories</View>
+                ):<View> <Text>Cannot load categories</Text></View>
                 
              }
             

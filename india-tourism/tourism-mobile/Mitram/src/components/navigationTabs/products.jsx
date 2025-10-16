@@ -3,9 +3,9 @@ import CardStyle from '../stylecomp/cards';
 import { useEffect, useState, useContext } from "react";
 import {Appbar,Avatar,Button,Card,Checkbox,Chip,Dialog,Divider,FAB,HelperText,IconButton,List,Menu,
 Modal,Portal,ProgressBar,RadioButton,Searchbar,SegmentedButtons,Snackbar,
-Surface,Switch,Text,TextInput,Tooltip,TouchableRipple} from 'react-native-paper'
+Surface,Switch,TextInput,Tooltip,TouchableRipple} from 'react-native-paper'
 
-  import { View ,TouchableOpacity} from 'react-native';
+  import { View ,Text,TouchableOpacity} from 'react-native';
 
 import {updateAsFavorite,getProducts } from "../admin/admin";
 import { NavContext } from '../navigationContext/navigationContext.jsx';
@@ -110,13 +110,13 @@ const Products = ({access_token,triggerDisplayTripsByProductId}) =>{
               </Card.CardContent>
               <TouchableOpacity type="submit" class="button"  onPress={()=>triggerDisplayTripsByProductId(item.productID)} 
                     style={{ cursor: 'pointer',backgroundColor: '#8a77f8ff',color:'#0c0c0fff'}}>
-                        Click to View</TouchableOpacity>
+                    <Text>Click to View</Text></TouchableOpacity>
                     </Card>
                 </View>
                 
                 </View>
                 )
-                ):<View >Cannot load products</View>
+                ):<View ><Text>Cannot load products</Text></View>
                 
              }
             
