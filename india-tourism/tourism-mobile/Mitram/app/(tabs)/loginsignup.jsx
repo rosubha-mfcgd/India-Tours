@@ -1,13 +1,13 @@
-import React, { useState, useRef , useEffect} from 'react';
+import React, { useState,  useEffect} from 'react';
  import { Image } from 'react-native';
 import {Appbar,Avatar,Button,Card,Checkbox,Chip,Dialog,Divider,FAB,HelperText,IconButton,List,Menu,
 Modal,Portal,ProgressBar,RadioButton,Searchbar,SegmentedButtons,Snackbar,
 Surface,Switch,Text,TextInput,Tooltip,TouchableRipple} from 'react-native-paper'
 
-import {signupUser,loginUser} from '../admin/admin';
+import {signupUser,loginUser} from '../admin/admin'
 import { View,TouchableOpacity } from 'react-native';
 
-import LoginSignUpStyle from '../stylecomp/loginsignup'; 
+import LoginSignUpStyle from '../stylecomp/loginsignup.js'; 
 
 
 import * as Google from 'expo-auth-session/providers/google';
@@ -54,7 +54,7 @@ const LoginSignup =({navigation}) => {
         }catch(err){
                  
           // user cancelled the login flow
-          console.log('Login Failed for error code:', error.code)
+          console.log('Login Failed for error code:', err.code)
         } 
         }
 
@@ -70,7 +70,7 @@ const LoginSignup =({navigation}) => {
         }catch(err)
         {
            // user cancelled the login flow
-          console.log('Login Failed for error code:', error.code)  
+          console.log('Login Failed for error code:', err.code)  
         }
         };          
          useEffect(()=>
@@ -207,8 +207,7 @@ const LoginSignup =({navigation}) => {
                         <View style={LoginSignUpStyle.header}>
                             <View style={LoginSignUpStyle.centeredText}><Text>{action}</Text></View>
                             
-                            <View className='underline'></View>
-
+                          
                         </View>
                          {errorMessage ? 
                          (<View style={LoginSignUpStyle.errordivattop}><Text>{errorMessage}</Text></View>):
@@ -222,34 +221,34 @@ const LoginSignup =({navigation}) => {
                         
                         <View>
                             <View style={LoginSignUpStyle.input}>
-                            <Image source ={require('../Assets/input/username.png')} alt=""/>
+                            <Image source ={require('../assets/input/username.png')} alt=""/>
                             <TextInput label="Name" value = {name} onChangeText = {handleNameChange} 
-                            variant="outlined"/>
+                            />
                         </View>
                         <View style={LoginSignUpStyle.input}>
-                            <Image source={require('../Assets/input/mobile.png')} alt=""/>
+                            <Image source={require('../assets/input/mobile.png')} alt=""/>
                             <TextInput label="Mobile" value = {mobile} onChangeText = {handleMobileChange} 
-                            variant="outlined"/>
+                           />
                         </View>
                         <View style={LoginSignUpStyle.input} >
-                            <Image source={require('../Assets/input/email.png')} alt=""/>
+                            <Image source={require('../assets/input/email.png')} alt=""/>
                             <TextInput label="Email" value = {email} onChangeText = {handleEmailChange} 
-                            variant="outlined"/>
+                           />
                         </View>
                     </View>:
                         <View>
                             <View style={LoginSignUpStyle.input}>
-                            <Image source={require('../Assets/input/mobile.png')} alt=""/>
+                            <Image source={require('../assets/input/mobile.png')} alt=""/>
                             <TextInput label="Mobile" value = {mobile} onChangeText = {handleMobileChange} 
-                            variant="outlined"/>
+                            />
                         </View>
                         <br/>
                         <View style={LoginSignUpStyle.input}><Text>OR</Text></View>
                         <br/>
                         <View style={LoginSignUpStyle.input} >
-                            <Image source={require('../Assets/input/email.png')} alt=""/>
+                            <Image source={require('../assets/input/email.png')} alt=""/>
                             <TextInput label="Email" value = {email} onChangeText = {handleEmailChange} 
-                            variant="outlined"/>
+                            />
                         </View>
                         </View>
                         }
@@ -270,7 +269,7 @@ const LoginSignup =({navigation}) => {
                         }
 
                         {action === 'Login'?
-                        <View className='submit-container'>
+                        <View>
                     <TouchableOpacity 
                       style={{ width: 192, height: 48 }}
                            

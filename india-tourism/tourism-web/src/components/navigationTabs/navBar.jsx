@@ -106,7 +106,7 @@ const NavBar = ({access_token,triggerDisplayOptionsByCatId,
 
     return (
         <div className="navbar-grid">
-        <nav className="navbar">
+        <div className="navbar">
             <Grid container spacing={10} justify="center" width="70%">
              {items && items.length>0 ?
 
@@ -158,7 +158,7 @@ const NavBar = ({access_token,triggerDisplayOptionsByCatId,
             </div> 
             :<div></div>
              }
-            </nav>
+            </div>
         </div>
 
     )

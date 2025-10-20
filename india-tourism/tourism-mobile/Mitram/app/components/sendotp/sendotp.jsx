@@ -1,15 +1,14 @@
 import React, { useState } from 'react';
-import mobile_icon from '../Assets/input/mobile.png';
-import email_icon from '../Assets/input/email.png';
- import { Image } from 'react-native';
+
+ import { View,Text,Image, TouchableOpacity } from 'react-native';
   import { useRoute } from '@react-navigation/native'; 
-import LoginSignUpStyle from '../stylecomp/loginsignup'; 
+import LoginSignUpStyle from '../../stylecomp/loginsignup.js'; 
 import {Appbar,Avatar,Button,Card,Checkbox,Chip,Dialog,Divider,FAB,HelperText,IconButton,List,Menu,
 Modal,Portal,ProgressBar,RadioButton,Searchbar,SegmentedButtons,Snackbar,
-Surface,Switch,Text,TextInput,Tooltip,TouchableRipple} from 'react-native-paper'
+Surface,Switch,TextInput,Tooltip,TouchableRipple} from 'react-native-paper'
 
-   import { View } from 'react-native';
-import {validateOTPForLogin} from '../admin/admin';
+import {validateOTPForLogin} from '../../admin/admin';
+
 const Sendotp = ({navigation})=>{
    
      const route = useRoute();
@@ -63,7 +62,7 @@ return (
                     }
 <View style={LoginSignUpStyle.inputs}>
      <View style={LoginSignUpStyle.input} >
-                <Image source={require('../Assets/input/mobile.png')} alt=""/>
+                <Image source={require('../../assets/input/mobile.png')} alt=""/>
               
         <TextInput  label="Mobile Number"
       variant="outlined"
@@ -80,9 +79,8 @@ return (
 
                </View>
                 <View style={LoginSignUpStyle.input}>
-                <Image source={require('../Assets/input/email.png')} alt=""/>
+                <Image source={require('../../assets/input/email.png')} alt=""/>
                  <TextInput  label="Email"
-                    variant="outlined"
                     defaultValue=""
                     value={location.state.email}
                     slotProps={{ htmlInput: { maxLength: 100,inputLabel: {
@@ -92,16 +90,16 @@ return (
         }  } }} disabled/>
                </View>
      <View style={LoginSignUpStyle.input}>
-                <Image source={require('../Assets/input/mobile.png')} alt=""/>
+                <Image source={require('../../assets/input/mobile.png')} alt=""/>
 
                  <TextInput label="OTP" value = {otp} onChangeText = {handleOTPChange} 
-                 variant="outlined"/>
+                />
                 </View>
                     <View style={LoginSignUpStyle.centrediv}>
-                    <View style={LoginSignUpStyle.submitcontainer}>
-                        <View style={LoginSignUpStyle.submit} 
-                        onPress={validateOTP}><Text>Validate OTP</Text></View>
-                        </View>
+                   
+                        <TouchableOpacity style={LoginSignUpStyle.submit} 
+                        onPress={validateOTP}><Text>Validate OTP</Text></TouchableOpacity>
+                       
                     </View>
     </View>
 </View>

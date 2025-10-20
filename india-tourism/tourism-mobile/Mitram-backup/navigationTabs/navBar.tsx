@@ -1,6 +1,5 @@
 import CategoryStyle from '../stylecomp/navbar'; 
 import CardStyle from '../stylecomp/cards'; 
-import SidebarStyle from '../stylecomp/sidebar'; 
 import { TouchableOpacity } from 'react-native';
 import { useEffect, useState, useContext } from "react";
  import { View,Text } from 'react-native';
@@ -102,8 +101,8 @@ const NavBar = ({access_token,triggerDisplayOptionsByCatId,
                     <Card style = {CardStyle.card}
                      >
                     
-                    <Card.Cover component= "img"  height="100"
-                    image = {item.image} alt={item.categoryDesc} 
+                    <Card.Cover  
+                    Image = {item.image}  height={100} alt={item.categoryDesc} 
                     onPress={()=>triggerDisplayOptionsByCatId(item.categoryID)} 
                     style={{ cursor: 'pointer' }} 
                      />

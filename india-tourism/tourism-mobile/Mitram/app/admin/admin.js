@@ -45,7 +45,7 @@ export const loginUser = async(data) =>{
             };
    
   const response = await axios.post(
-        process.env.REACT_APP_SERVER_URI + "loginUser",
+        process.env.EXPO_PUBLIC_SERVER_URI + "loginUser",
         data,
        {headers}
     );
@@ -72,7 +72,7 @@ export const validateOTPForLogin = async(data) =>{
             "Authorization":"Bearer "+access_token.data.access_token
             };
         let response = await axios.post(
-        process.env.REACT_APP_SERVER_URI + "validateOTP",
+        process.env.EXPO_PUBLIC_SERVER_URI + "validateOTP",
         data,
        {headers});
     if(response){
@@ -98,7 +98,7 @@ export const getPoints = async(data) =>{
             "Authorization":"Bearer "+access_token.data.access_token
             };
             const response = await axios.post(
-        process.env.REACT_APP_SERVER_URI + "getPoints",
+        process.env.EXPO_PUBLIC_SERVER_URI + "getPoints",
         data,
        {headers});
     if(response)
@@ -128,7 +128,7 @@ export const getCategories = async(productID) =>{
             "Authorization":"Bearer "+access_token.data.access_token
             };
             const response = await axios.get(
-        process.env.REACT_APP_SERVER_URI + "getCategories?productID="+productID,
+        process.env.EXPO_PUBLIC_SERVER_URI + "getCategories?productID="+productID,
         {headers});
         if(response)
      {
@@ -155,7 +155,7 @@ export const getOptions = async(productID,categoryID) =>{
             "Authorization":"Bearer "+access_token.data.access_token
             };
             const response = await axios.get(
-        process.env.REACT_APP_SERVER_URI + "searchMyOptions?productID="+
+        process.env.EXPO_PUBLIC_SERVER_URI + "searchMyOptions?productID="+
                 productID+"&categoryID="+categoryID,
         {headers});
         if(response)
@@ -185,7 +185,7 @@ export const getProducts = async() =>{
             "Authorization":"Bearer "+access_token.data.access_token
             };
             const response = await axios.get(
-        process.env.REACT_APP_SERVER_URI + "getProducts",
+        process.env.EXPO_PUBLIC_SERVER_URI + "getProducts",
         {headers});
         if(response)
      {
@@ -214,7 +214,7 @@ export const getCities = async() =>{
             "Authorization":"Bearer "+access_token.data.access_token
             };
             const response = await axios.get(
-        process.env.REACT_APP_SERVER_URI + "getCities",
+        process.env.EXPO_PUBLIC_SERVER_URI + "getCities",
         {headers});
         if(response)
      {
@@ -243,7 +243,7 @@ export const getTripList = async(categoryId) =>{
             "Authorization":"Bearer "+access_token.data.access_token
             };
             const response = await axios.get(
-        process.env.REACT_APP_SERVER_URI + "getToursByCategoryId?categoryId="+categoryId,
+        process.env.EXPO_PUBLIC_SERVER_URI + "getToursByCategoryId?categoryId="+categoryId,
         {headers});
         if(response)
      {
@@ -271,7 +271,7 @@ export const getTourManagers = async() =>{
             "Authorization":"Bearer "+access_token.data.access_token
             };
             const response = await axios.get(
-        process.env.REACT_APP_SERVER_URI + "getTourOperators",
+        process.env.EXPO_PUBLIC_SERVER_URI + "getTourOperators",
         {headers});
         if(response)
      {
@@ -299,7 +299,7 @@ export const updateAsFavorite = async(data) =>{
             "Authorization":"Bearer "+access_token.data.access_token
             };
             const response = await axios.post(
-        process.env.REACT_APP_SERVER_URI + "updateFavoriteCategory",
+        process.env.EXPO_PUBLIC_SERVER_URI + "updateFavoriteCategory",
             data, {headers});
         if(response)
      {
@@ -327,7 +327,7 @@ export const performTripBooking = async(data) =>{
             "Authorization":"Bearer "+access_token.data.access_token
             };
             let response = await axios.post(
-        process.env.REACT_APP_SERVER_URI + "performBookings",
+        process.env.EXPO_PUBLIC_SERVER_URI + "performBookings",
             data, {headers});
         if(response)
      {
@@ -358,7 +358,7 @@ export const getBookingsByBookingId = async(data) =>{
             };
         
         const response = await axios.post(
-                        process.env.REACT_APP_SERVER_URI + "getBookingsByBookingId",
+                        process.env.EXPO_PUBLIC_SERVER_URI + "getBookingsByBookingId",
                         data, {headers});
         
          if(response)
@@ -388,7 +388,7 @@ export const updateBookingsByBookingId = async(data) =>{
             };
         
         const response = await axios.post(
-                        process.env.REACT_APP_SERVER_URI + "updateBookingsByBookingId",
+                        process.env.EXPO_PUBLIC_SERVER_URI + "updateBookingsByBookingId",
                         data, {headers});
         
          if(response)
@@ -409,7 +409,7 @@ return res_data;
 export const getApiAccessToken= async() =>{
   try{
     const response = await axios.post(
-        process.env.REACT_APP_SERVER_URI + "token"
+        process.env.EXPO_PUBLIC_SERVER_URI + "token"
     );
     if(response){
         console.log('access_token....',response.data);
@@ -423,7 +423,6 @@ catch(err){
     throw err;
 }
 }
-
 
 
 

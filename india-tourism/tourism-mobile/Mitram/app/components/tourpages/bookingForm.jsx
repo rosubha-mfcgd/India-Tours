@@ -1,20 +1,18 @@
 
-import CategoryStyle from '../stylecomp/navbar'; 
-import CardStyle from '../stylecomp/cards'; 
-import SidebarStyle from '../stylecomp/sidebar'; 
-import TripDetailsStyle from '../stylecomp/TripDetails'
-import BookingFormStyle from '../stylecomp/bookingForm'; 
-import LoginSignUpStyle from '../stylecomp/loginsignup';
-import CustomButton from '../Utilities/CustomButtons.jsx'
-import { useEffect, useState, useContext} from "react";
-import {getBookingsByBookingId} from "../admin/admin";
-import SideBarNotification from '../navigationTabs/sideBarNotification.jsx';
 
-import {View} from 'react-native'
-import { NavContext } from '../navigationContext/navigationContext.jsx';
+import TripDetailsStyle from '../../stylecomp/TripDetails'
+import BookingFormStyle from '../../stylecomp/bookingForm'; 
+import LoginSignUpStyle from '../../stylecomp/loginsignup';
+import CustomButton from '../../Utilities/CustomButtons.jsx'
+import { useEffect, useState} from "react";
+import {getBookingsByBookingId} from '../../admin/admin';
+
+
+import {View, Text} from 'react-native'
+
 import {Appbar,Avatar,Button,Card,Checkbox,Chip,Dialog,Divider,FAB,HelperText,IconButton,List,Menu,
 Modal,Portal,ProgressBar,RadioButton,Searchbar,SegmentedButtons,Snackbar,
-Surface,Switch,Text,TextInput,Tooltip,TouchableRipple,Paper,DataTable} from 'react-native-paper';
+Surface,Switch,TextInput,Tooltip,TouchableRipple,Paper,DataTable} from 'react-native-paper';
 
 
 
@@ -37,7 +35,7 @@ const BookingForm = ({access_token,tourDetails,triggerDisplayBookings}) =>{
      const [dialogOpen, setDialogOpen] = useState(false);
      const[showBookingBtn,setShowBookingBtn] = useState(true);
  
-  const { notification} = useContext(NavContext);
+  
     const CssTextInput = styled(TextInput)({
       '& label': {
         color: '#FFFF', // Default label color
@@ -228,7 +226,7 @@ const BookingForm = ({access_token,tourDetails,triggerDisplayBookings}) =>{
            
           <DialogContentText id="dialog-description">
           
-          {errorMessage}
+         <Text> {errorMessage}</Text>
           </DialogContentText>
         </DialogContent>
         <DialogActions>
@@ -237,7 +235,7 @@ const BookingForm = ({access_token,tourDetails,triggerDisplayBookings}) =>{
            OK
           </Button>
           {dialogOpen?
-          <Image source={require('../Assets/images/failure_animation.gif')} alt="" width="40" height="40"/>:
+          <Image source={require('../../assets/images/failure_animation.gif')} alt="" width="40" height="40"/>:
           <View></View>}
         </DialogActions>
       </Dialog>:<View></View>}
@@ -314,7 +312,7 @@ const BookingForm = ({access_token,tourDetails,triggerDisplayBookings}) =>{
                 >
              <Text variant="body2" style={{ color: '#160101ff' }}> 
               <strong>Tourist #{tourist.key}</strong>
-              <Image source={require('../Assets/images/close-button.png')} alt="" height="30" width="30" 
+              <Image source={require('../../assets/images/close-button.png')} alt="" height="30" width="30" 
               className='img-style' 
 
              />
@@ -401,20 +399,15 @@ const BookingForm = ({access_token,tourDetails,triggerDisplayBookings}) =>{
                         >Go Back</TouchableOpacity>
 
                             <TouchableOpacity style={TripDetailsStyle.button}
-                      onPress={submitBookings}>
-                        Submit your Booking</TouchableOpacity>
+                      onPress={submitBookings}><Text>
+                        Submit your Booking</Text></TouchableOpacity>
                        
         </View>
       </View>
         </View>:<View></View>
     }
          </View>
-         {notification ?
-                        <View style={{position: 'fixed', top:70,right:0}} >    
-                        <SideBarNotification/> 
-                     </View> 
-                     :<View></View>
-                      }
+       
          </View> 
           
     );

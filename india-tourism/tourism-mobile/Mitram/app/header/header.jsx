@@ -1,11 +1,11 @@
-import React, { useState, useRef , useEffect, useContext} from 'react';
+import React, { useState,  useEffect, useContext} from 'react';
 import { Text, View } from 'react-native';
 
 import {Appbar,Avatar,Button,Card,Checkbox,Chip,Dialog,Divider,FAB,HelperText,IconButton,List,Menu,
 Modal,Portal,ProgressBar,RadioButton,Searchbar,SegmentedButtons,Snackbar,
 Surface,Switch,TextInput,Tooltip,TouchableRipple} from 'react-native-paper'
 
-import { NavContext } from '../navigationContext/navigationContext.jsx';
+
 
 
 const Header = () =>{
@@ -14,12 +14,12 @@ const [dateTime, setDateTime] = useState(new Date());
 
 const[isOpen,setOpen] = useState(false);
 const open = Boolean(anchorEl);
-const {triggerNotification} = useContext(NavContext);
+//const {triggerNotification} = useContext(NavContext);
 function toggleSideBar(event)
 {
   console.log('isOpen',isOpen)
   setOpen(!isOpen);
-  triggerNotification(!isOpen);
+ // triggerNotification(!isOpen);
 }
 
 

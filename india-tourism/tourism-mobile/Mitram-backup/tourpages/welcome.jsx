@@ -1,7 +1,7 @@
 import React, { useEffect,useState,useContext } from "react";  
 
 import NavBar from '../navigationTabs/navBar.jsx';
-import Product from '../navigationTabs/products.jsx';
+import Product from '../products.jsx';
 import DisplayOptions from '../navigationTabs/showOptions.jsx'
 import Header from '../header/header.jsx';
 import Layout from '../Layout/layout.jsx';

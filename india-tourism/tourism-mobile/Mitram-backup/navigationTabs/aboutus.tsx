@@ -1,13 +1,13 @@
 import React, { useEffect,useState,useContext } from "react";
 import { NavProvider } from '../navigationContext/navigationContext.jsx';
-import NavBar from '../navigationTabs/navBar.jsx';
+import NavBar from './navBar.jsx';
 import UserProfile from '../userprofile/userprofile.jsx';
 
  import { View,Text } from 'react-native';
 const Aboutus = () =>{
 
 return (
-      <View className="terms-and-conditions-container">
+      <View>
       <h1>Terms and Conditions</h1>
 
       <section className="section-intro">

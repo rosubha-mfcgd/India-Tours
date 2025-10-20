@@ -4,18 +4,15 @@ import { useEffect, useState, useContext } from "react";
 import {Appbar,Avatar,Button,Card,Checkbox,Chip,Dialog,Divider,FAB,HelperText,IconButton,List,Menu,
 Modal,Portal,ProgressBar,RadioButton,Searchbar,SegmentedButtons,Snackbar,
 Surface,Switch,TextInput,Tooltip,TouchableRipple} from 'react-native-paper'
+import { View ,Text,TouchableOpacity, StyleSheet} from 'react-native';
+import {updateAsFavorite,getProducts} from '../admin/admin';
 
-  import { View ,Text,TouchableOpacity} from 'react-native';
-
-import {updateAsFavorite,getProducts } from "../admin/admin";
-import { NavContext } from '../navigationContext/navigationContext.jsx';
-import SideBarNotification from './sideBarNotification.jsx'
  import { MaterialIcons } from '@react-native-vector-icons/material-icons';
 
 const Products = ({access_token,triggerDisplayTripsByProductId}) =>{
 
     
-     const { notification} = useContext(NavContext);
+    
      const [items, setItems] = useState('')
     
     
@@ -121,12 +118,7 @@ const Products = ({access_token,triggerDisplayTripsByProductId}) =>{
              }
             
             </View>
-          {notification ?
-               <View  style={{position: 'fixed', top:70,right:0}} >    
-               <SideBarNotification/> 
-            </View> 
-            :<View ></View>
-             }
+          
             </View>
         </View>
 
