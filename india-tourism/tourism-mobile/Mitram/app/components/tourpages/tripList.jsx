@@ -1,10 +1,11 @@
 import React, { useContext, useEffect,useState } from "react";  
 
 import {getTourManagers,getTripList} from '../../admin/admin';
- import { View , Text,Image} from 'react-native';
+ import { View , Text,Image,TouchableOpacity} from 'react-native';
  import {Appbar,Avatar,Button,Card,Checkbox,Chip,Dialog,Divider,FAB,HelperText,IconButton,List,Menu,
 Modal,Portal,ProgressBar,RadioButton,Searchbar,SegmentedButtons,Snackbar,
 Surface,Switch,TextInput,Tooltip,TouchableRipple} from 'react-native-paper'
+
 
  
 
@@ -190,30 +191,30 @@ const TripList = ({access_token,categoryId,cityList,showDetails}) =>{
                     />
                                      
                     <CardContent>
-                        <Text gutterBottom variant="body1" >
+                        <Text>
                 {tour.categoryName}
               </Text>
-              <Text variant="body2" color="text.secondary">
+              <Text>
                 {tour.locationName}
               </Text>
 
-              <Text variant="body2" color="text.secondary">
+              <Text>
                 {changeDateToWords(tour.startDate)} - {changeDateToWords(tour.endDate)}
               </Text>
 
-               <Text variant="body2" color="text.secondary">
+               <Text>
                 {getValuesFromTourManagerMap(tour.tourManagerId).tourManagerName}- {getValuesFromTourManagerMap(tour.tourManagerId).tourOpLocation}
               </Text>
-                    <Text variant="body2" color="text.secondary">
+                    <Text>
                  {getValuesFromTourManagerMap(tour.tourManagerId).contact}
               </Text>
              
-                    <Text variant="body2" color="text.secondary">
+                    <Text>
                  {tour.domesticOrinternational === "D"? "Domestic":"International"}
               </Text>
-                 <button type="submit" class="button"  onPress={()=>showDetails(tour,getValuesFromTourManagerMap(tour.tourManagerId))} 
+                 <TouchableOpacity  onPress={()=>showDetails(tour,getValuesFromTourManagerMap(tour.tourManagerId))} 
                     style={{ cursor: 'pointer',backgroundColor: '#8a77f8ff',color:'#0c0c0fff'}}>
-                       Details</button>
+                       Details</TouchableOpacity>
               </CardContent>
                     </Card>
                 </View>

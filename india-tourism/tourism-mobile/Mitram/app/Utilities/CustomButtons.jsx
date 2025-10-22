@@ -41,7 +41,8 @@ const styles = StyleSheet.create({
            resizeMode: 'contain'
 
         }}
-            source={require('../assets/images/plus.png')} id="add" onPress= {(event)=> addTourist(event)}/>
+            source={require('../assets/images/plus.png')} id="add" 
+            onPress= {(event)=> addTourist(event)}/>
          
       </View>
           <View>

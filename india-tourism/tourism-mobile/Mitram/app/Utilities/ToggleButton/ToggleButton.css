@@ -15,7 +15,6 @@
   content: "";
   height: 100%;
   width: 50%;
-  background-color: white;
   position: absolute;
   border-radius: 50%;
   border: var(--secondary) solid 0.2em;

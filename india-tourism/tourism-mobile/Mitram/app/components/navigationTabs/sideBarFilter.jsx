@@ -31,7 +31,7 @@ import SidebarFilterStyle from  '../../stylecomp/sidebarForSorting';
         };
     const StyledDrawer = styled(Drawer)(({ theme }) => ({
   '& .MuiDrawer-paper': {
-    backgroundColor: "#01130ad5" // Set your desired background color here
+   // Set your desired background color here
      },
     }));
 
@@ -53,7 +53,7 @@ const handleChange = (event) => {
         '& .MuiDrawer-paper': { // Target the Paper component within the Drawer
           width: 240,
           boxSizing: 'border-box',
-          backgroundColor: 'lightblue', // Example background color
+          // Example background color
           borderRadius: '0 16px 16px 0', // Example rounded corners
         },
       }} 

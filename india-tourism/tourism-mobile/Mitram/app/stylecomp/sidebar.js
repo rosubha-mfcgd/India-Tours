@@ -36,7 +36,7 @@ sidebar :{
   left: '-250', /* Hide by default */
   width: '250',
   height: '100%',
-  backgroundcolor: '#333',
+  backgroundColor: '#333',
   color: 'white',
   padding: '1rem',
   transition: 'left 0.3s ease',
@@ -48,8 +48,7 @@ sidebaropen :{
 },
 
 sidebarclosebtn :{
-  background: 'none',
-  color: 'white',
+   color: 'white',
   border: 'none',
   fontsize: '2rem',
   cursor: 'pointer',

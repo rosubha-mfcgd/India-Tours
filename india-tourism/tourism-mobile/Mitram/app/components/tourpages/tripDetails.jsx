@@ -54,16 +54,16 @@ const TripDetails = ({tourDetails,triggerDisplayOptionsByCatId,openBookingForm,
         alt={tourDetails.locationName}
       />
            </Card>
-            <Text variant="body2" style={{ color: '#FFFFFF' }}>
+            <Text style={{ color: '#FFFFFF' }}>
                            {tourDetails.desc}
                          </Text>
-            <Text variant="body2" style={{ color: '#FFFFFF' }}>
+            <Text style={{ color: '#FFFFFF' }}>
                           This tour is operated by :- <strong>{tourDetails.tourManagerName}</strong>
                          </Text>
-            <Text variant="body2" style={{ color: '#FFFFFF' }}>
+            <Text  style={{ color: '#FFFFFF' }}>
                 Operator Contact :- <strong>{tourDetails.contact}</strong>
              </Text>
-             <Text variant="body2" style={{ color: '#FFFFFF' }}>
+             <Text style={{ color: '#FFFFFF' }}>
                     Operator secondary Contact :- {tourDetails.secondarycontact}
              </Text>
 
@@ -75,7 +75,7 @@ const TripDetails = ({tourDetails,triggerDisplayOptionsByCatId,openBookingForm,
                        
                         <DataTable.Row>
                     <DataTable.Col>
-                        <Text variant="body2" style={{ color: '#FFFFFF' }}>
+                        <Text style={{ color: '#FFFFFF' }}>
                         LocationName : <strong>{tourDetails.locationName}</strong>    
                         </Text>
                     </DataTable.Col>
@@ -83,7 +83,7 @@ const TripDetails = ({tourDetails,triggerDisplayOptionsByCatId,openBookingForm,
                    
                     <DataTable.Row>
                     <DataTable.Col>
-                        <Text variant="body2" style={{ color: '#FFFFFF' }}>
+                        <Text style={{ color: '#FFFFFF' }}>
                        Trip Length : <strong> {tourDetails.triplength}  </strong>
                         </Text>  
                     </DataTable.Col>
@@ -91,7 +91,7 @@ const TripDetails = ({tourDetails,triggerDisplayOptionsByCatId,openBookingForm,
                     </DataTable.Row>
                      <DataTable.Row>
                      <DataTable.Col>
-                        <Text variant="body2" style={{ color: '#FFFFFF' }}>
+                        <Text style={{ color: '#FFFFFF' }}>
                        Trip Type : <strong> {tourDetails.domesticOrInternational === "D"? "Domestic"
                        :"International"}  </strong>
                         </Text>  
@@ -150,13 +150,13 @@ const TripDetails = ({tourDetails,triggerDisplayOptionsByCatId,openBookingForm,
                     <Button  onPress={()=>{
                         triggerDisplayOptionsByCatId(tourDetails.categoryId)}}
                         style={TripDetails.button}
-                        >Go Back</Button>
+                        ><Text>Go Back</Text></Button>
 
                     
                     <Button  onPress={()=>{
                         openBookingForm(tourDetails)}}
                        style={TripDetails.button} 
-                        >Book My Trip</Button>
+                        ><Text>Book My Trip</Text></Button>
 
              
         </View> 

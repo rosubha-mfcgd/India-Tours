@@ -12,11 +12,11 @@ export default function TabLayout() {
        
         <Tabs.Screen name = "loginsignup"  
         
-        options={{title : "Login/SignUp" ,
+        options={{title : "loginsignup" ,
             tabBarIcon: ({size,color}) =><Ionicons name="home" size={size} color={color}/>
         }}>
           </Tabs.Screen> 
-         <Tabs.Screen name = "index" options={{title : "Our Products" ,
+         <Tabs.Screen name = "index" options={{title : "index" ,
             tabBarIcon: ({size,color}) =><Ionicons name="cart-outline" size={size} color={color}/>
         }}
         

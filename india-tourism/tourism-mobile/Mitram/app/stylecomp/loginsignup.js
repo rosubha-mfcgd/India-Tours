@@ -55,7 +55,7 @@ input:{
     margin: 'auto',
     width:480,
     height:80,
-    backgroundcolor:'#eaeaea',
+    backgroundColor:'#eaeaea',
     borderradius: 6
 
 },
@@ -64,7 +64,7 @@ TextInput: {
     margin: 'auto',
     width:480,
     height:80,
-    backgroundcolor:'#eaeaea',
+    backgroundColor:'#eaeaea',
     borderradius: 6
 },
 
@@ -75,9 +75,7 @@ inputimg: {
 inputText: {
     height:50,
     width:400,
-    background: 'transparent',
     border: 'none',
-    outline: 'none',
     color:'#797979',
     fontsize:19
 },

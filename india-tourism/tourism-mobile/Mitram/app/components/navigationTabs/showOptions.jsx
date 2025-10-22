@@ -102,7 +102,7 @@ Surface,Switch,Text,TextInput,Tooltip,TouchableRipple} from 'react-native-paper'
               </Card.Content>
               <TouchableOpacity type="submit" class="button"  
               onPress={()=>triggerDisplayTasksByOptionID(item.optionID)} 
-            style={{ cursor: 'pointer',backgroundColor: '#8a77f8ff',color:'#0c0c0fff'}}>
+            style={{ cursor: 'pointer',color:'#0c0c0fff'}}>
                        <Text> Click to View</Text></TouchableOpacity>
                     </Card>
                 </View>

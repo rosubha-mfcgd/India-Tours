@@ -135,22 +135,24 @@ const submitBooking = async()=>{
         <DialogContent>
               {!tourDetailsParam.bookingid?
           <DialogContentText id="dialog-description">
-          
+          <Text>
            Bingo !! Your booking has been allocated with bookingId {bookingId}. 
            Ensure to complete payment by next 48 hours else this booking will be deactivated
+           </Text>
           </DialogContentText>:
           <DialogContentText id="dialog-description">
-          
+          <Text>
            Yaay !! Your bookingId {bookingId} has been updated. 
            Ensure to complete additional payment by next 48 hours.
            For adjustment/refund, kindly wait for 5 business days
+           </Text>
           </DialogContentText>
             }
         </DialogContent>
         <DialogActions>
           <Button onPress={handleClickOpenOrClose}>Cancel</Button>
           <Button onPress={handleClickOpenOrClose} autoFocus>
-            Proceed to Payment
+           <Text> Proceed to Payment</Text>
           </Button>
           {dialogOpen?
           <Image source={require('../../assets/images/success_animation.gif')} alt="" width="40" height="40"/>:<View></View>}
@@ -162,10 +164,10 @@ const submitBooking = async()=>{
                                       <DataTable.Row>
                                         <DataTable.Cell>
                                     {!tourDetailsParam.bookingid?
-                                        <Text variant="h5" style={{ color: 'hsla(0, 32%, 92%, 1.00)' }}>
+                                        <Text style={{ color: 'hsla(0, 32%, 92%, 1.00)' }}>
                                             Booking details for {tourDetailsParam.locationName} tour by {tourDetailsParam.tourManagerName}
                                         </Text>:
-                                        <Text variant="h5" style={{ color: 'hsla(0, 32%, 92%, 1.00)' }}>
+                                        <Text style={{ color: 'hsla(0, 32%, 92%, 1.00)' }}>
                                             Booking ID {tourDetailsParam.bookingid} updates for  {tourDetailsParam.locationName} tour by {tourDetailsParam.tourManagerName}
                                         </Text>
                                     }
@@ -174,7 +176,7 @@ const submitBooking = async()=>{
                                          <button type="button" onPress={()=>{
                         triggerEditable()}}
                        class="button" 
-                        >Edit </button>
+                        ><Text>Edit</Text> </button>
 
                                         </DataTable.Cell>
                                         </DataTable.Row>
@@ -201,7 +203,7 @@ const submitBooking = async()=>{
                                                 </h2>
                                                 <FormControl>
                                              
-                                                <InputLabel variant="outlined" 
+                                                <InputLabel  
                                                 style={{ color: '#080000ff' }}
                                                 fullWidth>Name</InputLabel>
                                                 <Input id="name" name="name" defaultValue = {booking.name} 
@@ -216,7 +218,7 @@ const submitBooking = async()=>{
                                                     
                                                 <InputLabel 
                                                 style={{ color: '#0c0000ff' }}
-                                                variant="outlined" fullWidth>Email</InputLabel>
+                                                 >Email</InputLabel>
                                                 <Input id="email" name="email" 
                                                 defaultValue = {booking.email} 
                                                 inputProps={{
@@ -230,7 +232,7 @@ const submitBooking = async()=>{
                                                    
                                                 <InputLabel 
                                                 style={{ color: '#0c0000ff' }}
-                                                variant="outlined" fullWidth>Mobile</InputLabel>
+                                                 >Mobile</InputLabel>
                                                 <Input id="mobile" name="mobile" defaultValue = {booking.mobile} 
                                                 disabled={disable} inputProps={{
          maxLength: 10,
@@ -241,7 +243,7 @@ const submitBooking = async()=>{
                                                       
                                                   <InputLabel 
                                                   style={{ color: '#080000ff' }}
-                                                  variant="outlined" fullWidth>Age</InputLabel>
+                                                 >Age</InputLabel>
                                                  <Input id="age" name="age" defaultValue = {booking.age} 
                                                  disabled={disable}  inputProps={{
                                                                        maxLength: 2,
@@ -252,7 +254,7 @@ const submitBooking = async()=>{
                                                      
                                                   <InputLabel 
                                                   style={{ color: '#080000ff' }}
-                                                  variant="outlined" fullWidth>Any Special request?</InputLabel>
+                                                  ><Text>Any Special request?</Text></InputLabel>
                                                  <Input id="specialRequest" name="specialRequest"  inputProps={{
                                                       maxLength: 100,
                                                   }}
@@ -270,10 +272,10 @@ const submitBooking = async()=>{
          <View className='submit-container'>
                     <button type="submit" 
                         class="button"
-                        >Go Back</button>
+                        ><Text>Go Back</Text></button>
 
                             <button type="submit" 
-                       class="button" onPress={submitBooking}>Confirm Booking</button>
+                       class="button" onPress={submitBooking}><Text>Confirm Booking</Text></button>
                        
         </View>
       </View>

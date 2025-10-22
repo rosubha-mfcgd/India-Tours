@@ -14,7 +14,7 @@ import * as Google from 'expo-auth-session/providers/google';
 import * as WebBrowser from 'expo-web-browser';
 
 
-const LoginSignup =({navigation}) => {
+export default function loginsignup({navigation})  {
 
         const [action,setAction] = useState("Sign Up");
         const[name,setName] = useState('');
@@ -221,24 +221,24 @@ const LoginSignup =({navigation}) => {
                         
                         <View>
                             <View style={LoginSignUpStyle.input}>
-                            <Image source ={require('../assets/input/username.png')} alt=""/>
+                            <Image source ={require('../assets/input/username.png')}/>
                             <TextInput label="Name" value = {name} onChangeText = {handleNameChange} 
                             />
                         </View>
                         <View style={LoginSignUpStyle.input}>
-                            <Image source={require('../assets/input/mobile.png')} alt=""/>
+                            <Image source={require('../assets/input/mobile.png')} />
                             <TextInput label="Mobile" value = {mobile} onChangeText = {handleMobileChange} 
                            />
                         </View>
                         <View style={LoginSignUpStyle.input} >
-                            <Image source={require('../assets/input/email.png')} alt=""/>
+                            <Image source={require('../assets/input/email.png')} />
                             <TextInput label="Email" value = {email} onChangeText = {handleEmailChange} 
                            />
                         </View>
                     </View>:
                         <View>
                             <View style={LoginSignUpStyle.input}>
-                            <Image source={require('../assets/input/mobile.png')} alt=""/>
+                            <Image source={require('../assets/input/mobile.png')} />
                             <TextInput label="Mobile" value = {mobile} onChangeText = {handleMobileChange} 
                             />
                         </View>
@@ -246,7 +246,7 @@ const LoginSignup =({navigation}) => {
                         <View style={LoginSignUpStyle.input}><Text>OR</Text></View>
                         <br/>
                         <View style={LoginSignUpStyle.input} >
-                            <Image source={require('../assets/input/email.png')} alt=""/>
+                            <Image source={require('../assets/input/email.png')}/>
                             <TextInput label="Email" value = {email} onChangeText = {handleEmailChange} 
                             />
                         </View>
@@ -278,7 +278,7 @@ const LoginSignup =({navigation}) => {
                       
                         onPress={()=>{setAction("Sign Up");
                         navigate('-1');
-                    }}>Cancel</TouchableOpacity> 
+                    }}><Text>Cancel</Text></TouchableOpacity> 
                     </View> :<View></View> 
                         }
                     </View> 
@@ -287,4 +287,4 @@ const LoginSignup =({navigation}) => {
                 
             );
         }
-export default LoginSignup
+

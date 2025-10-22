@@ -7,7 +7,7 @@ const rightInfoStyle = StyleSheet.create({
 verticalbar: {
   width: '200px', /* Adjust the width as needed */
   height: '100vh', /* Make it span the full viewport height */
-  backgroundcolor: '#334', /* Set a background color */
+  backgroundColor: '#334', /* Set a background color */
   position: 'relative', /* Fix its position on the screen */
   top: 0, /* Align to the top */
   left: 0, /* Align to the left */

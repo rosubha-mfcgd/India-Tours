@@ -65,7 +65,7 @@ return (
                 <Image source={require('../../assets/input/mobile.png')} alt=""/>
               
         <TextInput  label="Mobile Number"
-      variant="outlined"
+      
       defaultValue=""
       value={location.state.mobile}
       slotProps={{ htmlInput: { maxLength: 10,inputLabel: {

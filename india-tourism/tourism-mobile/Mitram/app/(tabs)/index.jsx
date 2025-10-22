@@ -4,17 +4,43 @@ import { useEffect, useState, useContext } from "react";
 import {Appbar,Avatar,Button,Card,Checkbox,Chip,Dialog,Divider,FAB,HelperText,IconButton,List,Menu,
 Modal,Portal,ProgressBar,RadioButton,Searchbar,SegmentedButtons,Snackbar,
 Surface,Switch,TextInput,Tooltip,TouchableRipple} from 'react-native-paper'
-import { View ,Text,TouchableOpacity, StyleSheet} from 'react-native';
-import {updateAsFavorite,getProducts} from '../admin/admin';
+import { FlatList, View ,Text,TouchableOpacity, StyleSheet} from 'react-native';
+import {updateAsFavorite,getProducts} from '../admin/admin.js';
 
- import { MaterialIcons } from '@react-native-vector-icons/material-icons';
+ import Ionicons from '@expo/vector-icons/Ionicons';
 
-const Products = ({access_token,triggerDisplayTripsByProductId}) =>{
+export default function index (access_token) {
 
     
     
      const [items, setItems] = useState('')
     
+     const renderProducts = ({item}) =>{
+       <View>
+
+                    <Card style={CardStyle.card} 
+                        image={item.image} title={item.productDesc}
+                     >
+             <Text>
+                {item.productName}
+              </Text>
+              <Text>
+                {item.productDesc}
+              </Text>
+              {(item.favorite === 'Y') ?
+               
+                    <Ionicons name = "heart" color='#f04646ff'/>:
+
+                    <Ionicons name = "heart" color='white'/>
+              }
+              
+            
+               <TouchableOpacity 
+                    style={{ cursor: 'pointer',color:'#0c0c0fff'}}>
+                    <Text>Click to View</Text></TouchableOpacity> 
+                    </Card>
+                </View>
+     }
     
        const updateFavorites = async(categoryid, status,event) =>{
 
@@ -68,60 +94,18 @@ const Products = ({access_token,triggerDisplayTripsByProductId}) =>{
     return (
         <View style={CategoryStyle.navbargrid} >
         <View style={CategoryStyle.navbar} >
-            <View container spacing={10} justify="center" width="70%">
-             {items && items.length>0 ?
-
-                items.map((item) => (
-               <View>
-                 
-                <View item xs = {12} sm={4}  key={item.productID}>
-
-                    <Card style={CardStyle.card}
-                     >
-                    
-                    <Card.Cover  height="100"
-                    source = {item.image} alt={item.productDesc} 
-                    onPress={()=>triggerDisplayTripsByProductId(item.productID)} 
-                    style={{ cursor: 'pointer' }} 
-                     />
-                                     
-                    <Card.CardContent>
-                        <Text gutterBottom variant="body1" component="div">
-                {item.productName}
-              </Text>
-              <Text variant="body2" color="text.secondary" style={{ whiteSpace: 'pre-wrap' }}>
-                {item.productDesc}
-              </Text>
-              {(item.favorite === 'Y') ?
-                <MaterialIcons name="favorite" color= '#f04646ff' 
-                size={30}
-                onPress = {(event) => updateFavorites(
-                    item.productID,'N',event)} 
-                    style={{ cursor: 'pointer' }}/>:
-                <MaterialIcons name="favorite"  
-                size={30}
-                onPress = {(event) => updateFavorites(
-                    item.productID,'Y',event)} style={{ cursor: 'pointer' }}/>
-              }
-              
-              </Card.CardContent>
-              <TouchableOpacity type="submit" class="button"  onPress={()=>triggerDisplayTripsByProductId(item.productID)} 
-                    style={{ cursor: 'pointer',backgroundColor: '#8a77f8ff',color:'#0c0c0fff'}}>
-                    <Text>Click to View</Text></TouchableOpacity>
-                    </Card>
-                </View>
-                
-                </View>
-                )
-                ):<View ><Text>Cannot load products</Text></View>
-                
-             }
-            
-            </View>
-          
-            </View>
+           
+             <Text>Cannot load products</Text>    
+         
+                {/* <FlatList
+          data={items}
+          renderItem={renderProducts}
+          keyExtractor={item => item.productID}
+        />
+               :<View><Text>Cannot load products</Text></View> */}
+             </View>
         </View>
 
     )
 }
-export default Products;
+

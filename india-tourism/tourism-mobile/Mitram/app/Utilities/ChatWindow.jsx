@@ -34,7 +34,7 @@ import { Text,View } from 'react-native';
         >
           <View style={{ padding: '10px', borderBottom: '1px solid #eee', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
             <Text>Live Chat</Text>
-            <button onPress={onClose} style={{ background: 'none', border: 'none', fontSize: '1.2em', cursor: 'pointer' }}>X</button>
+            <button onPress={onClose} style={{ border: 'none', fontSize: '1.2em', cursor: 'pointer' }}>X</button>
           </View>
           <View style={{ padding: '10px', height: 'calc(100% - 70px)', overflowY: 'auto' }}>
             {/* Chat messages and input will go here */}

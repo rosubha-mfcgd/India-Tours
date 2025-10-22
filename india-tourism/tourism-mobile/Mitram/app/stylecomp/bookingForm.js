@@ -12,7 +12,7 @@ labelone :{
   marginright: '15px'
 },
 addremovebutton: {
-    backgroundcolor: '#007bff',
+    backgroundColor: '#007bff',
     padding: 10,
     borderRadius: 5,
     alignItems: 'center',
@@ -42,15 +42,14 @@ buttoncontainer: {
 
 blinkingbutton: {
   /* Basic button styles */
-  backgroundcolor: '#007bff',
+  backgroundColor: '#007bff',
   color: 'white',
-  padding: '10px 20px',
+  padding: '20px',
   border: 'none',
   borderradius: '5px',
   cursor: 'pointer',
 
-  /* Animation properties */
-  animation: 'blink-animation 20s linear infinite;' /* Name, duration, timing, iteration count */
+ 
 },
 imagestyle :{
     flex: 1,

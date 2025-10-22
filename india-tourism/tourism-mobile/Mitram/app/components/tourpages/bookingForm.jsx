@@ -208,7 +208,7 @@ const BookingForm = ({access_token,tourDetails,triggerDisplayBookings}) =>{
       }}
       noValidate 
       autoComplete="off" onPress={initBooking}>
-         <Text variant="body2" style={{ color: 'rgba(17, 17, 17, 1)' }}>
+         <Text style={{ color: 'rgba(17, 17, 17, 1)' }}>
                   Click me to book your trip to {tourDetails.locationName} with 
                   {tourDetails.tourManagerName}    
         </Text> 
@@ -221,7 +221,7 @@ const BookingForm = ({access_token,tourDetails,triggerDisplayBookings}) =>{
         aria-labelledby="dialog-title"
         aria-describedby="dialog-description"
       >
-        <DialogTitle id="dialog-title">Error Message From {tourDetails.tourManagerName}</DialogTitle>
+        <DialogTitle id="dialog-title"><Text>Error Message From {tourDetails.tourManagerName}</Text></DialogTitle>
         <DialogContent>
            
           <DialogContentText id="dialog-description">
@@ -230,7 +230,7 @@ const BookingForm = ({access_token,tourDetails,triggerDisplayBookings}) =>{
           </DialogContentText>
         </DialogContent>
         <DialogActions>
-          <Button onPress={handleClickOpenOrClose}>Cancel</Button>
+          <Button onPress={handleClickOpenOrClose}><Text>Cancel</Text></Button>
           <Button onPress={handleClickOpenOrClose} autoFocus>
            OK
           </Button>
@@ -269,7 +269,7 @@ const BookingForm = ({access_token,tourDetails,triggerDisplayBookings}) =>{
                         </DataTable.Row>
                          <DataTable.Row>
                          <DataTable.Cell style={{border:"none"}}>
-                           <Text variant="body2" style={{ color: '#FFFFFF' }}>
+                           <Text style={{ color: '#FFFFFF' }}>
                             Please enter the booking ID of the trip you want to attend?
                             </Text>
                         </DataTable.Cell>
@@ -292,7 +292,7 @@ const BookingForm = ({access_token,tourDetails,triggerDisplayBookings}) =>{
      {
         openBookingForm ?
         <View style={{border: "2px solid black;" }}>
-          <Text variant="body2" style={{ color: '#FFFFFF' }}>{bookingPageMessage}</Text>
+          <Text  style={{ color: '#FFFFFF' }}>{bookingPageMessage}</Text>
          <Paper>
           {
           touristCount && touristCount.length >0 ?
@@ -310,21 +310,19 @@ const BookingForm = ({access_token,tourDetails,triggerDisplayBookings}) =>{
                         color: "solid white"
                     }}
                 >
-             <Text variant="body2" style={{ color: '#160101ff' }}> 
-              <strong>Tourist #{tourist.key}</strong>
-              <Image source={require('../../assets/images/close-button.png')} alt="" height="30" width="30" 
-              className='img-style' 
-
-             />
+             <Text style={{ color: '#160101ff' }}> 
+              Tourist #{tourist.key}
+              <Image source={require('../../assets/images/close-button.png')}  
+              />
                </Text>
 
               
                 </h2>
                 <FormControl>
              
-                <InputLabel variant="outlined" 
+                <InputLabel 
                 style={{ color: '#080000ff' }}
-                fullWidth>Name</InputLabel>
+                fullWidth><Text>Name</Text></InputLabel>
                 <Input id="name" name="name" 
                 defaultValue={tourist.value.name}   inputProps={{
          maxLength: 20,
@@ -334,7 +332,7 @@ const BookingForm = ({access_token,tourDetails,triggerDisplayBookings}) =>{
                     
                 <InputLabel 
                 style={{ color: '#0c0000ff' }} 
-                variant="outlined" fullWidth>Email</InputLabel>
+                 >Email</InputLabel>
                 <Input id="email" name="email" 
                  defaultValue={tourist.value.email}  inputProps={{
          maxLength: 50,
@@ -346,7 +344,7 @@ const BookingForm = ({access_token,tourDetails,triggerDisplayBookings}) =>{
                    
                 <InputLabel 
                 style={{ color: '#0c0000ff' }} 
-                variant="outlined" fullWidth>Mobile</InputLabel>
+                >Mobile</InputLabel>
                 <Input id="mobile" name="mobile" 
                 defaultValue={tourist.value.mobile}  inputProps={{
          maxLength: 10,
@@ -356,7 +354,7 @@ const BookingForm = ({access_token,tourDetails,triggerDisplayBookings}) =>{
                       
                   <InputLabel 
                   style={{ color: '#080000ff' }} 
-                  variant="outlined" fullWidth>Age</InputLabel>
+                  ><Text>Age</Text></InputLabel>
                  <Input id="age" name="age" 
                  defaultValue={tourist.value.age}  inputProps={{
          maxLength: 2,
@@ -366,7 +364,7 @@ const BookingForm = ({access_token,tourDetails,triggerDisplayBookings}) =>{
                      
                   <InputLabel 
                   style={{ color: '#080000ff' }} 
-                  variant="outlined" fullWidth>Any Special request?</InputLabel>
+                  ><Text>Any Special request?</Text></InputLabel>
                  <Input id="specialRequest" name="specialRequest" 
                   defaultValue={tourist.value.specialRequest}  inputProps={{
          maxLength: 100,
@@ -380,7 +378,7 @@ const BookingForm = ({access_token,tourDetails,triggerDisplayBookings}) =>{
         }
         { startBooking && touristCount && touristCount.length >0? 
        
-         <View className = "center-container" style={{
+         <View style={{
                     width: "fit-content",
                     margin: "auto",
                     flex: 1,
@@ -396,7 +394,7 @@ const BookingForm = ({access_token,tourDetails,triggerDisplayBookings}) =>{
          <View style={LoginSignUpStyle.submitcontainer}>
                     <TouchableOpacity onPress = {goBack}
                         style={TripDetailsStyle.button}
-                        >Go Back</TouchableOpacity>
+                        ><Text>Go Back</Text></TouchableOpacity>
 
                             <TouchableOpacity style={TripDetailsStyle.button}
                       onPress={submitBookings}><Text>

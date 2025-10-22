@@ -7,14 +7,14 @@ const CategoryStyle = StyleSheet.create({
 navbargrid: {
      height: '300',
      overflow: 'auto',
-     border: '1px solid #ccc'
+     border: '1px solid #e71c1cff'
   },
   navbar: {
       flex: 1,
     justifycontent: 'space-between',
     alignitems: 'center',
-    backgroundcolor:' #F5F5F5',
-    color: '#fff',
+    backgroundColor:' #200305ff',
+    color: '#770909ff',
     padding: 1 // Optional: for visual clarity
   },
 
@@ -67,7 +67,7 @@ input:{
     margin: 'auto',
     width:480,
     height:80,
-    backgroundcolor:'#eaeaea',
+    backgroundColor:'#eaeaea',
     borderradius: 6
 
 },
@@ -77,7 +77,7 @@ TextInput: {
     margin: 'auto',
     width:480,
     height:80,
-    backgroundcolor:'#eaeaea',
+    backgroundColor:'#eaeaea',
     borderradius: 6
 },
 
@@ -88,10 +88,8 @@ inputimg: {
 inputText: {
     height:50,
     width:400,
-    background: 'transparent',
     border: 'none',
-    outline: 'none',
-    color:'#797979',
+   color:'#797979',
     fontsize:19
 },
 
