@@ -5,11 +5,13 @@ import ProductStyle from '../styles/productStyle.js';
 import {updateAsFavorite,getProducts} from "../admin/admin";
 import { useEffect, useState, useContext } from "react";
 import { FlatList, TouchableOpacity, Image} from 'react-native';
+import { Link } from 'expo-router';
 import Ionicons from '@expo/vector-icons/Ionicons';
 import { Card, Button, Icon } from '@rneui/themed';
 import {productImages} from "../admin/imageManager";
+
 export default function Products()
-{
+{ 
 
     const [items, setItems] = useState('');
    
@@ -34,9 +36,8 @@ export default function Products()
                     }
        }
 
-         const RenderProducts = ({item,productID}) =>{
-           let index = productID - 1; 
-           console.log('index....',index)
+         const RenderProducts = ({item}) =>{
+           
             return(
        <View style={ProductStyle.row}>
 
@@ -54,15 +55,18 @@ export default function Products()
               
               {(item.favorite === 'Y') ?
                
-                    <Ionicons name = "heart" color='#f04646ff'/>:
+                    <Ionicons name = "heart" color='#f04646ff' size={32}/>:
 
-                    <Ionicons name = "heart" color='white'/>
+                    <Ionicons name = "heart" color='white' size={32}/>
               }
               
-            
+            <Link href={{pathname:"/tourism",
+               params: { productID: item.productID}
+            }} asChild>
                <TouchableOpacity 
                     style={ProductStyle.button}>
                     <Text style={ProductStyle.buttonText}>Click to View</Text></TouchableOpacity> 
+              </Link>
                     </Card>
                 </View>
             );
@@ -95,6 +99,7 @@ export default function Products()
                 if(items==='')
                 {
                    fetchProducts();
+                 
                 }},100);
                  return () => {
         mounted = false; // Set flag to false on cleanup
@@ -109,7 +114,7 @@ return(
 {
  <FlatList
           data={items}
-          renderItem={({item})=> <RenderProducts item = {item} productID = {item.productID}/>}
+          renderItem={({item})=> <RenderProducts item = {item}/>}
           keyExtractor={item => item.productID}
         />
 }
