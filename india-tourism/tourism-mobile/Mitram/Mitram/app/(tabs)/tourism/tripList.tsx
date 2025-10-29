@@ -15,6 +15,7 @@ export default function TripList()
 {
 
     const {productID,categoryId,cityList} = useLocalSearchParams();
+    const listOfCities = JSON.parse(cityList);
    const updateFavorites = async(categoryid, status,event) =>{
 
         if(status === 'Y') {
@@ -55,83 +56,38 @@ export default function TripList()
 }
   // console.log('categoryId...',categoryId);
 
-    const [tourMgrMap, setTourMgrMap] = useState(new Map());
+   const [tourMgrMap, setTourMgrMap] = useState({}); 
     const [selectedValue, setSelectedValue] = useState('B');
     const[priceValue, setPriceValue] = useState('100000');
     const [triplengthValue, setTriplengthValue] = useState('30');
     const [cityvalue, setCityvalue] = useState('0'); 
-    const tourManagerMap = new Map(tourMgrMap);
-   
     const updateTourMgrMap = (key,value) => {
        
-        tourManagerMap.set(key,value);
-        setTourMgrMap(tourManagerMap);
+      
+    setTourMgrMap(prevData =>(
+    {
+      ...prevData,// Keep existing data
+      [key]:value// Add or update the new key-value pair
+    }
+    ));
     }
 
     
-    function getCityOfTourOperator(citycode){
+    function getCityOfTourOperator (citycode){
         console.log('city code...',citycode)
         console.log('city List...',cityList)
-        for(let city of cityList){
-            console.log('citycode...',citycode);
-            if(city.citycode === citycode)
+       
+        for(let count = 0;count<listOfCities.length;count++)
             {
-                return city.cityname;
+            console.log(' searching city...',listOfCities[count]);
+            if(listOfCities[count].citycode === citycode)
+            {
+                return listOfCities[count].cityname;
             }
         }
         return "";
     }
-   
-   const RenderTripList = ({item}) =>{
-           return(
-                <View style={TourCommonStyle.row}>
-                  <Card>
-              
-            
-             <Image source={tripListImages[item.locationName]} 
-             style={{flex: 1, width: 300, height: 200 }}/>
-          <Card.Title>
-            <Text style={TripListStyle.screenText}>{item.locationName}{"\n"}</Text>
-            <Text style={TripListStyle.screenText}>{item.customStartDate}</Text>
-            <Text style={TripListStyle.screenText}>-</Text>
-            <Text style={TripListStyle.screenText}>{item. customEndDate}{"\n"}</Text>
-            {/* <Text style={TourCommonStyle.screenText}>{item.domesticOrinternational === "D"? "Domestic":"International"}{"\n"}</Text> */}
-            <Text style={TripListStyle.screenText}>{tourManagerMap.get(item.tourManagerId).tourManagerName}{"\n"}</Text>
-            <Text style={TripListStyle.screenText}>{item.package_cost}{"\n"}</Text>
-                     
-        </Card.Title>
-        <Card.Divider/>
-                
-              
-              {(item.favorite === 'Y') ?
-               
-                    <Ionicons name = "heart" color='#f04646ff' onPress={
-                        (e)=>updateFavorites(categoryId,'N',e)}/>:
-
-                    <Ionicons name = "heart" color='#635f5fff'  onPress={
-                        (e)=>updateFavorites(categoryId,'Y',e)}/>
-              }
-              
-              <Link href={{pathname:"/tourism/tripDetails",
-                             params: { 
-                                item:item,
-                                tourmanagerName:tourManagerMap.get(item.tourManagerId).tourManagerName
-                             }
-                          }} asChild>
-               <TouchableOpacity 
-                    style={TourCommonStyle.button}>
-                    <Text style={TourCommonStyle.buttonText}>See Details</Text>
-                    </TouchableOpacity>
-                    </Link> 
-                    </Card>    
-                </View>
-
-            );
-    }
-
-   
-  
-       const getTripListByCategoryId = async (categoryId) =>{
+   const getTripListByCategoryId = async (categoryId) =>{
                        console.log('categoryId...',categoryId);
                        let tourOps = '';
                      
@@ -141,22 +97,24 @@ export default function TripList()
                         }
                             if(tourOps)
                             {
-                                console.log('tourOps...',tourOps);
-                                tourOps.map((tourManager) =>{
+                                console.log('tour Operators...',tourOps);
+                                tourOps.map(tourManager =>{
+                                    let tourOpLocation = getCityOfTourOperator(tourManager.citycode);
+                                    console.log('tourOpLocation...',tourOpLocation);
                                     updateTourMgrMap(tourManager.tourManagerId,
                                         {"tourManagerId":tourManager.tourManagerId,
                                         "tourManagerName":tourManager.tourManagerName,
                                           "contact" : tourManager.contact,
                                           "secondarycontact":tourManager.backupcontact,
                                           "citycode":tourManager.citycode,
-                                          "tourOpLocation": getCityOfTourOperator(tourManager.citycode),
+                                          "tourOpLocation": tourOpLocation,
                                           "desc": tourManager.desc,
                                           "website":tourManager.website,
                                           "categoryId":categoryId
                                         });
                                 }
                             );
-
+                            console.log('tourMgrMap....',tourMgrMap)
                         }else{
                             console.log('Could not find tour managers');
                         }
@@ -173,11 +131,8 @@ export default function TripList()
                 
          useEffect(()=>{
             const selectedTours = [];
-                // console.log('alltours in useEffect...',alltours)
-                
-                //console.log('selectedValue in useEffect...',selectedValue)
-                    if(tours)
-                    {
+            if(tours)
+                   {
                         
                         if(selectedValue === 'I' || selectedValue === 'D'){
                         for(let tour of alltours)
@@ -188,9 +143,9 @@ export default function TripList()
                             if(tour.domesticOrinternational === selectedValue  && 
                                 Number(tour.package_cost)<=(Number(priceValue)) && 
                             Number(tripLength)<=Number(triplengthValue) && (
-                                tourManagerMap.get(tour.tourManagerId) && 
-                                ((tourManagerMap.get(tour.tourManagerId)).citycode == cityvalue)||
-                        (tourManagerMap.get(tour.tourManagerId).citycode == '0')
+                                tourMgrMap[tour.tourManagerId] && 
+                                ((tourMgrMap[tour.tourManagerId]).citycode == cityvalue)||
+                        (tourMgrMap[tour.tourManagerId].citycode == '0')
                         ))
                             {
                                 selectedTours.push(tour);
@@ -206,9 +161,9 @@ export default function TripList()
                                  let tripLength = (new Date(tour.endDate).getTime() - 
                             new Date(tour.startDate).getTime())/(24*3600*1000);
                                 if(Number(tour.package_cost)<=(Number(priceValue)) && 
-                            Number(tripLength)<=Number(triplengthValue) && (tourManagerMap.get(tour.tourManagerId) && 
-                            (tourManagerMap.get(tour.tourManagerId)).citycode == cityvalue)||
-                        (tourManagerMap.get(tour.tourManagerId).citycode == '0'))
+                            Number(tripLength)<=Number(triplengthValue) && (tourMgrMap[tour.tourManagerId] && 
+                            (tourMgrMap[tour.tourManagerId]).citycode == cityvalue)||
+                        (tourMgrMap[tour.tourManagerId].citycode == '0'))
                         {
                                   selectedTours.push(tour);
                         }
@@ -247,6 +202,54 @@ export default function TripList()
                             clearTimeout(timer); // Clean up the timer
                         };
           },[]);
+          
+ const RenderTripList = ({item}) =>{
+           return(
+                <View style={TourCommonStyle.row}>
+                  <Card>
+              
+            
+             <Image source={tripListImages[item.locationName]} 
+             style={{flex: 1, width: 300, height: 200 }}/>
+          <Card.Title>
+            <Text style={TripListStyle.screenText}>{item.locationName}{"\n"}</Text>
+            <Text style={TripListStyle.screenText}>{item.customStartDate}</Text>
+            <Text style={TripListStyle.screenText}>-</Text>
+            <Text style={TripListStyle.screenText}>{item. customEndDate}{"\n"}</Text>
+            {/* <Text style={TourCommonStyle.screenText}>{item.domesticOrinternational === "D"? "Domestic":"International"}{"\n"}</Text> */}
+            <Text style={TripListStyle.screenText}>{tourMgrMap[item.tourManagerId].tourManagerName},{"\n"}{tourMgrMap[item.tourManagerId].tourOpLocation}</Text>
+            <Text style={TripListStyle.screenText}>{item.package_cost}{"\n"}</Text>
+                     
+        </Card.Title>
+        <Card.Divider/>
+                
+              
+              {(item.favorite === 'Y') ?
+               
+                    <Ionicons name = "heart" color='#f04646ff' onPress={
+                        (e)=>updateFavorites(categoryId,'N',e)}/>:
+
+                    <Ionicons name = "heart" color='#635f5fff'  onPress={
+                        (e)=>updateFavorites(categoryId,'Y',e)}/>
+              }
+              
+              <Link href={{pathname:"/tourism/tripDetails",
+                             params: { 
+                                item:  JSON.stringify(item),
+                                tourmanagerName:tourMgrMap[item.tourManagerId].tourManagerName,
+                                cityName: tourMgrMap[item.tourManagerId].tourOpLocation
+                             }
+                          }} asChild>
+               <TouchableOpacity 
+                    style={TourCommonStyle.button}>
+                    <Text style={TourCommonStyle.buttonText}>See Details</Text>
+                    </TouchableOpacity>
+                    </Link> 
+                    </Card>    
+                </View>
+
+            );
+    }
 
     return(
         <View style={TourCommonStyle.centeredContainer}>

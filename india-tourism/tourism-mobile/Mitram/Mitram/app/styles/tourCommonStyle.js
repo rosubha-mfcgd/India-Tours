@@ -50,7 +50,20 @@ centeredContainer: {
     shadowOffset: { width: 0, height: 2 },
     shadowOpacity: 0.1,
     shadowRadius: 2,
-  }  
+  } ,
+  table: {
+    // Style for each row of the table
+    flexDirection: 'row',
+    borderBottomWidth: 1,
+    borderBottomColor: '#ccc',
+  },
+  
+  cell: {
+    // Style for each cell within a row
+    padding: 10,
+    borderRightWidth: 1,
+    borderRightColor: '#ccc',
+  }
 
 
 },

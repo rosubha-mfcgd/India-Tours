@@ -64,7 +64,7 @@ const updateFavorites = async(categoryid, status,event) =>{
               }
               <Link href={{pathname:"/tourism/tripList",
                              params: { productID: item.productID, categoryId:item.categoryID,
-                                cityList:cityList
+                                cityList:JSON.stringify(cityList)
                              }
                           }} asChild>
             
@@ -125,9 +125,10 @@ const updateFavorites = async(categoryid, status,event) =>{
                     }
                    
                 };
-                if(cityList==='')
+                if(cityList==='' && mounted)
                 {
                     getCityList();
+                    mounted = false;
                   
                 }},100);
         
