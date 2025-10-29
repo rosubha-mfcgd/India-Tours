@@ -3,6 +3,7 @@ import LoginSignUpStyle from '../../styles/loginsignup.js';
 import CardStyle from '../../styles/cards.js'; 
 import TripListStyle from '../../styles/tripListStyle.js'; 
 import TourCommonStyle from '../../styles/tourCommonStyle.js'; 
+import {formatINR} from "../../admin/utility";
 import {updateAsFavorite,getTourManagers,getTripList} from "../../admin/admin";
 import { useEffect, useState, useContext } from "react";
 import { FlatList, TouchableOpacity, Image} from 'react-native';
@@ -202,7 +203,7 @@ export default function TripList()
                             clearTimeout(timer); // Clean up the timer
                         };
           },[]);
-          
+
  const RenderTripList = ({item}) =>{
            return(
                 <View style={TourCommonStyle.row}>
@@ -217,8 +218,8 @@ export default function TripList()
             <Text style={TripListStyle.screenText}>-</Text>
             <Text style={TripListStyle.screenText}>{item. customEndDate}{"\n"}</Text>
             {/* <Text style={TourCommonStyle.screenText}>{item.domesticOrinternational === "D"? "Domestic":"International"}{"\n"}</Text> */}
-            <Text style={TripListStyle.screenText}>{tourMgrMap[item.tourManagerId].tourManagerName},{"\n"}{tourMgrMap[item.tourManagerId].tourOpLocation}</Text>
-            <Text style={TripListStyle.screenText}>{item.package_cost}{"\n"}</Text>
+            <Text style={TripListStyle.screenText}>{tourMgrMap[item.tourManagerId].tourManagerName},{tourMgrMap[item.tourManagerId].tourOpLocation}{"\n"}</Text>
+            <Text style={TripListStyle.screenText}>{formatINR(item.package_cost)}{"\n"}</Text>
                      
         </Card.Title>
         <Card.Divider/>
@@ -237,7 +238,7 @@ export default function TripList()
                              params: { 
                                 item:  JSON.stringify(item),
                                 tourmanagerName:tourMgrMap[item.tourManagerId].tourManagerName,
-                                cityName: tourMgrMap[item.tourManagerId].tourOpLocation
+                                cityname: tourMgrMap[item.tourManagerId].tourOpLocation
                              }
                           }} asChild>
                <TouchableOpacity 

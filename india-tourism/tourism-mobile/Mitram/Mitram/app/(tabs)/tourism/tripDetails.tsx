@@ -5,6 +5,7 @@ import ProductStyle from '../../styles/productStyle.js';
 import TourCommonStyle from '../../styles/tourCommonStyle.js'; 
 import TextStyle from '../../styles/textStyles.js'
 import {updateAsFavorite,getProducts} from "../../admin/admin";
+import {formatINR} from "../../admin/utility";
 import { useEffect, useState, useContext } from "react";
 import { FlatList, TouchableOpacity, Image} from 'react-native';
 import Ionicons from '@expo/vector-icons/Ionicons';
@@ -16,6 +17,9 @@ import { useLocalSearchParams } from 'expo-router';
 export default function TripDetails()
 {
     const {item,tourmanagerName,cityname} = useLocalSearchParams();
+
+   
+
 
     const itemObject = JSON.parse(item);
     return(
@@ -40,7 +44,7 @@ export default function TripDetails()
           <TBody>
             <TR>
               <TD>
-                <Text style={TextStyle.body}>This tour is operated by  {tourmanagerName}</Text>
+                <Text style={TextStyle.body}>This tour is operated by  {tourmanagerName} , {cityname}</Text>
               </TD>
               </TR>
              
@@ -67,19 +71,24 @@ export default function TripDetails()
             </TR>
              <TR>
               <TD>
-                <Text style={TextStyle.body}>Trip Length {itemObject.lengthOfTour}</Text>
+                <Text style={TextStyle.body}>Trip Length {itemObject.lengthOfTour} days</Text>
               </TD>
               </TR>
               <TR>
               <TD>
-                <Text style={TextStyle.body}>Package Cost  {itemObject.ticket_cost}</Text>
+                <Text style={TextStyle.body}>Package Cost  {formatINR(itemObject.ticket_cost)}</Text>
+              </TD>
+            </TR>
+             <TR>
+              <TD>
+                <Text style={TextStyle.body}>Itinerary  {(itemObject.itinerary)}{"\n"}</Text>
               </TD>
             </TR>
           </TBody>
 
                 </Table>
                 <TouchableOpacity 
-                    style={TourCommonStyle.button}>
+                    style={TourCommonStyle.bookingbutton}>
                     <Text style={TourCommonStyle.buttonText}>Book My Trip</Text>
                     </TouchableOpacity>
             

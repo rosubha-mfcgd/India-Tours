@@ -31,7 +31,7 @@ export default function TabLayout() {
       }                                                                                                                                                                
       }}       
       />
-      <Tabs.Screen name="tourism" options={{ title: 'Tourism', 
+      <Tabs.Screen name="tourism" options={{ title: 'Tourism', href: null,
       tabBarIcon :({focused,color,size}) =>{
           return  (
             <Image

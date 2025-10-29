@@ -37,6 +37,12 @@ centeredContainer: {
     paddingHorizontal: 20,
     borderRadius: 8,
   },
+  bookingbutton: {
+    backgroundColor: '#0c0009ff', // Example background color
+    paddingVertical: 12,
+    paddingHorizontal: 15,
+    borderRadius: 8,
+  },
   gridItem: {
     flex: 1, // Allows items to grow and shrink to fill available space
     aspectRatio: 1, // Makes the item square
