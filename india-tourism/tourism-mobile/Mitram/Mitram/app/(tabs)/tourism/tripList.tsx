@@ -217,7 +217,6 @@ export default function TripList()
             <Text style={TripListStyle.screenText}>{item.customStartDate}</Text>
             <Text style={TripListStyle.screenText}>-</Text>
             <Text style={TripListStyle.screenText}>{item. customEndDate}{"\n"}</Text>
-            {/* <Text style={TourCommonStyle.screenText}>{item.domesticOrinternational === "D"? "Domestic":"International"}{"\n"}</Text> */}
             <Text style={TripListStyle.screenText}>{tourMgrMap[item.tourManagerId].tourManagerName},{tourMgrMap[item.tourManagerId].tourOpLocation}{"\n"}</Text>
             <Text style={TripListStyle.screenText}>{formatINR(item.package_cost)}{"\n"}</Text>
                      

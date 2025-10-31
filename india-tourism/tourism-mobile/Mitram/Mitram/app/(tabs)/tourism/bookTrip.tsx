@@ -1,22 +1,204 @@
-import { StyleSheet, Text, View } from 'react-native';
+import { ScrollView, Text,TextInput,View } from 'react-native';
 import LoginSignUpStyle from '../../styles/loginsignup.js'; 
 import CardStyle from '../../styles/cards.js'; 
-import ProductStyle from '../../styles/productStyle.js'; 
-import {updateAsFavorite,getProducts} from "../../admin/admin";
-import { useEffect, useState, useContext } from "react";
-import { FlatList, TouchableOpacity, Image} from 'react-native';
+import ProductStyle from '../../styles/productStyle.js';
+import TourCommonStyle from '../../styles/tourCommonStyle.js'; 
+import TextStyle from '../../styles/textStyles.js' ;
+import BookingStyle from '../../styles/bookingStyle.js';
+import {getBookingsByBookingId} from "../../admin/admin";
+import { useEffect, useState } from "react";
+import { TouchableOpacity} from 'react-native';
 import Ionicons from '@expo/vector-icons/Ionicons';
-import { Card, Button, Icon } from '@rneui/themed';
-import {productImages} from "../../admin/imageManager";
-
+import { useLocalSearchParams } from 'expo-router';
+import { Table, THead, TH, TBody, TR, TD } from '@expo/html-elements';
 export default function BookMyTrip()
 {
+    const {location,tourmanagerName,cityname,startdate,enddate,
+        tourManagerId,domesticOrInternational} = useLocalSearchParams();
+    const [count,setCount] = useState('')
+    const[items, setItems] = useState([]);
+    const[nameOfTourist,setNameOfTourist] = useState('');
+    const[email,setEmail] = useState('');
+    const[age,setAge] = useState('');
+    const[mobile,setMobile] = useState('');
+     const[specialRequest,setSpecialRequest] = useState('');
+    const[openBookingForm, setOpenBookingForm] = useState(false);
+    
+    //This is the final result tourist info payload
+    const [booking,setBooking] = useState({
+        tourManagerId:tourManagerId,
+        location:location,
+        startdate:startdate,
+        enddate:enddate,
+        domesticOrInternational:domesticOrInternational,
+        bookingData: []
+    })
+        //This is the booking record for each tourist
+     const [bookingData,setBookingData] = useState({
+        
+        name: '',
+        email: '',
+        mobile: '',
+        age: '',
+        specialRequest: ''
+      });
+     
+
+    const changeTouristCount=(action) =>{
+       
+        let currentVal = +count;
+       
+        if(action === 'add'){
+             currentVal = currentVal+1;
+         setCount(currentVal.toString());
+        }
+        else if(action === 'remove')
+        {
+            if(currentVal>0){
+             currentVal = currentVal-1;
+             setCount(currentVal.toString());
+            }else{
+                setCount('');
+            }
+        }
+        createForms(currentVal);
+        }
+
+    const createForms = (noOfTourists) =>
+    {
+          let result = [];
+          console.log('value is....',noOfTourists)
+          if(parseInt(noOfTourists)>0 && !openBookingForm)
+          {
+              for(let count=0;count<parseInt(noOfTourists);count++)
+              {
+                  let data = {"key":(count+1),"value":(count+1)}
+
+                  result.push(data);
+              }
+          console.log('result...',result);
+         // setTouristCount(result);
+        setItems(result);
+          
+          for(let index=0;index<parseInt(count);index++)
+          {
+           booking.bookingData[index] = {};
+          }
+         
+        
+         setOpenBookingForm(true);
+          }else if(openBookingForm){
+            let totalbookings =  booking.bookingData.length-1;
+            booking.bookingData[totalbookings+1] = {};
+        }
+    }
+
+    const updateBooking = async(key,name,value) =>{
+        
+            setBookingData(booking.bookingData[key-1]);
+                bookingData[name] = value;
+                booking.bookingData[key-1] = bookingData;
+            }
+        
+      
+
+    const submitBookings = async() =>{
+        let noOfTourists = count === ''?0:(+count);
+         for(let count = 1;count<=noOfTourists;count++)
+          {
+            updateBooking('name',count,'name');
+            updateBooking('mobile',count,'mobile');
+            updateBooking('email',count,'email');
+            updateBooking('age',count,'age'); 
+            updateBooking('specialRequest',count,'specialRequest');
+          }
+     }
+    
+
+    useEffect(()=>{
+        let result = [];
+        if(count){
+            let data = {"key":(count),"value":(count)};
+            result.push(data);
+            setItems(result);
+            setOpenBookingForm(true);
+        }else{
+           setItems(result);
+            setOpenBookingForm(false); 
+        }
+
+    },[count]);
+
     
     return(
-        <View>
-            <Text> This page book your trip!!</Text>
-
+        <ScrollView contentContainerStyle = {BookingStyle.contentContainer}>
+            <Text style={TextStyle.h2}> This page books your trip for {location} with {tourmanagerName} {cityname}</Text>
+          
+          <View style={BookingStyle.flexboxcontainer}>
+            
+              <View style= {BookingStyle.column}>
+             <TextInput
+              placeholder="Enter No. of Travellers"
+        value={count}
+        
+      />
         </View>
+        <View>
+             <Ionicons name="add-circle" size={32} color="blue" onPress={()=>changeTouristCount('add')}/>
+        </View>
+        <View>
+             <Ionicons name="remove-circle" size={32} color="red" onPress={()=>changeTouristCount('remove')}/>
+        </View>
+                
+        </View>
+        {openBookingForm ?
+       
+            
+                items && items.length>0 ?
+                     items.map((item)=>(
+                         <View style={BookingStyle.outlinedView}>
+                            <Table>
+                                <TR>
+                       <TD> <Text>Name:</Text></TD>
+                       <TD> <Text>Email:</Text></TD>
+                         <TD>  <Text>Mobile#:</Text> </TD> 
+                         <TD> <Text>Age:</Text> </TD> 
+                          <TD> <Text>Special Request:</Text> </TD> 
+                        </TR>
+
+                        <TR>
+
+                            <TD>    <TextInput 
+              placeholder="name" key={`"name"-${item.key}`} 
+        value={nameOfTourist} onChangeText={()=>updateBooking(item.key,"name",nameOfTourist)}/>  </TD> 
+        
+         <TD> <TextInput 
+              placeholder="email" key= {`"email"-${item.key}`} 
+        value={email} onChangeText={()=>updateBooking(item.key,"email",email)}/>  </TD> 
+        <TD> 
+        <TextInput 
+              placeholder="Mobile #" key={`"mobile"-${item.key}`} 
+        value={mobile} onChangeText={()=>updateBooking(item.key,"mobile",mobile)} keyboardType="phone-pad"/>
+          </TD>
+           <TD>  
+         <TextInput 
+              placeholder="Age" key={`"age"-${item.key}`}
+        value={age} onChangeText={()=>updateBooking(item.key,"age",age)}/> </TD> 
+        <TD> 
+        <TextInput 
+              placeholder="Any special request?" key={`"specialRequest"-${item.key}`}
+        value={specialRequest} onChangeText={()=>updateBooking(item.key,"specialRequest",specialRequest)}/>
+        </TD> 
+        </TR> 
+       </Table>
+        </View>
+        
+    )):<View></View>
+            
+            
+        :<View></View>
+        }
+        </ScrollView>
 
 
 

@@ -29,6 +29,16 @@ const TextStyle = StyleSheet.create({
 detailitemdescription: {
   fontsize: 14,
   color: '#666'
-}});
+},
+
+ bookingtitle: {
+  fontsize: 18,
+  fontweight: 500, /* Medium weight */
+  color: '#007bff', /* Accent color for emphasis */
+  textDecorationLine: 'underline'
+}
+
+
+});
 
  export default TextStyle

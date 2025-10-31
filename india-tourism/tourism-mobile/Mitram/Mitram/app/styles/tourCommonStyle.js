@@ -69,6 +69,9 @@ centeredContainer: {
     padding: 10,
     borderRightWidth: 1,
     borderRightColor: '#ccc',
+  },
+  underline: {
+    textDecorationLine: 'underline',
   }
 
 

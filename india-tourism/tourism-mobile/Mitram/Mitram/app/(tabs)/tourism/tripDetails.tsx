@@ -4,15 +4,11 @@ import CardStyle from '../../styles/cards.js';
 import ProductStyle from '../../styles/productStyle.js'; 
 import TourCommonStyle from '../../styles/tourCommonStyle.js'; 
 import TextStyle from '../../styles/textStyles.js'
-import {updateAsFavorite,getProducts} from "../../admin/admin";
 import {formatINR} from "../../admin/utility";
-import { useEffect, useState, useContext } from "react";
-import { FlatList, TouchableOpacity, Image} from 'react-native';
-import Ionicons from '@expo/vector-icons/Ionicons';
-import { Card, Button, Icon } from '@rneui/themed';
+import { TouchableOpacity, Image} from 'react-native';
 import {tripListImages} from "../../admin/imageManager";
-import { Table, THead, TH, TBody, TR, TD, Caption } from '@expo/html-elements';
-import { useLocalSearchParams } from 'expo-router';
+import { Table, THead, TH, TBody, TR, TD } from '@expo/html-elements';
+import { useLocalSearchParams,Link } from 'expo-router';
 
 export default function TripDetails()
 {
@@ -87,11 +83,40 @@ export default function TripDetails()
           </TBody>
 
                 </Table>
+                 <Link href={{pathname:"/tourism/bookTrip",
+                                             params: { 
+                                                location:  itemObject.locationName,
+                                                tourmanagerName:tourmanagerName, 
+                                                cityname: cityname,
+                                                startdate: itemObject.customStartDate,
+                                                enddate: itemObject.enddate,
+                                                tourManagerId: itemObject.tourManagerId,
+                                                domesticOrInternational:itemObject.domesticOrInternational,
+                                                packageCost:itemObject.packageCost
+                                             }
+                                          }} asChild>
                 <TouchableOpacity 
                     style={TourCommonStyle.bookingbutton}>
                     <Text style={TourCommonStyle.buttonText}>Book My Trip</Text>
-                    </TouchableOpacity>
-            
+                  </TouchableOpacity>
+                    </Link>
+                   <Link href={{pathname:"/tourism/editTrip",
+                                             params: { 
+                                                location:  itemObject.locationName,
+                                                tourmanagerName:tourmanagerName, 
+                                                cityname: cityname,
+                                                startdate: itemObject.customStartDate,
+                                                enddate: itemObject.enddate,
+                                                tourManagerId: itemObject.tourManagerId,
+                                                domesticOrInternational:itemObject.domesticOrInternational,
+                                                packageCost:itemObject.packageCost
+                                             }
+                                          }} asChild>
+                <TouchableOpacity 
+                    style={TourCommonStyle.bookingbutton}>
+                    <Text style={TourCommonStyle.buttonText}>Edit My Trip</Text>
+                  </TouchableOpacity>
+            </Link>
         </ScrollView>
     )
     
