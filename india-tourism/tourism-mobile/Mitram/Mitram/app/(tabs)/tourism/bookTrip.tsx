@@ -1,27 +1,24 @@
-import { ScrollView, Text,TextInput,View } from 'react-native';
-import LoginSignUpStyle from '../../styles/loginsignup.js'; 
-import CardStyle from '../../styles/cards.js'; 
-import ProductStyle from '../../styles/productStyle.js';
+import { KeyboardAvoidingView, Platform,ScrollView, Text,TextInput,View } from 'react-native';
 import TourCommonStyle from '../../styles/tourCommonStyle.js'; 
 import TextStyle from '../../styles/textStyles.js' ;
 import BookingStyle from '../../styles/bookingStyle.js';
-import {getBookingsByBookingId} from "../../admin/admin";
 import { useEffect, useState } from "react";
 import { TouchableOpacity} from 'react-native';
 import Ionicons from '@expo/vector-icons/Ionicons';
-import { useLocalSearchParams } from 'expo-router';
-import { Table, THead, TH, TBody, TR, TD } from '@expo/html-elements';
+import { useLocalSearchParams,Link } from 'expo-router';
+import { Table,  TBody, TR, TD } from '@expo/html-elements';
 export default function BookMyTrip()
 {
     const {location,tourmanagerName,cityname,startdate,enddate,
         tourManagerId,domesticOrInternational,packageCost} = useLocalSearchParams();
     const [count,setCount] = useState('')
     const[items, setItems] = useState([]);
-    const[nameOfTourist,setNameOfTourist] = useState('');
-    const[email,setEmail] = useState('');
-    const[age,setAge] = useState('');
-    const[mobile,setMobile] = useState('');
-     const[specialRequest,setSpecialRequest] = useState('');
+    const[nameOfTourist,setNameOfTourist] = useState([]);
+   
+    const[age,setAge] = useState([]);
+    const[mobile,setMobile] = useState([]);
+    
+      const[address,setAddress] = useState([]);
     const[openBookingForm, setOpenBookingForm] = useState(false);
     
     //This is the final result tourist info payload
@@ -33,16 +30,7 @@ export default function BookMyTrip()
         domesticOrInternational:domesticOrInternational,
         bookingData: []
     })
-        //This is the booking record for each tourist
-     const [bookingData,setBookingData] = useState({
-        
-        name: '',
-        email: '',
-        mobile: '',
-        age: '',
-        specialRequest: ''
-      });
-     
+         
 
     const changeTouristCount=(action) =>{
        
@@ -68,9 +56,10 @@ export default function BookMyTrip()
    
     const updateBooking = (key,name,value) =>{
             console.log('booking...',booking)
-            setBookingData(booking.bookingData[key-1]);
-                bookingData[name] = value;
-                booking.bookingData[key-1] = bookingData;
+            console.log('VALUE...',value)
+          //  setBookingData(booking.bookingData[key-1]);
+                booking.bookingData[key-1][name] = value;
+              //  booking.bookingData[key-1] = bookingData;
             }
         
       
@@ -89,16 +78,7 @@ export default function BookMyTrip()
     
 
     useEffect(()=>{
-        // let result = [];
-        // if(count){
-        //     let data = {"key":(count),"value":(count)};
-        //     result.push(data);
-        //     setItems(result);
-        //     setOpenBookingForm(true);
-        // }else{
-        //    setItems(result);
-        //     setOpenBookingForm(false); 
-        // }
+      
           let result = [];
           console.log('value is....',count)
           if(parseInt(count)>0)
@@ -113,10 +93,8 @@ export default function BookMyTrip()
          // setTouristCount(result);
         setItems(result);
           
-          for(let index=0;index<parseInt(count);index++)
-          {
-           booking.bookingData[index] = {};
-          }
+           booking.bookingData[+count-1] = {};
+          
          
         
          setOpenBookingForm(true);
@@ -129,7 +107,16 @@ export default function BookMyTrip()
 
     
     return(
-        <View contentContainerStyle = {BookingStyle.contentContainer}>
+        <KeyboardAvoidingView
+      behavior={Platform.OS === 'ios' ? 'padding' : 'height'} // 'padding' works best for iOS, 'height' or 'padding' for Android
+      style={{ flex: 1 }}
+    >
+
+    
+        <ScrollView contentContainerStyle = {BookingStyle.contentContainer} 
+           showsVerticalScrollIndicator={true} // Ensures vertical scroll indicator is visible
+      showsHorizontalScrollIndicator={false} // Ensures horizontal scroll indicator is hidden (if not needed)
+        >
             <Text style={TextStyle.h2}> This page books your trip for {location} with {tourmanagerName} {cityname}</Text>
           
           <View style={BookingStyle.flexboxcontainer}>
@@ -149,39 +136,72 @@ export default function BookMyTrip()
         </View>
                 
         </View>
-        <View style={BookingStyle.tableContainer}>
+        
         {openBookingForm ?
        
             
                 items && items.length>0 ?
                      items.map((item)=>(
-                       <View key={`"view"-${item.key}`} >
-                         <Text  key={`"header"-${item.key}`}>Tourist no#: {item.key}</Text>
+                       <View key={`"view"-${item.key}`} style={BookingStyle.tableContainer}>
+                         <Text  key={`"header"-${item.key}`}>Tourist #: {item.key}</Text>
                             <Table key={`"table"-${item.key}`} >
-                                <TR>
-                       <TD style={BookingStyle.tableCell}> <Text  key={`"namelabel"-${item.key}`}>Name:</Text></TD>
-                        <TD style={BookingStyle.tableCell}> <Text  key={`"mobilelabel"-${item.key}`}>Mobile#:</Text></TD> 
-                         <TD style={BookingStyle.tableCell}> <Text  key={`"agelabel"-${item.key}`}>Age:</Text></TD>
-                         </TR>
-                         <TR>
+
+                                <TBody>
+                        <TR>
+                       <TD style={BookingStyle.tableCell}> 
+                        <Text  key={`"namelabel"-${item.key}`}>Name:</Text></TD>
+                       </TR>
+                        <TR>
                       <TD key={`"cell"-${item.key}`}>    
                 <TextInput 
-              placeholder="Name" key={`"name"-${item.key}`} 
-        value={nameOfTourist} onBlur={()=>updateBooking(item.key,"name",nameOfTourist)}/>  </TD> 
-                        
-                    <TD> 
+              placeholder="Name" key={`"name"-${item.key}`}  style={BookingStyle.TextInput}
+        value={nameOfTourist[`${item.key}-1`]} onChangeText={text=>
+        {
+            nameOfTourist[`${item.key}-1`]=text
+            updateBooking(item.key,"name",text)
+        }}/>  </TD></TR>
+            <TR>
+              <TD style={BookingStyle.tableCell}> 
+                <Text  key={`"mobilelabel"-${item.key}`}>Mobile#:</Text></TD> 
+            </TR>
+            <TR>
+                <TD> 
         <TextInput 
-              placeholder="Mobile #" key={`"mobile"-${item.key}`} 
-        value={mobile} onBlur={()=>updateBooking(item.key,"mobile",mobile)} />
+              placeholder="Mobile #" key={`"mobile"-${item.key}`}  style={BookingStyle.TextInput}
+        value={mobile[`${item.key}-1`]} onChangeText={text=>
+        {
+            mobile[`${item.key}-1`]=text
+            updateBooking(item.key,"mobile",text)}} />
+        
           </TD>
-                        
+           </TR>
+             <TR>
+              <TD style={BookingStyle.tableCell}> <Text  key={`"agelabel"-${item.key}`}>Age:</Text></TD>
+             </TR>
+                <TR>                    
                  <TD>  
          <TextInput 
-              placeholder="Age" key={`"age"-${item.key}`}
-        value={age} onBlur={()=>updateBooking(item.key,"age",age)}/> </TD>           
-                        
-      
-        </TR> 
+              placeholder="Age" key={`"age"-${item.key}`} style={BookingStyle.TextInput}
+        value={age[`${item.key}-1`]} onChangeText={text=>
+        {
+            age[`${item.key}-1`] = text
+            updateBooking(item.key,"age",text)}}/>
+        </TD>           
+     </TR> 
+      <TR>
+        <TD style={BookingStyle.tableCell}> <Text  key={`"addresslabel"-${item.key}`}>Address:</Text></TD>
+      </TR>
+       <TR>                    
+                 <TD>  
+         <TextInput 
+              placeholder="Address" key={`"address"-${item.key}`} style={BookingStyle.TextInput}
+        value={address[`${item.key}-1`]} onChangeText={text=>
+        {
+            address[`${item.key}-1`] = text
+            updateBooking(item.key,"address",text)}}/>
+        </TD>           
+     </TR>
+     </TBody> 
        </Table>
        </View>
         
@@ -190,10 +210,20 @@ export default function BookMyTrip()
             
         :<View></View>
         }
-        </View>
-        </View>
-
-
+       {openBookingForm ? 
+  <Link href={{pathname:"/tourism/previewbooking",
+                                             params: { 
+                                                bookingdata: JSON.stringify(booking)
+                                             }
+                                          }} asChild>
+                <TouchableOpacity 
+                    style={TourCommonStyle.bookingbutton}>
+                    <Text style={TourCommonStyle.buttonText}>Submit</Text>
+                  </TouchableOpacity>
+            </Link>:<View></View>
+}
+        </ScrollView>
+</KeyboardAvoidingView>
 
     )
     

@@ -13,22 +13,18 @@ import { useLocalSearchParams,Link } from 'expo-router';
 export default function TripDetails()
 {
     const {item,tourmanagerName,cityname} = useLocalSearchParams();
-
-   
-
-
     const itemObject = JSON.parse(item);
     return(
-          <ScrollView>
+          <ScrollView style={{backgroundColor:'#8a41df7e'}}>
             
             <Table>
                
           <THead>
                 <TR>
-             <TD style={TourCommonStyle.cell}>
+             <TH style={TourCommonStyle.cell}>
                 <Image source={tripListImages[itemObject.locationName]}  style={{flex: 1, 
                 width: 350, height: 350 }}/>  
-                </TD>    
+                </TH>    
                </TR>
             <TR>
               <TD style={TourCommonStyle.cell}>
@@ -83,6 +79,8 @@ export default function TripDetails()
           </TBody>
 
                 </Table>
+                 <View style={TourCommonStyle.buttonscontainer}>
+                  <View style = {TourCommonStyle.buttonWrapper}>
                  <Link href={{pathname:"/tourism/bookTrip",
                                              params: { 
                                                 location:  itemObject.locationName,
@@ -100,6 +98,8 @@ export default function TripDetails()
                     <Text style={TourCommonStyle.buttonText}>Book My Trip</Text>
                   </TouchableOpacity>
                     </Link>
+                    </View>
+                     <View style = {TourCommonStyle.buttonWrapper}>
                    <Link href={{pathname:"/tourism/editTrip",
                                              params: { 
                                                 location: itemObject.locationName,
@@ -117,6 +117,8 @@ export default function TripDetails()
                     <Text style={TourCommonStyle.buttonText}>Edit My Trip</Text>
                   </TouchableOpacity>
             </Link>
+            </View>
+            </View>
         </ScrollView>
     )
     

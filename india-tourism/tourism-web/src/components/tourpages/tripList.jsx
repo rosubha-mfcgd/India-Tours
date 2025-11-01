@@ -245,7 +245,7 @@ const TripList = ({access_token,categoryId,cityList,showDetails}) =>{
                
                 </div>
                 ))
-                :<div>Cannot load Tour details</div>
+                :<div>Cannot load Tour List</div>
                 
              }
              <Box  sx={{position: 'fixed', top: '10', right: '0'

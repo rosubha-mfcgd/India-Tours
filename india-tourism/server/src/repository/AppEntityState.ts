@@ -106,11 +106,6 @@ export interface IProduct extends Document{
       required: true,
       trim: true,
     },
-    mobileimage:{
-      type: String,
-      required: true,
-      trim: true,
-    },
      favorite:{
        type: String,
       

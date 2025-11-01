@@ -9,9 +9,10 @@ const BookingStyle = StyleSheet.create({
   },
     TextInput: {
     alignitems: 'center',
+    textAlign: 'center',
     margin: 'auto',
     width:480,
-    height:80,
+    height:40,
     backgroundColor:'#eaeaea',
     borderradius: 6
 },
@@ -67,12 +68,13 @@ input: {
       },
        tableContainer: {
     // The main outline effect is achieved here
-    borderWidth: 2,
-    borderColor: '#000',
-    borderRadius: 5, // Optional: for rounded corners
-    margin: 10,
-    overflow: 'hidden', // Ensures border radius is visible
-  },
+        width: '100%',
+        borderWidth: 2,
+        borderColor: '#000',
+        borderRadius: 5, // Optional: for rounded corners
+        margin: 10,
+        overflow: 'hidden', // Ensures border radius is visible
+        },
   tableRow: {
     flexDirection: 'row',
     justifyContent: 'space-around',

@@ -17,19 +17,19 @@ export const tripCategoryImages = {
 }
 
 export const tripListImages = {
-    "Shimla" : require("../../public/hillstations/Shimla.png"),
-    "Nainital" : require("../../public/hillstations/Nainital.png"),
+    "Shimla" : require("../../public/hillstations/front/Shimla.png"),
+    "Nainital" : require("../../public/hillstations/front/Nainital.png"),
     "Goa" : require("../../public/seabeach/Goa.png"),
     "Rajasthan" : require("../../public/desert/Rajasthan.png"),
-    "Ladakh" : require("../../public/hillstations/Ladakh.png"),
-    "Gangtok" : require("../../public/hillstations/Gangtok.png"),
-    "Himachal Pradesh" : require("../../public/hillstations/Himachal Pradesh.png"),
-    "Bhutan" : require("../../public/hillstations/Bhutan.png"),
-    "Nepal" : require("../../public/hillstations/Nepal.png"),
+    "Ladakh" : require("../../public/hillstations/front/Ladakh.png"),
+    "Gangtok" : require("../../public/hillstations/front/Gangtok.png"),
+    "Himachal Pradesh" : require("../../public/hillstations/front/Himachal Pradesh.png"),
+    "Bhutan" : require("../../public/hillstations/front/Bhutan.png"),
+    "Nepal" : require("../../public/hillstations/front/Nepal.png"),
     "Bangkok/Pattaya" : require("../../public/seabeach/Bangkok Pattaya.png"),
     "Sri Lanka" : require("../../public/seabeach/SriLanka.png"),
-    "Darjeeling" : require("../../public/hillstations/Darjeeling.png"),
+    "Darjeeling" : require("../../public/hillstations/front/Darjeeling.png"),
     "Maldives" : require("../../public/seabeach/Maldives.png"),
-    "Kailash" : require("../../public/hillstations/Kailash.png"),
+    "Kailash" : require("../../public/hillstations/front/Kailash.png"),
     "Singapore" : require("../../public/cityvibes/singapore.png")
 }

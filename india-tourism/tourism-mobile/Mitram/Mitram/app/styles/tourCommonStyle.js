@@ -6,7 +6,17 @@ centeredContainer: {
     flex: 1,
     justifyContent: 'center', // Centers content vertically
     alignItems: 'center',     // Centers content horizontally
-    backgroundColor: '#f0f0f0', // Optional: for visual clarity
+    backgroundColor: '#8a41df7e', // Optional: for visual clarity
+  },
+  buttonscontainer: {
+    flexDirection: 'row', // Arranges children horizontally
+    justifyContent: 'space-around', // Distributes space evenly around items
+    alignItems: 'center', // Aligns items vertically in the center
+    flex: 1, // Allows the container to take up available space
+  },
+  buttonWrapper: {
+    // Optional: Add styling to individual button containers if needed
+    marginHorizontal: 10, // Adds horizontal spacing between buttons
   },
   centre: {
     flex: 1,
@@ -38,10 +48,10 @@ centeredContainer: {
     borderRadius: 8,
   },
   bookingbutton: {
-    backgroundColor: '#0c0009ff', // Example background color
+    backgroundColor: '#ff00c8ff', // Example background color
     paddingVertical: 12,
-    paddingHorizontal: 15,
-    borderRadius: 8,
+    paddingHorizontal: 10,
+    borderRadius: 4,
   },
   gridItem: {
     flex: 1, // Allows items to grow and shrink to fill available space

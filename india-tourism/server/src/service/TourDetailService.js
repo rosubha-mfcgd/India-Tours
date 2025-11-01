@@ -84,7 +84,7 @@ async getCategories(productID)
   try{
    const tourRepository = new TourRepository();
    
-      plannedTours = await tourRepository.find({"categoryID":Number(categoryId), "startDate":{$gt: new Date()}});
+      plannedTours = await tourRepository.aggregatePlannedTours({"categoryID":Number(categoryId), "startDate":{$gt: new Date()}});
       
       if(plannedTours && plannedTours.length >0){
          console.log('plannedTours...',plannedTours);

@@ -21,5 +21,43 @@ class TourRepository extends BaseRepository_1.BaseRepository {
             return tours_1.ToursModel.findById(id).exec();
         });
     }
+    aggregatePlannedTours(query) {
+        return __awaiter(this, void 0, void 0, function* () {
+            const result = yield tours_1.ToursModel.aggregate([
+                {
+                    $match: query
+                },
+                {
+                    $addFields: {
+                        customStartDate: {
+                            $dateToString: {
+                                format: "%d-%B-%Y",
+                                date: "$startDate",
+                                timezone: "Asia/Kolkata"
+                            }
+                        },
+                        customEndDate: {
+                            $dateToString: {
+                                format: "%d-%B-%Y",
+                                date: "$endDate",
+                                timezone: "Asia/Kolkata"
+                            }
+                        },
+                        lengthOfTour: {
+                            $dateDiff: {
+                                startDate: "$startDate",
+                                endDate: "$endDate",
+                                unit: "day",
+                                timezone: "Asia/Kolkata", // Optional
+                            }
+                        }
+                    },
+                },
+            ]).exec();
+            //  const result = await ToursModel.aggregate(pipelines);
+            console.log("Aggregation Result:", result);
+            return result;
+        });
+    }
 }
 exports.TourRepository = TourRepository;

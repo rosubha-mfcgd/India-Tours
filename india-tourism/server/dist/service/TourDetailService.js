@@ -81,7 +81,7 @@ class TourDetailService {
             let plannedTours = [];
             try {
                 const tourRepository = new TourRepository();
-                plannedTours = yield tourRepository.find({ "categoryID": Number(categoryId), "startDate": { $gt: new Date() } });
+                plannedTours = yield tourRepository.aggregatePlannedTours({ "categoryID": Number(categoryId), "startDate": { $gt: new Date() } });
                 if (plannedTours && plannedTours.length > 0) {
                     console.log('plannedTours...', plannedTours);
                 }

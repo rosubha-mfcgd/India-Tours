@@ -2,6 +2,7 @@ import { Text, View } from 'react-native';
 import CardStyle from '../../styles/cards.js'; 
 import CategoryStyle from '../../styles/productStyle.js'; 
 import LoginSignUpStyle from '../../styles/loginsignup.js'; 
+import TourCommonStyle from '../../styles/tourCommonStyle.js'; 
 import {updateAsFavorite,getCategories,getCities} from "../../admin/admin";
 import { useEffect, useState, useContext } from "react";
 import { FlatList, TouchableOpacity, Image} from 'react-native';
@@ -40,6 +41,7 @@ const updateFavorites = async(categoryid, status,event) =>{
       const RenderTripCategories = ({item}) =>{
 
             return(
+
                 <View style={CategoryStyle.row}>
                   <Card>
               
@@ -139,7 +141,7 @@ const updateFavorites = async(categoryid, status,event) =>{
     },[] )
 
     return(
-        <View style={LoginSignUpStyle.centeredContainer}>
+        <View style={TourCommonStyle.centeredContainer}>
     {
         <FlatList
           data={items}

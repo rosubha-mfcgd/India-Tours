@@ -22,11 +22,6 @@ const productSchema = new mongoose_1.Schema({
         required: true,
         trim: true,
     },
-    mobileimage: {
-        type: String,
-        required: true,
-        trim: true,
-    },
     favorite: {
         type: String,
     }
