@@ -90,6 +90,7 @@ export default function TripList()
     }
    const getTripListByCategoryId = async (categoryId) =>{
                        console.log('categoryId...',categoryId);
+                       
                        let tourOps = '';
                      
                         if(!tourManagers)
@@ -162,7 +163,8 @@ export default function TripList()
                                  let tripLength = (new Date(tour.endDate).getTime() - 
                             new Date(tour.startDate).getTime())/(24*3600*1000);
                                 if(Number(tour.package_cost)<=(Number(priceValue)) && 
-                            Number(tripLength)<=Number(triplengthValue) && (tourMgrMap[tour.tourManagerId] && 
+                            Number(tripLength)<=Number(triplengthValue) && 
+                            (tourMgrMap[tour.tourManagerId] && 
                             (tourMgrMap[tour.tourManagerId]).citycode == cityvalue)||
                         (tourMgrMap[tour.tourManagerId].citycode == '0'))
                         {
@@ -205,6 +207,8 @@ export default function TripList()
           },[]);
 
  const RenderTripList = ({item}) =>{
+
+    console.log('item....',JSON.stringify(item));
            return(
                 <View style={TourCommonStyle.row}>
                   <Card>

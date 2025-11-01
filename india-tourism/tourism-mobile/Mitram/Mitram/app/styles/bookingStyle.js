@@ -57,6 +57,7 @@ input: {
     marginHorizontal: 5,
   },
   outlinedView: {
+    flex: 1,
      flexDirection: 'row', // Arranges children horizontally
     alignItems: 'center', // Vertically aligns items in the center
         borderWidth: 2, // Sets the width of the border

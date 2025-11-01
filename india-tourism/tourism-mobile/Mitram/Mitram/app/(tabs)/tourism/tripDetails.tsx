@@ -89,9 +89,9 @@ export default function TripDetails()
                                                 tourmanagerName:tourmanagerName, 
                                                 cityname: cityname,
                                                 startdate: itemObject.customStartDate,
-                                                enddate: itemObject.enddate,
+                                                enddate: itemObject.customEndDate,
                                                 tourManagerId: itemObject.tourManagerId,
-                                                domesticOrInternational:itemObject.domesticOrInternational,
+                                                domesticOrInternational:itemObject.domesticOrinternational,
                                                 packageCost:itemObject.packageCost
                                              }
                                           }} asChild>
@@ -102,7 +102,7 @@ export default function TripDetails()
                     </Link>
                    <Link href={{pathname:"/tourism/editTrip",
                                              params: { 
-                                                location:  itemObject.locationName,
+                                                location: itemObject.locationName,
                                                 tourmanagerName:tourmanagerName, 
                                                 cityname: cityname,
                                                 startdate: itemObject.customStartDate,

@@ -14,7 +14,7 @@ import { Table, THead, TH, TBody, TR, TD } from '@expo/html-elements';
 export default function BookMyTrip()
 {
     const {location,tourmanagerName,cityname,startdate,enddate,
-        tourManagerId,domesticOrInternational} = useLocalSearchParams();
+        tourManagerId,domesticOrInternational,packageCost} = useLocalSearchParams();
     const [count,setCount] = useState('')
     const[items, setItems] = useState([]);
     const[nameOfTourist,setNameOfTourist] = useState('');
@@ -50,6 +50,7 @@ export default function BookMyTrip()
        
         if(action === 'add'){
              currentVal = currentVal+1;
+             console.log('currentVal....',currentVal)
          setCount(currentVal.toString());
         }
         else if(action === 'remove')
@@ -61,40 +62,12 @@ export default function BookMyTrip()
                 setCount('');
             }
         }
-        createForms(currentVal);
+       // createForms(currentVal);
         }
 
-    const createForms = (noOfTourists) =>
-    {
-          let result = [];
-          console.log('value is....',noOfTourists)
-          if(parseInt(noOfTourists)>0 && !openBookingForm)
-          {
-              for(let count=0;count<parseInt(noOfTourists);count++)
-              {
-                  let data = {"key":(count+1),"value":(count+1)}
-
-                  result.push(data);
-              }
-          console.log('result...',result);
-         // setTouristCount(result);
-        setItems(result);
-          
-          for(let index=0;index<parseInt(count);index++)
-          {
-           booking.bookingData[index] = {};
-          }
-         
-        
-         setOpenBookingForm(true);
-          }else if(openBookingForm){
-            let totalbookings =  booking.bookingData.length-1;
-            booking.bookingData[totalbookings+1] = {};
-        }
-    }
-
+   
     const updateBooking = async(key,name,value) =>{
-        
+            console.log('booking...',booking)
             setBookingData(booking.bookingData[key-1]);
                 bookingData[name] = value;
                 booking.bookingData[key-1] = bookingData;
@@ -116,22 +89,47 @@ export default function BookMyTrip()
     
 
     useEffect(()=>{
-        let result = [];
-        if(count){
-            let data = {"key":(count),"value":(count)};
-            result.push(data);
-            setItems(result);
-            setOpenBookingForm(true);
-        }else{
-           setItems(result);
-            setOpenBookingForm(false); 
+        // let result = [];
+        // if(count){
+        //     let data = {"key":(count),"value":(count)};
+        //     result.push(data);
+        //     setItems(result);
+        //     setOpenBookingForm(true);
+        // }else{
+        //    setItems(result);
+        //     setOpenBookingForm(false); 
+        // }
+          let result = [];
+          console.log('value is....',count)
+          if(parseInt(count)>0)
+          {
+              for(let idx=0;idx<parseInt(count);idx++)
+              {
+                  let data = {"key":(idx+1),"value":(idx+1)}
+
+                  result.push(data);
+              }
+          console.log('result...',result);
+         // setTouristCount(result);
+        setItems(result);
+          
+          for(let index=0;index<parseInt(count);index++)
+          {
+           booking.bookingData[index] = {};
+          }
+         
+        
+         setOpenBookingForm(true);
+          }else if(openBookingForm){
+            let totalbookings =  booking.bookingData.length-1;
+            booking.bookingData[totalbookings+1] = {};
         }
 
     },[count]);
 
     
     return(
-        <ScrollView contentContainerStyle = {BookingStyle.contentContainer}>
+        <View contentContainerStyle = {BookingStyle.contentContainer}>
             <Text style={TextStyle.h2}> This page books your trip for {location} with {tourmanagerName} {cityname}</Text>
           
           <View style={BookingStyle.flexboxcontainer}>
@@ -156,49 +154,41 @@ export default function BookMyTrip()
             
                 items && items.length>0 ?
                      items.map((item)=>(
-                         <View style={BookingStyle.outlinedView}>
-                            <Table>
+                       <View key={`"view"-${item.key}`}>
+                            <Table key={`"table"-${item.key}`} >
                                 <TR>
-                       <TD> <Text>Name:</Text></TD>
-                       <TD> <Text>Email:</Text></TD>
-                         <TD>  <Text>Mobile#:</Text> </TD> 
-                         <TD> <Text>Age:</Text> </TD> 
-                          <TD> <Text>Special Request:</Text> </TD> 
-                        </TR>
-
-                        <TR>
-
-                            <TD>    <TextInput 
+                       <TD> <Text  key={`"namelabel"-${item.key}`}>Name:</Text></TD>
+                        <TD> <Text  key={`"mobilelabel"-${item.key}`}>Mobile#:</Text></TD> 
+                         <TD> <Text  key={`"agelabel"-${item.key}`}>Age:</Text></TD>
+                         </TR>
+                         <TR>
+                      <TD key={`"cell"-${item.key}`}>    
+                <TextInput 
               placeholder="name" key={`"name"-${item.key}`} 
         value={nameOfTourist} onChangeText={()=>updateBooking(item.key,"name",nameOfTourist)}/>  </TD> 
-        
-         <TD> <TextInput 
-              placeholder="email" key= {`"email"-${item.key}`} 
-        value={email} onChangeText={()=>updateBooking(item.key,"email",email)}/>  </TD> 
-        <TD> 
+                        
+                    <TD> 
         <TextInput 
               placeholder="Mobile #" key={`"mobile"-${item.key}`} 
-        value={mobile} onChangeText={()=>updateBooking(item.key,"mobile",mobile)} keyboardType="phone-pad"/>
+        value={mobile} onChangeText={()=>updateBooking(item.key,"mobile",mobile)} />
           </TD>
-           <TD>  
+                        
+                 <TD>  
          <TextInput 
               placeholder="Age" key={`"age"-${item.key}`}
-        value={age} onChangeText={()=>updateBooking(item.key,"age",age)}/> </TD> 
-        <TD> 
-        <TextInput 
-              placeholder="Any special request?" key={`"specialRequest"-${item.key}`}
-        value={specialRequest} onChangeText={()=>updateBooking(item.key,"specialRequest",specialRequest)}/>
-        </TD> 
+        value={age} onChangeText={()=>updateBooking(item.key,"age",age)}/> </TD>           
+                        
+      
         </TR> 
        </Table>
-        </View>
+       </View>
         
     )):<View></View>
             
             
         :<View></View>
         }
-        </ScrollView>
+        </View>
 
 
 
