@@ -66,7 +66,7 @@ export default function BookMyTrip()
         }
 
    
-    const updateBooking = async(key,name,value) =>{
+    const updateBooking = (key,name,value) =>{
             console.log('booking...',booking)
             setBookingData(booking.bookingData[key-1]);
                 bookingData[name] = value;
@@ -149,34 +149,36 @@ export default function BookMyTrip()
         </View>
                 
         </View>
+        <View style={BookingStyle.tableContainer}>
         {openBookingForm ?
        
             
                 items && items.length>0 ?
                      items.map((item)=>(
-                       <View key={`"view"-${item.key}`}>
+                       <View key={`"view"-${item.key}`} >
+                         <Text  key={`"header"-${item.key}`}>Tourist no#: {item.key}</Text>
                             <Table key={`"table"-${item.key}`} >
                                 <TR>
-                       <TD> <Text  key={`"namelabel"-${item.key}`}>Name:</Text></TD>
-                        <TD> <Text  key={`"mobilelabel"-${item.key}`}>Mobile#:</Text></TD> 
-                         <TD> <Text  key={`"agelabel"-${item.key}`}>Age:</Text></TD>
+                       <TD style={BookingStyle.tableCell}> <Text  key={`"namelabel"-${item.key}`}>Name:</Text></TD>
+                        <TD style={BookingStyle.tableCell}> <Text  key={`"mobilelabel"-${item.key}`}>Mobile#:</Text></TD> 
+                         <TD style={BookingStyle.tableCell}> <Text  key={`"agelabel"-${item.key}`}>Age:</Text></TD>
                          </TR>
                          <TR>
                       <TD key={`"cell"-${item.key}`}>    
                 <TextInput 
-              placeholder="name" key={`"name"-${item.key}`} 
-        value={nameOfTourist} onChangeText={()=>updateBooking(item.key,"name",nameOfTourist)}/>  </TD> 
+              placeholder="Name" key={`"name"-${item.key}`} 
+        value={nameOfTourist} onBlur={()=>updateBooking(item.key,"name",nameOfTourist)}/>  </TD> 
                         
                     <TD> 
         <TextInput 
               placeholder="Mobile #" key={`"mobile"-${item.key}`} 
-        value={mobile} onChangeText={()=>updateBooking(item.key,"mobile",mobile)} />
+        value={mobile} onBlur={()=>updateBooking(item.key,"mobile",mobile)} />
           </TD>
                         
                  <TD>  
          <TextInput 
               placeholder="Age" key={`"age"-${item.key}`}
-        value={age} onChangeText={()=>updateBooking(item.key,"age",age)}/> </TD>           
+        value={age} onBlur={()=>updateBooking(item.key,"age",age)}/> </TD>           
                         
       
         </TR> 
@@ -188,6 +190,7 @@ export default function BookMyTrip()
             
         :<View></View>
         }
+        </View>
         </View>
 
 

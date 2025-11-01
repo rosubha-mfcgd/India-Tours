@@ -64,7 +64,33 @@ input: {
         borderColor: 'red', // Sets the color of the border
         borderStyle: 'solid', // Sets the style of the border (solid, dotted, dashed)
         padding: 10, // Add padding to ensure content isn't flush with the border
-      }
+      },
+       tableContainer: {
+    // The main outline effect is achieved here
+    borderWidth: 2,
+    borderColor: '#000',
+    borderRadius: 5, // Optional: for rounded corners
+    margin: 10,
+    overflow: 'hidden', // Ensures border radius is visible
+  },
+  tableRow: {
+    flexDirection: 'row',
+    justifyContent: 'space-around',
+    borderBottomWidth: 1, // Optional: for inner horizontal lines
+    borderBottomColor: '#ccc',
+    paddingVertical: 10,
+  },
+  tableHeaderCell: {
+    fontWeight: 'bold',
+    flex: 1,
+    textAlign: 'center',
+    paddingHorizontal: 5,
+  },
+  tableCell: {
+    flex: 1,
+    textAlign: 'center',
+    paddingHorizontal: 5,
+  },
 });
 
 export default BookingStyle
