@@ -21,6 +21,11 @@ gridItem: {
     shadowOpacity: 0.1,
     shadowRadius: 2,
   },
+  row: {
+    flexDirection: 'row', // Arranges items horizontally in a row
+    justifyContent: 'space-around', // Distributes space evenly around items
+    marginBottom: 12,
+  },
    button: {
     backgroundColor: '#ff00c8ff', // Example background color
     paddingVertical: 12,

@@ -36,7 +36,13 @@ detailitemdescription: {
   fontweight: 500, /* Medium weight */
   color: '#007bff', /* Accent color for emphasis */
   textDecorationLine: 'underline'
-}
+},
+ previewbookingtabletext: {
+     fontfamily: 'Roboto', /* Or another suitable sans-serif font */
+    fontSize: 16,
+    lineheight: 1.5,
+    color: 'white' /* Dark gray for good contrast */
+  }
 
 
 });

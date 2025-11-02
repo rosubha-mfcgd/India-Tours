@@ -1,6 +1,6 @@
 import { Text, View } from 'react-native';
 import CardStyle from '../../styles/cards.js'; 
-import CategoryStyle from '../../styles/productStyle.js'; 
+import CategoryStyle from '../../styles/categoryStyle.js'; 
 import LoginSignUpStyle from '../../styles/loginsignup.js'; 
 import TourCommonStyle from '../../styles/tourCommonStyle.js'; 
 import {updateAsFavorite,getCategories,getCities} from "../../admin/admin";
@@ -42,7 +42,7 @@ const updateFavorites = async(categoryid, status,event) =>{
 
             return(
 
-                <View style={CategoryStyle.row}>
+                <View>
                   <Card>
               
             

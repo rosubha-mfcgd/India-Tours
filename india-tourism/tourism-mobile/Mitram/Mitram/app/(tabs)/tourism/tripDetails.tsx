@@ -1,7 +1,4 @@
-import { StyleSheet, Text, View ,ScrollView} from 'react-native';
-import LoginSignUpStyle from '../../styles/loginsignup.js'; 
-import CardStyle from '../../styles/cards.js'; 
-import ProductStyle from '../../styles/productStyle.js'; 
+import { Text, View ,ScrollView} from 'react-native';
 import TourCommonStyle from '../../styles/tourCommonStyle.js'; 
 import TextStyle from '../../styles/textStyles.js'
 import {formatINR} from "../../admin/utility";
@@ -90,7 +87,7 @@ export default function TripDetails()
                                                 enddate: itemObject.customEndDate,
                                                 tourManagerId: itemObject.tourManagerId,
                                                 domesticOrInternational:itemObject.domesticOrinternational,
-                                                packageCost:itemObject.packageCost
+                                                packageCost:itemObject.package_cost
                                              }
                                           }} asChild>
                 <TouchableOpacity 
@@ -109,7 +106,7 @@ export default function TripDetails()
                                                 enddate: itemObject.enddate,
                                                 tourManagerId: itemObject.tourManagerId,
                                                 domesticOrInternational:itemObject.domesticOrInternational,
-                                                packageCost:itemObject.packageCost
+                                                packageCost:itemObject.package_cost
                                              }
                                           }} asChild>
                 <TouchableOpacity 

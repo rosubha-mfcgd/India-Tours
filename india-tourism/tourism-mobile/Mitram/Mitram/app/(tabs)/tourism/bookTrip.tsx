@@ -7,6 +7,7 @@ import { TouchableOpacity} from 'react-native';
 import Ionicons from '@expo/vector-icons/Ionicons';
 import { useLocalSearchParams,Link } from 'expo-router';
 import { Table,  TBody, TR, TD } from '@expo/html-elements';
+
 export default function BookMyTrip()
 {
     const {location,tourmanagerName,cityname,startdate,enddate,
@@ -20,7 +21,7 @@ export default function BookMyTrip()
     
       const[address,setAddress] = useState([]);
     const[openBookingForm, setOpenBookingForm] = useState(false);
-    const[jsonStr,setJsonStr] = useState('');
+    const[jsonStr,setJsonStr] = useState(null);
     //This is the final result tourist info payload
     const [booking,setBooking] = useState({
         tourManagerId:tourManagerId,
@@ -28,9 +29,11 @@ export default function BookMyTrip()
         startdate:startdate,
         enddate:enddate,
         domesticOrInternational:domesticOrInternational,
+        package_cost:packageCost,
         bookingData: []
     })
          
+    
 
     const changeTouristCount=(action) =>{
        
@@ -61,17 +64,10 @@ export default function BookMyTrip()
             booking.bookingData[key-1]["index"] = key-1;
             setBooking(booking);
             console.log('final booking....',booking)
+             setJsonStr(JSON.stringify(booking));
         }
-    useEffect(()=>{
-        setJsonStr(JSON.stringify(booking));
-        console.log('jsonStr...',jsonStr)
-    },[booking]);    
       
-
-   
-    
-
-    useEffect(()=>{
+      useEffect(()=>{
       
           let result = [];
           console.log('value is....',count)
@@ -88,10 +84,7 @@ export default function BookMyTrip()
         setItems(result);
           
            booking.bookingData[+count-1] = {};
-          
-         
-        
-         setOpenBookingForm(true);
+          setOpenBookingForm(true);
           }
 
     },[count]);
@@ -201,7 +194,7 @@ export default function BookMyTrip()
             
         :<View></View>
         }
-       {jsonStr && openBookingForm? 
+       {jsonStr && openBookingForm ? 
   <Link href={{pathname:"/tourism/previewbooking",
                                              params: { 
                                                 bookingdata: jsonStr

@@ -1,6 +1,6 @@
 import { StyleSheet ,Platform } from 'react-native';
 
-const BookingStyle = StyleSheet.create({
+const PreviewBookingStyle = StyleSheet.create({
 
     contentContainer: {
     alignItems: 'center', // Centers content horizontally
@@ -8,12 +8,12 @@ const BookingStyle = StyleSheet.create({
     paddingVertical: 20,
   },
     TextInput: {
-    alignitems: 'center',
-    textAlign: 'center',
+    alignitems: 'left',
+    textAlign: 'left',
     margin: 'auto',
-    width:480,
+    width:600,
     height:40,
-    backgroundColor:'#eaeaea',
+    backgroundColor:'#65b2e6ff',
     borderradius: 6
 },
  body: {
@@ -22,6 +22,12 @@ const BookingStyle = StyleSheet.create({
     lineheight: 1.5,
     color: '#333', /* Dark gray for good contrast */
      alignitems: 'left'
+  },
+   h2: {
+     fontSize: 18, /* Or another suitable sans-serif font */
+  fontWeight: 'bold',
+  marginbottom: 16,
+  color: '#fcf2f2ff'
   },
 input: {
    height: 40,
@@ -57,7 +63,6 @@ input: {
     flex: 1, // Distributes available space equally among columns
     marginHorizontal: 5,
   },
-   
   outlinedView: {
     flex: 1,
      flexDirection: 'row', // Arranges children horizontally
@@ -95,12 +100,27 @@ input: {
     paddingHorizontal: 5,
   },
    tdcell: {
-      width: '50%', // Distributes width evenly, or set a specific pixel value
+      width: '75%', // Distributes width evenly, or set a specific pixel value
     },
     previewtable: {
         borderWidth: 1,
         marginBottom: 8,
-    }
+    },
+    tdlabelcell: {
+        width: '25%', 
+        backgroundColor: 'rgba(160, 230, 248, 1)'
+    },
+     safeAreaContainer: {
+    flex: 1,
+    backgroundColor: '#8004049f', // Background color behind the status bar/notch
+  },
+    scrollView: {
+    marginHorizontal: 0,
+  },
+  contentContainer: {
+    paddingHorizontal: 20,
+    // Add extra padding at the top/bottom if needed, or let SafeAreaView handle it
+  }
 });
 
-export default BookingStyle
+export default PreviewBookingStyle

@@ -33,7 +33,13 @@ const ProductStyle = StyleSheet.create({
     fontSize: 18,
     fontWeight: 'bold',
     textAlign: 'center'
-  }
+  },
+   productscreenText: {
+        fontSize: 20,
+        color: 'blue',
+        fontWeight: 'bold',
+        textAlign: 'center',
+      }
 });
 
   export default ProductStyle
