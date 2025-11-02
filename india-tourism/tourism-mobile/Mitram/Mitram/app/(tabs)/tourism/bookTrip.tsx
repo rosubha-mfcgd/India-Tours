@@ -20,7 +20,7 @@ export default function BookMyTrip()
     
       const[address,setAddress] = useState([]);
     const[openBookingForm, setOpenBookingForm] = useState(false);
-    
+    const[jsonStr,setJsonStr] = useState('');
     //This is the final result tourist info payload
     const [booking,setBooking] = useState({
         tourManagerId:tourManagerId,
@@ -57,25 +57,18 @@ export default function BookMyTrip()
     const updateBooking = (key,name,value) =>{
             console.log('booking...',booking)
             console.log('VALUE...',value)
-          //  setBookingData(booking.bookingData[key-1]);
-                booking.bookingData[key-1][name] = value;
-                booking.bookingData[key-1]["index"] = key-1;
-              //  booking.bookingData[key-1] = bookingData;
-            }
-        
+            booking.bookingData[key-1][name] = value;
+            booking.bookingData[key-1]["index"] = key-1;
+            setBooking(booking);
+            console.log('final booking....',booking)
+        }
+    useEffect(()=>{
+        setJsonStr(JSON.stringify(booking));
+        console.log('jsonStr...',jsonStr)
+    },[booking]);    
       
 
-    const submitBookings = async() =>{
-        let noOfTourists = count === ''?0:(+count);
-         for(let count = 1;count<=noOfTourists;count++)
-          {
-            updateBooking('name',count,'name');
-            updateBooking('mobile',count,'mobile');
-            updateBooking('email',count,'email');
-            updateBooking('age',count,'age'); 
-            updateBooking('specialRequest',count,'specialRequest');
-          }
-     }
+   
     
 
     useEffect(()=>{
@@ -99,10 +92,7 @@ export default function BookMyTrip()
          
         
          setOpenBookingForm(true);
-          }else if(openBookingForm){
-            let totalbookings =  booking.bookingData.length-1;
-            booking.bookingData[totalbookings+1] = {};
-        }
+          }
 
     },[count]);
 
@@ -211,10 +201,10 @@ export default function BookMyTrip()
             
         :<View></View>
         }
-       {openBookingForm ? 
+       {jsonStr && openBookingForm? 
   <Link href={{pathname:"/tourism/previewbooking",
                                              params: { 
-                                                bookingdata: JSON.stringify(booking)
+                                                bookingdata: jsonStr
                                              }
                                           }} asChild>
                 <TouchableOpacity 

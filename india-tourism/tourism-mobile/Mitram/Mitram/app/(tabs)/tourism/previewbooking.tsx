@@ -15,7 +15,7 @@ export default function PreviewBooking()
      const[editable,setEditable] = useState(false)
      const[items,setItems] = useState([]);
     useEffect(()=>{
-        console.log('bookingData....',bookingDataObj)
+        console.log('bookingData....',bookingdata)
         setItems(bookingDataObj.bookingData);
     },[]);
     return(
