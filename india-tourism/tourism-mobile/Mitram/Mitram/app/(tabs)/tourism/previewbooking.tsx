@@ -2,13 +2,9 @@ import { ScrollView, StyleSheet, Text, TextInput, View } from 'react-native';
 import TourCommonStyle from '../../styles/tourCommonStyle.js'; 
 import TextStyle from '../../styles/textStyles.js' ;
 import BookingStyle from '../../styles/bookingStyle.js';
-import {updateAsFavorite,getProducts} from "../../admin/admin.js";
+
 import { useEffect, useState, useContext } from "react";
-import { FlatList, TouchableOpacity, Image} from 'react-native';
-import Ionicons from '@expo/vector-icons/Ionicons';
-import { Card, Button, Icon } from '@rneui/themed';
 import { useLocalSearchParams } from 'expo-router';
-import { Link } from 'expo-router';
 import { Table,  TBody, TR, TD } from '@expo/html-elements';
 export default function PreviewBooking()
 {
@@ -19,6 +15,7 @@ export default function PreviewBooking()
      const[editable,setEditable] = useState(false)
      const[items,setItems] = useState([]);
     useEffect(()=>{
+        console.log('bookingData....',bookingDataObj)
         setItems(bookingDataObj.bookingData);
     },[]);
     return(
@@ -33,7 +30,7 @@ export default function PreviewBooking()
                 items && items.length>0 ?
                     items.map((item)=>(
 
-                    <View style={BookingStyle.tableContainer} key={`"view"-${item.key}`}>
+                    <View style={BookingStyle.tableContainer} key={`"view"-${item.index}`}>
                          <Table key={`"table"-${item.key}`}>
                              <TBody>
                                 <TR>
@@ -41,14 +38,14 @@ export default function PreviewBooking()
                                         <Text>Name:</Text>
                                     </TD>
                                      <TD>
-                                        <TextInput value={item.name} key={`"name"-${item.key}`}
+                                        <TextInput value={item.name} key={`"name"-${item.index}`}
                                         style={BookingStyle.TextInput} editable={editable}/>
                                     </TD>
                                      <TD>
                                         <Text>Mobile#:</Text>
                                     </TD>
                                      <TD>
-                                        <TextInput value={item.mobile} key={`"mobile"-${item.key}`}
+                                        <TextInput value={item.mobile} key={`"mobile"-${item.index}`}
                                         style={BookingStyle.TextInput} editable={editable}/>
                                     </TD>
                                 </TR>
@@ -57,14 +54,14 @@ export default function PreviewBooking()
                                         <Text>Age:</Text>
                                     </TD>
                                      <TD>
-                                        <TextInput value={item.age} key={`"age"-${item.key}`}
+                                        <TextInput value={item.age} key={`"age"-${item.index}`}
                                         style={BookingStyle.TextInput} editable={editable}/>
                                     </TD>
                                      <TD>
                                         <Text>Address:</Text>
                                     </TD>
                                      <TD>
-                                        <TextInput value={item.address} key={`"address"-${item.key}`}
+                                        <TextInput value={item.address} key={`"address"-${item.index}`}
                                         style={BookingStyle.TextInput} editable={editable}/>
                                     </TD>  
                                 </TR>
@@ -74,7 +71,7 @@ export default function PreviewBooking()
                     )):<View></View>
             }
             <View>
-                <Text>Enter an email for communication:</Text> 
+                <Text>Enter an email for better communication:</Text> 
                 <TextInput value={email} onChangeText={setEmail}></TextInput>
             </View>
         </ScrollView>

@@ -59,6 +59,7 @@ export default function BookMyTrip()
             console.log('VALUE...',value)
           //  setBookingData(booking.bookingData[key-1]);
                 booking.bookingData[key-1][name] = value;
+                booking.bookingData[key-1]["index"] = key-1;
               //  booking.bookingData[key-1] = bookingData;
             }
         
