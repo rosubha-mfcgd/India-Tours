@@ -11,9 +11,9 @@ const PreviewBookingStyle = StyleSheet.create({
     alignitems: 'left',
     textAlign: 'left',
     margin: 'auto',
-    width:600,
+    width:'90%',
     height:40,
-    backgroundColor:'#65b2e6ff',
+    backgroundColor:'#f7f8f8ff',
     borderradius: 6
 },
  body: {
@@ -27,7 +27,8 @@ const PreviewBookingStyle = StyleSheet.create({
      fontSize: 18, /* Or another suitable sans-serif font */
   fontWeight: 'bold',
   marginbottom: 16,
-  color: '#fcf2f2ff'
+  color: '#fcf2f2ff',
+  padding:10
   },
 input: {
    height: 40,
@@ -112,7 +113,7 @@ input: {
     },
      safeAreaContainer: {
     flex: 1,
-    backgroundColor: '#8004049f', // Background color behind the status bar/notch
+    backgroundColor: '#2c0ddad2', // Background color behind the status bar/notch
   },
     scrollView: {
     marginHorizontal: 0,
@@ -120,6 +121,15 @@ input: {
   contentContainer: {
     paddingHorizontal: 20,
     // Add extra padding at the top/bottom if needed, or let SafeAreaView handle it
+  },
+   closeButton: {
+    position: 'absolute', // Position absolutely within the parent
+    top: -12, // Adjust to move the button partly outside the top border
+    right: -12, // Adjust to move the button partly outside the right border
+    backgroundColor: 'white', // Ensure the background is white so it covers the border corner
+    borderRadius: 15, // Makes it look like a floating circle
+    zIndex: 10, // Ensures it is rendered on top of the table content/border
+    padding: 2, // Optional, for better touch area/visuals
   }
 });
 

@@ -6,6 +6,7 @@ const BookingStyle = StyleSheet.create({
     alignItems: 'center', // Centers content horizontally
     justifyContent: 'center', // Centers content vertically (if scrollable area allows)
     paddingVertical: 20,
+    backgroundColor:'#8a41df7e'
   },
     TextInput: {
     alignitems: 'center',
@@ -16,6 +17,15 @@ const BookingStyle = StyleSheet.create({
     backgroundColor:'#eaeaea',
     borderradius: 6
 },
+textfieldunderlinedInput: {
+    fontSize: 15, // Makes the text big
+    borderBottomWidth: 1, // Creates a thick underline
+    borderBottomColor: '#020f1dff', // Sets the underline color
+    paddingVertical: 15, // Adds vertical padding for better spacing
+    width: '100%', // Adjust width as needed
+    textAlign: 'center' // Centers the text within the input
+    
+  },
  body: {
      fontfamily: 'Roboto', /* Or another suitable sans-serif font */
     fontSize: 16,

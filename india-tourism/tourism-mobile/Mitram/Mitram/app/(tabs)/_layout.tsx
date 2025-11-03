@@ -1,11 +1,11 @@
-import { Tabs } from 'expo-router';
+import { Tabs,useSegments } from 'expo-router';
 import { Image} from 'react-native';
 import React, { useState } from 'react';
-import { Button } from 'react-native';
+
 export default function TabLayout() {
 
   const [activeColor, setActiveColor] = useState('blue');
-
+   const segments = useSegments();
   const toggleColor = () => {
     setActiveColor(prevColor => (prevColor === 'blue' ? 'red' : 'blue'));
   };
@@ -17,6 +17,7 @@ export default function TabLayout() {
         tabBarInactiveTintColor: 'black', // Color for inactive tab icon/label
         tabBarStyle: {
           backgroundColor: '#e69797ff', // Background color of the entire tab bar
+          display:segments.includes('previewbooking')?'none':'flex'
         },
       }}>
       {/* <Stack.Screen name="index" options={{ title: 'Home' }} /> */}

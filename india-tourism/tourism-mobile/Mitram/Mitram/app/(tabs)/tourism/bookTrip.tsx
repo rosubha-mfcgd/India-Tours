@@ -19,7 +19,8 @@ export default function BookMyTrip()
     const[age,setAge] = useState([]);
     const[mobile,setMobile] = useState([]);
     
-      const[address,setAddress] = useState([]);
+    const[streetaddress,setStreetaddress] = useState([]);
+    const[pincode,setPincode] = useState([]);
     const[openBookingForm, setOpenBookingForm] = useState(false);
     const[jsonStr,setJsonStr] = useState(null);
     //This is the final result tourist info payload
@@ -138,7 +139,7 @@ export default function BookMyTrip()
                         <TR>
                       <TD key={`"cell"-${item.key}`}>    
                 <TextInput 
-              placeholder="Name" key={`"name"-${item.key}`}  style={BookingStyle.TextInput}
+              placeholder="Name" key={`"name"-${item.key}`}  style={BookingStyle.textfieldunderlinedInput}
         value={nameOfTourist[`${item.key}-1`]} onChangeText={text=>
         {
             nameOfTourist[`${item.key}-1`]=text
@@ -151,7 +152,7 @@ export default function BookMyTrip()
             <TR>
                 <TD> 
         <TextInput 
-              placeholder="Mobile #" key={`"mobile"-${item.key}`}  style={BookingStyle.TextInput}
+              placeholder="Mobile #" key={`"mobile"-${item.key}`}  style={BookingStyle.textfieldunderlinedInput}
         value={mobile[`${item.key}-1`]} onChangeText={text=>
         {
             mobile[`${item.key}-1`]=text
@@ -165,7 +166,7 @@ export default function BookMyTrip()
                 <TR>                    
                  <TD>  
          <TextInput 
-              placeholder="Age" key={`"age"-${item.key}`} style={BookingStyle.TextInput}
+              placeholder="Age" key={`"age"-${item.key}`} style={BookingStyle.textfieldunderlinedInput}
         value={age[`${item.key}-1`]} onChangeText={text=>
         {
             age[`${item.key}-1`] = text
@@ -173,18 +174,33 @@ export default function BookMyTrip()
         </TD>           
      </TR> 
       <TR>
-        <TD style={BookingStyle.tableCell}> <Text  key={`"addresslabel"-${item.key}`}>Address:</Text></TD>
+        <TD style={BookingStyle.tableCell}> <Text  key={`"streetaddresslabel"-${item.key}`}>Street Name</Text></TD>
       </TR>
        <TR>                    
-                 <TD>  
+        <TD>  
          <TextInput 
-              placeholder="Address" key={`"address"-${item.key}`} style={BookingStyle.TextInput}
-        value={address[`${item.key}-1`]} onChangeText={text=>
+              placeholder="Street Name" key={`"streetname"-${item.key}`} 
+              style={BookingStyle.textfieldunderlinedInput}
+        value={streetaddress[`${item.key}-1`]} onChangeText={text=>
         {
-            address[`${item.key}-1`] = text
-            updateBooking(item.key,"address",text)}}/>
+            streetaddress[`${item.key}-1`] = text
+            updateBooking(item.key,"streetname",text)}}/>
         </TD>           
      </TR>
+    <TR>
+        <TD style={BookingStyle.tableCell}> <Text  key={`"pincodelabel"-${item.key}`}>Pin code</Text></TD>
+      </TR>
+       <TR>                    
+        <TD>  
+         <TextInput 
+              placeholder="Pin Code" key={`"pincode"-${item.key}`} style={BookingStyle.textfieldunderlinedInput}
+        value={pincode[`${item.key}-1`]} onChangeText={text=>
+        {
+            pincode[`${item.key}-1`] = text
+            updateBooking(item.key,"pincode",text)}}/>
+        </TD>           
+     </TR>
+
      </TBody> 
        </Table>
        </View>
