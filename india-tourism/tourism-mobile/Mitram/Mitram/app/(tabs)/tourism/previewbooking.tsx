@@ -25,6 +25,14 @@ export default function PreviewBooking()
           inputRef.current.focus();
         }
       };
+      const handleDelete = ()=>{
+
+      }
+
+       const handleUpdate = ()=>{
+        
+      }
+
      const insets = useSafeAreaInsets();
 
     useEffect(()=>{
@@ -57,7 +65,7 @@ export default function PreviewBooking()
         return (
              <View>
                
-                             <KeyboardAvoidingView
+    <KeyboardAvoidingView
       behavior={Platform.OS === "ios" ? 'position' : 'height'} // Adjust behavior for iOS
       style={{flex:1}}
     >
@@ -82,8 +90,13 @@ export default function PreviewBooking()
                                      <TD style={PreviewBookingStyle.tdcell}>
                                         <TextInput value={item.name} key={`"name"-${item.index}`}
                                         style={PreviewBookingStyle.TextInput} editable={editable}>
-                                         <Ionicons name='trash-sharp' size={24} color="tomato" />   
+                                         
+                                         <Ionicons name='remove-circle' size={24} color="green" />   
+                                         
+
+                                      
                                          <Ionicons name='save' size={24} color="tomato" /> 
+                                        
                                             </TextInput>
                                         
                                     </TD>
