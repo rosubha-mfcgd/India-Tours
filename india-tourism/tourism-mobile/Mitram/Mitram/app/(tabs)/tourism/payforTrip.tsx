@@ -14,7 +14,7 @@ export default function payforTrip()
     
     return(
         <View>
-            <Text> This page shows the trip Details!!</Text>
+            <Text> This page is for confirming payment !!</Text>
 
         </View>
 

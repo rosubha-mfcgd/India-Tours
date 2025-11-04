@@ -67,7 +67,7 @@ export default function PreviewBooking()
 
                 <Text style={PreviewBookingStyle.h2}>Trip to  {bookingDataObj.location}</Text>
                    <Text style={PreviewBookingStyle.h2}>Total package cost {formatINR(totalAmountPayable)}</Text>
-                 <Link href="/next-page" asChild>
+                 <Link href="/tourism/payforTrip" asChild>
             <Pressable style={{ flexDirection: 'row', alignItems: 'center', padding: 10, 
                 backgroundColor: '#ff00c8ff', borderRadius: 5 }}>
               <Text style={{ color: 'white', fontSize: 18, marginRight: 5 }}>Make Payment</Text>
@@ -120,7 +120,7 @@ export default function PreviewBooking()
 
                                       
                                          <Ionicons name='pencil-sharp' size={24} color="black" 
-                                         onPress={handleUpdate}/> 
+                                         onPress={()=>handleUpdate}/> 
                                         
                                          <Ionicons name='save' size={24} color="black" 
                                          onPress={handleUpdate}/> 
