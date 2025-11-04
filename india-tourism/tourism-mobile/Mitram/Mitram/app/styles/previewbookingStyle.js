@@ -30,6 +30,13 @@ const PreviewBookingStyle = StyleSheet.create({
   color: '#fcf2f2ff',
   padding:10
   },
+  h3: {
+     fontSize: 15, /* Or another suitable sans-serif font */
+  fontWeight: 'bold',
+  marginbottom: 16,
+  color: '#fcf2f2ff',
+  padding:10
+  },
 input: {
    height: 40,
     borderColor: 'gray',
@@ -130,7 +137,7 @@ input: {
     borderRadius: 15, // Makes it look like a floating circle
     zIndex: 10, // Ensures it is rendered on top of the table content/border
     padding: 2, // Optional, for better touch area/visuals
-  }
+  }   
 });
 
 export default PreviewBookingStyle

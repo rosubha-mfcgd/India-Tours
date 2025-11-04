@@ -1,12 +1,15 @@
-import { KeyboardAvoidingView,Platform,Text, TextInput, View,TouchableOpacity ,FlatList } from 'react-native';
+import { KeyboardAvoidingView,Platform,Text, Button,TextInput, View,
+    TouchableOpacity ,FlatList,Pressable } 
+from 'react-native';
 import { SafeAreaProvider, useSafeAreaInsets,SafeAreaView } from 'react-native-safe-area-context'
-
+import {CustomFirstDialog} from '../../admin/customModals'
 import PreviewBookingStyle from '../../styles/previewbookingStyle.js';
-
+import TourCommonStyle from '../../styles/tourCommonStyle';
+import { AlertStyles } from '../../styles/AlertButtonStyle';
 import { useEffect, useState,useRef  } from "react";
 import { useLocalSearchParams,Link } from 'expo-router';
 import { Table,  TBody, TR, TD } from '@expo/html-elements';
-
+ import { MaterialIcons } from '@expo/vector-icons'; // For the arrow icon
 import {formatINR} from "../../admin/utility";
 import Ionicons from '@expo/vector-icons/Ionicons';
 export default function PreviewBooking()
@@ -15,6 +18,8 @@ export default function PreviewBooking()
     const bookingDataObj = JSON.parse(bookingdata);
      const[email,setEmail] = useState('');
      const[specialRequest,setSpecialRequest] = useState('');
+     const [deletemodalVisible, setDeletemodalVisible] = useState(false);
+      const [updatemodalVisible, setUpdatemodalVisible] = useState(false);
      const[editable,setEditable] = useState(false)
      const[items,setItems] = useState([]);
      const [totalAmountPayable,setTotalAmountPayable] = useState(0);
@@ -25,13 +30,25 @@ export default function PreviewBooking()
           inputRef.current.focus();
         }
       };
-      const handleDelete = ()=>{
-
+      const handleDelete = (index)=>{
+        setDeletemodalVisible(true)
       }
 
        const handleUpdate = ()=>{
-        
+        setEditable(true)
       }
+
+        const handleOk = () => {
+    // Perform actions when "OK" is pressed
+    console.log('OK pressed');
+    setDeletemodalVisible(false);
+  };
+
+  const handleCancel = () => {
+    // Perform actions when "Cancel" is pressed
+    console.log('Cancel pressed');
+    setDeletemodalVisible(false);
+  };
 
      const insets = useSafeAreaInsets();
 
@@ -48,33 +65,39 @@ export default function PreviewBooking()
         return (
              <View style={PreviewBookingStyle.contentContainer}>
 
-                <Text style={PreviewBookingStyle.h2}>Review your booking for your trip to  {bookingDataObj.location}</Text>
-                
-                 <Text style={PreviewBookingStyle.h2}>Enter an email for better communication with us:</Text>
+                <Text style={PreviewBookingStyle.h2}>Trip to  {bookingDataObj.location}</Text>
+                   <Text style={PreviewBookingStyle.h2}>Total package cost {formatINR(totalAmountPayable)}</Text>
+                 <Link href="/next-page" asChild>
+            <Pressable style={{ flexDirection: 'row', alignItems: 'center', padding: 10, 
+                backgroundColor: '#ff00c8ff', borderRadius: 5 }}>
+              <Text style={{ color: 'white', fontSize: 18, marginRight: 5 }}>Make Payment</Text>
+              <MaterialIcons name="arrow-forward-ios" size={20} color="white" />
+            </Pressable>
+            </Link>
+                 
+                 
+             
+                 
+                 {/* <Text style={PreviewBookingStyle.h2}>Enter an email for better communication with us:</Text>
                   <TextInput value={email} onChangeText={setEmail} 
                 ref={inputRef}
                 onPress={getFocus}
                 placeholder="Enter Email..." 
-                style={PreviewBookingStyle.TextInput}></TextInput>
-               
+                style={PreviewBookingStyle.TextInput}></TextInput> */}
+
+                {/* <Text style={PreviewBookingStyle.h3}>If you have any special request for your trip, please let us know. 
+                    We'll try our best to assist you.
+                </Text>
+                  <TextInput value={specialRequest} onChangeText={setSpecialRequest} 
+                ref={inputRef}
+                onPress={getFocus}
+                placeholder="Special request (if any)" 
+                style={PreviewBookingStyle.TextInput}></TextInput> */}
             </View>
         )
     }
 
-    const RenderFooter = () =>{
-        return (
-             <View>
-               
-    <KeyboardAvoidingView
-      behavior={Platform.OS === "ios" ? 'position' : 'height'} // Adjust behavior for iOS
-      style={{flex:1}}
-    >
-         <Text style={PreviewBookingStyle.h2}>Your total package cost is {formatINR(totalAmountPayable)}</Text>        
-              
-       </KeyboardAvoidingView>         
-            </View>
-        )
-    }
+    
 
     const RenderBookingList = ({item}) =>{
         return(
@@ -91,12 +114,16 @@ export default function PreviewBooking()
                                         <TextInput value={item.name} key={`"name"-${item.index}`}
                                         style={PreviewBookingStyle.TextInput} editable={editable}>
                                          
-                                         <Ionicons name='remove-circle' size={24} color="green" />   
+                                         <Ionicons name='remove-circle' size={24} color="green" 
+                                         onPress={()=>handleDelete(item.index)}/>   
                                          
 
                                       
-                                         <Ionicons name='save' size={24} color="tomato" /> 
+                                         <Ionicons name='pencil-sharp' size={24} color="black" 
+                                         onPress={handleUpdate}/> 
                                         
+                                         <Ionicons name='save' size={24} color="black" 
+                                         onPress={handleUpdate}/> 
                                             </TextInput>
                                         
                                     </TD>
@@ -160,18 +187,52 @@ export default function PreviewBooking()
             data={items}
             renderItem={({item})=> <RenderBookingList item = {item}/>}
             keyExtractor={item =>`${item.index}` }
-            ListHeaderComponent={RenderHeader} ListFooterComponent={RenderFooter}
+            ListHeaderComponent={RenderHeader} 
              nestedScrollEnabled={true}
              />
     }
    
         {/* Step 3 & 4: The Cross Button */}
-      <TouchableOpacity 
-        style={PreviewBookingStyle.closeButton} 
-        onPress={() => console.log('Close button pressed!')}
-      >
+      <CustomFirstDialog visible={deletemodalVisible} onClose={() => setDeletemodalVisible(false)}>
+        <Text style={AlertStyles.modalText}>Do you want to delete this booking?</Text>
+         <View style={AlertStyles.modalbuttonContainer}>
+              <Pressable
+                style={[AlertStyles.modalbutton, AlertStyles.modalbuttonCancel]}
+                onPress={handleCancel}
+              >
+                <Text style={AlertStyles.modaltextStyle}>Cancel</Text>
+              </Pressable>
+              <Pressable
+                style={[AlertStyles.modalbutton, AlertStyles.modalbuttonOk]}
+                onPress={handleOk}
+              >
+                <Text style={AlertStyles.modaltextStyle}>OK</Text>
+              </Pressable>
+            </View>
+      </CustomFirstDialog>
+
+    <CustomFirstDialog visible={updatemodalVisible} onClose={() => setUpdatemodalVisible(false)}>
+        <Text style={AlertStyles.modalText}>Do you want to update your booking?</Text>
+         <View style={AlertStyles.modalbuttonContainer}>
+              <Pressable
+                style={[AlertStyles.modalbutton, AlertStyles.modalbuttonCancel]}
+                onPress={handleCancel}
+              >
+                <Text style={AlertStyles.modaltextStyle}>Cancel</Text>
+              </Pressable>
+              <Pressable
+                style={[AlertStyles.modalbutton, AlertStyles.modalbuttonOk]}
+                onPress={handleOk}
+              >
+                <Text style={AlertStyles.modaltextStyle}>OK</Text>
+              </Pressable>
+            </View>
+      </CustomFirstDialog>
+
+ 
+               
         
-      </TouchableOpacity>
+      
             </SafeAreaView>
             </SafeAreaProvider>
              

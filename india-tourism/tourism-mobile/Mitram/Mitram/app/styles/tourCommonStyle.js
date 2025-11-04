@@ -82,8 +82,15 @@ centeredContainer: {
   },
   underline: {
     textDecorationLine: 'underline',
-  }
+  },
 
+   updatebookingbutton: {
+    backgroundColor: '#ff00c8ff', // Example background color
+    paddingVertical: 12,
+    paddingHorizontal: 10,
+    borderRadius: 4,
+    width:"25%"
+  }
 
 },
 
