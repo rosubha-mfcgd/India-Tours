@@ -48,7 +48,7 @@ centeredContainer: {
     borderRadius: 8,
   },
   bookingbutton: {
-    backgroundColor: '#ff00c8ff', // Example background color
+    backgroundColor: '#ff0000ff', // Example background color
     paddingVertical: 12,
     paddingHorizontal: 10,
     borderRadius: 4,

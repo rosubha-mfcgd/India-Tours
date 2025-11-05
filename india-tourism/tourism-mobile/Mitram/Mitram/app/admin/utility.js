@@ -20,5 +20,16 @@ export const validationSchema = Yup.object().shape({
     .min(2, 'Name is too short - should be 2 chars minimum.')
     .max(50, 'Name is too long - should be 50 chars maximum.')
     .matches(/^[a-zA-Z\s]+$/, 'Name can only contain letters and spaces') // Optional: enforce format
-    .required('Tourist Name is required')
+    .required('Tourist Name is required'),
+  
 });
+
+export const updateBooking = (key,name,value, booking,setBooking) =>{
+            console.log('booking...',booking)
+            console.log('VALUE...',value)
+            console.log('key....',key)
+            booking.bookingData[key-1][name] = value;
+            booking.bookingData[key-1]["index"] = key-1;
+            setBooking(booking);
+            console.log('final booking....',booking)
+        }

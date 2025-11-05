@@ -10,12 +10,12 @@ import { useEffect, useState,useRef  } from "react";
 import { useLocalSearchParams,Link } from 'expo-router';
 import { Table,  TBody, TR, TD } from '@expo/html-elements';
  import { MaterialIcons } from '@expo/vector-icons'; // For the arrow icon
-import {formatINR} from "../../admin/utility";
+import {formatINR,updateBooking} from "../../admin/utility";
 import Ionicons from '@expo/vector-icons/Ionicons';
 export default function PreviewBooking()
 {
     const {bookingdata} = useLocalSearchParams();
-    const bookingDataObj = JSON.parse(bookingdata);
+    const [bookingDataObj, setBookingDataObj] = useState(JSON.parse(bookingdata));
      const[email,setEmail] = useState('');
      const[specialRequest,setSpecialRequest] = useState('');
      const [deletemodalVisible, setDeletemodalVisible] = useState(false);
@@ -23,19 +23,37 @@ export default function PreviewBooking()
      const[editable,setEditable] = useState(false)
      const[items,setItems] = useState([]);
      const [totalAmountPayable,setTotalAmountPayable] = useState(0);
-       const inputRef = useRef(null);
+     const [jsonStr,setJsonStr] = useState(JSON.stringify(bookingDataObj));
+      const inputRef = useRef([]);
 
-      const getFocus = () => {
-        if (inputRef.current) {
-          inputRef.current.focus();
+      const getFocus = (index) => {
+       
+        if (inputRef.current[index]) {
+        console.log('input ref index at ',index)
+          inputRef.current[index].focus();
+          
         }
       };
       const handleDelete = (index)=>{
         setDeletemodalVisible(true)
       }
 
-       const handleUpdate = ()=>{
+       const updateTourBooking = (key,name,value) =>{
+                    console.log('key increment...',key+1);
+                   updateBooking(key+1,name,value, bookingDataObj,setBookingDataObj);
+                   setJsonStr(JSON.stringify(bookingDataObj));
+              }
+      
+
+       const handleUpdate = (index)=>{
+        console.log('Update attempted....')
         setEditable(true)
+        getFocus(index);
+      }
+
+         const handleSave = ()=>{
+        console.log('Save attempted....')
+        setEditable(false)
       }
 
         const handleOk = () => {
@@ -67,32 +85,20 @@ export default function PreviewBooking()
 
                 <Text style={PreviewBookingStyle.h2}>Trip to  {bookingDataObj.location}</Text>
                    <Text style={PreviewBookingStyle.h2}>Total package cost {formatINR(totalAmountPayable)}</Text>
-                 <Link href="/tourism/payforTrip" asChild>
-            <Pressable style={{ flexDirection: 'row', alignItems: 'center', padding: 10, 
-                backgroundColor: '#ff00c8ff', borderRadius: 5 }}>
-              <Text style={{ color: 'white', fontSize: 18, marginRight: 5 }}>Make Payment</Text>
-              <MaterialIcons name="arrow-forward-ios" size={20} color="white" />
+                <View style={TourCommonStyle.buttonscontainer}>
+                <View style = {TourCommonStyle.buttonWrapper}>
+                 <Link href={{pathname:"/tourism/payforTrip" ,
+                                             params: { 
+                                                bookingdata: jsonStr
+                                             }
+                                          }} asChild>
+            <Pressable style={TourCommonStyle.bookingbutton}>
+              <Text style={{ color: 'white', fontSize: 18, marginRight: 5 }}>Go to Payment</Text>
+              
             </Pressable>
             </Link>
-                 
-                 
-             
-                 
-                 {/* <Text style={PreviewBookingStyle.h2}>Enter an email for better communication with us:</Text>
-                  <TextInput value={email} onChangeText={setEmail} 
-                ref={inputRef}
-                onPress={getFocus}
-                placeholder="Enter Email..." 
-                style={PreviewBookingStyle.TextInput}></TextInput> */}
-
-                {/* <Text style={PreviewBookingStyle.h3}>If you have any special request for your trip, please let us know. 
-                    We'll try our best to assist you.
-                </Text>
-                  <TextInput value={specialRequest} onChangeText={setSpecialRequest} 
-                ref={inputRef}
-                onPress={getFocus}
-                placeholder="Special request (if any)" 
-                style={PreviewBookingStyle.TextInput}></TextInput> */}
+            </View>
+            </View>
             </View>
         )
     }
@@ -112,19 +118,14 @@ export default function PreviewBooking()
                                     </TD>
                                      <TD style={PreviewBookingStyle.tdcell}>
                                         <TextInput value={item.name} key={`"name"-${item.index}`}
-                                        style={PreviewBookingStyle.TextInput} editable={editable}>
-                                         
-                                         <Ionicons name='remove-circle' size={24} color="green" 
-                                         onPress={()=>handleDelete(item.index)}/>   
-                                         
-
-                                      
-                                         <Ionicons name='pencil-sharp' size={24} color="black" 
-                                         onPress={()=>handleUpdate}/> 
+                                         ref={(el) => (inputRef.current[item.index] = el)}
+                                        style={PreviewBookingStyle.TextInput} editable={editable}
+                                        onChangeText={text=>
+                                  {
+                                    updateTourBooking(item.index,"name",text)
+                                 }}>
                                         
-                                         <Ionicons name='save' size={24} color="black" 
-                                         onPress={handleUpdate}/> 
-                                            </TextInput>
+                                    </TextInput>
                                         
                                     </TD>
                                     </TR>
@@ -134,7 +135,12 @@ export default function PreviewBooking()
                                     </TD>
                                      <TD style={PreviewBookingStyle.tdcell}>
                                         <TextInput value={item.mobile} key={`"mobile"-${item.index}`}
-                                        style={PreviewBookingStyle.TextInput} editable={editable}/>
+                                        style={PreviewBookingStyle.TextInput} editable={editable}
+                                         autoFocus={editable} 
+                                        onChangeText={text=>
+                                     {
+                                       updateTourBooking(item.index,"mobile",text)
+                                     }}/>
                                     </TD>
                                 </TR>
                                 <TR>
@@ -145,7 +151,10 @@ export default function PreviewBooking()
                                         <TextInput value={item.age} 
                                         key={`"age"-${item.index}`}
                                         style={PreviewBookingStyle.TextInput} 
-                                        editable={editable}/>
+                                        editable={editable} onChangeText={text=>
+                                     {
+                                             updateTourBooking(item.index,"age",text)
+                                     }}/>
                                     </TD>
                                     </TR>
                                     <TR>
@@ -156,7 +165,10 @@ export default function PreviewBooking()
                                         <TextInput value={item.streetname} 
                                         key={`"streetaddress"-${item.index}`}
                                         style={PreviewBookingStyle.TextInput} 
-                                        editable={editable}/>
+                                        editable={editable} onChangeText={text=>
+                                     {
+                                             updateTourBooking(item.index,"streetaddress",text)
+                                     }}/>
                                     </TD>  
                                 </TR>
 
@@ -168,11 +180,27 @@ export default function PreviewBooking()
                                         <TextInput value={item.pincode} 
                                         key={`"pincode"-${item.index}`}
                                         style={PreviewBookingStyle.TextInput} 
-                                        editable={editable}/>
+                                        editable={editable} onChangeText={text=>
+                                     {
+                                             updateTourBooking(item.index,"pincode",text)
+                                     }}/>
                                     </TD>  
                                 </TR>
                              </TBody>
                          </Table>
+                           <View style={TourCommonStyle.buttonscontainer}>
+            <View style = {TourCommonStyle.buttonWrapper}>
+             <TouchableOpacity style={TourCommonStyle.bookingbutton} 
+             onPress={()=>handleUpdate(item.index)}>
+              <Text style={{ color: 'white', fontSize: 18, marginRight: 5 }}>Edit</Text>
+              </TouchableOpacity>
+              </View>  
+              <View style = {TourCommonStyle.buttonWrapper}>
+             <TouchableOpacity style={TourCommonStyle.bookingbutton}  onPress={handleSave}>
+              <Text style={{ color: 'white', fontSize: 18, marginRight: 5 }}>Save</Text>
+              </TouchableOpacity>
+              </View>  
+              </View>
                          </View>
         )  
     }

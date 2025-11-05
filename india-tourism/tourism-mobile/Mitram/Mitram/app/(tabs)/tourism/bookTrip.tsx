@@ -7,7 +7,7 @@ import { TouchableOpacity} from 'react-native';
 import Ionicons from '@expo/vector-icons/Ionicons';
 import { useLocalSearchParams,Link } from 'expo-router';
 import { Table,  TBody, TR, TD } from '@expo/html-elements';
-
+import {updateBooking} from  '../../admin/utility';
 export default function BookMyTrip()
 {
     const {location,tourmanagerName,cityname,startdate,enddate,
@@ -58,13 +58,8 @@ export default function BookMyTrip()
         }
 
    
-    const updateBooking = (key,name,value) =>{
-            console.log('booking...',booking)
-            console.log('VALUE...',value)
-            booking.bookingData[key-1][name] = value;
-            booking.bookingData[key-1]["index"] = key-1;
-            setBooking(booking);
-            console.log('final booking....',booking)
+    const updateTourBooking = (key,name,value) =>{
+             updateBooking(key,name,value, booking,setBooking);
              setJsonStr(JSON.stringify(booking));
         }
       
@@ -143,7 +138,7 @@ export default function BookMyTrip()
         value={nameOfTourist[`${item.key}-1`]} onChangeText={text=>
         {
             nameOfTourist[`${item.key}-1`]=text
-            updateBooking(item.key,"name",text)
+            updateTourBooking(item.key,"name",text)
         }}/>  </TD></TR>
             <TR>
               <TD style={BookingStyle.tableCell}> 
@@ -156,7 +151,7 @@ export default function BookMyTrip()
         value={mobile[`${item.key}-1`]} onChangeText={text=>
         {
             mobile[`${item.key}-1`]=text
-            updateBooking(item.key,"mobile",text)}} />
+            updateTourBooking(item.key,"mobile",text)}} />
         
           </TD>
            </TR>
@@ -170,7 +165,7 @@ export default function BookMyTrip()
         value={age[`${item.key}-1`]} onChangeText={text=>
         {
             age[`${item.key}-1`] = text
-            updateBooking(item.key,"age",text)}}/>
+            updateTourBooking(item.key,"age",text)}}/>
         </TD>           
      </TR> 
       <TR>
@@ -184,7 +179,7 @@ export default function BookMyTrip()
         value={streetaddress[`${item.key}-1`]} onChangeText={text=>
         {
             streetaddress[`${item.key}-1`] = text
-            updateBooking(item.key,"streetname",text)}}/>
+            updateTourBooking(item.key,"streetname",text)}}/>
         </TD>           
      </TR>
     <TR>
@@ -197,7 +192,7 @@ export default function BookMyTrip()
         value={pincode[`${item.key}-1`]} onChangeText={text=>
         {
             pincode[`${item.key}-1`] = text
-            updateBooking(item.key,"pincode",text)}}/>
+            updateTourBooking(item.key,"pincode",text)}}/>
         </TD>           
      </TR>
 
