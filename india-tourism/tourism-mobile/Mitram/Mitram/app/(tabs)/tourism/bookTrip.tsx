@@ -7,7 +7,9 @@ import { TouchableOpacity} from 'react-native';
 import Ionicons from '@expo/vector-icons/Ionicons';
 import { useLocalSearchParams,Link } from 'expo-router';
 import { Table,  TBody, TR, TD } from '@expo/html-elements';
-import {updateBooking} from  '../../admin/utility';
+import {updateBooking,validationSchema} from  '../../admin/utility';
+ 
+import { Formik } from 'formik';
 export default function BookMyTrip()
 {
     const {location,tourmanagerName,cityname,startdate,enddate,
@@ -122,6 +124,16 @@ export default function BookMyTrip()
             
                 items && items.length>0 ?
                      items.map((item)=>(
+                       <Formik
+        initialValues={{ name: '', mobile: '' ,age:'', streetname:'',pincode:''}}
+        validationSchema={validationSchema}
+        onSubmit={(values, actions) => {
+          console.log(values);
+          actions.setSubmitting(false);
+        }}
+      >
+         {({ handleChange, handleBlur, handleSubmit, values, errors, touched }) => (
+        
                        <View key={`"view"-${item.key}`} style={BookingStyle.tableContainer}>
                          <Text  key={`"header"-${item.key}`}>Tourist #: {item.key}</Text>
                             <Table key={`"table"-${item.key}`} >
@@ -132,14 +144,22 @@ export default function BookMyTrip()
                         <Text  key={`"namelabel"-${item.key}`}>Name:</Text></TD>
                        </TR>
                         <TR>
-                      <TD key={`"cell"-${item.key}`}>    
+                      <TD key={`"cell"-${item.key}`}>  
+                          
                 <TextInput 
-              placeholder="Name" key={`"name"-${item.key}`}  style={BookingStyle.textfieldunderlinedInput}
+              placeholder="Name" key={`"name"-${item.key}`}  
+              style={BookingStyle.textfieldunderlinedInput}
         value={nameOfTourist[`${item.key}-1`]} onChangeText={text=>
         {
+          handleChange('name');
             nameOfTourist[`${item.key}-1`]=text
             updateTourBooking(item.key,"name",text)
-        }}/>  </TD></TR>
+        }}
+        onBlur={handleBlur('name')}
+         
+        /> 
+        {errors.name && touched.name && <Text style={{ color: '#ccccccff' }}>{errors.name}</Text>}
+         </TD></TR>
             <TR>
               <TD style={BookingStyle.tableCell}> 
                 <Text  key={`"mobilelabel"-${item.key}`}>Mobile#:</Text></TD> 
@@ -150,9 +170,13 @@ export default function BookMyTrip()
               placeholder="Mobile #" key={`"mobile"-${item.key}`}  style={BookingStyle.textfieldunderlinedInput}
         value={mobile[`${item.key}-1`]} onChangeText={text=>
         {
+          handleChange('mobile');
             mobile[`${item.key}-1`]=text
-            updateTourBooking(item.key,"mobile",text)}} />
-        
+            updateTourBooking(item.key,"mobile",text)}} 
+            onBlur={handleBlur('mobile')}
+            
+            />
+         {errors.mobile && touched.mobile && <Text style={{ color: 'red' }}>{errors.mobile}</Text>}
           </TD>
            </TR>
              <TR>
@@ -164,8 +188,12 @@ export default function BookMyTrip()
               placeholder="Age" key={`"age"-${item.key}`} style={BookingStyle.textfieldunderlinedInput}
         value={age[`${item.key}-1`]} onChangeText={text=>
         {
+          handleChange('age');
             age[`${item.key}-1`] = text
-            updateTourBooking(item.key,"age",text)}}/>
+            updateTourBooking(item.key,"age",text)}}
+            onBlur={handleBlur('age')}
+            />
+             {errors.age && touched.age && <Text style={{ color: 'red' }}>{errors.age}</Text>}
         </TD>           
      </TR> 
       <TR>
@@ -178,8 +206,12 @@ export default function BookMyTrip()
               style={BookingStyle.textfieldunderlinedInput}
         value={streetaddress[`${item.key}-1`]} onChangeText={text=>
         {
+          handleChange('streetname');
             streetaddress[`${item.key}-1`] = text
-            updateTourBooking(item.key,"streetname",text)}}/>
+            updateTourBooking(item.key,"streetname",text)}}
+            onBlur={handleBlur('streetname')}
+            />
+             {errors.streetname && touched.streetname && <Text style={{ color: 'red' }}>{errors.streetname}</Text>}
         </TD>           
      </TR>
     <TR>
@@ -191,15 +223,20 @@ export default function BookMyTrip()
               placeholder="Pin Code" key={`"pincode"-${item.key}`} style={BookingStyle.textfieldunderlinedInput}
         value={pincode[`${item.key}-1`]} onChangeText={text=>
         {
+           handleChange('pincode');
             pincode[`${item.key}-1`] = text
-            updateTourBooking(item.key,"pincode",text)}}/>
+            updateTourBooking(item.key,"pincode",text)}}
+             onBlur={handleBlur('pincode')}
+            />
+             {errors.pincode && touched.pincode && <Text style={{ color: 'red' }}>{errors.pincode}</Text>}
         </TD>           
      </TR>
 
      </TBody> 
        </Table>
        </View>
-        
+       )}
+     </Formik>   
     )):<View></View>
             
             
