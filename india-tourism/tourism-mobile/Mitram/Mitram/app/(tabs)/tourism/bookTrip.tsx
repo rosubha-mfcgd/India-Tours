@@ -126,6 +126,7 @@ export default function BookMyTrip()
                      items.map((item)=>(
                        <Formik
         initialValues={{ name: '', mobile: '' ,age:'', streetname:'',pincode:''}}
+        key = {`"formik"-${item.key}`}
         validationSchema={validationSchema}
         onSubmit={(values, actions) => {
           console.log(values);
@@ -158,7 +159,7 @@ export default function BookMyTrip()
         onBlur={handleBlur('name')}
          
         /> 
-        {errors.name && touched.name && <Text style={{ color: '#ccccccff' }}>{errors.name}</Text>}
+        {errors.name && touched.name && <Text style={{ color: '#f50c0cff' }}>{errors.name}</Text>}
          </TD></TR>
             <TR>
               <TD style={BookingStyle.tableCell}> 
