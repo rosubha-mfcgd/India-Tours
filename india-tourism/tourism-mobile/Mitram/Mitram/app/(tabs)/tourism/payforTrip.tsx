@@ -3,7 +3,7 @@ import LoginSignUpStyle from '../../styles/loginsignup.js';
 import TourCommonStyle from '../../styles/tourCommonStyle.js'; 
 import TextStyle from '../../styles/textStyles.js'
 import ProductStyle from '../../styles/productStyle.js'; 
-import {updateAsFavorite,getProducts} from "../../admin/admin.js";
+import {performTripBooking} from "../../admin/admin.js";
 import {formatINR} from "../../admin/utility";
 import { useEffect, useState, useContext } from "react";
 import {KeyboardAvoidingView,Platform, FlatList, TouchableOpacity, TextInput,Pressable} from 'react-native';
@@ -29,6 +29,26 @@ export default function payforTrip()
             bookingDataObj["specialRequest"] = text;
             setSpecialRequest(text);
        }
+       const handleSubmit = async() =>{
+          console.log('submit ')
+          let data = {tourManagerId:bookingDataObj.tourManagerId,
+              locationName:bookingDataObj.location,
+              startDate:bookingDataObj.startdate,
+              endDate:bookingDataObj.enddate,
+              domesticOrInternational:bookingDataObj.domesticOrInternational,
+              package_cost:totalPayableAmt,
+              primarybookings:bookingDataObj.bookingData[0],
+              dependantbookings:bookingDataObj.bookingData[0]
+
+          }
+         const bookings= await performTripBooking(data);
+         if(bookings){
+            console.log('bookings...',bookings)
+         }
+       }
+
+
+
        useEffect(()=>{
 
         console.log('bookingdata...',bookingdata)
@@ -85,17 +105,19 @@ export default function payforTrip()
                 <View style = {TourCommonStyle.buttonWrapper}>
                    
             
-             <Link href={{pathname:"/tourism/confirmbooking",
+             {/* <Link href={{pathname:"/tourism/confirmbooking",
                           params: { 
                                bookingdata: JSON.stringify(bookingDataObj),
                                payment:"A"
                                 }
-                               }} asChild>
+                               }} asChild> */}
                 <TouchableOpacity 
                     style={TourCommonStyle.paymentbutton}>
-                    <Text style={TourCommonStyle.buttonText}>Advance Payment</Text>
+                    <Text style={TourCommonStyle.buttonText}
+                    onPress={handleSubmit}
+                    >Advance Payment</Text>
                   </TouchableOpacity>
-            </Link>
+            {/* </Link> */}
             </View>
              </View>
             </TD>
@@ -103,17 +125,11 @@ export default function payforTrip()
              <View style={TourCommonStyle.buttonscontainer}>
                 <View style = {TourCommonStyle.buttonWrapper}>
 
-             <Link href={{pathname:"/tourism/confirmbooking",
-                          params: { 
-                               bookingdata: JSON.stringify(bookingDataObj),
-                               payment: "F"
-                                }
-                               }} asChild>
                 <TouchableOpacity 
                     style={TourCommonStyle.paymentbutton}>
                     <Text style={TourCommonStyle.buttonText}>Complete Payment</Text>
                   </TouchableOpacity>
-            </Link>
+           
             </View>
             </View>
             </TD>
