@@ -42,7 +42,7 @@ const updateFavorites = async(categoryid, status,event) =>{
 
             return(
 
-                <View>
+                <View style={CategoryStyle.row}>
                   <Card>
               
             

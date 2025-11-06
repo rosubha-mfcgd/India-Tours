@@ -5,6 +5,7 @@ const TextStyle = StyleSheet.create({
      fontfamily: 'Roboto', /* Or another suitable sans-serif font */
     fontSize: 16,
     lineheight: 1.5,
+    padding: 10,
     color: '#333' /* Dark gray for good contrast */
   },
   h1: {
@@ -19,6 +20,14 @@ const TextStyle = StyleSheet.create({
   },
   p:{
 
+  },
+  text: {
+    fontSize: 20,
+    fontWeight: 'bold',
+    color: 'blue',
+    textAlign: 'center',
+    fontStyle: 'italic',
+    textDecorationLine: 'underline',
   },
   detailtitle: {
   fontsize: 18,
@@ -42,7 +51,16 @@ detailitemdescription: {
     fontSize: 16,
     lineheight: 1.5,
     color: 'white' /* Dark gray for good contrast */
-  }
+  },
+  TextInput: {
+    alignitems: 'left',
+    textAlign: 'left',
+    margin: 'auto',
+    width:'90%',
+    height:40,
+    backgroundColor:'#f7f8f8ff',
+    borderradius: 6
+}
 
 
 });

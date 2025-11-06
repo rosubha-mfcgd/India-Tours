@@ -23,8 +23,10 @@ textfieldunderlinedInput: {
     borderBottomColor: '#020f1dff', // Sets the underline color
     paddingVertical: 15, // Adds vertical padding for better spacing
     width: '100%', // Adjust width as needed
-    textAlign: 'center' // Centers the text within the input
-    
+    textAlign: 'center' ,// Centers the text within the input
+    borderradius:'8px',
+    border: '1px solid #ccc',
+    transition: 'border-color 0.3s ease-in-out, box-shadow 0.3s ease-in-out'
   },
  body: {
      fontfamily: 'Roboto', /* Or another suitable sans-serif font */

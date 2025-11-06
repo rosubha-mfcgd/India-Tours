@@ -23,10 +23,18 @@ const ProductStyle = StyleSheet.create({
     shadowRadius: 2,
   },
    button: {
-    backgroundColor: '#ff00c8ff', // Example background color
-    paddingVertical: 12,
-    paddingHorizontal: 20,
-    borderRadius: 8,
+   backgroundColor: '#007AFF', // Example primary color 
+paddingVertical: 12, 
+paddingHorizontal: 20, 
+borderRadius: 8, 
+flexDirection: 'row', 
+alignItems: 'center', 
+justifyContent: 'center', 
+shadowColor: '#000', 
+shadowOffset: { width: 0, height: 2 }, 
+shadowOpacity: 0.2, 
+shadowRadius: 4, 
+elevation: 5,
   },
   buttonText: {
     color: 'white',

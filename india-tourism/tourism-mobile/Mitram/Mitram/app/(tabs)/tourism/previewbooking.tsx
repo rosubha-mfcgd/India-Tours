@@ -9,15 +9,12 @@ import { AlertStyles } from '../../styles/AlertButtonStyle';
 import { useEffect, useState,useRef  } from "react";
 import { useLocalSearchParams,Link } from 'expo-router';
 import { Table,  TBody, TR, TD } from '@expo/html-elements';
- import { MaterialIcons } from '@expo/vector-icons'; // For the arrow icon
 import {formatINR,updateBooking} from "../../admin/utility";
-import Ionicons from '@expo/vector-icons/Ionicons';
 export default function PreviewBooking()
 {
     const {bookingdata} = useLocalSearchParams();
     const [bookingDataObj, setBookingDataObj] = useState(JSON.parse(bookingdata));
-     const[email,setEmail] = useState('');
-     const[specialRequest,setSpecialRequest] = useState('');
+    
      const [deletemodalVisible, setDeletemodalVisible] = useState(false);
       const [updatemodalVisible, setUpdatemodalVisible] = useState(false);
      const[editable,setEditable] = useState(false)
@@ -76,6 +73,8 @@ export default function PreviewBooking()
         console.log('items...',items);
         let totaltourists = bookingDataObj.bookingData.length;
         setTotalAmountPayable((+bookingDataObj.package_cost)*(totaltourists));
+        bookingDataObj.totalAmountPayable = totalAmountPayable;
+         setJsonStr(JSON.stringify(bookingDataObj));
     },[]);
 
    

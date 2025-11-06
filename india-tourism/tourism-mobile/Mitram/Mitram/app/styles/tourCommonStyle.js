@@ -42,16 +42,32 @@ centeredContainer: {
     textAlign: 'center'
   },
   button: {
-    backgroundColor: '#ff00c8ff', // Example background color
-    paddingVertical: 12,
-    paddingHorizontal: 20,
-    borderRadius: 8,
+   backgroundColor: '#007AFF', // Example primary color 
+paddingVertical: 12, 
+paddingHorizontal: 20, 
+borderRadius: 8, 
+flexDirection: 'row', 
+alignItems: 'center', 
+justifyContent: 'center', 
+shadowColor: '#000', 
+shadowOffset: { width: 0, height: 2 }, 
+shadowOpacity: 0.2, 
+shadowRadius: 4, 
+elevation: 5,
   },
   bookingbutton: {
-    backgroundColor: '#ff0000ff', // Example background color
-    paddingVertical: 12,
-    paddingHorizontal: 10,
-    borderRadius: 4,
+    backgroundColor: '#007AFF', // Example primary color 
+paddingVertical: 12, 
+paddingHorizontal: 20, 
+borderRadius: 8, 
+flexDirection: 'row', 
+alignItems: 'center', 
+justifyContent: 'center', 
+shadowColor: '#000', 
+shadowOffset: { width: 0, height: 2 }, 
+shadowOpacity: 0.2, 
+shadowRadius: 4, 
+elevation: 5,
   },
   gridItem: {
     flex: 1, // Allows items to grow and shrink to fill available space
@@ -85,12 +101,44 @@ centeredContainer: {
   },
 
    updatebookingbutton: {
-    backgroundColor: '#ff00c8ff', // Example background color
-    paddingVertical: 12,
-    paddingHorizontal: 10,
-    borderRadius: 4,
-    width:"25%"
-  }
+    backgroundColor: '#007AFF', // Example primary color 
+paddingVertical: 12, 
+paddingHorizontal: 20, 
+borderRadius: 8, 
+flexDirection: 'row', 
+alignItems: 'center', 
+justifyContent: 'center', 
+shadowColor: '#000', 
+shadowOffset: { width: 0, height: 2 }, 
+shadowOpacity: 0.2, 
+shadowRadius: 4, 
+elevation: 5,
+  },
+  paymentbutton: { 
+backgroundColor: '#007AFF', // Example primary color 
+paddingVertical: 12, 
+paddingHorizontal: 20, 
+borderRadius: 8, 
+flexDirection: 'row', 
+alignItems: 'center', 
+justifyContent: 'center', 
+shadowColor: '#000', 
+shadowOffset: { width: 0, height: 2 }, 
+shadowOpacity: 0.2, 
+shadowRadius: 4, 
+elevation: 5, 
+}, 
+disabledButton: { 
+backgroundColor: '#A0A0A0', 
+}, 
+paymentbuttonText: { 
+color: '#fff', 
+fontSize: 16, 
+fontWeight: 'bold', 
+}, 
+icon: { 
+marginRight: 8, 
+}
 
 },
 
