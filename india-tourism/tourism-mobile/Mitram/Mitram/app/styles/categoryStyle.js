@@ -28,6 +28,7 @@ gridItem: {
   },
    button: {
     backgroundColor: '#007AFF', // Example primary color 
+    borderRadius:30,
 paddingVertical: 12, 
 paddingHorizontal: 20, 
 borderRadius: 8, 

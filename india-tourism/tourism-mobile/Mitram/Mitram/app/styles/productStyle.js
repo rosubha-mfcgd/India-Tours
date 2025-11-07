@@ -26,7 +26,7 @@ const ProductStyle = StyleSheet.create({
    backgroundColor: '#007AFF', // Example primary color 
 paddingVertical: 12, 
 paddingHorizontal: 20, 
-borderRadius: 8, 
+borderRadius:  30, 
 flexDirection: 'row', 
 alignItems: 'center', 
 justifyContent: 'center', 

@@ -196,7 +196,7 @@ export default function PreviewBooking()
               </View>  
               <View style = {TourCommonStyle.buttonWrapper}>
              <TouchableOpacity style={TourCommonStyle.bookingbutton}  onPress={handleSave}>
-              <Text style={{ color: 'white', fontSize: 18, marginRight: 5 }}>Save</Text>
+              <Text style={{ color: 'white', fontSize: 18, marginRight: 5 }}>Delete</Text>
               </TouchableOpacity>
               </View>  
               </View>

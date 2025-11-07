@@ -43,3 +43,22 @@ export const updateBooking = (key,name,value, booking,setBooking) =>{
             setBooking(booking);
             console.log('final booking....',booking)
         }
+
+export const validateBookingData =async (bookingData) =>{
+  let errMsg = '';
+  
+      for(let index = 0;index<bookingData.length;index++)
+      {
+        try{
+        console.log('booking to be validated....',bookingData[index])
+       await validationSchema.validate(bookingData[index]);
+        }
+        catch(error){
+        errMsg = error.message;
+       // console.error("Validation error:", error.message)
+        break;
+  }
+    }
+        return errMsg;
+  }
+

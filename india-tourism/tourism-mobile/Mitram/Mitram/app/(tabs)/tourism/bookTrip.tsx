@@ -5,11 +5,14 @@ import BookingStyle from '../../styles/bookingStyle.js';
 import { useEffect, useState } from "react";
 import { TouchableOpacity} from 'react-native';
 import Ionicons from '@expo/vector-icons/Ionicons';
-import { useLocalSearchParams,Link } from 'expo-router';
+import { useLocalSearchParams } from 'expo-router';
 import { Table,  TBody, TR, TD } from '@expo/html-elements';
-import {updateBooking,validationSchema} from  '../../admin/utility';
- 
-import { Formik } from 'formik';
+import {updateBooking,validateBookingData} from  '../../admin/utility';
+ import TourismCommonModal from '../../admin/tourismCommonModal.js'
+
+import { useRouter } from 'expo-router';
+
+
 export default function BookMyTrip()
 {
     const {location,tourmanagerName,cityname,startdate,enddate,
@@ -17,14 +20,15 @@ export default function BookMyTrip()
     const [count,setCount] = useState('')
     const[items, setItems] = useState([]);
     const[nameOfTourist,setNameOfTourist] = useState([]);
-   
+    const router = useRouter();
     const[age,setAge] = useState([]);
     const[mobile,setMobile] = useState([]);
-    
+    const[modalVisible,setModalVisible] = useState(false);
     const[streetaddress,setStreetaddress] = useState([]);
     const[pincode,setPincode] = useState([]);
     const[openBookingForm, setOpenBookingForm] = useState(false);
     const[jsonStr,setJsonStr] = useState(null);
+    const[errorMessage,setErrorMessage] = useState(null)
     //This is the final result tourist info payload
     const [booking,setBooking] = useState({
         tourManagerId:tourManagerId,
@@ -35,7 +39,26 @@ export default function BookMyTrip()
         package_cost:packageCost,
         bookingData: []
     })
-         
+     
+    const handleSubmit = async(bookingData) =>{
+      
+      let booking = JSON.parse(bookingData);
+      console.log('bookingData for validation....',booking)
+       let errorMessage = await validateBookingData(booking.bookingData);
+       
+       if(errorMessage)
+       {
+        console.log('errorMessage....',errorMessage);
+       setErrorMessage(errorMessage);
+       setModalVisible(true);           
+       }else{
+        setModalVisible(false)
+        router.push({
+              pathname: "/tourism/previewbooking",
+          params: {  bookingdata: jsonStr }
+          });
+       }
+    }
     
 
     const changeTouristCount=(action) =>{
@@ -100,7 +123,12 @@ export default function BookMyTrip()
       showsHorizontalScrollIndicator={false} // Ensures horizontal scroll indicator is hidden (if not needed)
         >
             <Text style={TextStyle.h2}> This page books your trip for {location} with {tourmanagerName} {cityname}</Text>
-          
+          {
+            modalVisible ? 
+            <TourismCommonModal modalVisible={modalVisible} 
+            setModalVisible={setModalVisible} errorMessage={errorMessage}></TourismCommonModal>:<View/>
+          }
+
           <View style={BookingStyle.flexboxcontainer}>
             
               <View style= {BookingStyle.column}>
@@ -124,16 +152,8 @@ export default function BookMyTrip()
             
                 items && items.length>0 ?
                      items.map((item)=>(
-                       <Formik
-        initialValues={{ name: '', mobile: '' ,age:'', streetname:'',pincode:''}}
-        key = {`"formik"-${item.key}`}
-        validationSchema={validationSchema}
-        onSubmit={(values, actions) => {
-          console.log(values);
-          actions.setSubmitting(false);
-        }}
-      >
-         {({ handleChange, handleBlur, handleSubmit, values, errors, touched }) => (
+             
+        
         
                        <View key={`"view"-${item.key}`} style={BookingStyle.tableContainer}>
                          <Text  key={`"header"-${item.key}`}>Tourist #: {item.key}</Text>
@@ -152,15 +172,11 @@ export default function BookMyTrip()
               style={BookingStyle.textfieldunderlinedInput}
         value={nameOfTourist[`${item.key}-1`]} onChangeText={text=>
         {
-          handleChange('name');
             nameOfTourist[`${item.key}-1`]=text
             updateTourBooking(item.key,"name",text)
         }}
-        onBlur={handleBlur('name')}
-         
-        /> 
-        {errors.name && touched.name && <Text style={{ color: '#f50c0cff' }}>{errors.name}</Text>}
-         </TD></TR>
+      /> 
+        </TD></TR>
             <TR>
               <TD style={BookingStyle.tableCell}> 
                 <Text  key={`"mobilelabel"-${item.key}`}>Mobile#:</Text></TD> 
@@ -171,13 +187,11 @@ export default function BookMyTrip()
               placeholder="Mobile #" key={`"mobile"-${item.key}`}  style={BookingStyle.textfieldunderlinedInput}
         value={mobile[`${item.key}-1`]} onChangeText={text=>
         {
-          handleChange('mobile');
+          
             mobile[`${item.key}-1`]=text
             updateTourBooking(item.key,"mobile",text)}} 
-            onBlur={handleBlur('mobile')}
-            
             />
-         {errors.mobile && touched.mobile && <Text style={{ color: 'red' }}>{errors.mobile}</Text>}
+         
           </TD>
            </TR>
              <TR>
@@ -189,12 +203,11 @@ export default function BookMyTrip()
               placeholder="Age" key={`"age"-${item.key}`} style={BookingStyle.textfieldunderlinedInput}
         value={age[`${item.key}-1`]} onChangeText={text=>
         {
-          handleChange('age');
-            age[`${item.key}-1`] = text
+             age[`${item.key}-1`] = text
             updateTourBooking(item.key,"age",text)}}
-            onBlur={handleBlur('age')}
+           
             />
-             {errors.age && touched.age && <Text style={{ color: 'red' }}>{errors.age}</Text>}
+           
         </TD>           
      </TR> 
       <TR>
@@ -207,12 +220,11 @@ export default function BookMyTrip()
               style={BookingStyle.textfieldunderlinedInput}
         value={streetaddress[`${item.key}-1`]} onChangeText={text=>
         {
-          handleChange('streetname');
             streetaddress[`${item.key}-1`] = text
             updateTourBooking(item.key,"streetname",text)}}
-            onBlur={handleBlur('streetname')}
+            
             />
-             {errors.streetname && touched.streetname && <Text style={{ color: 'red' }}>{errors.streetname}</Text>}
+          
         </TD>           
      </TR>
     <TR>
@@ -224,36 +236,31 @@ export default function BookMyTrip()
               placeholder="Pin Code" key={`"pincode"-${item.key}`} style={BookingStyle.textfieldunderlinedInput}
         value={pincode[`${item.key}-1`]} onChangeText={text=>
         {
-           handleChange('pincode');
             pincode[`${item.key}-1`] = text
             updateTourBooking(item.key,"pincode",text)}}
-             onBlur={handleBlur('pincode')}
-            />
-             {errors.pincode && touched.pincode && <Text style={{ color: 'red' }}>{errors.pincode}</Text>}
+          />
+          
         </TD>           
      </TR>
 
      </TBody> 
        </Table>
        </View>
-       )}
-     </Formik>   
+       
+        
     )):<View></View>
             
             
         :<View></View>
         }
        {jsonStr && openBookingForm ? 
-  <Link href={{pathname:"/tourism/previewbooking",
-                                             params: { 
-                                                bookingdata: jsonStr
-                                             }
-                                          }} asChild>
+ 
                 <TouchableOpacity 
                     style={TourCommonStyle.bookingbutton}>
-                    <Text style={TourCommonStyle.buttonText}>Submit</Text>
+                    <Text style={TourCommonStyle.buttonText} onPress={()=>
+                      handleSubmit(jsonStr)}>Submit</Text>
                   </TouchableOpacity>
-            </Link>:<View></View>
+           :<View></View>
 }
         </ScrollView>
 </KeyboardAvoidingView>

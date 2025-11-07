@@ -30,7 +30,7 @@ export default function payforTrip()
             setSpecialRequest(text);
        }
        const handleSubmit = async() =>{
-          console.log('submit ')
+          console.log('submit ');
           let data = {tourManagerId:bookingDataObj.tourManagerId,
               locationName:bookingDataObj.location,
               startDate:bookingDataObj.startdate,
