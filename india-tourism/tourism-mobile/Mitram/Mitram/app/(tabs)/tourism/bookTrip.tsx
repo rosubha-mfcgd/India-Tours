@@ -60,6 +60,59 @@ export default function BookMyTrip()
        }
     }
     
+    const handleValueOnBlur = (data,field) =>{
+    
+      console.log('bookingData for validation....',data)
+     let errMesage = '';
+     if("name" === field)
+      {
+       if(!(/^[a-zA-Z\s]+$/).test(data))
+       {
+           errMesage =  'Name can only contain letters and spaces'
+           setErrorMessage(errMesage)
+       }
+      } 
+      else if("mobile" === field)
+      {
+       if(!(/^[0-9]{10}$/).test(data))
+       {
+           errMesage =  'Mobile number is not valid'
+           setErrorMessage(errMesage)
+       }
+      } 
+
+     else if("age" === field)
+      {
+       if(data<0 || data>92)
+       {
+           errMesage =  'You must be younger than 92 years old'
+           setErrorMessage(errMesage)
+       }
+      } 
+      else if("pincode" === field)
+      {
+       if(!(/^[0-9]{6}$/).test(data))
+       {
+           errMesage =  'Pincode must be exactly 6 digits'
+           setErrorMessage(errMesage)
+       }
+      } 
+       else if("streetname" === field)
+      {
+       if(!(/^[a-zA-Z0-9\s.,#-]+$/).test(data))
+       {
+           errMesage =  'Invalid street name'
+           setErrorMessage(errMesage)
+       }
+      } 
+      
+      if(errorMessage)
+      {
+        setModalVisible(true)
+      }else{
+        setModalVisible(false)
+      }
+    }
 
     const changeTouristCount=(action) =>{
        
@@ -126,7 +179,7 @@ export default function BookMyTrip()
           {
             modalVisible ? 
             <TourismCommonModal modalVisible={modalVisible} 
-            setModalVisible={setModalVisible} errorMessage={errorMessage}></TourismCommonModal>:<View/>
+            setModalVisible={setModalVisible} errorMessage={errorMessage}/>:<View/>
           }
 
           <View style={BookingStyle.flexboxcontainer}>
@@ -175,6 +228,9 @@ export default function BookMyTrip()
             nameOfTourist[`${item.key}-1`]=text
             updateTourBooking(item.key,"name",text)
         }}
+        onBlur={() =>{
+          handleValueOnBlur(nameOfTourist[`${item.key}-1`],'name')
+        }}
       /> 
         </TD></TR>
             <TR>
@@ -190,6 +246,9 @@ export default function BookMyTrip()
           
             mobile[`${item.key}-1`]=text
             updateTourBooking(item.key,"mobile",text)}} 
+             onBlur={() =>{
+          handleValueOnBlur(mobile[`${item.key}-1`],'mobile')
+        }}
             />
          
           </TD>
@@ -205,7 +264,9 @@ export default function BookMyTrip()
         {
              age[`${item.key}-1`] = text
             updateTourBooking(item.key,"age",text)}}
-           
+            onBlur={() =>{
+          handleValueOnBlur(age[`${item.key}-1`],'age')
+        }}
             />
            
         </TD>           
@@ -222,7 +283,9 @@ export default function BookMyTrip()
         {
             streetaddress[`${item.key}-1`] = text
             updateTourBooking(item.key,"streetname",text)}}
-            
+            onBlur={() =>{
+          handleValueOnBlur(streetaddress[`${item.key}-1`],'streetname')
+        }} 
             />
           
         </TD>           
@@ -238,6 +301,9 @@ export default function BookMyTrip()
         {
             pincode[`${item.key}-1`] = text
             updateTourBooking(item.key,"pincode",text)}}
+              onBlur={() =>{
+          handleValueOnBlur(pincode[`${item.key}-1`],'pincode')
+        }} 
           />
           
         </TD>           
