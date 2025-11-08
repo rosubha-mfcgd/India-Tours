@@ -60,16 +60,19 @@ export default function BookMyTrip()
        }
     }
     
-    const handleValueOnBlur = (data,field) =>{
+    const handleValueOnBlur = (data,field,index) =>{
     
       console.log('bookingData for validation....',data)
      let errMesage = '';
+     setErrorMessage(null)
      if("name" === field)
       {
        if(!(/^[a-zA-Z\s]+$/).test(data))
        {
            errMesage =  'Name can only contain letters and spaces'
            setErrorMessage(errMesage)
+           nameOfTourist[index] = ''; 
+           
        }
       } 
       else if("mobile" === field)
@@ -78,6 +81,7 @@ export default function BookMyTrip()
        {
            errMesage =  'Mobile number is not valid'
            setErrorMessage(errMesage)
+           mobile[index] = '';
        }
       } 
 
@@ -87,6 +91,7 @@ export default function BookMyTrip()
        {
            errMesage =  'You must be younger than 92 years old'
            setErrorMessage(errMesage)
+           age[index] = '';
        }
       } 
       else if("pincode" === field)
@@ -95,6 +100,7 @@ export default function BookMyTrip()
        {
            errMesage =  'Pincode must be exactly 6 digits'
            setErrorMessage(errMesage)
+           pincode[index] = ''
        }
       } 
        else if("streetname" === field)
@@ -103,6 +109,7 @@ export default function BookMyTrip()
        {
            errMesage =  'Invalid street name'
            setErrorMessage(errMesage)
+           streetaddress[index] = '';
        }
       } 
       
@@ -132,8 +139,7 @@ export default function BookMyTrip()
                 setCount('');
             }
         }
-       // createForms(currentVal);
-        }
+       }
 
    
     const updateTourBooking = (key,name,value) =>{
@@ -229,7 +235,7 @@ export default function BookMyTrip()
             updateTourBooking(item.key,"name",text)
         }}
         onBlur={() =>{
-          handleValueOnBlur(nameOfTourist[`${item.key}-1`],'name')
+          handleValueOnBlur(nameOfTourist[`${item.key}-1`],'name',`${item.key}-1`)
         }}
       /> 
         </TD></TR>
@@ -247,7 +253,7 @@ export default function BookMyTrip()
             mobile[`${item.key}-1`]=text
             updateTourBooking(item.key,"mobile",text)}} 
              onBlur={() =>{
-          handleValueOnBlur(mobile[`${item.key}-1`],'mobile')
+          handleValueOnBlur(mobile[`${item.key}-1`],'mobile',`${item.key}-1`)
         }}
             />
          
@@ -265,7 +271,7 @@ export default function BookMyTrip()
              age[`${item.key}-1`] = text
             updateTourBooking(item.key,"age",text)}}
             onBlur={() =>{
-          handleValueOnBlur(age[`${item.key}-1`],'age')
+          handleValueOnBlur(age[`${item.key}-1`],'age',`${item.key}-1`)
         }}
             />
            
@@ -284,7 +290,7 @@ export default function BookMyTrip()
             streetaddress[`${item.key}-1`] = text
             updateTourBooking(item.key,"streetname",text)}}
             onBlur={() =>{
-          handleValueOnBlur(streetaddress[`${item.key}-1`],'streetname')
+          handleValueOnBlur(streetaddress[`${item.key}-1`],'streetname',`${item.key}-1`)
         }} 
             />
           
@@ -302,7 +308,7 @@ export default function BookMyTrip()
             pincode[`${item.key}-1`] = text
             updateTourBooking(item.key,"pincode",text)}}
               onBlur={() =>{
-          handleValueOnBlur(pincode[`${item.key}-1`],'pincode')
+          handleValueOnBlur(pincode[`${item.key}-1`],'pincode',`${item.key}-1`)
         }} 
           />
           

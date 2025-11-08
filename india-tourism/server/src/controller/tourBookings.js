@@ -32,6 +32,37 @@ const performBookings = async(req,res,retries = 3, delay = 1000) =>{
        
     }
 
+    const performBookingsByMobile = async(req,res,retries = 3, delay = 1000) =>{
+
+    const {tourManagerId,locationName,startDate,endDate,domesticOrInternational,
+        package_cost,bookingData} = req.body;
+
+        try{
+                let tourBookingService =  new TourBookingService();
+                
+            let bookings = await tourBookingService.createBookingsByMobile(tourManagerId,locationName,
+                startDate,endDate,domesticOrInternational,
+                package_cost,bookingData);
+                if(bookings){
+                  console.log('bookings...',bookings);
+                res.status(200).send({"bookingid":bookings});
+                }else{
+                    throw new Error("could not create a booking on attempt #:-",retries);
+                }
+       }catch(err){
+         if(retries>0)
+        {
+             console.log('retry attempted...')
+          await new Promise(resolve => setTimeout(resolve, delay));
+          return performBookingsByMobile(req,res,retries-1,delay);
+        }
+          logNginx(err.stack);
+        res.status(400).send(
+                {"errormessage":"could not create a booking"});
+       }
+       
+    }
+
     const getBookingsByBookingId = async(req,res,retries = 3, delay = 1000) =>{
 
         const {tourManagerId,locationName,startDate,endDate,domesticOrInternational,
@@ -108,7 +139,7 @@ const performBookings = async(req,res,retries = 3, delay = 1000) =>{
        }
     }
     
-    module.exports = {performBookings,getBookingsByBookingId,updateBookingsByBookingId}
+    module.exports = {performBookings,performBookingsByMobile,getBookingsByBookingId,updateBookingsByBookingId}
 
     
 

@@ -115,6 +115,7 @@ export default function TripDetails()
                   </TouchableOpacity>
             </Link>
             </View>
+            
             </View>
         </ScrollView>
     )

@@ -31,14 +31,14 @@ class TourRepository extends BaseRepository_1.BaseRepository {
                     $addFields: {
                         customStartDate: {
                             $dateToString: {
-                                format: "%d/%B/%Y",
+                                format: "%d-%B-%Y",
                                 date: "$startDate",
                                 timezone: "Asia/Kolkata"
                             }
                         },
                         customEndDate: {
                             $dateToString: {
-                                format: "%d/%B/%Y",
+                                format: "%d-%B-%Y",
                                 date: "$endDate",
                                 timezone: "Asia/Kolkata"
                             }

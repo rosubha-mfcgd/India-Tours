@@ -33,6 +33,29 @@ const performBookings = (req_1, res_1, ...args_1) => __awaiter(void 0, [req_1, r
         res.status(400).send({ "errormessage": "could not create a booking" });
     }
 });
+const performBookingsByMobile = (req_1, res_1, ...args_1) => __awaiter(void 0, [req_1, res_1, ...args_1], void 0, function* (req, res, retries = 3, delay = 1000) {
+    const { tourManagerId, locationName, startDate, endDate, domesticOrInternational, package_cost, bookingData } = req.body;
+    try {
+        let tourBookingService = new TourBookingService();
+        let bookings = yield tourBookingService.createBookingsByMobile(tourManagerId, locationName, startDate, endDate, domesticOrInternational, package_cost, bookingData);
+        if (bookings) {
+            console.log('bookings...', bookings);
+            res.status(200).send({ "bookingid": bookings });
+        }
+        else {
+            throw new Error("could not create a booking on attempt #:-", retries);
+        }
+    }
+    catch (err) {
+        if (retries > 0) {
+            console.log('retry attempted...');
+            yield new Promise(resolve => setTimeout(resolve, delay));
+            return performBookingsByMobile(req, res, retries - 1, delay);
+        }
+        logNginx(err.stack);
+        res.status(400).send({ "errormessage": "could not create a booking" });
+    }
+});
 const getBookingsByBookingId = (req_1, res_1, ...args_1) => __awaiter(void 0, [req_1, res_1, ...args_1], void 0, function* (req, res, retries = 3, delay = 1000) {
     const { tourManagerId, locationName, startDate, endDate, domesticOrInternational, bookingId } = req.body;
     try {
@@ -88,4 +111,4 @@ const updateBookingsByBookingId = (req_1, res_1, ...args_1) => __awaiter(void 0,
         res.status(400).send({ "errormessage": "could not update booking by bookingId " + bookingId });
     }
 });
-module.exports = { performBookings, getBookingsByBookingId, updateBookingsByBookingId };
+module.exports = { performBookings, performBookingsByMobile, getBookingsByBookingId, updateBookingsByBookingId };

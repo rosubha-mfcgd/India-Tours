@@ -1,26 +1,23 @@
-import { StyleSheet, Text, View ,ScrollView} from 'react-native';
-import LoginSignUpStyle from '../../styles/loginsignup.js'; 
+import { Text, View ,ScrollView} from 'react-native';
 import TourCommonStyle from '../../styles/tourCommonStyle.js'; 
 import TextStyle from '../../styles/textStyles.js'
-import ProductStyle from '../../styles/productStyle.js'; 
 import {performTripBooking} from "../../admin/admin.js";
 import {formatINR} from "../../admin/utility";
 import { useEffect, useState, useContext } from "react";
-import {KeyboardAvoidingView,Platform, FlatList, TouchableOpacity, TextInput,Pressable} from 'react-native';
-import Ionicons from '@expo/vector-icons/Ionicons';
-import { Card, Button, Icon } from '@rneui/themed';
-import { Table, THead, TH, TBody, TR, TD } from '@expo/html-elements';
-import { useLocalSearchParams,Link } from 'expo-router';
+import {TouchableOpacity, TextInput} from 'react-native';
+import { Table,  TH, TBody, TR, TD } from '@expo/html-elements';
+import { useLocalSearchParams,useRouter } from 'expo-router';
 
 
 export default function payforTrip()
 {
     const {bookingdata} = useLocalSearchParams();
      const[email,setEmail] = useState('');
+     const router = useRouter();
          const[specialRequest,setSpecialRequest] = useState('NA');
         const [bookingDataObj, setBookingDataObj] = useState(JSON.parse(bookingdata));
        const[totalPayableAmt,setTotalPayableAmt] = useState('');
-        const handleEmailChange = (text) =>{
+       const handleEmailChange = (text) =>{
             bookingDataObj["email"] = text;
             setEmail(text);
        }
@@ -30,20 +27,45 @@ export default function payforTrip()
             setSpecialRequest(text);
        }
        const handleSubmit = async() =>{
-          console.log('submit ');
+          console.log('submit action called ');
+          let primarybookings = [];
+          let dependentbookings = [];
+          let primary_index=0;
+           let dep_index=0;
+          for(let index=0;index<bookingDataObj.bookingData.length;index++)
+          {
+            let bookingData = bookingDataObj.bookingData[index]; 
+            if(bookingData.age<18)
+            {
+              dependentbookings[dep_index++] = bookingData;
+
+            }else{
+                primarybookings[primary_index++] = bookingData;
+                
+            }
+              
+          }
+
           let data = {tourManagerId:bookingDataObj.tourManagerId,
               locationName:bookingDataObj.location,
               startDate:bookingDataObj.startdate,
               endDate:bookingDataObj.enddate,
               domesticOrInternational:bookingDataObj.domesticOrInternational,
-              package_cost:totalPayableAmt,
-              primarybookings:bookingDataObj.bookingData[0],
-              dependantbookings:bookingDataObj.bookingData[0]
-
+              package_cost:bookingDataObj.totalAmountPayable,
+              primarybookings:primarybookings,
+             dependantbookings: dependentbookings
           }
          const bookings= await performTripBooking(data);
          if(bookings){
-            console.log('bookings...',bookings)
+            console.log('bookings...',bookings);
+            router.push({
+           pathname: '/tourism/confirmbooking',
+            params: { booking: bookings.bookingid,
+              locationName:bookingDataObj.location,
+            startDate:bookingDataObj.startdate,
+              endDate:bookingDataObj.enddate
+            },
+           });
          }
        }
 
@@ -56,6 +78,7 @@ export default function payforTrip()
         let totalAmountPayable = ((+bookingDataObj.package_cost)*(totaltourists));
         bookingDataObj.totalAmountPayable = totalAmountPayable;
         setTotalPayableAmt(formatINR(totalAmountPayable));
+
        },[])
 
     return(
@@ -127,7 +150,9 @@ export default function payforTrip()
 
                 <TouchableOpacity 
                     style={TourCommonStyle.paymentbutton}>
-                    <Text style={TourCommonStyle.buttonText}>Complete Payment</Text>
+                    <Text style={TourCommonStyle.buttonText}
+                    onPress={handleSubmit}
+                    >Complete Payment</Text>
                   </TouchableOpacity>
            
             </View>

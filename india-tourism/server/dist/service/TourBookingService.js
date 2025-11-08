@@ -21,13 +21,6 @@ class TourBookingService {
             let bookingId = '';
             try {
                 const bookingRepository = new BookingRepository();
-                // let existingBooking = await bookingRepository.findOne({"tourManagerId": tourManagerId,
-                //     "locationName":locationName,
-                //     "startDate":startDate, 
-                //     "endDate":endDate,
-                //     "domesticOrInternational":domesticOrInternational});
-                // if(!existingBooking)
-                // {
                 bookingId = apputil.generateBookingId();
                 let data = { "tourManagerId": tourManagerId,
                     "locationName": locationName,
@@ -45,12 +38,36 @@ class TourBookingService {
                     console.log('bookings...', bookings);
                     bookingId = bookings.bookingId;
                 }
-                // }else{
-                //      console.log('User already found with object id ',existingBooking._id);
-                //       if(existingBooking){
-                //         console.log('bookings...',existingBooking);
-                //         bookingId = existingBooking.bookingId;
-                //     }
+            }
+            catch (err) {
+                console.log(err.stack);
+                logNginx(err.stack);
+            }
+            return bookingId;
+        });
+    }
+    createBookingsByMobile(tourManagerId, locationName, startDate, endDate, domesticOrInternational, package_cost, bookingData) {
+        return __awaiter(this, void 0, void 0, function* () {
+            let bookings = [];
+            let bookingId = '';
+            try {
+                const bookingRepository = new BookingRepository();
+                bookingId = apputil.generateBookingId();
+                let data = { "tourManagerId": tourManagerId,
+                    "locationName": locationName,
+                    "startDate": new Date(startDate),
+                    "endDate": new Date(endDate),
+                    "domesticOrInternational": domesticOrInternational,
+                    "bookingId": bookingId,
+                    "package_cost": package_cost,
+                    "bookings": bookingData
+                };
+                bookings = yield bookingRepository.create(data);
+                console.log('User successfully booked with object id ', bookings);
+                if (bookings) {
+                    console.log('bookings...', bookings);
+                    bookingId = bookings.bookingId;
+                }
             }
             catch (err) {
                 console.log(err.stack);
