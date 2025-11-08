@@ -8,6 +8,12 @@ centeredContainer: {
     alignItems: 'center',     // Centers content horizontally
     backgroundColor: '#8a41df7e', // Optional: for visual clarity
   },
+  centeredsecContainer: {
+    flex: 1,
+    justifyContent: 'center', // Centers content vertically
+    alignItems: 'center',     // Centers content horizontally
+    backgroundColor: '#5a0ed47e', // Optional: for visual clarity
+  },
   buttonscontainer: {
     flexDirection: 'row', // Arranges children horizontally
     justifyContent: 'space-around', // Distributes space evenly around items

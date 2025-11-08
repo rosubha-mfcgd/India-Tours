@@ -46,6 +46,14 @@ detailitemdescription: {
   color: '#007bff', /* Accent color for emphasis */
   textDecorationLine: 'underline'
 },
+infotext: {
+  fontSize: 20,
+    fontWeight: 'bold',
+    color: '#ff0000ff',
+    textAlign: 'center',
+    fontStyle: 'italic',
+    textDecorationLine: 'underline',
+},
  previewbookingtabletext: {
      fontfamily: 'Roboto', /* Or another suitable sans-serif font */
     fontSize: 16,

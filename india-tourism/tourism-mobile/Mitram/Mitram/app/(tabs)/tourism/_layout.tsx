@@ -12,8 +12,8 @@
            <Stack.Screen name="viewitinerary" options={{ title: 'View our Itinerary' }} />
            <Stack.Screen name="editTrip" options={{ title: 'Edit My Trip' }} />
            <Stack.Screen name="payfortrip" options={{ title: 'Complete Payment' }} />
-           <Stack.Screen name="confirmbooking" options={{ title: 'Booking Confirmation',
-             headerLeft: () => null, // This hides the back button
+           <Stack.Screen name="confirmbooking" options={{headerShown: false
+           // This hides the back button
             }} />
         </Stack>
       );
