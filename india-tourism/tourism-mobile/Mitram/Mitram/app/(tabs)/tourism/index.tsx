@@ -4,10 +4,11 @@ import TourCommonStyle from '../../styles/tourCommonStyle.js';
 import {updateAsFavorite,getCategories,getCities,
     persistDataInCache,getDataFromCache} from "../../admin/admin";
 import { useEffect, useState } from "react";
+
 import { FlatList, TouchableOpacity, Image} from 'react-native';
 import Ionicons from '@expo/vector-icons/Ionicons';
 import { Card } from '@rneui/themed';
-import {tripCategoryImages} from "../../admin/imageManager";
+import {tripCategoryImages,tripCategoryBackImages} from "../../admin/imageManager";
 import { useLocalSearchParams } from 'expo-router';
 import { Link } from 'expo-router';
 export default function Categories()
@@ -16,6 +17,11 @@ export default function Categories()
     const {productID} = useLocalSearchParams();
     const [items, setItems] = useState('');
     const[cityList,setCityList] = useState('');
+    const [showFlipImage,setShowFlipImage] = useState(false)
+
+    const toggleImage = () =>{
+         setShowFlipImage(!showFlipImage)
+      }
 
 const updateFavorites = async(categoryid, status,event) =>{
 
@@ -44,9 +50,14 @@ const updateFavorites = async(categoryid, status,event) =>{
                 <View style={CategoryStyle.row}>
                   <Card>
               
-            
+            <TouchableOpacity style={CategoryStyle.touchableOpacity} onPress={toggleImage}>
+                {showFlipImage?
              <Image source={tripCategoryImages[item.categoryName]} style=
-             {{flex: 1, width: 300, height: 200 }}/>
+             {CategoryStyle.image}/> :
+             <Image source={tripCategoryBackImages[item.categoryName]} style=
+             {CategoryStyle.image}/>
+                }
+             </TouchableOpacity>
           <Card.Title>
             <Text style={CategoryStyle.categoryscreenText}>{item.categoryName}{"\n"}</Text>
                     <Text style={CategoryStyle.categoryscreenText}>{item.categoryDesc}</Text>

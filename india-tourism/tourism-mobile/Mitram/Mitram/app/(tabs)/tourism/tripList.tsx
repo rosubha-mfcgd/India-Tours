@@ -1,12 +1,10 @@
-import { StyleSheet, Text, View } from 'react-native';
-import LoginSignUpStyle from '../../styles/loginsignup.js'; 
-import CardStyle from '../../styles/cards.js'; 
+import { Text, View } from 'react-native';
 import TripListStyle from '../../styles/tripListStyle.js'; 
 import TourCommonStyle from '../../styles/tourCommonStyle.js'; 
 import {formatINR} from "../../admin/utility";
 import {updateAsFavorite,getTourManagers,getTripList} from "../../admin/admin";
-import { useEffect, useState, useContext } from "react";
-import { FlatList, TouchableOpacity, Image} from 'react-native';
+import { useEffect, useState } from "react";
+import { FlatList, TouchableOpacity, ImageBackground} from 'react-native';
 import Ionicons from '@expo/vector-icons/Ionicons';
 import { Card } from '@rneui/themed';
 import {tripListImages} from "../../admin/imageManager";
@@ -16,6 +14,7 @@ export default function TripList()
 {
 
     const {productID,categoryId,cityList} = useLocalSearchParams();
+   
     const listOfCities = JSON.parse(cityList);
    const updateFavorites = async(categoryid, status,event) =>{
 
@@ -214,8 +213,24 @@ export default function TripList()
                   <Card>
               
             
-             <Image source={tripListImages[item.locationName]} 
-             style={{flex: 1, width: 300, height: 200 }}/>
+             <ImageBackground source={tripListImages[item.locationName]} 
+             style={{flex: 1, width: 300, height: 200 }}>
+                 <Text
+          style={{
+            fontSize:12,
+            fontWeight: "bold",
+            color: "black",
+            backgroundColor: '#fff',
+            position: "absolute", // child
+            bottom: 0, // position where you want
+            left: 0
+          }}
+        >
+          {item.lengthOfTour} days
+        </Text>
+                
+                
+                </ImageBackground>
           <Card.Title>
             <Text style={TripListStyle.screenText}>{item.locationName}{"\n"}</Text>
             <Text style={TripListStyle.screenText}>{item.customStartDate}</Text>

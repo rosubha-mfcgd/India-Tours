@@ -24,7 +24,7 @@ export default function ConfirmBooking()
               email: email,
              tourmanagername:tourmanagerName
           }
-        let emailSent =   sendConfirmationBookingEmail(data);
+        let emailSent = sendConfirmationBookingEmail(data);
         if(emailSent)
         {
             console.log('email Confirmation sent');

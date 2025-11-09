@@ -23,6 +23,18 @@ export const tripCategoryImages = {
 "City Vibes": require("../../public/categories/cityvibes.png")
 }
 
+export const tripCategoryBackImages = {
+"Hill stations" : require("../../public/categories/backside/hillstation.png"),
+"Sea beach":require("../../public/categories/backside/seabeach.png"),
+"Desert":require("../../public/categories/backside/desert.png"),
+"Jungle safari" : require("../../public/categories/backside/junglesafari.png"),
+"Religious places":require("../../public/categories/backside/religiousplaces.png"),
+"Office Trips":require("../../public/categories/backside/officetrips.png"),
+"Health Treatments" : require("../../public/categories/backside/healthtreatments.png"),
+"Search my option":require("../../public/categories/backside/searchmyoption.png"),
+"City Vibes": require("../../public/categories/backside/cityvibes.png")
+}
+
 export const tripListImages = {
     "Shimla" : require("../../public/hillstations/front/Shimla.png"),
     "Nainital" : require("../../public/hillstations/front/Nainital.png"),
