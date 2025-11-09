@@ -144,7 +144,13 @@ fontWeight: 'bold',
 }, 
 icon: { 
 marginRight: 8, 
-}
+},
+ linkText: {
+        color: '#007AFF',
+        fontSize: 20,
+        textDecorationLine: 'underline',
+        // Add any other Text styles here
+      },
 
 },
 

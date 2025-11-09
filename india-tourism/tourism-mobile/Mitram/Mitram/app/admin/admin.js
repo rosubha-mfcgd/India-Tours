@@ -1,4 +1,5 @@
 import axios from "axios"
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 
 export const signupUser = async(data) =>{
@@ -452,6 +453,54 @@ catch(err){
 }
 }
 
+export const sendConfirmationBookingEmail = async(data) =>{
+let res_data = "failed to send email communication";
+     try{
+        let access_token = await getApiAccessToken();
+        if(access_token){
+            console.log('access_token found...',access_token.data)
+        console.log('data...',data);
+        
+        const headers = {
+                 "Content-type": "application/json; charset=UTF-8",
+                 "Authorization":"Bearer "+access_token.data.access_token
+            };
+        
+        const response = await axios.post(
+                        process.env.EXPO_PUBLIC_SERVER_URI + "sendConfirmation",
+                        data, {headers});
+        
+         if(response)
+         {
+            res_data = response.data;
+         }
+     }
+     
+}catch(err){
+     console.error('Could not send communication:::', err.stack);
+    // throw err;
+}
+return res_data;
 
+}
 
+export const persistDataInCache = async(key,value) =>{
+    try{
+        const jsonStrValue = JSON.stringify(value);
+        await AsyncStorage.setItem(key,jsonStrValue);
+        console.log('response successfully cached ');
+    }catch(err){
+        console.error('response could not be cached ',err.stack);
+    }
+}
 
+export const getDataFromCache = async(key) =>{
+    let result = null;
+    try{
+        const jsonStrValue = await AsyncStorage.getItem(key);
+        result = JSON.parse(jsonStrValue)
+        console.log('response successfully retrieved from cache ');
+    }catch(err){
+        console.error('response could not be retrieved ',err.stack);
+    }
+}

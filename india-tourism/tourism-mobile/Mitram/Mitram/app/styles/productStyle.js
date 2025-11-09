@@ -47,7 +47,19 @@ elevation: 5,
         color: 'blue',
         fontWeight: 'bold',
         textAlign: 'center',
-      }
+      },
+  touchable: {
+    // You can add styling to the touchable area itself if needed
+    // For example, to give it a specific size or background
+    borderRadius: 10, // Example: for a rounded touchable area
+    overflow: 'hidden', // Ensures content respects border-radius
+    flex: 1, 
+    width: 300, 
+    height: 200
+  },
+  imageStyle: {flex: 1, 
+    width: 300, 
+    height: 200 }
 });
 
   export default ProductStyle

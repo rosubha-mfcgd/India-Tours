@@ -2,19 +2,23 @@ import { StyleSheet, Text, View } from 'react-native';
 import LoginSignUpStyle from '../styles/loginsignup.js'; 
 import CardStyle from '../styles/cards.js'; 
 import ProductStyle from '../styles/productStyle.js'; 
-import {updateAsFavorite,getProducts} from "../admin/admin";
+import {updateAsFavorite,getProducts,persistDataInCache,getDataFromCache} from "../admin/admin";
 import { useEffect, useState, useContext } from "react";
 import { FlatList, TouchableOpacity, Image} from 'react-native';
 import { Link } from 'expo-router';
 import Ionicons from '@expo/vector-icons/Ionicons';
 import { Card, Button, Icon } from '@rneui/themed';
-import {productImages} from "../admin/imageManager";
+import {productImages,productBackImages} from "../admin/imageManager";
 
 export default function Products()
 { 
 
     const [items, setItems] = useState('');
-   
+      const [showFlipImage,setShowFlipImage] = useState(false)
+
+      const toggleImage = () =>{
+         setShowFlipImage(!showFlipImage)
+      }
     let images = [];
       const updateFavorites = async(categoryid, status,event) =>{
 
@@ -43,8 +47,17 @@ export default function Products()
 
            <Card>
               
+          
+             <TouchableOpacity onPress={toggleImage} style={ProductStyle.touchable}>
+              {!showFlipImage ?
+             <Image source={productImages[item.productName]} style={ProductStyle.imageStyle}
+             
+             />
+            :
+            <Image source={productBackImages[item.productName]} style={ProductStyle.imageStyle}/>
             
-             <Image source={productImages[item.productName]} style={{flex: 1, width: 350, height: 200 }}/>
+            }
+          </TouchableOpacity>
           <Card.Title>
             <Text style={ProductStyle.productscreenText}>{item.productName}{"\n"}</Text>
                     <Text style={ProductStyle.productscreenText}>{item.productDesc}</Text>
@@ -79,8 +92,14 @@ export default function Products()
                 
                     const fetchProducts = async () =>{
                    
-                    let products = await getProducts();
-
+                    let products = await getDataFromCache("products");
+                    if(!products)
+                    {
+                       products = await getProducts();
+                       if(products){
+                        persistDataInCache('products',products);
+                       }
+                    }
                     if(products)
                     {
                         console.log('products...',products);

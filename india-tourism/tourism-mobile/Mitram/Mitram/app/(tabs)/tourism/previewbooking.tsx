@@ -12,7 +12,7 @@ import { Table,  TBody, TR, TD } from '@expo/html-elements';
 import {formatINR,updateBooking} from "../../admin/utility";
 export default function PreviewBooking()
 {
-    const {bookingdata} = useLocalSearchParams();
+    const {bookingdata,tourmanagerName} = useLocalSearchParams();
     const [bookingDataObj, setBookingDataObj] = useState(JSON.parse(bookingdata));
     
      const [deletemodalVisible, setDeletemodalVisible] = useState(false);
@@ -88,7 +88,8 @@ export default function PreviewBooking()
                 <View style = {TourCommonStyle.buttonWrapper}>
                  <Link href={{pathname:"/tourism/payforTrip" ,
                                              params: { 
-                                                bookingdata: jsonStr
+                                                bookingdata: jsonStr,
+                                                tourmanagerName:tourmanagerName
                                              }
                                           }} asChild>
             <Pressable style={TourCommonStyle.bookingbutton}>

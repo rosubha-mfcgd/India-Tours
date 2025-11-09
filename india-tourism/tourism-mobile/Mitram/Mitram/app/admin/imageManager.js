@@ -4,6 +4,13 @@ export const productImages = {
 "Decorate your home":require("../../public/products/homeDecoration.png"),
 }
 
+export const productBackImages = {
+"Travel and Tourism" : require("../../public/products/backside/tourism.png"),
+"Health care and treatment":require("../../public/products/backside/healthcare.png"),
+"Decorate your home":require("../../public/products/backside/homeDecoration.png"),
+}
+
+
 export const tripCategoryImages = {
 "Hill stations" : require("../../public/categories/hillstation.png"),
 "Sea beach":require("../../public/categories/seabeach.png"),
@@ -27,7 +34,7 @@ export const tripListImages = {
     "Bhutan" : require("../../public/hillstations/front/Bhutan.png"),
     "Nepal" : require("../../public/hillstations/front/Nepal.png"),
     "Bangkok/Pattaya" : require("../../public/seabeach/Bangkok Pattaya.png"),
-    "Sri Lanka" : require("../../public/seabeach/SriLanka.png"),
+    "SriLanka" : require("../../public/seabeach/SriLanka.png"),
     "Darjeeling" : require("../../public/hillstations/front/Darjeeling.png"),
     "Maldives" : require("../../public/seabeach/Maldives.png"),
     "Kailash" : require("../../public/hillstations/front/Kailash.png"),

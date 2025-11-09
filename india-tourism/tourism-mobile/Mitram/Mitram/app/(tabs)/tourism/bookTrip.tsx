@@ -46,16 +46,17 @@ export default function BookMyTrip()
       console.log('bookingData for validation....',booking)
        let errorMessage = await validateBookingData(booking.bookingData);
        
-       if(errorMessage)
+       if(errorMessage && errorMessage != '')
        {
         console.log('errorMessage....',errorMessage);
        setErrorMessage(errorMessage);
        setModalVisible(true);           
        }else{
+         setErrorMessage(null);
         setModalVisible(false)
         router.push({
               pathname: "/tourism/previewbooking",
-          params: {  bookingdata: jsonStr }
+          params: {  bookingdata: jsonStr,tourmanagerName:tourmanagerName }
           });
        }
     }
@@ -113,7 +114,7 @@ export default function BookMyTrip()
        }
       } 
       
-      if(errorMessage)
+      if(errorMessage && errorMessage != '')
       {
         setModalVisible(true)
       }else{
@@ -181,7 +182,7 @@ export default function BookMyTrip()
            showsVerticalScrollIndicator={true} // Ensures vertical scroll indicator is visible
       showsHorizontalScrollIndicator={false} // Ensures horizontal scroll indicator is hidden (if not needed)
         >
-            <Text style={TextStyle.h2}> This page books your trip for {location} with {tourmanagerName} {cityname}</Text>
+            <Text style={TextStyle.h2}> Please book your trip to {location} with {tourmanagerName} {cityname}</Text>
           {
             modalVisible ? 
             <TourismCommonModal modalVisible={modalVisible} 

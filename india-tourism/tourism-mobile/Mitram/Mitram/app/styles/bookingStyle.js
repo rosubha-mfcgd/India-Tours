@@ -18,15 +18,13 @@ const BookingStyle = StyleSheet.create({
     borderradius: 6
 },
 textfieldunderlinedInput: {
-    fontSize: 15, // Makes the text big
-    borderBottomWidth: 1, // Creates a thick underline
-    borderBottomColor: '#020f1dff', // Sets the underline color
-    paddingVertical: 15, // Adds vertical padding for better spacing
-    width: '100%', // Adjust width as needed
-    textAlign: 'center' ,// Centers the text within the input
-    borderradius:'8px',
-    border: '1px solid #ccc',
-    transition: 'border-color 0.3s ease-in-out, box-shadow 0.3s ease-in-out'
+    alignitems: 'left',
+    textAlign: 'left',
+    margin: 'auto',
+    width:'100%',
+    height:40,
+    backgroundColor:'#f7f8f8ff',
+    borderRadius: 30
   },
  body: {
      fontfamily: 'Roboto', /* Or another suitable sans-serif font */

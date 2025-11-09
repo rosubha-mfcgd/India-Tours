@@ -39,13 +39,7 @@ export default function TourismCommonModal({modalVisible,setModalVisible,errorMe
               >
                 <Text style={ModalStyle.textStyle}>OK</Text>
               </Pressable>
-              {/* <Pressable
-                style={[ModalStyle.button, ModalStyle.buttonCancel]}
-                onPress={handleCancel}
-              >
-                <Text style={ModalStyle.textStyle}>Cancel</Text>
-              </Pressable> */}
-              
+                           
             </View>
           </View>
         </View>

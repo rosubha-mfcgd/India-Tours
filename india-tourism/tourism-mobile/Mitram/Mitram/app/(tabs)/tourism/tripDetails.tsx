@@ -70,7 +70,21 @@ export default function TripDetails()
             </TR>
              <TR>
               <TD>
-                <Text style={TextStyle.body}>Itinerary  {(itemObject.itinerary)}{"\n"}</Text>
+                <Text style={TextStyle.body}>To view full Itinerary </Text>
+                <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
+                <Link href={{pathname:"/tourism/viewitinerary",
+                                             params: { 
+                                                location:  itemObject.locationName,
+                                                tourmanagerName:tourmanagerName, 
+                                                cityname: cityname,
+                                                startdate: itemObject.customStartDate,
+                                                enddate: itemObject.customEndDate,
+                                                itinerary: itemObject.itinerary,
+                                               }
+                                          }} style={TourCommonStyle.linkText} asChild>
+            <Text>Click here</Text>
+          </Link>
+          </View>
               </TD>
             </TR>
           </TBody>

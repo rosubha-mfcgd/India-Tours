@@ -45,7 +45,7 @@ export const updateBooking = (key,name,value, booking,setBooking) =>{
         }
 
 export const validateBookingData =async (bookingData) =>{
-  let errMsg = '';
+  let errMsg = null;
   
       for(let index = 0;index<bookingData.length;index++)
       {

@@ -1,10 +1,9 @@
 import { Text, View } from 'react-native';
-import CardStyle from '../../styles/cards.js'; 
 import CategoryStyle from '../../styles/categoryStyle.js'; 
-import LoginSignUpStyle from '../../styles/loginsignup.js'; 
 import TourCommonStyle from '../../styles/tourCommonStyle.js'; 
-import {updateAsFavorite,getCategories,getCities} from "../../admin/admin";
-import { useEffect, useState, useContext } from "react";
+import {updateAsFavorite,getCategories,getCities,
+    persistDataInCache,getDataFromCache} from "../../admin/admin";
+import { useEffect, useState } from "react";
 import { FlatList, TouchableOpacity, Image} from 'react-native';
 import Ionicons from '@expo/vector-icons/Ionicons';
 import { Card } from '@rneui/themed';
@@ -46,8 +45,8 @@ const updateFavorites = async(categoryid, status,event) =>{
                   <Card>
               
             
-             <Image source={tripCategoryImages[item.categoryName]} style={{flex: 1, 
-                width: 350, height: 200 }}/>
+             <Image source={tripCategoryImages[item.categoryName]} style=
+             {{flex: 1, width: 300, height: 200 }}/>
           <Card.Title>
             <Text style={CategoryStyle.categoryscreenText}>{item.categoryName}{"\n"}</Text>
                     <Text style={CategoryStyle.categoryscreenText}>{item.categoryDesc}</Text>
@@ -59,10 +58,10 @@ const updateFavorites = async(categoryid, status,event) =>{
               {(item.favorite === 'Y') ?
                
                     <Ionicons name = "heart" color='#f04646ff' size={45} onPress={()=>
-                        updateFavorites(item.categoryID,'N',event)}/>:
+                        updateFavorites(item,item.categoryID,'N')}/>:
 
                     <Ionicons name = "heart" color='#635f5fff' size={45} onPress={()=>
-                        updateFavorites(item.categoryID,'Y',event)}/>
+                        updateFavorites(item,item.categoryID,'Y')}/>
               }
               <Link href={{pathname:"/tourism/tripList",
                              params: { productID: item.productID, categoryId:item.categoryID,
@@ -80,10 +79,6 @@ const updateFavorites = async(categoryid, status,event) =>{
 
             );
         }
-
-
-
-
      useEffect(()=>{
             let mounted = true;
 
@@ -91,7 +86,15 @@ const updateFavorites = async(categoryid, status,event) =>{
                 
                     const getTripCategories = async (productID) =>{
                    
-                    let categories = await getCategories(productID);
+                    let categories = await getDataFromCache(productID);
+                    
+                    if(!categories){
+                       categories = await getCategories(productID);
+                       if(categories)
+                       {
+                            persistDataInCache(productID,categories);
+                       }
+                    }
                     
                     if(categories)
                     {

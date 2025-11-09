@@ -67,7 +67,7 @@ infotext: {
     width:'90%',
     height:40,
     backgroundColor:'#f7f8f8ff',
-    borderradius: 6
+    borderRadius: 30
 }
 
 

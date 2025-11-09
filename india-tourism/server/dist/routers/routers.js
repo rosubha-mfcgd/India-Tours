@@ -11,6 +11,7 @@ const { getCategories, getProducts, getToursByCategoryId, updateFavoriteCategory
 const { getRegisteredTourManagers, getCities } = require("../controller/tourManagers");
 const { performBookings, performBookingsByMobile, getBookingsByBookingId, updateBookingsByBookingId } = require("../controller/tourBookings");
 const { getSearchOptions } = require("../controller/searchOptions");
+const { sendConfirmation } = require('../controller/sendCommunication');
 const router = express.Router();
 router.post("/dosignup", checkAuthenticated, signupvalidate, doSignup);
 router.post("/validateOTP", checkAuthenticated, validateOTP);
@@ -25,5 +26,6 @@ router.post("/performBookings", checkAuthenticated, performBookings);
 router.post("/performBookingsByMobile", checkAuthenticated, performBookingsByMobile);
 router.post("/getBookingsByBookingId", checkAuthenticated, getBookingsByBookingId);
 router.post("/updateBookingsByBookingId", checkAuthenticated, updateBookingsByBookingId);
+router.post("/sendConfirmation", checkAuthenticated, sendConfirmation);
 router.get("/searchMyOptions", checkAuthenticated, getSearchOptions);
 module.exports = router;

@@ -11,20 +11,22 @@ import { useLocalSearchParams,useRouter } from 'expo-router';
 
 export default function payforTrip()
 {
-    const {bookingdata} = useLocalSearchParams();
+    const {bookingdata,tourmanagerName} = useLocalSearchParams();
      const[email,setEmail] = useState('');
      const router = useRouter();
          const[specialRequest,setSpecialRequest] = useState('NA');
         const [bookingDataObj, setBookingDataObj] = useState(JSON.parse(bookingdata));
        const[totalPayableAmt,setTotalPayableAmt] = useState('');
        const handleEmailChange = (text) =>{
-            bookingDataObj["email"] = text;
+            bookingDataObj.email = text;
             setEmail(text);
+            console.log('email added to bookingdata obj',bookingDataObj)
        }
 
          const handleSpecialRequests = (text) =>{
-            bookingDataObj["specialRequest"] = text;
+            bookingDataObj.specialRequest = text;
             setSpecialRequest(text);
+            console.log('special request for tourist added to bookingdata obj',bookingDataObj)
        }
        const handleSubmit = async() =>{
           console.log('submit action called ');
@@ -60,10 +62,13 @@ export default function payforTrip()
             console.log('bookings...',bookings);
             router.push({
            pathname: '/tourism/confirmbooking',
-            params: { booking: bookings.bookingid,
+            params: { booking: JSON.stringify(bookings),
               locationName:bookingDataObj.location,
-            startDate:bookingDataObj.startdate,
-              endDate:bookingDataObj.enddate
+              startDate:bookingDataObj.startdate,
+              endDate:bookingDataObj.enddate,
+              tourmanagerName:tourmanagerName,
+              package_cost:bookingDataObj.totalAmountPayable,
+              email:email
             },
            });
          }
@@ -114,7 +119,7 @@ export default function payforTrip()
                 let us know . We'll try our best to meet your requirements.
               </Text>
               <TextInput value={specialRequest} 
-                                        key={specialRequest}
+                                        key="2"
                                         style={TextStyle.TextInput} 
                                         onChangeText={text=>
                                      {
@@ -128,19 +133,14 @@ export default function payforTrip()
                 <View style = {TourCommonStyle.buttonWrapper}>
                    
             
-             {/* <Link href={{pathname:"/tourism/confirmbooking",
-                          params: { 
-                               bookingdata: JSON.stringify(bookingDataObj),
-                               payment:"A"
-                                }
-                               }} asChild> */}
+            
                 <TouchableOpacity 
                     style={TourCommonStyle.paymentbutton}>
                     <Text style={TourCommonStyle.buttonText}
                     onPress={handleSubmit}
                     >Advance Payment</Text>
                   </TouchableOpacity>
-            {/* </Link> */}
+          
             </View>
              </View>
             </TD>
