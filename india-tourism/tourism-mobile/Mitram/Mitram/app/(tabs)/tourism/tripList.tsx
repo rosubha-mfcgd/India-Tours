@@ -208,25 +208,21 @@ export default function TripList()
  const RenderTripList = ({item}) =>{
 
     console.log('item....',JSON.stringify(item));
+    let nightsStay = item.lengthOfTour-1;
+    let tourmanagerName = tourMgrMap[item.tourManagerId].tourManagerName;
+    let tourOpLocation = tourMgrMap[item.tourManagerId].tourOpLocation;
            return(
                 <View style={TourCommonStyle.row}>
                   <Card>
               
             
              <ImageBackground source={tripListImages[item.locationName]} 
-             style={{flex: 1, width: 300, height: 200 }}>
+             style={TripListStyle.image}>
                  <Text
-          style={{
-            fontSize:12,
-            fontWeight: "bold",
-            color: "black",
-            backgroundColor: '#fff',
-            position: "absolute", // child
-            bottom: 0, // position where you want
-            left: 0
-          }}
+          style={TripListStyle.cardText}
         >
-          {item.lengthOfTour} days
+          {item.lengthOfTour} days/{nightsStay} nights {"\n"}
+          {tourmanagerName}{"\n"}{tourOpLocation}
         </Text>
                 
                 
@@ -236,7 +232,6 @@ export default function TripList()
             <Text style={TripListStyle.screenText}>{item.customStartDate}</Text>
             <Text style={TripListStyle.screenText}>-</Text>
             <Text style={TripListStyle.screenText}>{item. customEndDate}{"\n"}</Text>
-            <Text style={TripListStyle.screenText}>{tourMgrMap[item.tourManagerId].tourManagerName},{tourMgrMap[item.tourManagerId].tourOpLocation}{"\n"}</Text>
             <Text style={TripListStyle.screenText}>{formatINR(item.package_cost)}{"\n"}</Text>
                      
         </Card.Title>

@@ -51,7 +51,7 @@ const updateFavorites = async(categoryid, status,event) =>{
                   <Card>
               
             <TouchableOpacity style={CategoryStyle.touchableOpacity} onPress={toggleImage}>
-                {showFlipImage?
+                {!showFlipImage?
              <Image source={tripCategoryImages[item.categoryName]} style=
              {CategoryStyle.image}/> :
              <Image source={tripCategoryBackImages[item.categoryName]} style=

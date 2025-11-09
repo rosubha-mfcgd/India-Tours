@@ -2,12 +2,14 @@ export const productImages = {
 "Travel and Tourism" : require("../../public/products/tourism.png"),
 "Health care and treatment":require("../../public/products/healthcare.png"),
 "Decorate your home":require("../../public/products/homeDecoration.png"),
+"Connect with our Helpdesk":require("../../public/products/helpdesk.png")
 }
 
 export const productBackImages = {
 "Travel and Tourism" : require("../../public/products/backside/tourism.png"),
 "Health care and treatment":require("../../public/products/backside/healthcare.png"),
 "Decorate your home":require("../../public/products/backside/homeDecoration.png"),
+"Connect with our Helpdesk":require("../../public/products/backside/helpdesk.png")
 }
 
 
@@ -19,8 +21,9 @@ export const tripCategoryImages = {
 "Religious places":require("../../public/categories/religiousplaces.png"),
 "Office Trips":require("../../public/categories/officetrips.png"),
 "Health Treatments" : require("../../public/categories/healthtreatments.png"),
-"Search my option":require("../../public/categories/searchmyoption.png"),
-"City Vibes": require("../../public/categories/cityvibes.png")
+"Plan my own Trip":require("../../public/categories/searchmyoption.png"),
+"City Vibes": require("../../public/categories/cityvibes.png"),
+"Sports Tour": require("../../public/categories/IPL.png"),
 }
 
 export const tripCategoryBackImages = {
@@ -31,8 +34,9 @@ export const tripCategoryBackImages = {
 "Religious places":require("../../public/categories/backside/religiousplaces.png"),
 "Office Trips":require("../../public/categories/backside/officetrips.png"),
 "Health Treatments" : require("../../public/categories/backside/healthtreatments.png"),
-"Search my option":require("../../public/categories/backside/searchmyoption.png"),
-"City Vibes": require("../../public/categories/backside/cityvibes.png")
+"Plan my own Trip":require("../../public/categories/backside/searchmyoption.png"),
+"City Vibes": require("../../public/categories/backside/cityvibes.png"),
+"Sports Tour": require("../../public/categories/backside/ISL.png"),
 }
 
 export const tripListImages = {

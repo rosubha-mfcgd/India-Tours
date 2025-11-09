@@ -261,7 +261,8 @@ export default function BookMyTrip()
           </TD>
            </TR>
              <TR>
-              <TD style={BookingStyle.tableCell}> <Text  key={`"agelabel"-${item.key}`}>Age:</Text></TD>
+              <TD style={BookingStyle.tableCell}> 
+                <Text  key={`"agelabel"-${item.key}`}>Age:</Text></TD>
              </TR>
                 <TR>                    
                  <TD>  

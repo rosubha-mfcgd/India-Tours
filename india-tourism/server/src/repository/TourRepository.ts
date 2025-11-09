@@ -45,7 +45,7 @@ export class TourRepository extends BaseRepository<ITourDetails>
            unit: "day",
           timezone: "Asia/Kolkata", // Optional
           }
-     }
+     },
      },
      },
      ]).exec();
