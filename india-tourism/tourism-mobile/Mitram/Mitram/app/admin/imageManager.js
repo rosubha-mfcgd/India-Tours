@@ -56,3 +56,9 @@ export const tripListImages = {
     "Kailash" : require("../../public/hillstations/front/Kailash.png"),
     "Singapore" : require("../../public/cityvibes/singapore.png")
 }
+
+export const tourManagerImages = {
+    "TravelXPloria" : require("../../public/tourmanagers/TravelXPloria.png"),
+    "Wonder Vision" : require("../../public/tourmanagers/WonderVision.png"),
+    "Travel for Fun" : require("../../public/tourmanagers/ToursForFun.png"),
+   }

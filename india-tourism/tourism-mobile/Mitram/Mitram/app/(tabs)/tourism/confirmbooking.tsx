@@ -40,7 +40,7 @@ export default function ConfirmBooking()
             <Text style={TextStyle.infotext}>{locationName}</Text>
             <Text style={TextStyle.text}>on - {startDate}</Text>
             <Text style={TextStyle.text}>and returning back on - {endDate}</Text>
-            <Text style={TextStyle.text}>We are confirming your trip to with the booking id </Text>
+            <Text style={TextStyle.text}>We are confirming your trip with booking id </Text>
             <Text style={TextStyle.infotext}> # {bookingObj.bookingid} with {tourmanagerName}</Text>
            <Text style={TextStyle.text}>We'll text you the bookingid in your registered email-id/mobile, 
             please save it for future reference. </Text>

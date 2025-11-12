@@ -65,6 +65,19 @@ elevation: 5,
     flex: 1, 
     width: 300, 
     height: 200
+  },
+  headercontainer: {
+       flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    paddingHorizontal: 15,
+    height: 60, // Adjust as needed
+    backgroundColor: '#673AB7', // Example: Purple background
+  },
+  headerTitles:{
+     color: 'white',
+    fontSize: 15,
+    fontWeight: 'bold',
   }
 });
 

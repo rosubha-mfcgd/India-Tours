@@ -2,7 +2,8 @@ import { Text, View } from 'react-native';
 import TripListStyle from '../../styles/tripListStyle.js'; 
 import TourCommonStyle from '../../styles/tourCommonStyle.js'; 
 import {formatINR} from "../../admin/utility";
-import {updateAsFavorite,getTourManagers,getTripList} from "../../admin/admin";
+import {updateAsFavorite,getTourManagers,getTripList,getDataFromCache,persistDataInCache} 
+from "../../admin/admin";
 import { useEffect, useState } from "react";
 import { FlatList, TouchableOpacity, ImageBackground} from 'react-native';
 import Ionicons from '@expo/vector-icons/Ionicons';
@@ -35,26 +36,23 @@ export default function TripList()
                         console.log('could not update favorite')
                     }
        }
-   //console.log('categoryID is...',categoryId); 
+   
     const[tours,setTours] = useState('');
     const[alltours,setAlltours] = useState('');
     //combined state variable holding info from tours and tour managers
    const [ tourManagers, setTourManagers] = useState('');
-    // const { name,email,mobile,categoryId} = location.state || {};
-    //const[mount,setMount] = useState(false);
+   
+    
     const[isOpen,setOpen] = useState(false);
    const [anchorEl, setAnchorEl] = useState(null);
-//    const {triggerSorting,sortTrip} = useContext(NavContext);
-//     const { notification} = useContext(NavContext);
    const open = Boolean(anchorEl);
 
    function toggleSideBarForSorting()
-{
-  console.log('isOpen',isOpen)
-  setOpen(!isOpen);
-  //triggerSorting(!isOpen);
-}
-  // console.log('categoryId...',categoryId);
+    {
+        console.log('isOpen',isOpen)
+        setOpen(!isOpen);
+    }
+
 
    const [tourMgrMap, setTourMgrMap] = useState({}); 
     const [selectedValue, setSelectedValue] = useState('B');
@@ -94,7 +92,13 @@ export default function TripList()
                      
                         if(!tourManagers)
                         {
-                             tourOps = await getTourManagers();
+                             tourOps = await getDataFromCache('touroperators');
+                             if(!tourOps)
+                             {
+                               tourOps =  await getTourManagers();
+                               persistDataInCache('touroperators',tourOps);
+                             }
+                             setTourManagers(tourOps);
                         }
                             if(tourOps)
                             {

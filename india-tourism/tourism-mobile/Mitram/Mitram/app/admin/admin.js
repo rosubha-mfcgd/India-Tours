@@ -262,6 +262,7 @@ return res_data;
 export const getTourManagers = async() =>{
   let res_data = "failed to fetch tour Managers";
      try{
+
         let access_token = await getApiAccessToken();
         if(access_token){
             console.log('access_token found...',access_token.data)
@@ -498,9 +499,23 @@ export const getDataFromCache = async(key) =>{
     let result = null;
     try{
         const jsonStrValue = await AsyncStorage.getItem(key);
-        result = JSON.parse(jsonStrValue)
-        console.log('response successfully retrieved from cache ');
+        if(jsonStrValue !== null)
+        {
+            result = JSON.parse(jsonStrValue)
+            console.log('response successfully retrieved from cache ',result);
+        }
+        
     }catch(err){
         console.error('response could not be retrieved ',err.stack);
     }
+    return result;
 }
+
+export const removeDataFromCache = async (key) => {
+  try {
+    await AsyncStorage.removeItem(key);
+    console.log(`${key} removed successfully.`);
+  } catch (error) {
+    console.error('Error removing data:', error);
+  }
+};

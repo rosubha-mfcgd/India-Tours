@@ -62,3 +62,7 @@ export const validateBookingData =async (bookingData) =>{
         return errMsg;
   }
 
+  export const calculateTotalPages = async(dataSize,itemPerPage) =>{
+    return Math.ceil(dataSize / itemPerPage)
+  }
+

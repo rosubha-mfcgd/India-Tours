@@ -22,6 +22,38 @@ export default function Categories()
     const toggleImage = () =>{
          setShowFlipImage(!showFlipImage)
       }
+       const showHeaderInformation = () =>{
+        return (
+             <View style={CategoryStyle.headercontainer} >
+
+                
+                 <Link href="/tourism/viewTourOperators">
+            
+              <Text style={CategoryStyle.headerTitles}>Operators</Text>
+              
+                     
+            </Link>
+             <Link href="/tourism/viewTourOperators">
+            
+              <Text style={CategoryStyle.headerTitles}>Gallery</Text>
+              
+                     
+            </Link>
+            <Link href="/tourism/viewTourOperators">
+            
+              <Text style={CategoryStyle.headerTitles}>Reviews</Text>
+              
+                     
+            </Link>
+            <Link href="/tourism/viewTourOperators">
+            
+              <Text style={CategoryStyle.headerTitles}>Notifications</Text>
+              
+                     
+            </Link>
+            </View>
+        )
+    }
 
 const updateFavorites = async(categoryid, status,event) =>{
 
@@ -132,8 +164,12 @@ const updateFavorites = async(categoryid, status,event) =>{
                 
                     const getCityList = async () =>{
                    
-                    let cities = await getCities();
-                    
+                    let cities = getDataFromCache('cities');
+                    if(!cities)
+                    {
+                      cities = await  getCities();
+                      persistDataInCache('cities',cities);
+                    }
                     if(cities)
                     {
                         console.log('cities...',cities);
@@ -160,6 +196,7 @@ const updateFavorites = async(categoryid, status,event) =>{
         <FlatList
           data={items}
           renderItem={({item})=> <RenderTripCategories item = {item}/>}
+          ListHeaderComponent={showHeaderInformation}
           keyExtractor={item => item.categoryID}
         />
     }
