@@ -33,7 +33,8 @@ export default function Pagination ({ currentPage, totalPages, onPageChange }) {
 
       {/* Next Button */}
       <TouchableOpacity
-        onClick={()=>onPageChange(page)}
+      
+        onPress={()=>onPageChange(page)}
         disabled={currentPage === totalPages}
         style={PaginationStyle.pageButton}
       >

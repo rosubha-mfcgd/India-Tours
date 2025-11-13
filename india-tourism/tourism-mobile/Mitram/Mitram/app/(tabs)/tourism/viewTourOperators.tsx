@@ -43,7 +43,7 @@ export default function getTourOperatos()
                  
            // setTourManagers(tourOps);
 
-           //tourOps.map(item => {setTourManagers([...tourManagers,item])});
+           
             for(let idx=0 ;  idx<tourOps.length;idx++)
             {
                tourManagers[idx] = tourOps[idx];
@@ -69,7 +69,7 @@ export default function getTourOperatos()
                // console.log('current Page now....',currentPage);
             }
             
-            }
+        }
 
         const RenderTourManagers = ({item}) =>{
             return(
@@ -161,36 +161,16 @@ export default function getTourOperatos()
                                      {
                                         await getTourManagersList();
                                      }
-                                     if(tourManagers && currentPage === 1)
+                                     if(tourManagers)
                                     {
-                                        console.log('tourOps result...',tourManagers);
-                                         console.log('currentPage...',currentPage);
-                                        for(let idx=0;idx<ITEM_PER_PAGE;idx++)
-                                        {
-                                           tourMgrListForDisplay[idx] = tourManagers[idx];
-                                           
-                                         }
-                                          console.log('tourManagerList for display...',
-                                                tourMgrListForDisplay)
-                                    }
-                                    else if(tourManagers && tourManagers.length>0 && 
-                                        currentPage > 1)
-                                    {
-                                       
-                                        let startidx = (currentPage-1)*ITEM_PER_PAGE;
-                                        let endIndex = ((startidx+ITEM_PER_PAGE)<totalPages?
-                                        (startidx+ITEM_PER_PAGE):
-                                            tourManagers.length-(startidx));
-                                        console.log('startidx...',startidx);
-                                        console.log('endIndex...',endIndex);
-                                        let index = 0;
-                                        for(let idx=startidx;idx<=endIndex;idx++)
-                                        {
-                                          tourMgrListForDisplay [index++] = tourManagers[idx]
-                                        }
-                                        console.log('tourMgrListForDisplay for {} page {}...',
-                                            currentPage,
-                                            tourMgrListForDisplay)
+                                       let startIndex = (currentPage-1)*ITEM_PER_PAGE;
+                                       let endIndex = startIndex+ITEM_PER_PAGE;
+                                       if(endIndex<tourManagers.length)
+                                       {
+                                            setTourMgrListForDisplay(tourManagers.slice(startIndex,endIndex));
+                                       }else{
+                                        setTourMgrListForDisplay(tourManagers.slice(startIndex));
+                                       }
                                     }
                              
                                                                               
