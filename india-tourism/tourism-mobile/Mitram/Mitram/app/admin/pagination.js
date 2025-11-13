@@ -29,17 +29,20 @@ export default function Pagination ({ currentPage, totalPages, onPageChange }) {
             {page}
           </Text>
         </TouchableOpacity>
+
+        
       ))}
 
       {/* Next Button */}
-      <TouchableOpacity
-      
-        onPress={()=>onPageChange(page)}
+        <TouchableOpacity
+        key = "next"
+        onPress={()=>onPageChange(currentPage+1)}
         disabled={currentPage === totalPages}
         style={PaginationStyle.pageButton}
       >
         <Text style={PaginationStyle.buttonText}>Next</Text>
       </TouchableOpacity>
+    
     </View>
   );
 };
