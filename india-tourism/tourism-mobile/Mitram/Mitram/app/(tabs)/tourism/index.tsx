@@ -18,27 +18,20 @@ export default function Categories()
     const [items, setItems] = useState('');
     const[cityList,setCityList] = useState('');
     const [showFlipImage,setShowFlipImage] = useState(false)
-
+    const [activeNotification,setActiveNotification] = useState(false)
     const toggleImage = () =>{
          setShowFlipImage(!showFlipImage)
       }
        const showHeaderInformation = () =>{
         return (
              <View style={CategoryStyle.headercontainer} >
-
-                
                  <Link href="/tourism/viewTourOperators">
             
               <Text style={CategoryStyle.headerTitles}>Operators</Text>
               
                      
             </Link>
-             <Link href="/tourism/viewTourOperators">
-            
-              <Text style={CategoryStyle.headerTitles}>Gallery</Text>
-              
-                     
-            </Link>
+           
             <Link href="/tourism/viewTourOperators">
             
               <Text style={CategoryStyle.headerTitles}>Reviews</Text>
@@ -46,11 +39,19 @@ export default function Categories()
                      
             </Link>
             <Link href="/tourism/viewTourOperators">
-            
-              <Text style={CategoryStyle.headerTitles}>Notifications</Text>
-              
+            {!activeNotification?
+               <Ionicons name="notifications" size={32} color="white" />:
+                <Ionicons name="notifications" size={32} color="red" />
+            }
                      
             </Link>
+             <Ionicons
+              name="menu" // Choose your desired icon name
+              size={32}
+              color="white"
+             
+              style={{ marginLeft: 15 }}
+            />
             </View>
         )
     }

@@ -1,4 +1,5 @@
 import { Tabs,useSegments } from 'expo-router';
+
 import { Image} from 'react-native';
 import React, { useState } from 'react';
 
@@ -30,8 +31,10 @@ export default function TabLayout() {
              />
           );
       }                                                                                                                                                                
-      }}       
-      />
+      }} />
+      
+       
+       
       <Tabs.Screen name="tourism" options={{ title: 'Tourism', href: null,
       tabBarIcon :({focused,color,size}) =>{
           return  (
