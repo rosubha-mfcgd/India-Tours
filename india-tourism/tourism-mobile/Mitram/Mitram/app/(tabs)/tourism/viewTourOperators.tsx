@@ -2,7 +2,6 @@ import { Text, View ,ScrollView, FlatList} from 'react-native';
 import TourCommonStyle from '../../styles/tourCommonStyle.js'; 
 import TextStyle from '../../styles/textStyles.js'
 import {getTourManagers,getCities,persistDataInCache,getDataFromCache} from "../../admin/admin";
-import {calculateTotalPages} from "../../admin/utility";
 import { TouchableOpacity, Image} from 'react-native';
 import {tourManagerImages} from "../../admin/imageManager";
 import Pagination from  '../../admin/pagination';

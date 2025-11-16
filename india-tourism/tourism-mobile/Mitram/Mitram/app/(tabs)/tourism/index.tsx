@@ -1,6 +1,7 @@
 import { Text, View } from 'react-native';
 import CategoryStyle from '../../styles/categoryStyle.js'; 
 import TourCommonStyle from '../../styles/tourCommonStyle.js'; 
+import ModalStyle from '../../styles/modalStyle.js'
 import {updateAsFavorite,getCategories,getCities,
     persistDataInCache,getDataFromCache} from "../../admin/admin";
 import { useEffect, useState } from "react";
@@ -11,47 +12,49 @@ import { Card } from '@rneui/themed';
 import {tripCategoryImages,tripCategoryBackImages} from "../../admin/imageManager";
 import { useLocalSearchParams } from 'expo-router';
 import { Link } from 'expo-router';
-export default function Categories()
+import CustomSidebar from '../../navigation/drawerModal.tsx'; 
+export default function Categories({navigation})
 {
+    
 
     const {productID} = useLocalSearchParams();
     const [items, setItems] = useState('');
     const[cityList,setCityList] = useState('');
     const [showFlipImage,setShowFlipImage] = useState(false)
     const [activeNotification,setActiveNotification] = useState(false)
+
+     const menuList = [
+    { id: '1', name: 'Upcoming Events' },
+    { id: '2', name: 'Exciting Offers' },
+    { id: '3', name: 'Recommendations' },
+    { id: '4', name: 'Check Past Trips' },
+  ];
     const toggleImage = () =>{
          setShowFlipImage(!showFlipImage)
       }
        const showHeaderInformation = () =>{
         return (
+            
              <View style={CategoryStyle.headercontainer} >
-                 <Link href="/tourism/viewTourOperators">
+            
+            <View style={ModalStyle.headerCompStyle}>
+          <Link href="/tourism/viewTourOperators">
             
               <Text style={CategoryStyle.headerTitles}>Operators</Text>
-              
-                     
+                   
             </Link>
-           
+            </View>
+           <View style={ModalStyle.headerCompStyle}>
             <Link href="/tourism/viewTourOperators">
             
               <Text style={CategoryStyle.headerTitles}>Reviews</Text>
               
                      
             </Link>
-            <Link href="/tourism/viewTourOperators">
-            {!activeNotification?
-               <Ionicons name="notifications" size={32} color="white" />:
-                <Ionicons name="notifications" size={32} color="red" />
-            }
-                     
-            </Link>
-             <Ionicons
-              name="menu" // Choose your desired icon name
-              size={32}
-              color="white"
-             
-              style={{ marginLeft: 15 }}
-            />
+            </View>
+             <View style={ModalStyle.headerCompStyle}>
+          <CustomSidebar data={menuList}/>
+            </View>
             </View>
         )
     }
@@ -120,6 +123,7 @@ const updateFavorites = async(categoryid, status,event) =>{
                     </Link> 
                     </Card>    
                 </View>
+                
 
             );
         }

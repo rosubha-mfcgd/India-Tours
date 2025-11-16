@@ -14,7 +14,7 @@ import { useLocalSearchParams } from 'expo-router';
 export default function EditMyTrip(){
     return(
         <View>
-            
+            <Text>This page edits the trip by booking id</Text>
         </View>
     )
 }

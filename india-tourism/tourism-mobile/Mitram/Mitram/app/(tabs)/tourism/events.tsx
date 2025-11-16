@@ -1,10 +1,9 @@
-import { Text, View } from 'react-native';
+import { ScrollView, Text,TextInput,View } from 'react-native';
 
-export default function Events (){
+export default function Events(){
     return(
         <View>
-            <Text>This page lists down the events</Text>
+            <Text>Shows upcoming events</Text>
         </View>
-
     )
 }

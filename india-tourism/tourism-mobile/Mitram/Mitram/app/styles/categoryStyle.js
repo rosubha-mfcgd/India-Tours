@@ -25,6 +25,7 @@ gridItem: {
     flexDirection: 'row', // Arranges items horizontally in a row
     justifyContent: 'space-around', // Distributes space evenly around items
     marginBottom: 12,
+    zIndex: -1
   },
    button: {
   backgroundColor: '#007AFF', // Example primary color 
@@ -78,6 +79,8 @@ elevation: 5,
      color: 'white',
     fontSize: 15,
     fontWeight: 'bold',
+    justifyContent: 'space-between',
+    paddingHorizontal: 15,
   }
 });
 

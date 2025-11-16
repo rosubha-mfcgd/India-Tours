@@ -50,6 +50,11 @@ const ModalStyle = StyleSheet.create({
     fontWeight: 'bold',
     textAlign: 'center',
   },
+  headerCompStyle: {
+    flex: 1, 
+    justifyContent: 'center', 
+    alignItems: 'center'
+  }
   
 });
 
