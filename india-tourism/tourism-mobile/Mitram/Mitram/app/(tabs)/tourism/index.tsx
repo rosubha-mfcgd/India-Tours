@@ -12,8 +12,8 @@ import { Card } from '@rneui/themed';
 import {tripCategoryImages,tripCategoryBackImages} from "../../admin/imageManager";
 import { useLocalSearchParams } from 'expo-router';
 import { Link } from 'expo-router';
-import CustomSidebar from '../../navigation/drawerModal.tsx'; 
-export default function Categories({navigation})
+import CustomSidebar from '../../navigation/drawerModal'; 
+export default function Categories()
 {
     
 
@@ -22,12 +22,12 @@ export default function Categories({navigation})
     const[cityList,setCityList] = useState('');
     const [showFlipImage,setShowFlipImage] = useState(false)
     const [activeNotification,setActiveNotification] = useState(false)
-
+    const [favorite,setFavorite] = useState([])
      const menuList = [
     { id: '1', name: 'Upcoming Events' },
     { id: '2', name: 'Exciting Offers' },
     { id: '3', name: 'Recommendations' },
-    { id: '4', name: 'Check Past Trips' },
+    { id: '4', name: 'My Past Trips' },
   ];
     const toggleImage = () =>{
          setShowFlipImage(!showFlipImage)
@@ -59,13 +59,13 @@ export default function Categories({navigation})
         )
     }
 
-const updateFavorites = async(categoryid, status,event) =>{
 
-        if(status === 'Y') {
-             event.target.style.color='#f04646ff';
-        }else{
-           event.target.style.color='#140202ff'; 
-        }
+const updateFavorites = async(categoryid, status,index) =>{
+
+         console.log('status....index...',status,index)
+        favorite[index].favorite = status;
+        setFavorite(favorite);
+        console.log('favorite....',favorite);
         let data = {
                     "categoryId":categoryid,
                     "status" : status
@@ -102,13 +102,14 @@ const updateFavorites = async(categoryid, status,event) =>{
         <Card.Divider/>
                 
               
-              {(item.favorite === 'Y') ?
-               
+              {(item.favorite === 'Y'|| favorite[item.categoryID-1] && 
+              favorite[item.categoryID-1].favorite== 'Y')   ? 
+                    
                     <Ionicons name = "heart" color='#f04646ff' size={45} onPress={()=>
-                        updateFavorites(item,item.categoryID,'N')}/>:
+                        updateFavorites(item.categoryID,'N',item.categoryID-1)}/>:
 
                     <Ionicons name = "heart" color='#635f5fff' size={45} onPress={()=>
-                        updateFavorites(item,item.categoryID,'Y')}/>
+                        updateFavorites(item.categoryID,'Y',item.categoryID-1)}/>
               }
               <Link href={{pathname:"/tourism/tripList",
                              params: { productID: item.productID, categoryId:item.categoryID,
@@ -148,12 +149,19 @@ const updateFavorites = async(categoryid, status,event) =>{
                     {
                         console.log('categories...',categories);
                         setItems(categories);
+                        for(let category of categories)
+                        {
+                           let catObj = {"id":category.categoryID,"favorite":category.favorite};
+                            favorite.push(catObj);
+                        }
+                        console.log('category in favorite map....',favorite);
                     }
                    
                 };
-                if(items==='')
+                if(!items)
                 {
                     getTripCategories(productID);
+
                 }},100);
         
     return () => {
@@ -161,7 +169,7 @@ const updateFavorites = async(categoryid, status,event) =>{
         clearTimeout(timer); // Clean up the timer
     };
 
-      },[]);
+      },[favorite]);
 
       useEffect(()=>{
          let mounted = true;
