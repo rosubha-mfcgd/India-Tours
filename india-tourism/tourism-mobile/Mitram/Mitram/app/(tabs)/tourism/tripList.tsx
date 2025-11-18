@@ -1,20 +1,53 @@
-import { Text, View } from 'react-native';
+import { Text, View,FlatList, TouchableOpacity, ImageBackground,Platform } from 'react-native';
 import TripListStyle from '../../styles/tripListStyle.js'; 
-import TourCommonStyle from '../../styles/tourCommonStyle.js'; 
+import FilterModalStyle from '../../styles/filtermodalStyle.js'; 
 import {formatINR} from "../../admin/utility";
 import {updateAsFavorite,getTourManagers,getTripList,getDataFromCache,persistDataInCache} 
 from "../../admin/admin";
 import { useEffect, useState } from "react";
-import { FlatList, TouchableOpacity, ImageBackground} from 'react-native';
 import Ionicons from '@expo/vector-icons/Ionicons';
 import { Card } from '@rneui/themed';
 import {tripListImages} from "../../admin/imageManager";
 import { useLocalSearchParams } from 'expo-router';
 import { Link } from 'expo-router';
+import FilterSidebar from '../../navigation/filterModal';
+import TourCommonStyle from '../../styles/tourCommonStyle';
+import DateTimePicker from '@react-native-community/datetimepicker';
 export default function TripList()
 {
 
     const {productID,categoryId,cityList} = useLocalSearchParams();
+    const [tripstartdate, setTripstartdate] = useState(new Date());
+    const [tripenddate, setTripenddate] = useState(new Date());
+    const [show, setShow] = useState(false); // To control picker visibility
+    const [mode, setMode] = useState('date'); // 'date' or 'time'
+
+    const onTripstartChange = () => {
+       
+      const currentDate = tripstartdate;
+ console.log('selectedDate....',currentDate)
+      setShow(Platform.OS === 'ios'); // Hide picker on iOS after selection
+      setTripstartdate(currentDate);
+    };
+const onTripendChange = () => {
+    
+      const currentDate = tripenddate;
+      console.log('selectedDate....',currentDate)
+      setShow(Platform.OS === 'ios'); // Hide picker on iOS after selection
+      setTripenddate(currentDate);
+    };
+    const showMode = (currentMode) => {
+      setShow(true);
+      setMode(currentMode);
+    };
+
+    const showDatePicker = () => showMode('date');
+
+     const filterList = [
+    { id: '1', name: 'Sort by Price (low-high)' },
+    { id: '2', name: 'Sort by Price (high-low)' },
+    
+  ];
    
     const listOfCities = JSON.parse(cityList);
    const updateFavorites = async(categoryid, status,event) =>{
@@ -70,7 +103,44 @@ export default function TripList()
     ));
     }
 
-    
+     const showTripListHeaderInformation = () =>{
+        return (
+            
+             <View style={FilterModalStyle.headercontainer} >
+                <View style={FilterModalStyle.headerCompStyle}>
+             <Text style={FilterModalStyle.headerTitles}>Start Date</Text>     
+         <DateTimePicker
+          testID="startdateTimePicker"
+          value={tripstartdate}
+          mode={'date'}
+          is24Hour={true} // For 24-hour time format
+         display="default"
+            style={{ width: 200, backgroundColor: 'white' }}
+          onChange={onTripstartChange}
+        />
+             
+            </View>
+
+              <View style={FilterModalStyle.headerCompStyle}>
+                <Text style={FilterModalStyle.headerTitles}>End Date</Text>
+               <DateTimePicker
+          testID="enddateTimePicker"
+          value={tripenddate} 
+          mode="date"
+          is24Hour={true} // For 24-hour time format
+          display="default"
+          style={{ width: 200, backgroundColor: 'white' }}
+          onChange={onTripendChange}
+        />
+               
+         
+            </View>
+        <View style={FilterModalStyle.headerCompStyle}>
+          <FilterSidebar data={filterList}/>
+            </View>
+             </View>
+            )
+        }
     function getCityOfTourOperator (citycode){
         console.log('city code...',citycode)
         console.log('city List...',cityList)
@@ -211,7 +281,7 @@ export default function TripList()
 
  const RenderTripList = ({item}) =>{
 
-    console.log('item....',JSON.stringify(item));
+   // console.log('item....',JSON.stringify(item));
     let nightsStay = item.lengthOfTour-1;
     let tourmanagerName = tourMgrMap[item.tourManagerId].tourManagerName;
     let tourOpLocation = tourMgrMap[item.tourManagerId].tourOpLocation;
@@ -277,6 +347,7 @@ export default function TripList()
           data={tours}
           renderItem={({item})=> <RenderTripList item = {item}/>}
           keyExtractor={item =>`${item.locationName}-${item.tourManagerId}-${item.ticket_cost}`}
+           ListHeaderComponent={showTripListHeaderInformation}
         />
             }
         </View>

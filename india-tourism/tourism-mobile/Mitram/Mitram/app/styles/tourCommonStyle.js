@@ -14,6 +14,14 @@ centeredContainer: {
     alignItems: 'center',     // Centers content horizontally
     backgroundColor: '#5a0ed47e', // Optional: for visual clarity
   },
+   headercontainer: {
+       flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    paddingHorizontal: 15,
+    height: 60, // Adjust as needed
+    backgroundColor: '#673AB7', // Example: Purple background
+  },
   buttonscontainer: {
     flexDirection: 'row', // Arranges children horizontally
     justifyContent: 'space-around', // Distributes space evenly around items
@@ -33,6 +41,7 @@ centeredContainer: {
     flexDirection: 'row', // Arranges items horizontally in a row
     justifyContent: 'space-around', // Distributes space evenly around items
     marginBottom: 10,
+     zIndex: -1
   },
    screenText: {
         fontSize: 20,
@@ -153,9 +162,6 @@ marginRight: 8,
       },
 
 },
-
-
-
 );
 
 export default TourCommonStyle;
