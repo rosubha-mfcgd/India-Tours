@@ -151,7 +151,7 @@ export default function BookMyTrip()
       useEffect(()=>{
       
           let result = [];
-          console.log('value is....',count)
+          //console.log('value is....',count)
           if(parseInt(count)>0)
           {
               for(let idx=0;idx<parseInt(count);idx++)

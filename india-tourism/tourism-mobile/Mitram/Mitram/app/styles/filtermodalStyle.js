@@ -1,4 +1,8 @@
 import { StyleSheet  } from 'react-native';
+import { Dimensions } from 'react-native';
+
+const screenWidth = Dimensions.get('screen').width;
+const screenHeight = Dimensions.get('screen').height;
 
 const ModalStyle = StyleSheet.create({
   centeredView: {
@@ -59,10 +63,19 @@ const ModalStyle = StyleSheet.create({
   headercontainer: {
        flexDirection: 'row',
     alignItems: 'right',
-    justifyContent: 'flex-end',
+    justifyContent: 'space-between',
+    paddingHorizontal: 2,
+    width: screenWidth,
+    height: screenHeight*0.10, // Adjust as needed
+    backgroundColor: '#673AB7', // Example: Purple background
+  },
+  headersubcontainer: {
+       flexDirection: 'column',
+    alignItems: 'center',
+    justifyContent: 'center',
     paddingHorizontal: 15,
-    width: '100%',
-    height: 90, // Adjust as needed
+    width: '30%',
+    height: 60, // Adjust as needed
     backgroundColor: '#673AB7', // Example: Purple background
   },
    headerTitles:{

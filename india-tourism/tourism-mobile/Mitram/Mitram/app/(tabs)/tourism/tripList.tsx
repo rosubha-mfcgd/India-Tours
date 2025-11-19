@@ -21,20 +21,28 @@ export default function TripList()
     const [tripenddate, setTripenddate] = useState(new Date());
     const [show, setShow] = useState(false); // To control picker visibility
     const [mode, setMode] = useState('date'); // 'date' or 'time'
+    const [showFilterDateOptions,setShowFilterDateOptions] = useState(false)
+
+    const getSixMonthsAhead = (startDate = new Date()) => {
+  const futureDate = new Date(startDate); // Clone the date to avoid mutation
+  // setMonth handles year overflow automatically
+  futureDate.setMonth(futureDate.getMonth() + 6); 
+  return futureDate;
+};
 
     const onTripstartChange = () => {
        
       const currentDate = tripstartdate;
  console.log('selectedDate....',currentDate)
       setShow(Platform.OS === 'ios'); // Hide picker on iOS after selection
-      setTripstartdate(currentDate);
+      //setTripstartdate(currentDate);
     };
 const onTripendChange = () => {
     
       const currentDate = tripenddate;
       console.log('selectedDate....',currentDate)
       setShow(Platform.OS === 'ios'); // Hide picker on iOS after selection
-      setTripenddate(currentDate);
+      //setTripenddate(currentDate);
     };
     const showMode = (currentMode) => {
       setShow(true);
@@ -44,10 +52,9 @@ const onTripendChange = () => {
     const showDatePicker = () => showMode('date');
 
      const filterList = [
-    { id: '1', name: 'Sort by Price (low-high)' },
-    { id: '2', name: 'Sort by Price (high-low)' },
-    
-  ];
+    { id: '1', name: 'Price (low-high)' },
+    { id: '2', name: 'Price (high-low)' }
+    ];
    
     const listOfCities = JSON.parse(cityList);
    const updateFavorites = async(categoryid, status,event) =>{
@@ -78,13 +85,7 @@ const onTripendChange = () => {
     
     const[isOpen,setOpen] = useState(false);
    const [anchorEl, setAnchorEl] = useState(null);
-   const open = Boolean(anchorEl);
-
-   function toggleSideBarForSorting()
-    {
-        console.log('isOpen',isOpen)
-        setOpen(!isOpen);
-    }
+   
 
 
    const [tourMgrMap, setTourMgrMap] = useState({}); 
@@ -102,13 +103,22 @@ const onTripendChange = () => {
     }
     ));
     }
+    const toggleFilterOptions = (data) =>{
+        setShowFilterDateOptions(data)
+    }
 
      const showTripListHeaderInformation = () =>{
+
+        
         return (
             
              <View style={FilterModalStyle.headercontainer} >
+                {showFilterDateOptions?
+                <View style={FilterModalStyle.headersubcontainer} >
                 <View style={FilterModalStyle.headerCompStyle}>
-             <Text style={FilterModalStyle.headerTitles}>Start Date</Text>     
+             <Text style={FilterModalStyle.headerTitles}>From</Text>  
+             </View>
+            <View style={FilterModalStyle.headerCompStyle}>     
          <DateTimePicker
           testID="startdateTimePicker"
           value={tripstartdate}
@@ -120,9 +130,16 @@ const onTripendChange = () => {
         />
              
             </View>
-
+             </View>
+            
+            :<View/>
+     }
+     {showFilterDateOptions ?
+                   <View style={FilterModalStyle.headersubcontainer} >
               <View style={FilterModalStyle.headerCompStyle}>
-                <Text style={FilterModalStyle.headerTitles}>End Date</Text>
+                <Text style={FilterModalStyle.headerTitles}>To</Text>
+                </View>
+                <View style={FilterModalStyle.headerCompStyle}>
                <DateTimePicker
           testID="enddateTimePicker"
           value={tripenddate} 
@@ -135,9 +152,18 @@ const onTripendChange = () => {
                
          
             </View>
+            </View>:<View/>
+            
+     }
+
+            <View style={FilterModalStyle.headersubcontainer} >
         <View style={FilterModalStyle.headerCompStyle}>
-          <FilterSidebar data={filterList}/>
+          <FilterSidebar data={filterList} showFilterDateOptions={showFilterDateOptions}
+          toggleFilterOptions={toggleFilterOptions}
+          />
             </View>
+            </View>
+          
              </View>
             )
         }
@@ -279,6 +305,10 @@ const onTripendChange = () => {
                         };
           },[]);
 
+           useEffect(() => {
+    setTripenddate(getSixMonthsAhead(new Date()));
+  }, [tripstartdate]);
+
  const RenderTripList = ({item}) =>{
 
    // console.log('item....',JSON.stringify(item));
@@ -346,7 +376,7 @@ const onTripendChange = () => {
               <FlatList
           data={tours}
           renderItem={({item})=> <RenderTripList item = {item}/>}
-          keyExtractor={item =>`${item.locationName}-${item.tourManagerId}-${item.ticket_cost}`}
+          keyExtractor={item =>`${item.locationName}-${item.tourManagerId}-${item._id}`}
            ListHeaderComponent={showTripListHeaderInformation}
         />
             }

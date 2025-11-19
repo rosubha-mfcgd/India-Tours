@@ -431,3 +431,26 @@ db.tourdetails.insertMany([
 	"itinerary":"Itinerary has not been finalized as yet" 
   }
 ]);	
+
+TourItinerary
+===============
+db.touritinerary.insertMany([
+  {
+    "locationName": "Shimla",
+    "categoryID": 1,
+	"tourManagerId": "001",
+	"triplength": "3 days",
+	"startDate" : new Date("2025-10-26"),
+    "endDate": new Date("2025-10-29"),
+	"itinerary" : [{"day":"1","plan": "Exploring the heart of Shimla|Morning: Jakhoo Temple|Afternoon: The Mall and The Ridge|Evening: Lakkar Bazaar and local food"},{"day":"2","plan": "Kufri excursion and Himalayan views|Morning to afternoon: Kufri and Mahasu Peak|ate afternoon: Naldehra or Mashobra|Evening: Relax in Shimla"},{"day":"3","plan": "Heritage and departure|Morning: Indian Institute of Advanced Study,ate morning: Chadwick Falls,Afternoon: Departure"}]
+	},
+	{
+    "locationName": "Nainital",
+    "categoryID": 1,
+	"tourManagerId": "001",
+	"triplength": "4 days 3 night",
+	"startDate" : new Date("2025-10-26"),
+    "endDate": new Date("2025-10-30"),
+	"itinerary" : [{"day":"1","plan": "Morning: Arrival and Naini Lake|Afternoon: Naina Devi Temple and Mall Road|Evening: Tibetan Market"},{"day":"2",
+	"plan": "Morning: Snow View Point|Afternoon: Tiffin Top and Eco Cave Gardens|Evening: St. John/'s Church"},{"day":"3","plan": "Morning to afternoon: Lake tour|Evening: Kainchi Dham|Late evening: Departure"}]
+	}]);

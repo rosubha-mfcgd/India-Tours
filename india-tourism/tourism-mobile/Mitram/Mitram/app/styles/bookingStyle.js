@@ -19,7 +19,7 @@ const BookingStyle = StyleSheet.create({
 },
 textfieldunderlinedInput: {
     alignitems: 'left',
-    textAlign: 'left',
+    textAlign: 'center',
     margin: 'auto',
     width:'100%',
     height:40,

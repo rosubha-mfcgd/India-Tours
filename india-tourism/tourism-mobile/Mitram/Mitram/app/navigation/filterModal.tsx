@@ -5,7 +5,7 @@ import Ionicons from '@expo/vector-icons/Ionicons';
 import { useRouter } from 'expo-router';
 const { width } = Dimensions.get('window');
 
-const FilterSidebar = ({ data }) => {
+const FilterSidebar = ({ data,showFilterDateOptions,toggleFilterOptions }) => {
   const [isOpen, setIsOpen] = useState(false);
 const router = useRouter();
 
@@ -13,6 +13,7 @@ const router = useRouter();
 
   const toggleSidebar = () => {
     const toValue = isOpen ? 0 : 1;
+    toggleFilterOptions(true)
     Animated.timing(animation, {
       toValue,
       duration: 300,
@@ -29,7 +30,7 @@ const router = useRouter();
   }
   const sidebarTranslateX = animation.interpolate({
     inputRange: [0, 1],
-    outputRange: [-width * 0.75, 0], // Sidebar width 75% of screen
+    outputRange: [-width * 0.50, 0], // Sidebar width 75% of screen
   });
 
   return (
@@ -38,7 +39,7 @@ const router = useRouter();
       <View style={Drawerstyles.mainContent}>
         <TouchableOpacity onPress={toggleSidebar} >
        <Ionicons
-              name="filter-outline" // Choose your desired icon name
+              name="funnel" // Choose your desired icon name
               size={24}
               color="white"
               style={{ marginLeft: 15 }}

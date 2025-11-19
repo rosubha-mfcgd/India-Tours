@@ -2,8 +2,9 @@ import { Text, View } from 'react-native';
 import CategoryStyle from '../../styles/categoryStyle.js'; 
 import TourCommonStyle from '../../styles/tourCommonStyle.js'; 
 import ModalStyle from '../../styles/modalStyle.js'
+import TextStyle from '../../styles/textStyles';
 import {updateAsFavorite,getCategories,getCities,
-    persistDataInCache,getDataFromCache} from "../../admin/admin";
+    persistDataInCache,getDataFromCache,removeDataFromCache} from "../../admin/admin";
 import { useEffect, useState } from "react";
 
 import { FlatList, TouchableOpacity, Image} from 'react-native';
@@ -22,12 +23,14 @@ export default function Categories()
     const[cityList,setCityList] = useState('');
     const [showFlipImage,setShowFlipImage] = useState(false)
     const [activeNotification,setActiveNotification] = useState(false)
-    const [favorite,setFavorite] = useState([])
+    const [favorite,setFavorite] = useState(new Map())
+    const [changeFav,setChangeFav] = useState(true)
      const menuList = [
     { id: '1', name: 'Upcoming Events' },
     { id: '2', name: 'Exciting Offers' },
     { id: '3', name: 'Recommendations' },
     { id: '4', name: 'My Past Trips' },
+     { id: '5', name: 'Reviews' },
   ];
     const toggleImage = () =>{
          setShowFlipImage(!showFlipImage)
@@ -47,7 +50,7 @@ export default function Categories()
            <View style={ModalStyle.headerCompStyle}>
             <Link href="/tourism/viewTourOperators">
             
-              <Text style={CategoryStyle.headerTitles}>Reviews</Text>
+              <Text style={CategoryStyle.headerTitles}>Apply for Visa</Text>
               
                      
             </Link>
@@ -59,13 +62,22 @@ export default function Categories()
         )
     }
 
-
-const updateFavorites = async(categoryid, status,index) =>{
-
-         console.log('status....index...',status,index)
-        favorite[index].favorite = status;
-        setFavorite(favorite);
-        console.log('favorite....',favorite);
+ const getItemFromFavoriteMap = (key) => {
+    console.log('favorite...',favorite)
+    let color = favorite.get(key) === 'Y'?'#f04646ff':'#635f5fff';
+    console.log('color..',color);
+    return color;
+  };
+const updateFavorites = async(categoryid) =>{
+        setChangeFav(false)
+        let status = favorite.get(categoryid)
+        let changedFavStatus = status === 'Y'?'N':'Y'
+         console.log('status....index...',status,categoryid)
+       
+        favorite.set(categoryid,changedFavStatus);
+        persistDataInCache('favoriteCategory',favorite);
+                  
+        //console.log('favorite....',favorite);
         let data = {
                     "categoryId":categoryid,
                     "status" : status
@@ -77,6 +89,8 @@ const updateFavorites = async(categoryid, status,index) =>{
                     }else{
                         console.log('could not update favorite')
                     }
+                    removeDataFromCache(productID);
+           setChangeFav(true)          
        }
 
       const RenderTripCategories = ({item}) =>{
@@ -102,15 +116,18 @@ const updateFavorites = async(categoryid, status,index) =>{
         <Card.Divider/>
                 
               
-              {(item.favorite === 'Y'|| favorite[item.categoryID-1] && 
-              favorite[item.categoryID-1].favorite== 'Y')   ? 
-                    
-                    <Ionicons name = "heart" color='#f04646ff' size={45} onPress={()=>
-                        updateFavorites(item.categoryID,'N',item.categoryID-1)}/>:
-
-                    <Ionicons name = "heart" color='#635f5fff' size={45} onPress={()=>
-                        updateFavorites(item.categoryID,'Y',item.categoryID-1)}/>
-              }
+              {changeFav?
+                    <View style={{flexDirection:'row'}}>
+                    <Ionicons name = "heart" color={getItemFromFavoriteMap(item.categoryID)} 
+                    size={45} onPress={()=>
+                        updateFavorites(item.categoryID)}/>
+                        {favorite.get(item.categoryID) === 'Y'?
+                            <Text style={TextStyle.h2}>My Favorite</Text>:
+                            <View/>
+                        }
+                        </View>
+                        :<View/>
+                    }
               <Link href={{pathname:"/tourism/tripList",
                              params: { productID: item.productID, categoryId:item.categoryID,
                                 cityList:JSON.stringify(cityList)
@@ -130,7 +147,7 @@ const updateFavorites = async(categoryid, status,index) =>{
         }
      useEffect(()=>{
             let mounted = true;
-
+           
             const timer = setTimeout(() =>{
                 
                     const getTripCategories = async (productID) =>{
@@ -142,6 +159,16 @@ const updateFavorites = async(categoryid, status,index) =>{
                        if(categories)
                        {
                             persistDataInCache(productID,categories);
+                            const favoriteMap = new Map(favorite); 
+                            for(let category of categories)
+                            {
+                               console.log('favorite map...',category.categoryID,
+                                 category.favorite)
+                                favoriteMap.set(category.categoryID, 
+                                    category.favorite === 'Y'?'Y':'N');
+                            }
+                            setFavorite(favoriteMap);
+                            persistDataInCache('favoriteCategory',favoriteMap)
                        }
                     }
                     
@@ -149,15 +176,11 @@ const updateFavorites = async(categoryid, status,index) =>{
                     {
                         console.log('categories...',categories);
                         setItems(categories);
-                        for(let category of categories)
-                        {
-                           let catObj = {"id":category.categoryID,"favorite":category.favorite};
-                            favorite.push(catObj);
-                        }
-                        console.log('category in favorite map....',favorite);
+                   
                     }
                    
                 };
+               
                 if(!items)
                 {
                     getTripCategories(productID);
@@ -165,11 +188,13 @@ const updateFavorites = async(categoryid, status,index) =>{
                 }},100);
         
     return () => {
+      
         mounted = false; // Set flag to false on cleanup
         clearTimeout(timer); // Clean up the timer
     };
 
       },[favorite]);
+
 
       useEffect(()=>{
          let mounted = true;
@@ -190,7 +215,7 @@ const updateFavorites = async(categoryid, status,index) =>{
                     }
                    
                 };
-                if(cityList==='' && mounted)
+                if(cityList==='')
                 {
                     getCityList();
                     mounted = false;
@@ -200,18 +225,21 @@ const updateFavorites = async(categoryid, status,index) =>{
     return () => {
         mounted = false; // Set flag to false on cleanup
         clearTimeout(timer); // Clean up the timer
+        
     };
     },[] )
 
+    
     return(
         <View style={TourCommonStyle.centeredContainer}>
     {
+        items ?
         <FlatList
           data={items}
           renderItem={({item})=> <RenderTripCategories item = {item}/>}
           ListHeaderComponent={showHeaderInformation}
           keyExtractor={item => item.categoryID}
-        />
+        />:<View/>
     }
     </View>
     )

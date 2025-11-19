@@ -203,6 +203,8 @@ try{
 //This function generates the oAuth token for API calls
 app.post("/api/token", async(req,res) =>{
 
+  const origin = req.headers.origin;
+  console.log('origin....',origin)
    const data = {
       'client_id':API_CLIENT_ID,
       'client_secret':API_CLIENT_SECRET,
@@ -211,7 +213,12 @@ app.post("/api/token", async(req,res) =>{
    await axios.post(API_AUTH_TOKEN_URL,querystring.stringify(data),
   {
     headers:{
-      'Content-Type': 'application/x-www-form-urlencoded'
+      'Content-Type': 'application/x-www-form-urlencoded',
+      'Access-Control-Allow-Origin': origin,
+      'Access-Control-Allow-Methods': 'GET, POST, OPTIONS, PUT, PATCH, DELETE',
+      'Access-Control-Allow-Headers': 'X-Requested-With,content-type',
+      'Access-Control-Allow-Credentials': true
+
     }}).then(
       response => {
           res.status(200).send(response.data);
