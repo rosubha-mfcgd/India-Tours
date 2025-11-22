@@ -50,7 +50,7 @@ class TourRepository extends BaseRepository_1.BaseRepository {
                                 unit: "day",
                                 timezone: "Asia/Kolkata", // Optional
                             }
-                        }
+                        },
                     },
                 },
             ]).exec();

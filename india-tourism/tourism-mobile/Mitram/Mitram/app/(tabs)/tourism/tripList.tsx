@@ -372,13 +372,13 @@ const onTripendChange = () => {
     return(
         <View style={TourCommonStyle.centeredContainer}>
             {
-           
+           tours && tours.length>0 ?
               <FlatList
           data={tours}
           renderItem={({item})=> <RenderTripList item = {item}/>}
-          keyExtractor={item =>`${item.locationName}-${item.tourManagerId}-${item._id}`}
+          keyExtractor={item =>`${item._id}`}
            ListHeaderComponent={showTripListHeaderInformation}
-        />
+        />:<View/>
             }
         </View>
 

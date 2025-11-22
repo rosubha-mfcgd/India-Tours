@@ -20,7 +20,7 @@ export default function Categories()
 
     const {productID} = useLocalSearchParams();
     const [items, setItems] = useState('');
-    const[cityList,setCityList] = useState('');
+    const[cityList,setCityList] = useState([]);
     const [showFlipImage,setShowFlipImage] = useState(false)
     const [activeNotification,setActiveNotification] = useState(false)
     const [favorite,setFavorite] = useState(new Map())
@@ -180,10 +180,36 @@ const updateFavorites = async(categoryid) =>{
                     }
                    
                 };
-               
+                 const getCityList = async () =>{
+                   
+                    let cities = await getDataFromCache('cities');
+                     if(cities)
+                    {
+                        console.log('cities...',cities);
+                        setCityList(cities);
+                    }
+                    if(!cityList || cityList.length === 0)
+                    {
+                      cities = await  getCities();
+                    
+                    }
+                    if(cities)
+                    {
+                        persistDataInCache('cities',cities);
+                        console.log('cities...',cities);
+                        setCityList(cities);
+                    }
+                   
+                };
                 if(!items)
                 {
                     getTripCategories(productID);
+                if(!cityList || cityList.length === 0)
+                {
+                    getCityList();
+                    mounted = false;
+                  
+                }
 
                 }},100);
         
@@ -200,21 +226,7 @@ const updateFavorites = async(categoryid) =>{
          let mounted = true;
              const timer = setTimeout(() =>{
                 
-                    const getCityList = async () =>{
-                   
-                    let cities = getDataFromCache('cities');
-                    if(!cities)
-                    {
-                      cities = await  getCities();
-                      persistDataInCache('cities',cities);
-                    }
-                    if(cities)
-                    {
-                        console.log('cities...',cities);
-                        setCityList(cities);
-                    }
-                   
-                };
+                  
                 if(cityList==='')
                 {
                     getCityList();

@@ -89,6 +89,30 @@ const getToursByCategoryId = (req_1, res_1, ...args_1) => __awaiter(void 0, [req
         res.status(400).send({ "errormessage": "could not load any planned Tours by any operator" });
     }
 });
+const getTourItenerariesForTrip = (req_1, res_1, ...args_1) => __awaiter(void 0, [req_1, res_1, ...args_1], void 0, function* (req, res, retries = 3, delay = 1000) {
+    try {
+        let { locationName, categoryID, tourManagerId, startDate, endDate } = req.body;
+        //const parameters = req.query;
+        console.log('request params is....', locationName, categoryID, tourManagerId, startDate, endDate);
+        let itineraries = yield new TourDetailService().getTourItenriesForTrip(locationName, categoryID, tourManagerId, startDate, endDate);
+        if (itineraries) {
+            console.log('result..', itineraries);
+            res.status(200).send(itineraries);
+        }
+        else {
+            res.status(400).send({ "errormessage": "could not find tour itineraries" });
+        }
+    }
+    catch (err) {
+        console.log(err.stack);
+        //   if(retries>0)
+        //     {
+        //          await new Promise(resolve => setTimeout(resolve, delay));
+        //         return getTourItenerariesForTrip(req,res,retries-1,delay);
+        //     }
+        res.status(400).send({ "errormessage": "could not load any planned Tours by any operator" });
+    }
+});
 const getTourManagers = (req_1, res_1, ...args_1) => __awaiter(void 0, [req_1, res_1, ...args_1], void 0, function* (req, res, retries = 3, delay = 1000) {
     try {
         //   const parameters = req.query;
@@ -109,4 +133,4 @@ const getTourManagers = (req_1, res_1, ...args_1) => __awaiter(void 0, [req_1, r
     }
 });
 module.exports = { getCategories, getToursByCategoryId, updateFavoriteCategory,
-    getProducts, getTourManagers };
+    getProducts, getTourManagers, getTourItenerariesForTrip };

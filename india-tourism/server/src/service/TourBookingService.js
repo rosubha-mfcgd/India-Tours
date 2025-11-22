@@ -133,7 +133,6 @@ constructor(){
                 let data = {"package_cost":package_cost,
                 "primarybookings":primarybookings,
                 "dependantbookings":dependantbookings}
-               console.log()
                let updateResult = await bookingRepository.update(existingbooking._id,data);
                 if(updateResult)
                 {

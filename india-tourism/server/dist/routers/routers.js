@@ -7,7 +7,7 @@ const { doSignup } = require("../controller/signup");
 const { checkAuthenticated } = require("../middlewares/auth");
 const { signupvalidate, validateOTP } = require("../controller/validations");
 const { getPoints } = require("../controller/userprofile");
-const { getCategories, getProducts, getToursByCategoryId, updateFavoriteCategory } = require("../controller/tripDetails");
+const { getCategories, getProducts, getToursByCategoryId, updateFavoriteCategory, getTourItenerariesForTrip } = require("../controller/tripDetails");
 const { getRegisteredTourManagers, getCities } = require("../controller/tourManagers");
 const { performBookings, performBookingsByMobile, getBookingsByBookingId, updateBookingsByBookingId } = require("../controller/tourBookings");
 const { getSearchOptions } = require("../controller/searchOptions");
@@ -28,4 +28,5 @@ router.post("/getBookingsByBookingId", checkAuthenticated, getBookingsByBookingI
 router.post("/updateBookingsByBookingId", checkAuthenticated, updateBookingsByBookingId);
 router.post("/sendConfirmation", checkAuthenticated, sendConfirmation);
 router.get("/searchMyOptions", checkAuthenticated, getSearchOptions);
+router.post("/tourItenerariesForTrip", checkAuthenticated, getTourItenerariesForTrip);
 module.exports = router;

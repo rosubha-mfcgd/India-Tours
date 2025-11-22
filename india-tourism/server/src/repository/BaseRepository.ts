@@ -31,9 +31,11 @@ export abstract class BaseRepository<T extends Document> implements IRepository<
         return result.deletedCount > 0;
     }
    async find(query: object): Promise<T[]> {
+     
         return this._model.find(query).exec();
     }
    async findOne(query: object): Promise<T | null> {
+     console.log('query...',query, this._model);
        return this._model.findOne(query).exec();
     }
    async findAll(): Promise<T[]> {

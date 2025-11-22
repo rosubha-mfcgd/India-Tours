@@ -46,6 +46,7 @@ class BaseRepository {
     }
     findOne(query) {
         return __awaiter(this, void 0, void 0, function* () {
+            console.log('query...', query, this._model);
             return this._model.findOne(query).exec();
         });
     }

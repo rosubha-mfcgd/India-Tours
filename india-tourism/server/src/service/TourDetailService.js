@@ -1,5 +1,6 @@
 const {CategoryRepository} = require ('../../dist/repository/CategoryRepository');
 const { TourRepository } = require('../repository/TourRepository');
+const { TourItineraryRepository } = require('../repository/TourItineraryRepository');
 const { TourManagerRepository } = require('../repository/TourManagerRepository');
 const {ProductRepository} = require ('../../dist/repository/ProductRepository');
 const {CityRepository} = require ('../../dist/repository/CityRepository');
@@ -99,6 +100,48 @@ async getCategories(productID)
   return plannedTours;
   }
 
+  async getTourItenriesForTrip(locationName,categoryId,tourManagerId,
+    startDate,endDate)
+  {
+      let itinerary = '';
+      const tourItineraryRepository = new TourItineraryRepository();
+      try{
+         // let isoStartDate = new Date(startDate);
+         // let isoEndDate = new Date(endDate);
+          const isoStartDate = new Date(startDate);
+          const isoEndDate = new Date(endDate);
+          isoStartDate.setUTCHours(0, 0, 0, 0);
+          isoEndDate.setUTCHours(0, 0, 0, 0);
+           console.log('Service reached...',isoStartDate,isoEndDate)
+              itinerary = await tourItineraryRepository.
+              findOne({
+                categoryID:Number(categoryId), 
+                locationName: locationName,
+                tourManagerId:tourManagerId,
+               startDate: 
+               {
+                $eq: isoStartDate
+              },
+               endDate : 
+               {
+                $eq: isoEndDate
+               }
+              });
+              
+              if(itinerary){
+                console.log('found itinerary...');
+                console.log('itinerary...',itinerary);
+                  
+              }
+    }
+    catch(err){
+         console.log(err.stack);
+        logNginx(err.stack);
+        
+      }
+  return itinerary;
+  }
+  
 async getTourManagers()
 {
   let tourOperators = [];

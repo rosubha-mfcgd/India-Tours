@@ -79,10 +79,10 @@ export default function TripDetails()
                                                 cityname: cityname,
                                                 startdate: itemObject.customStartDate,
                                                 enddate: itemObject.customEndDate,
-                                                itinerary: itemObject.itinerary,
+                                                itinerary:JSON.stringify(itemObject.itinerary),
                                                }
                                           }} style={TourCommonStyle.linkText} asChild>
-            <Text>Click here</Text>
+            <Text>Click here {itemObject.itinerary}</Text>
           </Link>
           </View>
               </TD>

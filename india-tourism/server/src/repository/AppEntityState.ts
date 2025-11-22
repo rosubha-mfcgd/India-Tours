@@ -321,6 +321,35 @@ export interface ICategory extends Document{
 		reviews: {
 			type: []
 		}
+   }
+
+    export interface ITouritinerary  extends Document{
+    
+    locationName: {
+			type: String,
+			required: true
+		},
+    categoryID:{
+       type: Number,
+      required: true
+    },
+		tourManagerId: {
+			type: String,
+			required: true
+		},
+     startDate : {
+         type: Date,
+         required: true
+      },
+       endDate : {
+          type: Date,
+          required: true
+      },
+      itinerary: {
+			type: [],
+			required: true
+		}
+
 	           
   }
 
