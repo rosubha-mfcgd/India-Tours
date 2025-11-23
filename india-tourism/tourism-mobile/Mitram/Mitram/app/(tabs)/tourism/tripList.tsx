@@ -355,7 +355,8 @@ const onTripendChange = () => {
                              params: { 
                                 item:  JSON.stringify(item),
                                 tourmanagerName:tourMgrMap[item.tourManagerId].tourManagerName,
-                                cityname: tourMgrMap[item.tourManagerId].tourOpLocation
+                                cityname: tourMgrMap[item.tourManagerId].tourOpLocation,
+                                categoryId:categoryId
                              }
                           }} asChild>
                <TouchableOpacity 

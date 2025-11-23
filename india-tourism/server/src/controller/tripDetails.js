@@ -117,10 +117,7 @@ const getTourItenerariesForTrip = async(req,res,retries = 3, delay = 1000) =>{
 
         let {locationName,categoryID,tourManagerId,startDate,endDate} = req.body;
         //const parameters = req.query;
-       
-        
-
-         console.log('request params is....',locationName,categoryID,tourManagerId,startDate,endDate)
+       console.log('request params is....',locationName,categoryID,tourManagerId,startDate,endDate)
      let itineraries = await new TourDetailService().getTourItenriesForTrip(
         locationName,categoryID,tourManagerId,startDate,endDate);
      

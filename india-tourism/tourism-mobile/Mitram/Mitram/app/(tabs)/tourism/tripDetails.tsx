@@ -9,7 +9,7 @@ import { useLocalSearchParams,Link } from 'expo-router';
 
 export default function TripDetails()
 {
-    const {item,tourmanagerName,cityname} = useLocalSearchParams();
+    const {item,tourmanagerName,cityname,categoryId} = useLocalSearchParams();
     const itemObject = JSON.parse(item);
     return(
           <ScrollView style={{backgroundColor:'#8a41df7e'}}>
@@ -76,13 +76,14 @@ export default function TripDetails()
                                              params: { 
                                                 location:  itemObject.locationName,
                                                 tourmanagerName:tourmanagerName, 
+                                                tourManagerId:itemObject.tourManagerId,
                                                 cityname: cityname,
-                                                startdate: itemObject.customStartDate,
-                                                enddate: itemObject.customEndDate,
-                                                itinerary:JSON.stringify(itemObject.itinerary),
-                                               }
+                                                startdate: itemObject.startDate,
+                                                enddate: itemObject.endDate,
+                                                categoryId: categoryId
+                                                }
                                           }} style={TourCommonStyle.linkText} asChild>
-            <Text>Click here {itemObject.itinerary}</Text>
+            <Text>Click here</Text>
           </Link>
           </View>
               </TD>

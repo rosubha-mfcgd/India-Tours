@@ -42,10 +42,12 @@ export abstract class BaseRepository<T extends Document> implements IRepository<
         return this._model.find({}).exec();
     }
     async findAllSortedResults(query: string): Promise<T[]> {
+      console.log('query...',query, this._model);
         return this._model.find().sort(query).exec();
     }
     async findAllSortedResultsByParams(query: object,filter: string): Promise<T[]> {
-        return this._model.find(query).sort(filter).exec();
+      console.log('query...',query, this._model);
+      return this._model.find(query).sort(filter).exec();
     }
         
 }

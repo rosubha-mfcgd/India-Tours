@@ -41,7 +41,13 @@ centeredContainer: {
     flexDirection: 'row', // Arranges items horizontally in a row
     justifyContent: 'space-around', // Distributes space evenly around items
     marginBottom: 10,
-     zIndex: -1
+    zIndex: -1
+  },
+  col: {
+    flexDirection: 'col', // Arranges items horizontally in a row
+    justifyContent: 'space-around', // Distributes space evenly around items
+    marginBottom: 10,
+    zIndex: -1
   },
    screenText: {
         fontSize: 20,
@@ -160,6 +166,9 @@ marginRight: 8,
         textDecorationLine: 'underline',
         // Add any other Text styles here
       },
+       contentContainer: {
+    paddingHorizontal: 10, // Optional: padding around the entire list
+  }
 
 },
 );

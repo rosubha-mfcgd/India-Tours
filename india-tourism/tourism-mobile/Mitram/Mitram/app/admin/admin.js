@@ -485,6 +485,36 @@ return res_data;
 
 }
 
+export const getIteneraries = async(data) =>{
+let res_data = "The itinerary of this trip will be available shortly";
+try{
+         let access_token = await getApiAccessToken();
+         if(access_token){
+             console.log('access_token found...',access_token.data)
+             console.log('data...',data);
+        
+            const headers = {
+                 "Content-type": "application/json; charset=UTF-8",
+                 "Authorization":"Bearer "+access_token.data.access_token
+            };
+            const response = await axios.post(
+                        process.env.EXPO_PUBLIC_SERVER_URI + "tourItenerariesForTrip",
+                        data, {headers});
+             if(response)
+             {
+                res_data = response.data;
+              }
+         }
+
+
+   }catch(err)
+   {
+     console.error('Error while fetching iteneraries:::', err.stack);
+   }
+   return res_data;
+}
+
+
 export const persistDataInCache = async(key,value) =>{
     try{
         const jsonStrValue = JSON.stringify(value);

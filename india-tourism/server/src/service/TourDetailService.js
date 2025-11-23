@@ -129,10 +129,8 @@ async getCategories(productID)
               });
               
               if(itinerary){
-                console.log('found itinerary...');
-                console.log('itinerary...',itinerary);
-                  
-              }
+                  console.log('found itinerary...',itinerary);
+               }
     }
     catch(err){
          console.log(err.stack);
