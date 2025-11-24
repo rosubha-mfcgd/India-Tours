@@ -14,6 +14,7 @@ const cors = require('cors');
 //parses cookies attached to the client request object
 //const cookieParser = require("cookie-parser");
 const { env } = require('process');
+const { GoogleGenerativeAI } = require('@google/generative-ai');
 const app = express();
 
 const { OAuth2Client } = require('google-auth-library');
@@ -30,7 +31,7 @@ const API_CLIENT_ID = process.env.API_CLIENT_ID;
 const API_CLIENT_SECRET = process.env.API_CLIENT_SECRET;
 const GRANT_TYPE = process.env.GRANT_TYPE;
 const API_AUTH_TOKEN_URL = process.env.API_AUTH_TOKEN_URL;
-
+const GOOGLE_GEMINI_API_KEY = process.env.GOOGLE_GEMINI_API_KEY;
 const GOOGLE_OAUTH_SCOPES = [
 
   "https%3A//www.googleapis.com/auth/userinfo.email",
@@ -229,6 +230,43 @@ app.post("/api/token", async(req,res) =>{
       res.status(401).send({"error":"Invalid token found"});
     });
 });
+
+app.post("/api/findUpcomingEvents", async(req,res) =>{
+
+    if (!GOOGLE_GEMINI_API_KEY) {
+          console.log("API_KEY not found in .env file. Please ensure it's set.");
+          process.exit(1); // Exit if API key is missing
+        }
+        const genAI = new GoogleGenerativeAI(GOOGLE_GEMINI_API_KEY);
+
+       
+         const {prompt,modelname} = req.body;
+          // Choose the model (e.g., "gemini-pro" for text-only)
+          const model = genAI.getGenerativeModel({ model: modelname });
+
+          // Start a chat or send a one-off prompt
+               
+          console.log('prompt....',prompt);
+          const result = await model.generateContent(prompt);
+         
+          
+          if(result){
+             const response = await result.response;
+             if(response){
+                   const text = response.text();
+                   console.log('response from Gemini AI...',text);
+                  res.status(200).send(text);
+                }
+              }
+                else{
+                  console.log('response from Gemini AI...',text);
+                    res.status(404).send(
+                {
+                  "errormessage":"could not find a response from Gemini AI "+text});
+                }
+              
+})
+
 
 
 // Define routes and middleware

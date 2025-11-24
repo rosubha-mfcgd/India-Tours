@@ -133,11 +133,11 @@ const getTourItenerariesForTrip = async(req,res,retries = 3, delay = 1000) =>{
          }
     }catch(err){
         console.log(err.stack)
-        //   if(retries>0)
-        //     {
-        //          await new Promise(resolve => setTimeout(resolve, delay));
-        //         return getTourItenerariesForTrip(req,res,retries-1,delay);
-        //     }
+           if(retries>0)
+             {
+                  await new Promise(resolve => setTimeout(resolve, delay));
+                 return getTourItenerariesForTrip(req,res,retries-1,delay);
+             }
         res.status(400).send(
                 {"errormessage":"could not load any planned Tours by any operator"});
     }

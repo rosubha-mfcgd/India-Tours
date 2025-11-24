@@ -12,7 +12,6 @@ const {getRegisteredTourManagers, getCities} = require("../controller/tourManage
 const {performBookings, performBookingsByMobile,getBookingsByBookingId,updateBookingsByBookingId} = require("../controller/tourBookings");
 const {getSearchOptions} = require("../controller/searchOptions");
 const { sendConfirmation } = require('../controller/sendCommunication');
-
 const router = express.Router();
 
 

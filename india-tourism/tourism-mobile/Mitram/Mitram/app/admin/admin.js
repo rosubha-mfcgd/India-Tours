@@ -514,6 +514,39 @@ try{
    return res_data;
 }
 
+export const getUpcomingEvents = async(data) =>{
+
+  let res_data = "The upcoming events cannot be found";
+try{
+         let access_token = await getApiAccessToken();
+         if(access_token){
+             console.log('access_token found...',access_token.data)
+             console.log('data...',data);
+        
+            const headers = {
+                 "Content-type": "application/json; charset=UTF-8",
+                 "Authorization":"Bearer "+access_token.data.access_token
+            };
+            const response = await axios.post(
+                        process.env.EXPO_PUBLIC_SERVER_URI + "findUpcomingEvents",
+                        data, {headers});
+             if(response)
+             {
+                res_data = response.data;
+              }
+         }
+
+
+   }catch(err)
+   {
+     console.error('Error while fetching events:::', err.stack);
+   }
+   return res_data;
+
+
+
+}
+
 
 export const persistDataInCache = async(key,value) =>{
     try{

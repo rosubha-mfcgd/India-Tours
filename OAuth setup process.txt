@@ -41,3 +41,15 @@ This command lists the S3 buckets in your LocalStack environment.
 Test AWS IAM user :- TestAWSUser
 Account ID/alias - 157208622016/rosubha2025
 password-IndiaTours2025@
+
+
+Convert Expo mobile app to desktop app
+========================================
+Run following commands
+
+ npx expo install react-dom react-native-web @expo/metro-runtime
+ npx expo start --web
+ 
+ 
+ https://www.google.com/search?q=convert+react+native+expo+mobile+application+to+web++version&sca_esv=e5901bf1fe2672d3&rlz=1C1VDKB_enCA1139CA1139&sxsrf=AE3TifNbWku6VQZf5AxkyPuPfnRLUsMJuQ%3A1763922520949&ei=WFIjaa7ZOcKV0PEPzq64oQo&ved=0ahUKEwiu5Za684iRAxXCCjQIHU4XLqQQ4dUDCBE&uact=5&oq=convert+react+native+expo+mobile+application+to+web++version&gs_lp=Egxnd3Mtd2l6LXNlcnAiPGNvbnZlcnQgcmVhY3QgbmF0aXZlIGV4cG8gbW9iaWxlIGFwcGxpY2F0aW9uIHRvIHdlYiAgdmVyc2lvbjIIEAAYogQYiQUyCBAAGIAEGKIEMgUQABjvBTIFEAAY7wVIwypQAFiNIXAAeAGQAQCYAb0BoAGKDKoBBDEuMTC4AQPIAQD4AQGYAgGgArIBmAMAkgcDMC4xoAfBGLIHAzAuMbgHsgHCBwMzLTHIBwg&sclient=gws-wiz-serp
+ 

@@ -21,6 +21,8 @@ export default function ViewItinerary()
   year: 'numeric' // 'numeric' for full year
 });
 
+
+  
       const formattedEndDate = customEndDate.toLocaleDateString('en-GB', {
   day: '2-digit',
   month: '2-digit',

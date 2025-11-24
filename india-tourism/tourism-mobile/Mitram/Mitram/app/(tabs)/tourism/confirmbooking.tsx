@@ -5,6 +5,7 @@ import TextStyle from '../../styles/textStyles.js';
 import { useLocalSearchParams } from 'expo-router';
 import {sendConfirmationBookingEmail} from "../../admin/admin";
 import { useEffect,useState } from 'react';
+import Ionicons from '@expo/vector-icons/Ionicons.js';
 export default function ConfirmBooking()
 {
     const {booking,locationName,startDate,endDate,tourmanagerName,package_cost,
@@ -36,13 +37,11 @@ export default function ConfirmBooking()
         <View style={TourCommonStyle.centeredsecContainer}>
           {showConfirmation ?
           <View>
-            <Text style={TextStyle.text}>You are going to </Text>
-            <Text style={TextStyle.infotext}>{locationName}</Text>
-            <Text style={TextStyle.text}>on - {startDate}</Text>
-            <Text style={TextStyle.text}>and returning back on - {endDate}</Text>
-            <Text style={TextStyle.text}>We are confirming your trip with booking id </Text>
-            <Text style={TextStyle.infotext}> # {bookingObj.bookingid} with {tourmanagerName}</Text>
-           <Text style={TextStyle.text}>We'll text you the bookingid in your registered email-id/mobile, 
+            <Ionicons name="checkmark-circle" size={140} color="#175c06ff" /> 
+            <Text style={TextStyle.body}>You are going to {locationName} on - {startDate} and returning back on - {endDate}</Text>
+                 <Text style={TextStyle.body}>We are confirming your trip with booking id # {bookingObj.bookingid}</Text>
+            <Text style={TextStyle.body}>  with {tourmanagerName}</Text>
+           <Text style={TextStyle.body}>We'll text you the bookingid in your registered email-id/mobile, 
             please save it for future reference. </Text>
             </View>:<View/>
         }
