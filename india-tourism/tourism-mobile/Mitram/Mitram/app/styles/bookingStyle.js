@@ -6,7 +6,7 @@ const BookingStyle = StyleSheet.create({
     alignItems: 'center', // Centers content horizontally
     justifyContent: 'center', // Centers content vertically (if scrollable area allows)
     paddingVertical: 20,
-    backgroundColor:'#8a41df7e'
+    backgroundColor:'#110ddd6b'
   },
     TextInput: {
     alignitems: 'center',
@@ -62,6 +62,7 @@ input: {
     padding: 10,
     borderBottomWidth: 1,
     borderBottomColor: '#c91818ff',
+   
   },
   column: {
     flex: 1, // Distributes available space equally among columns
@@ -85,7 +86,8 @@ input: {
         borderRadius: 5, // Optional: for rounded corners
         margin: 10,
         overflow: 'hidden', // Ensures border radius is visible
-        },
+        backgroundColor:'#110ddd6b'  
+      },
   tableRow: {
     flexDirection: 'row',
     justifyContent: 'space-around',

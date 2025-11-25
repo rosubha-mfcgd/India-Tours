@@ -29,6 +29,13 @@ const TextStyle = StyleSheet.create({
     fontStyle: 'italic',
     textDecorationLine: 'underline',
   },
+  bookingtext: {
+    fontSize: 20,
+    fontWeight: 'bold',
+    color: '#f1ececa6',
+    textAlign: 'center',
+    fontStyle: 'italic',
+    },
   detailtitle: {
   fontsize: 18,
   fontweight: 500, /* Medium weight */
