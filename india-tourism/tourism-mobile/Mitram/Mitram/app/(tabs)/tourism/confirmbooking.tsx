@@ -16,6 +16,10 @@ export default function ConfirmBooking()
 
         console.log('bookingid...',booking)
         console.log('email...',email);
+        let mounted = true;
+        const timer = setTimeout(() =>{
+                        
+        const confirmBooking = async () =>{
            let data = {
             bookingid:bookingObj.bookingid,
               locationName:locationName,
@@ -25,25 +29,43 @@ export default function ConfirmBooking()
               email: email,
              tourmanagername:tourmanagerName
           }
-        let emailSent = sendConfirmationBookingEmail(data);
+        let emailSent = await sendConfirmationBookingEmail(data);
         if(emailSent)
         {
             console.log('email Confirmation sent');
             setShowConfirmation(true)
+            mounted = false;
         }
+    };
+     if(mounted) 
+                        {
+                            if(!showConfirmation)
+                            {
+                                 confirmBooking();
+                            }
+                        }},1000);
+                
+                        return () => {
+                            mounted = false; // Set flag to false on cleanup
+                            clearTimeout(timer); // Clean up the timer
+                        };
           
     },[]);
     return(
         <View style={TourCommonStyle.centeredsecContainer}>
           {showConfirmation ?
-          <View>
+           <View>
+          <View style={TourCommonStyle.centeredContainer}>
             <Ionicons name="checkmark-circle" size={140} color="#175c06ff" /> 
+            </View>
+            <View>
             <Text style={TextStyle.body}>You are going to {locationName} on - {startDate} and returning back on - {endDate}</Text>
-                 <Text style={TextStyle.body}>We are confirming your trip with booking id # {bookingObj.bookingid}</Text>
-            <Text style={TextStyle.body}>  with {tourmanagerName}</Text>
-           <Text style={TextStyle.body}>We'll send you the bookingid in your registered email-id/mobile, 
+                 <Text style={TextStyle.body}>We are confirming your trip with booking id # {bookingObj.bookingid} with {tourmanagerName}</Text>
+            <Text style={TextStyle.body}>We'll send you the bookingid in your registered email-id/mobile, 
             please save it for future reference. </Text>
-            </View>:<View/>
+            </View>
+            </View>
+            :<View/>
         }
         </View>
 

@@ -1,4 +1,4 @@
-import { KeyboardAvoidingView,Platform,Text, TextInput, View,
+import {Text, TextInput, View,
     TouchableOpacity ,FlatList,Pressable } 
 from 'react-native';
 import { SafeAreaProvider, useSafeAreaInsets,SafeAreaView } from 'react-native-safe-area-context'

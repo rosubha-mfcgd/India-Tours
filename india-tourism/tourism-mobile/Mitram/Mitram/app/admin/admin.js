@@ -478,7 +478,7 @@ let res_data = "failed to send email communication";
      }
      
 }catch(err){
-     console.error('Could not send communication:::', err.stack);
+     console.log('Could not send communication:::', err.stack);
     // throw err;
 }
 return res_data;

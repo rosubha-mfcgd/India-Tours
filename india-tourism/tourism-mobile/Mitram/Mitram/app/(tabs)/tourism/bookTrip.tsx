@@ -221,7 +221,7 @@ export default function BookMyTrip()
                             <Table key={`"table"-${count}`} >
 
                                 <TBody>
-                        <TR>
+                        <TR style={BookingStyle.tableRow}>
                        <TD style={BookingStyle.tableCell}> 
                         <Text  key={`"namelabel"-${count}`} style={TextStyle.bookingtext}>Name</Text></TD>
                        </TR>
@@ -240,8 +240,9 @@ export default function BookMyTrip()
           handleValueOnBlur(nameOfTourist[`${count}-1`],'name',`${count}-1`)
         }}
       /> 
-        </TD></TR>
-            <TR>
+        </TD>
+        </TR>
+            <TR style={BookingStyle.tableRow}>
               <TD style={BookingStyle.tableCell}> 
                 <Text  key={`"mobilelabel"-${count}`} style={TextStyle.bookingtext}>Mobile#</Text>
               </TD> 
@@ -249,7 +250,7 @@ export default function BookMyTrip()
                 <Text  key={`"genderlabel"-${count}`} style={TextStyle.bookingtext}>Gender</Text>
               </TD>
             </TR>
-            <TR>
+            <TR style={BookingStyle.tableRow}>
                 <TD> 
         <TextInput 
               placeholder="Mobile #" key={`"mobile"-${count}`}  style={BookingStyle.textfieldunderlinedInput}
@@ -292,7 +293,7 @@ export default function BookMyTrip()
           />
           </TD>
            </TR>
-             <TR>
+             <TR style={BookingStyle.tableRow}>
               <TD style={BookingStyle.tableCell}> 
                 <Text  key={`"agelabel"-${count}`} style={TextStyle.bookingtext}>Age:</Text>
                 </TD>
@@ -301,7 +302,7 @@ export default function BookMyTrip()
             </TD>
                 
              </TR>
-                <TR>                    
+                <TR style={BookingStyle.tableRow}>                    
                  <TD>  
          <TextInput 
               placeholder="Age" key={`"age"-${count}`} style={BookingStyle.textfieldunderlinedInput}
@@ -330,11 +331,11 @@ export default function BookMyTrip()
           
         </TD>           
      </TR> 
-      <TR>
+      <TR style={BookingStyle.tableRow}>
         <TD style={BookingStyle.tableCell}> <Text  key={`"streetaddresslabel"-${count}`} 
         style={TextStyle.bookingtext}>Street Name</Text></TD>
       </TR>
-       <TR>                    
+       <TR style={BookingStyle.tableRow}>                    
         <TD>  
          <TextInput 
               placeholder="Street Name" key={`"streetname"-${count}`} 
