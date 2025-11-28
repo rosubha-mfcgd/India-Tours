@@ -7,7 +7,7 @@ const LoginSignUpStyle = StyleSheet.create({
     flex: 1,
     justifyContent: 'center', // Centers content vertically
     alignItems: 'center',     // Centers content horizontally
-    backgroundColor: '#f0f0f0', // Optional: for visual clarity
+    backgroundColor: '#64589cff', // Optional: for visual clarity
   },
   centre: {
     flex: 1,
@@ -160,7 +160,75 @@ originalcontent: {
   marginleft: 0, /* Adjust this to match the width of your vertical bar */
   flexgrow: 1, /* Allow main content to take up remaining space */
   padding: 10 /* Add some padding for content */
-}
+},
+
+ container: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    padding: 20,
+  },
+  title: {
+    fontSize: 24,
+    marginBottom: 20,
+  },
+  input: {
+    width: '100%',
+    padding: 10,
+    borderWidth: 1,
+    borderColor: '#ccc',
+    borderRadius: 5,
+    marginBottom: 10,
+  },
+    TextInput: {
+    alignitems: 'center',
+    textAlign: 'center',
+    margin: 'auto',
+    width:480,
+    height:40,
+    backgroundColor:'#eaeaea',
+    borderradius: 6
+},
+textfieldunderlinedInput: {
+    alignitems: 'left',
+    textAlign: 'center',
+    margin: 'auto',
+    width:'80%',
+    height:40,
+    backgroundColor:'#f7f8f8ff',
+    borderRadius: 30
+  },
+  flexboxcontainer: {
+    flexDirection: 'row', // Arranges children horizontally
+    alignItems: 'center', // Vertically aligns items in the center
+    padding: 10,
+    width:'100%',
+   
+  },
+  buttonscontainer: {
+    flexDirection: 'row', // Arranges children horizontally
+    justifyContent: 'space-around', // Distributes space evenly around items
+    alignItems: 'center', // Aligns items vertically in the center
+    flex: 1, // Allows the container to take up available space
+  },
+  loginbutton: {
+   backgroundColor: '#ff0000ff', // Example primary color 
+paddingVertical: 12, 
+paddingHorizontal: 20, 
+borderRadius: 25, 
+flexDirection: 'row', 
+alignItems: 'center', 
+justifyContent: 'center', 
+shadowColor: '#000', 
+shadowOffset: { width: 0, height: 2 }, 
+shadowOpacity: 0.2, 
+shadowRadius: 4, 
+elevation: 5,
+  },
+  errorText: {
+    color: 'red',
+    marginBottom: 10,
+  },
   // Add more common styles here
 });
 
