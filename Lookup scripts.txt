@@ -34,72 +34,81 @@ Category
 db.categories.insertMany([
   {
     categoryID: 1,
-    categoryName: "Hill stations",
-    categoryDesc:"Hill stations",
-    image:"/categories/hillstation.png",
-	productID:1
+    categoryName: 'Hill stations',
+    categoryDesc: 'Hill stations',
+    image: '/categories/hillstation.png',
+    productID: 1,
+    favorite: 'N'
   },
   {
     categoryID: 2,
-    categoryName: "Sea beach",
-    categoryDesc:"Sea beach",
-    image:"/categories/seabeach.png",
-	productID:1
+    categoryName: 'Sea beach',
+    categoryDesc: 'Sea beach',
+    image: '/categories/seabeach.png',
+    productID: 1,
+    favorite: 'N'
   },
-{
+  {
     categoryID: 3,
-    categoryName: "Desert",
-    categoryDesc:"Desert",
-    image:"/categories/desert.png",
-	productID:1
+    categoryName: 'Desert',
+    categoryDesc: 'Desert',
+    image: '/categories/desert.png',
+    productID: 1,
+    favorite: 'Y'
   },
-
-{
+  {
     categoryID: 4,
-    categoryName: "Jungle safari",
-    categoryDesc:"Jungle safari",
-    image:"/categories/junglesafari.png",
-	productID:1
+    categoryName: 'Jungle safari',
+    categoryDesc: 'Jungle safari',
+    image: '/categories/junglesafari.png',
+    productID: 1,
+    favorite: 'N'
   },
-
-{
-    categoryID: 5,
-    categoryName: "Religious places",
-    categoryDesc:"Religious places",
-    image:"/categories/religiousplaces.png",
-	productID:1
-},
- {
+  {
+     categoryID: 5,
+    categoryName: 'Religious places',
+    categoryDesc: 'Religious places',
+    image: '/categories/religiousplaces.png',
+    productID: 1,
+    favorite: 'N'
+  },
+  {
     categoryID: 6,
-    categoryName: "City Vibes",
-    categoryDesc:"City Vibes",
-    image:"/categories/cityvibes.png",
-	productID:1
- },
-{
+    categoryName: 'City Vibes',
+    categoryDesc: 'City Vibes',
+    image: '/categories/cityvibes.png',
+    productID: 1
+  },
+  {
     categoryID: 7,
-    categoryName: "Office Trips",
-    categoryDesc:"Office Trips",
-    image:"/categories/officetrips.png",
-	productID:1
+    categoryName: 'Office Trips',
+    categoryDesc: 'Office Trips',
+    image: '/categories/officetrips.png',
+    productID: 1
   },
-
- {
+  {
     categoryID: 8,
-    categoryName: "Health Treatments",
-    categoryDesc:"Health Treatments",
-    image:"/categories/healthtreatments.png",
-	productID:2
+    categoryName: 'Health Treatments',
+    categoryDesc: 'Health Treatments',
+    image: '/categories/healthtreatments.png',
+    productID: 2
   },
-{
+  {
     categoryID: 9,
-    categoryName: "Search my option",
-    categoryDesc:"Search my option",
-    image:"/categories/searchmyoption.png",
-	productID:1
+    categoryName: 'Sports Tour',
+    categoryDesc: "Cheer your favorite team and player from the stands. We'll get you there",
+    image: '/categories/sports.png',
+    productID: 1
+  },
+  {
+    categoryID: 10,
+    categoryName: 'Plan my own Trip',
+    categoryDesc: 'Plan my own Trip',
+    image: '/categories/searchmyoption.png',
+    productID: 1,
+    favorite: 'N'
   }
 ]);
-
 City
 ============
 db.cities.insertMany([
