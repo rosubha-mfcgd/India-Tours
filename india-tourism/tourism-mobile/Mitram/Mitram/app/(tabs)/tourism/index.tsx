@@ -11,8 +11,7 @@ import { FlatList, TouchableOpacity, Image} from 'react-native';
 import Ionicons from '@expo/vector-icons/Ionicons';
 import { Card } from '@rneui/themed';
 import {tripCategoryImages,tripCategoryBackImages} from "../../admin/imageManager";
-import { useLocalSearchParams } from 'expo-router';
-import { Link } from 'expo-router';
+import { Link,useLocalSearchParams } from 'expo-router';
 import CustomSidebar from '../../navigation/drawerModal'; 
 export default function Categories()
 {

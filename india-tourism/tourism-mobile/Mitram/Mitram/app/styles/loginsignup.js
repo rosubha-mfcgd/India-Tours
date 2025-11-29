@@ -203,6 +203,7 @@ textfieldunderlinedInput: {
     alignItems: 'center', // Vertically aligns items in the center
     padding: 10,
     width:'100%',
+    justifyContent: 'center',
    
   },
   buttonscontainer: {

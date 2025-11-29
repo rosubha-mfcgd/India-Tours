@@ -8,6 +8,7 @@ import AppLoading from 'expo-app-loading';
  import { useFonts } from 'expo-font';
     import { Inter_900Black,Inter_900Black_Italic } from '@expo-google-fonts/inter'; 
     import {Poppins_400Regular, Poppins_600SemiBold} from '@expo-google-fonts/poppins';
+ import { Link,useLocalSearchParams } from 'expo-router';
 export default function Login({navigation}){
 const [email, setEmail] = useState('');
   const [mobile, setMobile] = useState('');
@@ -58,7 +59,7 @@ const [email, setEmail] = useState('');
 
   return (
     <View style = {LoginSignUpStyle.centeredContainer}>
-    <Text style={{ fontFamily: 'Inter-Black-Header',color:'#f3f3f3d7',fontSize:50 }}>Mitram</Text>
+    <Text style={{ fontFamily: 'Inter-Black-Header',color:'#f3f3f3d7',fontSize:50 }}>Login</Text>
     <View
       style={LoginSignUpStyle.flexboxcontainer}>
        
@@ -78,7 +79,7 @@ const [email, setEmail] = useState('');
 </View>
 <View
       style={LoginSignUpStyle.flexboxcontainer}>
-         <Text style={{fontFamily:'Poppins-Regular'}}>OR</Text>
+         <Text style={{fontFamily:'Poppins-Regular',textAlign: 'center'}}>OR</Text>
       </View>
 <View
       style={LoginSignUpStyle.flexboxcontainer}>
@@ -95,13 +96,26 @@ const [email, setEmail] = useState('');
     <View
       style={LoginSignUpStyle.flexboxcontainer}>
     <View style={LoginSignUpStyle.buttonscontainer}>
-   
+     <Link href={{pathname:"/login/validateOTP",
+        params: { email: email, mobile:mobile
+                             }}} asChild>
             <TouchableOpacity 
                     style={LoginSignUpStyle.loginbutton}>
-                    <Text style={TourCommonStyle.buttonText} onPress={()=>
-                      handleLogin()}>Login</Text>
+                    <Text style={TourCommonStyle.buttonText}>Send OTP</Text>
                   </TouchableOpacity>
+    </Link>
     
+      {/* Add a "Forgot Password" link or similar */}
+    
+    </View>
+
+     <View style={LoginSignUpStyle.buttonscontainer}>
+         <Link href={{pathname:"/login/signup"}} asChild>
+            <TouchableOpacity 
+                    style={LoginSignUpStyle.loginbutton}>
+                    <Text style={TourCommonStyle.buttonText}>Sign Up</Text>
+                  </TouchableOpacity>
+    </Link>
     
       {/* Add a "Forgot Password" link or similar */}
     

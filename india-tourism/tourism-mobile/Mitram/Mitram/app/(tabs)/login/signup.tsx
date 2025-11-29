@@ -8,7 +8,9 @@ import AppLoading from 'expo-app-loading';
  import { useFonts } from 'expo-font';
     import { Inter_900Black,Inter_900Black_Italic } from '@expo-google-fonts/inter'; 
     import {Poppins_400Regular, Poppins_600SemiBold} from '@expo-google-fonts/poppins';
+     import { Link } from 'expo-router';
 export default function SignUp({navigation}){
+  const [name, setName] = useState('');
 const [email, setEmail] = useState('');
   const [mobile, setMobile] = useState('');
   const [error, setError] = useState('');
@@ -58,12 +60,24 @@ const [email, setEmail] = useState('');
 
   return (
     <View style = {LoginSignUpStyle.centeredContainer}>
-    <Text style={{ fontFamily: 'Inter-Black-Header',color:'#f3f3f3d7',fontSize:50 }}>Mitram</Text>
+    <Text style={{ fontFamily: 'Inter-Black-Header',color:'#f3f3f3d7',fontSize:50 }}>SignUp</Text>
     <View
       style={LoginSignUpStyle.flexboxcontainer}>
        
-       
+        <Text style={{fontFamily:'Poppins-SemiBold'}}>Name</Text>
 
+        <TextInput
+        style={LoginSignUpStyle.textfieldunderlinedInput}
+        placeholder="Name"
+        value={name}
+        onChangeText={setName}
+        keyboardType="name-phone-pad"
+        autoCapitalize="none"
+      />
+      </View>
+
+<View
+      style={LoginSignUpStyle.flexboxcontainer}>
         <Text style={{fontFamily:'Poppins-SemiBold'}}>Email</Text>
 
 
@@ -78,10 +92,6 @@ const [email, setEmail] = useState('');
 </View>
 <View
       style={LoginSignUpStyle.flexboxcontainer}>
-         <Text style={{fontFamily:'Poppins-Regular'}}>OR</Text>
-      </View>
-<View
-      style={LoginSignUpStyle.flexboxcontainer}>
   <Text style={{fontFamily:'Poppins-SemiBold'}}>Mobile</Text>
       <TextInput
         style={LoginSignUpStyle.textfieldunderlinedInput}
@@ -94,17 +104,30 @@ const [email, setEmail] = useState('');
     </View>
     <View
       style={LoginSignUpStyle.flexboxcontainer}>
-    <View style={LoginSignUpStyle.buttonscontainer}>
+
+         <View style={LoginSignUpStyle.buttonscontainer}>
    
             <TouchableOpacity 
                     style={LoginSignUpStyle.loginbutton}>
                     <Text style={TourCommonStyle.buttonText} onPress={()=>
-                      handleSignup()}>Login</Text>
+                      handleSignup()}>Send OTP</Text>
                   </TouchableOpacity>
     
       {/* Add a "Forgot Password" link or similar */}
     
     </View>
+    <View style={LoginSignUpStyle.buttonscontainer}>
+   <Link href={{pathname:"/login/"}} asChild>
+            <TouchableOpacity 
+                    style={LoginSignUpStyle.loginbutton}>
+                    <Text style={TourCommonStyle.buttonText}>Login</Text>
+                  </TouchableOpacity>
+    </Link>
+      {/* Add a "Forgot Password" link or similar */}
+    
+    </View>
+
+    
     </View>
     <View>
         {error ? <Text style={LoginSignUpStyle.errorText}>{error}</Text> : null}
