@@ -112,7 +112,7 @@ const LoginSignup =() => {
             onSuccess: async(codeResponse) => {
                 console.log('Trying google auth...')
                 setAction("Send Otp");
-                       // navigate('sendotp', { replace: true });
+                // navigate('sendotp', { replace: true });
                // setAction("Login");
                 
                 const req_data = {

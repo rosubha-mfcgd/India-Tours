@@ -24,7 +24,7 @@ export default function ValidateOTP({navigation}){
     }
     const {email,mobile} = useLocalSearchParams();
 
-  const handleSignup = async () => {
+  const validateOTP = async () => {
     setError(''); // Clear previous errors
 
     // Basic validation
@@ -98,7 +98,7 @@ export default function ValidateOTP({navigation}){
             <TouchableOpacity 
                     style={LoginSignUpStyle.loginbutton}>
                     <Text style={TourCommonStyle.buttonText} onPress={()=>
-                      handleSignup()}>Validate OTP</Text>
+                      validateOTP()}>Validate OTP</Text>
                   </TouchableOpacity>
     
       {/* Add a "Forgot Password" link or similar */}

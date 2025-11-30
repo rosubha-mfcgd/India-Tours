@@ -1,14 +1,18 @@
 import React, { useState } from 'react';
-import { View, Text, TextInput, 
-    TouchableOpacity } from 'react-native';
+import {KeyboardAvoidingView, View, Text, TextInput, 
+    TouchableOpacity,Platform } from 'react-native';
 import * as SecureStore from 'expo-secure-store'; // For storing tokens
-import LoginSignUpStyle from '../../styles/loginsignup.js';
-import TourCommonStyle from '../../styles/tourCommonStyle.js';
+import LoginSignUpStyle from '../../styles/loginsignup';
+import TourCommonStyle from '../../styles/tourCommonStyle';
 import AppLoading from 'expo-app-loading';
- import { useFonts } from 'expo-font';
-    import { Inter_900Black,Inter_900Black_Italic } from '@expo-google-fonts/inter'; 
-    import {Poppins_400Regular, Poppins_600SemiBold} from '@expo-google-fonts/poppins';
-     import { Link } from 'expo-router';
+import { useFonts } from 'expo-font';
+import { Inter_900Black,Inter_900Black_Italic } from '@expo-google-fonts/inter'; 
+import {Poppins_400Regular, Poppins_600SemiBold} from '@expo-google-fonts/poppins';
+import { Link,useRouter } from 'expo-router';
+import { signupUser,getApiAccessToken } from '../../admin/admin';
+import Ionicons from '@expo/vector-icons/Ionicons';
+
+
 export default function SignUp({navigation}){
   const [name, setName] = useState('');
 const [email, setEmail] = useState('');
@@ -25,6 +29,7 @@ const [email, setEmail] = useState('');
         return <AppLoading/>
     }
 
+    const router = useRouter();
   const handleSignup = async () => {
     setError(''); // Clear previous errors
 
@@ -35,36 +40,58 @@ const [email, setEmail] = useState('');
     }
 
     try {
+
+      let token = await getApiAccessToken();
+
+      if(token){
+        console.log('signup token....',token.data.access_token)
+       const req_data = {
+                        email:email,
+                        mobile:mobile,
+                        name:name,
+                        access_token:token.data.access_token
+                      };
       // Replace with your actual API call
-      const response = await fetch('YOUR_API_ENDPOINT/login', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({ email, mobile }),
-      });
+      const response = await signupUser(req_data);
+      if(response)
+      {
+        console.log('response found...',response)
+        const code = response.code;
 
-      const data = await response.json();
-
-      if (response.ok) {
+      if (code === 'Y') {
         // Assuming your API returns a token on success
-        await SecureStore.setItemAsync('userToken', data.token);
-        navigation.replace('Home'); // Navigate to home screen
+      //  await SecureStore.setItemAsync('userToken', data.token);
+        //navigation.replace('Home'); // Navigate to home screen
+
+        router.push({
+              pathname: "/login/validateOTP",
+          params: {  mobile: mobile,email:email }
+          });
+       }else if(code === 'E'){
+        setError(response.message)
+       }
+
       } else {
-        setError(data.message || 'Login failed. Please try again.');
+        setError(response.message || 'Login failed. Please try again.');
       }
-    } catch (err) {
+    }
+    }
+     catch (err) {
       setError('An error occurred. Please check your internet connection.');
     }
+  
   };
 
   return (
-    <View style = {LoginSignUpStyle.centeredContainer}>
+    <KeyboardAvoidingView style = {LoginSignUpStyle.centeredContainer}  
+    behavior={Platform.OS === 'ios' ? 'padding' : undefined}
+              keyboardVerticalOffset={Platform.OS === 'ios' ? 64 : 0} // Adjust offset as needed
+              >
     <Text style={{ fontFamily: 'Inter-Black-Header',color:'#f3f3f3d7',fontSize:50 }}>SignUp</Text>
     <View
       style={LoginSignUpStyle.flexboxcontainer}>
        
-        <Text style={{fontFamily:'Poppins-SemiBold'}}>Name</Text>
+         <Ionicons name="person-circle" size={24} color="black"></Ionicons>
 
         <TextInput
         style={LoginSignUpStyle.textfieldunderlinedInput}
@@ -78,7 +105,7 @@ const [email, setEmail] = useState('');
 
 <View
       style={LoginSignUpStyle.flexboxcontainer}>
-        <Text style={{fontFamily:'Poppins-SemiBold'}}>Email</Text>
+        <Ionicons name="mail-open" size={24} color="white"></Ionicons>
 
 
       <TextInput
@@ -92,7 +119,7 @@ const [email, setEmail] = useState('');
 </View>
 <View
       style={LoginSignUpStyle.flexboxcontainer}>
-  <Text style={{fontFamily:'Poppins-SemiBold'}}>Mobile</Text>
+    <Ionicons name="phone-portrait" size={24} color="white"></Ionicons>
       <TextInput
         style={LoginSignUpStyle.textfieldunderlinedInput}
         placeholder="mobile"
@@ -109,8 +136,7 @@ const [email, setEmail] = useState('');
    
             <TouchableOpacity 
                     style={LoginSignUpStyle.loginbutton}>
-                    <Text style={TourCommonStyle.buttonText} onPress={()=>
-                      handleSignup()}>Send OTP</Text>
+                    <Text style={TourCommonStyle.buttonText} onPress={handleSignup}>Send OTP</Text>
                   </TouchableOpacity>
     
       {/* Add a "Forgot Password" link or similar */}
@@ -132,7 +158,7 @@ const [email, setEmail] = useState('');
     <View>
         {error ? <Text style={LoginSignUpStyle.errorText}>{error}</Text> : null}
     </View>
-    </View>
+    </KeyboardAvoidingView>
   );
 }
 

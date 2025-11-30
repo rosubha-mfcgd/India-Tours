@@ -32,6 +32,14 @@
       "android",
       "web"
     ],
+	 "plugins": [
+      [
+        "@react-native-google-signin/google-signin",
+        {
+          "iosUrlScheme": "com.googleusercontent.apps.YOUR_IOS_CLIENT_ID"
+        }
+      ]
+    ]
     "extra": {
       "eas": {
         "projectId": "ddbc5093-9be4-4737-8ce4-0b3c07e142b2"
