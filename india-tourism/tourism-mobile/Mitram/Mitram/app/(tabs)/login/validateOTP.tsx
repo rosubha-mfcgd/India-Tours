@@ -1,17 +1,22 @@
 import React, { useState } from 'react';
 import { View, Text, TextInput, 
-    TouchableOpacity } from 'react-native';
+    TouchableOpacity,KeyboardAvoidingView,Platform } from 'react-native';
 import * as SecureStore from 'expo-secure-store'; // For storing tokens
 import LoginSignUpStyle from '../../styles/loginsignup.js';
 import TourCommonStyle from '../../styles/tourCommonStyle.js';
 import AppLoading from 'expo-app-loading';
- import { useFonts } from 'expo-font';
-    import { Inter_900Black,Inter_900Black_Italic } from '@expo-google-fonts/inter'; 
-    import {Poppins_400Regular, Poppins_600SemiBold} from '@expo-google-fonts/poppins';
-     import { useLocalSearchParams } from 'expo-router';
+import { useFonts } from 'expo-font';
+import { Inter_900Black,Inter_900Black_Italic } from '@expo-google-fonts/inter'; 
+import {Poppins_400Regular, Poppins_600SemiBold} from '@expo-google-fonts/poppins';
+import { useLocalSearchParams } from 'expo-router';
+import {validateOTPForLogin} from '../../admin/admin'
+import { Link,useRouter } from 'expo-router';
+import Ionicons from '@expo/vector-icons/Ionicons';
+import AuthCommonModal from '../../admin/authCommonModal'
 export default function ValidateOTP({navigation}){
   const [otp, setOtp] = useState('');
   const [error, setError] = useState('');
+   const[modalVisible,setModalVisible] = useState(false);
   const [fontsLoaded] = useFonts({
       'Inter-Black': Inter_900Black, // Assign a name to the loaded font
       'Poppins-Regular': Poppins_400Regular,
@@ -22,33 +27,44 @@ export default function ValidateOTP({navigation}){
     {
         return <AppLoading/>
     }
-    const {email,mobile} = useLocalSearchParams();
+    const {email,mobile,access_token} = useLocalSearchParams();
+    const router = useRouter();
 
   const validateOTP = async () => {
     setError(''); // Clear previous errors
-
+    setModalVisible(false)
     // Basic validation
-    if (!email || !mobile) {
-      setError('Please enter both email and mobile.');
-      return;
+    if (!email && !mobile) {
+      setError('Please enter and email and mobile.');
+      setModalVisible(true)
+      return
     }
 
     try {
+         let req_data = ({ email:email, mobile:mobile, otp:otp,
+             access_token:access_token
+          });
+
       // Replace with your actual API call
-      const response = await fetch('YOUR_API_ENDPOINT/login', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({ email, mobile }),
-      });
+      let response = await validateOTPForLogin(req_data);
+       
+      
+           if (response) {
+            console.log('response from validate OTP....',response)
+            const otpValid = response.otpValid;
 
-      const data = await response.json();
-
-      if (response.ok) {
+            if(otpValid)
+            {
+                router.push( { pathname: "/",
+          params: {mobile: mobile,email:email,access_token:access_token,productID:'1'} 
+          })
+            }
+            else{
+               setError('OTP validation failed , Please try again'); 
+            }
         // Assuming your API returns a token on success
-        await SecureStore.setItemAsync('userToken', data.token);
-        navigation.replace('Home'); // Navigate to home screen
+      //  await SecureStore.setItemAsync('userToken', data.token);
+        //navigation.replace('Home'); // Navigate to home screen
       } else {
         setError(data.message || 'Login failed. Please try again.');
       }
@@ -58,13 +74,17 @@ export default function ValidateOTP({navigation}){
   };
 
   return (
-    <View style = {LoginSignUpStyle.centeredContainer}>
+    <KeyboardAvoidingView style = {LoginSignUpStyle.centeredContainer}  
+    behavior={Platform.OS === 'ios' ? 'padding' : undefined}
+              keyboardVerticalOffset={Platform.OS === 'ios' ? 64 : 0} // Adjust offset as needed
+              >
     <Text style={{ fontFamily: 'Inter-Black-Header',color:'#f3f3f3d7',fontSize:50 }}>Validate OTP</Text>
     
 
 <View
       style={LoginSignUpStyle.flexboxcontainer}>
-        <Text style={{fontFamily:'Poppins-SemiBold'}}>Email</Text>
+         <Ionicons name="mail-open" size={24} color="white"></Ionicons>
+
 
 
       <Text  style={{fontFamily:'Poppins-SemiBold'}}
@@ -72,7 +92,7 @@ export default function ValidateOTP({navigation}){
 </View>
 <View
       style={LoginSignUpStyle.flexboxcontainer}>
-  <Text style={{fontFamily:'Poppins-SemiBold'}}>Mobile</Text>
+   <Ionicons name="phone-portrait" size={24} color="white"></Ionicons>
       <Text  style={{fontFamily:'Poppins-SemiBold'}}
         >{mobile}</Text>
     </View>
@@ -106,9 +126,10 @@ export default function ValidateOTP({navigation}){
     </View>
      </View>
     <View>
-        {error ? <Text style={LoginSignUpStyle.errorText}>{error}</Text> : null}
+        {error ? <AuthCommonModal modalVisible={modalVisible} 
+                    setModalVisible={setModalVisible} errorMessage={error}/> : null}
     </View>
-    </View>
+    </KeyboardAvoidingView>
   );
 }
 

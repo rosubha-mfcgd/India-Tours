@@ -11,12 +11,15 @@ import {Poppins_400Regular, Poppins_600SemiBold} from '@expo-google-fonts/poppin
 import { Link,useRouter } from 'expo-router';
 import { signupUser,getApiAccessToken } from '../../admin/admin';
 import Ionicons from '@expo/vector-icons/Ionicons';
+ import DeviceInfo from 'react-native-device-info';
+ import AuthCommonModal from '../../admin/authCommonModal'
 
 
 export default function SignUp({navigation}){
   const [name, setName] = useState('');
 const [email, setEmail] = useState('');
   const [mobile, setMobile] = useState('');
+   const[modalVisible,setModalVisible] = useState(false);
   const [error, setError] = useState('');
   const [fontsLoaded] = useFonts({
       'Inter-Black': Inter_900Black, // Assign a name to the loaded font
@@ -32,10 +35,11 @@ const [email, setEmail] = useState('');
     const router = useRouter();
   const handleSignup = async () => {
     setError(''); // Clear previous errors
-
+    setModalVisible(false)
     // Basic validation
-    if (!email || !mobile) {
-      setError('Please enter both email and mobile.');
+    if (!email && !mobile) {
+      setError('Please enter your Name and either email or mobile for signup.');
+      setModalVisible(true)
       return;
     }
 
@@ -69,10 +73,12 @@ const [email, setEmail] = useState('');
           });
        }else if(code === 'E'){
         setError(response.message)
+        setModalVisible(true)
        }
 
       } else {
         setError(response.message || 'Login failed. Please try again.');
+         setModalVisible(true)
       }
     }
     }
@@ -136,11 +142,15 @@ const [email, setEmail] = useState('');
    
             <TouchableOpacity 
                     style={LoginSignUpStyle.loginbutton}>
-                    <Text style={TourCommonStyle.buttonText} onPress={handleSignup}>Send OTP</Text>
+                    <Text style={TourCommonStyle.buttonText} onPress={handleSignup}>SignUp</Text>
                   </TouchableOpacity>
     
       {/* Add a "Forgot Password" link or similar */}
     
+    </View>
+     <View>
+        {error ? <AuthCommonModal modalVisible={modalVisible} 
+                    setModalVisible={setModalVisible} errorMessage={error}/> : null}
     </View>
     <View style={LoginSignUpStyle.buttonscontainer}>
    <Link href={{pathname:"/login/"}} asChild>
@@ -155,9 +165,7 @@ const [email, setEmail] = useState('');
 
     
     </View>
-    <View>
-        {error ? <Text style={LoginSignUpStyle.errorText}>{error}</Text> : null}
-    </View>
+   
     </KeyboardAvoidingView>
   );
 }

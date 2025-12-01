@@ -5,23 +5,24 @@ import * as SecureStore from 'expo-secure-store'; // For storing tokens
 import LoginSignUpStyle from '../../styles/loginsignup.js';
 import TourCommonStyle from '../../styles/tourCommonStyle.js';
 import AppLoading from 'expo-app-loading';
- import { useFonts } from 'expo-font';
-    import { Inter_900Black,Inter_900Black_Italic } from '@expo-google-fonts/inter'; 
-    import {Poppins_400Regular, Poppins_600SemiBold} from '@expo-google-fonts/poppins';
- import { Link } from 'expo-router';
- import { loginUser,getApiAccessToken } from '../../admin/admin';
+import { useFonts } from 'expo-font';
+import { Inter_900Black,Inter_900Black_Italic } from '@expo-google-fonts/inter'; 
+import {Poppins_400Regular, Poppins_600SemiBold} from '@expo-google-fonts/poppins';
+import {Link} from 'expo-router';
+import {loginUser,getApiAccessToken,persistDataInCache,getDataFromCache } from '../../admin/admin';
 import Ionicons from '@expo/vector-icons/Ionicons';
-
+import DeviceInfo from 'react-native-device-info';
+import AuthCommonModal from '../../admin/authCommonModal'
 export default function Login({navigation}){
 const [email, setEmail] = useState('');
   const [mobile, setMobile] = useState('');
   const [error, setError] = useState('');
-  
+   const[modalVisible,setModalVisible] = useState(false);
   const [fontsLoaded] = useFonts({
       'Inter-Black': Inter_900Black, // Assign a name to the loaded font
       'Poppins-Regular': Poppins_400Regular,
-    'Poppins-SemiBold': Poppins_600SemiBold,
-    'Inter-Black-Header': Inter_900Black_Italic
+      'Poppins-SemiBold': Poppins_600SemiBold,
+      'Inter-Black-Header': Inter_900Black_Italic
     });
     if(!fontsLoaded)
     {
@@ -34,16 +35,21 @@ const [email, setEmail] = useState('');
     setError(''); // Clear previous errors
 
     // Basic validation
-    if (!email || !mobile) 
+    if (!email && !mobile) 
     {
       setError('Please enter both email and mobile.');
+      setModalVisible(true);
       return;
+    }else{
+      setModalVisible(false);
     }
 
     try {
-
+      let deviceID = DeviceInfo.getUniqueId(); // Get the unique device ID
+      console.log('device ID is...',deviceID);
+      
       let token = await getApiAccessToken();
-
+      
       if(token)
       {
           console.log('token....',token)
@@ -58,9 +64,11 @@ const [email, setEmail] = useState('');
         let data = response.data;
         // Assuming your API returns a token on success
         await SecureStore.setItemAsync('userToken', data.token);
+        await persistDataInCache(deviceID,token);
         navigation.replace('Home'); // Navigate to home screen
       } else {
         setError(data.message || 'Login failed. Please try again.');
+        setModalVisible(true);
       }
     }
     } catch (err) {
@@ -76,13 +84,14 @@ const [email, setEmail] = useState('');
           keyboardVerticalOffset={Platform.OS === 'ios' ? 64 : 0} // Adjust offset as needed
     
     >
-    <Text style={{ fontFamily: 'Inter-Black-Header',color:'#f3f3f3d7',fontSize:50 }}>Login</Text>
+    <Text style={{ fontFamily: 'Inter-Black-Header',
+      color:'#f3f3f3d7',fontSize:50 }}>Login</Text>
     <View
       style={LoginSignUpStyle.flexboxcontainer}>
        
        
 
-       <Ionicons name="mail-open" size={24} color="white"></Ionicons>
+       <Ionicons name="mail-open" size={24} color="#fcf1f1ff"></Ionicons>
 
 
       <TextInput
@@ -140,7 +149,10 @@ const [email, setEmail] = useState('');
     </View>
     </View>
     <View>
-        {error ? <Text style={LoginSignUpStyle.errorText}>{error}</Text> : null}
+        {error ?  <AuthCommonModal modalVisible={modalVisible} 
+            setModalVisible={setModalVisible} errorMessage={error}/>
+        
+        : null}
     </View>
     </KeyboardAvoidingView>
   );

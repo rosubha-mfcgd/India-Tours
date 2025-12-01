@@ -13,7 +13,11 @@
       "backgroundColor": "#242c40"
     },
     "ios": {
-      "supportsTablet": true
+      "supportsTablet": true,
+      "bundleIdentifier": "dev.Mitram",
+      "infoPlist": {
+        "ITSAppUsesNonExemptEncryption": false
+      }
     },
     "android": {
       "adaptiveIcon": {
@@ -25,7 +29,12 @@
     },
     "web": {
       "favicon": "./assets/favicon.png"
-    }
-     
+    },
+    "extra": {
+      "eas": {
+        "projectId": "ddbc5093-9be4-4737-8ce4-0b3c07e142b2"
+      }
+    },
+    "owner": "rosubha"
   }
 }
