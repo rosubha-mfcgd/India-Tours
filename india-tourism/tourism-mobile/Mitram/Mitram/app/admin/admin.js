@@ -88,6 +88,41 @@ export const validateOTPForLogin = async(data) =>{
 return res_data;
 }
 
+export const resendOTPForLogin = async(data) =>{
+      let res_data = "resend otp failed";
+   try{
+   
+   let access_token = await getApiAccessToken();
+     if(access_token){
+        console.log('access_token found...',access_token.data.access_token)
+         let headers = {
+            "Content-type": "application/json; charset=UTF-8",
+            "Authorization":"Bearer "+access_token.data.access_token
+            };
+        let response = await axios.post(
+        process.env.EXPO_PUBLIC_SERVER_URI + "resendOTP",
+        data,
+       {headers});
+    if(response){
+
+       res_data = response.data;
+       console.log('resend OTP data ....',res_data)
+    }
+}
+    
+}catch(err){
+     console.error('Error while resend OTP:::', err.stack);
+     throw err;
+}
+return res_data;
+
+
+}
+
+
+
+
+
 export const getPoints = async(data) =>{
     let res_data = "failed to fetch points";
      try{

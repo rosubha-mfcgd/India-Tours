@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import {KeyboardAvoidingView, View, Text, TextInput, 
     TouchableOpacity,Platform } from 'react-native';
 import * as SecureStore from 'expo-secure-store'; // For storing tokens
@@ -8,7 +8,7 @@ import AppLoading from 'expo-app-loading';
 import { useFonts } from 'expo-font';
 import { Inter_900Black,Inter_900Black_Italic } from '@expo-google-fonts/inter'; 
 import {Poppins_400Regular, Poppins_600SemiBold} from '@expo-google-fonts/poppins';
-import {Link} from 'expo-router';
+import {Link,useRouter} from 'expo-router';
 import {loginUser,getApiAccessToken,persistDataInCache,getDataFromCache } from '../../admin/admin';
 import Ionicons from '@expo/vector-icons/Ionicons';
 import DeviceInfo from 'react-native-device-info';
@@ -18,6 +18,8 @@ const [email, setEmail] = useState('');
   const [mobile, setMobile] = useState('');
   const [error, setError] = useState('');
    const[modalVisible,setModalVisible] = useState(false);
+   const [userProfile,setUserProfile] = useState('');
+   const router = useRouter();
   const [fontsLoaded] = useFonts({
       'Inter-Black': Inter_900Black, // Assign a name to the loaded font
       'Poppins-Regular': Poppins_400Regular,
@@ -29,6 +31,7 @@ const [email, setEmail] = useState('');
         return <AppLoading/>
     }
 
+    let deviceID = DeviceInfo.getUniqueId();
 
      
   const handleLogin = async () => {
@@ -45,7 +48,7 @@ const [email, setEmail] = useState('');
     }
 
     try {
-      let deviceID = DeviceInfo.getUniqueId(); // Get the unique device ID
+       // Get the unique device ID
       console.log('device ID is...',deviceID);
       
       let token = await getApiAccessToken();
@@ -63,8 +66,11 @@ const [email, setEmail] = useState('');
        if (response) {
         let data = response.data;
         // Assuming your API returns a token on success
-        await SecureStore.setItemAsync('userToken', data.token);
-        await persistDataInCache(deviceID,token);
+        await SecureStore.setItemAsync(deviceID.toString(),  
+         JSON.stringify(data));
+
+        //await SecureStore.setItemAsync('userToken', data.token);
+       // await persistDataInCache(deviceID,token);
         navigation.replace('Home'); // Navigate to home screen
       } else {
         setError(data.message || 'Login failed. Please try again.');
@@ -76,7 +82,46 @@ const [email, setEmail] = useState('');
     }
   
   };
+  useEffect(()=>{
+     let mounted = true;
+    const timer = setTimeout(async () =>{
+                
+                    const checkIfUserLoggedIn = async () =>{
+                         let result = await SecureStore.getItemAsync(deviceID.toString());
+                         if(result)
+                         {
+                            setUserProfile(result);
+                            return "Y";
+                         }
+                         else{
+                            return "N";
+                         }
+                    };
+                   if(mounted)
+                   {
+                        let isLoggedIn = await checkIfUserLoggedIn();
+                        if(isLoggedIn === 'Y')
+                        {
+                         router.push({
+                         pathname: "/login/profile",
+                         params: { 
+                              profile: JSON.stringify(userProfile)
+                           }})
 
+                        }
+                        mounted = false;
+                   }
+                  
+                  },100);
+
+                   return () => {
+                        mounted = false; // Set flag to false on cleanup
+                        clearTimeout(timer); // Clean up the timer
+                  };
+
+                  
+  },
+  []);
 
   return (
     <KeyboardAvoidingView style = {LoginSignUpStyle.centeredContainer}

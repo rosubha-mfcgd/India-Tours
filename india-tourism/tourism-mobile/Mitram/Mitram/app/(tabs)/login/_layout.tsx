@@ -10,6 +10,15 @@
            <Stack.Screen name="validateOTP" options={{ title: 'OTP validate' }} />
             <Stack.Screen name="success" options={{ title: 'Success' }} />
             <Stack.Screen name="failure" options={{ title: 'failure' }} />
+             <Stack.Screen name="profile" options={{ title: 'User Profile',
+                 headerStyle: {
+                    backgroundColor: '#967369ff', // Custom header background color
+                  },
+                  headerTintColor: '#fff', // Custom header text color
+                  headerTitleStyle: {
+                    fontWeight: 'bold', // Custom header title style
+                  }
+             }} />
                      
         </Stack>
       );

@@ -9,14 +9,16 @@ import { useFonts } from 'expo-font';
 import { Inter_900Black,Inter_900Black_Italic } from '@expo-google-fonts/inter'; 
 import {Poppins_400Regular, Poppins_600SemiBold} from '@expo-google-fonts/poppins';
 import { useLocalSearchParams } from 'expo-router';
-import {validateOTPForLogin} from '../../admin/admin'
+import {validateOTPForLogin,resendOTPForLogin} from '../../admin/admin'
 import { Link,useRouter } from 'expo-router';
 import Ionicons from '@expo/vector-icons/Ionicons';
 import AuthCommonModal from '../../admin/authCommonModal'
-export default function ValidateOTP({navigation}){
+import PleaseWaitScreen from '../../admin/waitscreen'
+export default function ValidateOTP(){
   const [otp, setOtp] = useState('');
   const [error, setError] = useState('');
    const[modalVisible,setModalVisible] = useState(false);
+   const [isloading,setIsloading] = useState(false)
   const [fontsLoaded] = useFonts({
       'Inter-Black': Inter_900Black, // Assign a name to the loaded font
       'Poppins-Regular': Poppins_400Regular,
@@ -27,10 +29,63 @@ export default function ValidateOTP({navigation}){
     {
         return <AppLoading/>
     }
+
+   
     const {email,mobile,access_token} = useLocalSearchParams();
     const router = useRouter();
 
   const validateOTP = async () => {
+    setError(''); // Clear previous errors
+    setModalVisible(false)
+   
+    // Basic validation
+    if (!email && !mobile) {
+      setError('Please enter and email and mobile.');
+      setModalVisible(true)
+      setIsloading(false)
+      return
+    }
+
+    try {
+         let req_data = ({ email:email, mobile:mobile, otp:otp,
+             access_token:access_token
+          });
+           setIsloading(true)
+            // Replace with your actual API call
+            let response = await validateOTPForLogin(req_data);
+       
+      
+           if (response) {
+            setIsloading(false)
+            console.log('response from validate OTP....',response)
+            const otpValid = response.otpValid;
+
+            if(otpValid)
+            {
+                router.push( { pathname: "/",
+          params: {mobile: mobile,email:email,access_token:access_token,productID:'1'} 
+          })
+            }
+            else{
+              setIsloading(false)
+               setError('OTP validation failed , Please try again'); 
+               setModalVisible(true)
+            }
+        // Assuming your API returns a token on success
+      //  await SecureStore.setItemAsync('userToken', data.token);
+        //navigation.replace('Home'); // Navigate to home screen
+      } else {
+        setError(data.message || 'Login failed. Please try again.');
+        setIsloading(false)
+      }
+    } catch (err) {
+      setError('An error occurred. Please check your internet connection.');
+      setIsloading(false)
+    }
+  };
+
+
+  const resendOTP = async () => {
     setError(''); // Clear previous errors
     setModalVisible(false)
     // Basic validation
@@ -45,34 +100,34 @@ export default function ValidateOTP({navigation}){
              access_token:access_token
           });
 
-      // Replace with your actual API call
-      let response = await validateOTPForLogin(req_data);
+            // Replace with your actual API call
+            let response = await resendOTPForLogin(req_data);
        
       
            if (response) {
             console.log('response from validate OTP....',response)
-            const otpValid = response.otpValid;
+            const otp = response.otp;
 
-            if(otpValid)
+            if(otp)
             {
-                router.push( { pathname: "/",
-          params: {mobile: mobile,email:email,access_token:access_token,productID:'1'} 
-          })
+              setError('Please use your new OTP sent to your email/mobile'); 
+              setModalVisible(true) 
             }
             else{
-               setError('OTP validation failed , Please try again'); 
+               setError('resend OTP failed , Please try again'); 
+               setModalVisible(true)
             }
         // Assuming your API returns a token on success
       //  await SecureStore.setItemAsync('userToken', data.token);
         //navigation.replace('Home'); // Navigate to home screen
       } else {
         setError(data.message || 'Login failed. Please try again.');
+         setModalVisible(true)
       }
     } catch (err) {
       setError('An error occurred. Please check your internet connection.');
     }
   };
-
   return (
     <KeyboardAvoidingView style = {LoginSignUpStyle.centeredContainer}  
     behavior={Platform.OS === 'ios' ? 'padding' : undefined}
@@ -90,6 +145,12 @@ export default function ValidateOTP({navigation}){
       <Text  style={{fontFamily:'Poppins-SemiBold'}}
         >{email}</Text>
 </View>
+{
+  isloading ?
+   
+       <PleaseWaitScreen/>:<View/>
+    
+}
 <View
       style={LoginSignUpStyle.flexboxcontainer}>
    <Ionicons name="phone-portrait" size={24} color="white"></Ionicons>
@@ -109,8 +170,12 @@ export default function ValidateOTP({navigation}){
         keyboardType="number-pad"
         autoCapitalize="none"
       />
-      </View>
-    <View
+       <View>
+        {error ? <AuthCommonModal modalVisible={modalVisible} 
+                    setModalVisible={setModalVisible} errorMessage={error}/> : null}
+    </View>
+     </View>
+      <View
       style={LoginSignUpStyle.flexboxcontainer}>
 
          <View style={LoginSignUpStyle.buttonscontainer}>
@@ -124,11 +189,20 @@ export default function ValidateOTP({navigation}){
       {/* Add a "Forgot Password" link or similar */}
     
     </View>
-     </View>
-    <View>
-        {error ? <AuthCommonModal modalVisible={modalVisible} 
-                    setModalVisible={setModalVisible} errorMessage={error}/> : null}
+
+      <View style={LoginSignUpStyle.buttonscontainer}>
+   
+            <TouchableOpacity 
+                    style={LoginSignUpStyle.loginbutton}>
+                    <Text style={TourCommonStyle.buttonText} onPress={()=>
+                      resendOTP()}>Resend OTP</Text>
+                  </TouchableOpacity>
+    
+      {/* Add a "Forgot Password" link or similar */}
+    
     </View>
+     </View>
+  
     </KeyboardAvoidingView>
   );
 }

@@ -203,6 +203,7 @@ const updateFavorites = async(categoryid) =>{
                 if(!items)
                 {
                     getTripCategories(productID);
+                    
                 if(!cityList || cityList.length === 0)
                 {
                     getCityList();
@@ -219,28 +220,7 @@ const updateFavorites = async(categoryid) =>{
     };
 
       },[favorite]);
-
-
-      useEffect(()=>{
-         let mounted = true;
-             const timer = setTimeout(() =>{
-                
-                  
-                if(cityList==='')
-                {
-                    getCityList();
-                    mounted = false;
-                  
-                }},100);
-        
-    return () => {
-        mounted = false; // Set flag to false on cleanup
-        clearTimeout(timer); // Clean up the timer
-        
-    };
-    },[] )
-
-    
+ 
     return(
         <View style={TourCommonStyle.centeredContainer}>
     {

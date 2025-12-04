@@ -48,7 +48,7 @@ export default function TabLayout() {
 
                                                                                                                                                                       
       }} />
-      <Tabs.Screen name="login" options={{ title: 'Login/Signup', 
+      <Tabs.Screen name="login" options={{ title: 'User', 
       tabBarIcon :({focused,color,size}) =>{
           return  (
             <Image
