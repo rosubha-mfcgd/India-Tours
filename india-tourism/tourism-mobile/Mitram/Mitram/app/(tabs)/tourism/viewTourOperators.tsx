@@ -1,4 +1,4 @@
-import { Text, View ,ScrollView, FlatList} from 'react-native';
+import { Text, View ,ActivityIndicator, FlatList} from 'react-native';
 import TourCommonStyle from '../../styles/tourCommonStyle.js'; 
 import TextStyle from '../../styles/textStyles.js'
 import {getTourManagers,getCities,persistDataInCache,getDataFromCache} from "../../admin/admin.js";
@@ -203,7 +203,11 @@ export default function getTourOperatos()
                     <FlatList data={tourMgrListForDisplay}  
                     keyExtractor={item=>`${item.tourManagerId}`}
                     renderItem={({item}) => <RenderTourManagers item= {item}/>}
-                    />:<View/>
+                    />:
+                    <View style={TourCommonStyle.centeredContainer}>
+            <ActivityIndicator 
+            size="large" color="#3c3ca7ff"/>
+            </View>
             }
             
         </View>

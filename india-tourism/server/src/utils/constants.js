@@ -3,7 +3,8 @@
 let constants = {
     YES: "Y",
     EXISTS: "E",
-    NO: "N"
+    NO: "N",
+    NO_USER_FOUND: "NF"
 };
 
 module.exports =

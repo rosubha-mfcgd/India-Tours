@@ -1,5 +1,5 @@
 import  { useEffect, useState } from 'react';
-import {KeyboardAvoidingView, View, Text, TextInput, 
+import {KeyboardAvoidingView, View, Text, TextInput, ActivityIndicator,
     TouchableOpacity,Platform } from 'react-native';
 import * as SecureStore from 'expo-secure-store'; // For storing tokens
 import LoginSignUpStyle from '../../styles/loginsignup.js';
@@ -60,20 +60,27 @@ const handleLogin = async () => {
           const response = await loginUser(req_data);
        if (response) {
         let data = response;
-        let deviceID = await SecureStore.getItemAsync('appDeviceID');
-        if(deviceID){
-              console.log('deviceID is ...',deviceID)
-              // Assuming your API returns a token on success
-            await SecureStore.setItemAsync(deviceID,  
-              JSON.stringify(data));
+        console.log('data...',data);
+        if(response.code === 'NF'|| response.code === 'N')
+        {
+              setError(response.message);
+              setModalVisible(true);
+        }else{
+            let deviceID = await SecureStore.getItemAsync('appDeviceID');
+            if(deviceID){
+                  console.log('deviceID is ...',deviceID)
+                  // Assuming your API returns a token on success
+                await SecureStore.setItemAsync(deviceID,  
+                  JSON.stringify(data));
 
-            // await SecureStore.setItemAsync('userToken', data.token);
-              //await persistDataInCache(deviceID,token);
-              router.push({
-                    pathname: "/login/profile",
-                params: {  mobile: mobile,email:email}
-                });
-        }
+                // await SecureStore.setItemAsync('userToken', data.token);
+                  //await persistDataInCache(deviceID,token);
+                  router.push({
+                        pathname: "/login/profile",
+                    params: {  mobile: mobile,email:email}
+                    });
+            }
+      }
       } else {
         setError('Login failed. Please try again.');
         setModalVisible(true);
@@ -201,7 +208,7 @@ const handleLogin = async () => {
             <TouchableOpacity 
                     style={LoginSignUpStyle.loginbutton}>
                     <Text style={TourCommonStyle.buttonText} 
-                    onPress={handleLogin} >Send OTP</Text>
+                    onPress={handleLogin} >Login</Text>
                   </TouchableOpacity>
     </Link>
     
@@ -221,7 +228,11 @@ const handleLogin = async () => {
     </View>
     </View>
     
-    </KeyboardAvoidingView>:<AppLoading/>
+    </KeyboardAvoidingView>:
+    <View style={TourCommonStyle.centeredContainer}>
+            <ActivityIndicator 
+            size="large" color="#3c3ca7ff"/>
+            </View>
     
   );
 

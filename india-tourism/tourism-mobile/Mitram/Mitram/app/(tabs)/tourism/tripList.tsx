@@ -1,4 +1,5 @@
-import { Text, View,FlatList, TouchableOpacity, ImageBackground,Platform } from 'react-native';
+import { Text, View,FlatList, TouchableOpacity, 
+    ImageBackground,Platform,ActivityIndicator } from 'react-native';
 import TripListStyle from '../../styles/tripListStyle.js'; 
 import FilterModalStyle from '../../styles/filtermodalStyle.js'; 
 import {formatINR} from "../../admin/utility.js";
@@ -379,7 +380,10 @@ const onTripendChange = () => {
           renderItem={({item})=> <RenderTripList item = {item}/>}
           keyExtractor={item =>`${item._id}`}
            ListHeaderComponent={showTripListHeaderInformation}
-        />:<View/>
+        />:<View style={TourCommonStyle.centeredContainer}>
+            <ActivityIndicator 
+            size="large" color="#3c3ca7ff"/>
+            </View>
             }
         </View>
 

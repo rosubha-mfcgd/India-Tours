@@ -7,6 +7,7 @@ export const signupUser = async(data) =>{
     let res_data = "signup failed";
    try{
     let access_token = await getApiAccessToken();
+    
     if(access_token){
         console.log('access_token found...',access_token.data)
         const headers = {

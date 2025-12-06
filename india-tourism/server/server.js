@@ -87,11 +87,19 @@ app.post("/api/signup", async(req,res) =>{
         scope: ['https://www.googleapis.com/auth/userinfo.profile', 
           'https://www.googleapis.com/auth/userinfo.email'],
     });
-    if(req.body.access_token)
+    const {access_token} = req.body;
+    if(!access_token)
     {
-       session.signuptoken = req.body.access_token;
+        console.log('sign up token not received');
+         res.status(400).send({ message: "No signup token found",
+                            "access_token":access_token});
+
+    }
+    if(access_token)
+    {
+       session.signuptoken = access_token;
      //To be changed next
-      session.access_token = req.body.access_token;
+      session.access_token = access_token;
        console.log('saving access token to session...',session.access_token);
         if(!session.signuptoken)
         {
@@ -105,18 +113,18 @@ app.post("/api/signup", async(req,res) =>{
           if(result === 'Y')
                         {
                         res.status(201).send({ message: "Account signup successful",
-                            "access_token":req.body.access_token,code: "Y"});
+                            "access_token":access_token,code: "Y"});
                         }
                         else if(result === 'E')
                         {
                         res.status(200).send({message: "Account already exists.Please try logging in.",
-                            "access_token":req.body.access_token,
+                            "access_token":access_token,
                           code: "E"
                           });
                         }else
                         {
                            res.status(400).send({message: "Account signup failed. Try again .",
-                            "access_token":req.body.access_token,code: "N"});
+                            "access_token":access_token,code: "N"});
                         }
         }else{
          
@@ -133,16 +141,21 @@ app.post("/api/loginUser", async(req,res) =>{
         scope: ['https://www.googleapis.com/auth/userinfo.profile', 
           'https://www.googleapis.com/auth/userinfo.email'],
     });
-    if(req.body.access_token)
+    const {access_token} = req.body;
+    if(access_token)
     {
-       session.logintoken = req.body.access_token;
+
+      console.log('session token...',access_token)
+      
+       session.logintoken = access_token;
+       console.log('session token...',session.logintoken)
      //To be changed next
-      session.access_token = req.body.access_token;
-       console.log('saving access token to session...',session.access_token);
-        if(!session.logintoken)
-        {
-          throw new Error("No Login token found...");
-        }
+     // session.access_token = access_token;
+       console.log('saving login access token to session...',session.logintoken);
+         if(!session.logintoken)
+         {
+           throw new Error("No Login token found...");
+         }
      const result =  await doLogin(req,res);
      
      if(result)
@@ -151,11 +164,15 @@ app.post("/api/loginUser", async(req,res) =>{
           if(result === 'Y')
                         {
                         res.status(200).send({ message: "Login successful",
-                            "access_token":req.body.access_token,code: "Y"});
+                            "access_token":access_token,code: "Y"});
                         }
-          else
+          else if(result === 'NF')
+            {
+               res.status(200).send({message: "You haven't signed up yet. Please sign up first",
+                            "access_token":access_token,code: "NF"});
+          }else
                         {
-                           res.status(400).send({message: "Login failed. Try again",
+                           res.status(200).send({message: "Login failed. Try again",
                             "access_token":req.body.access_token,code: "N"});
                         }
         }else{

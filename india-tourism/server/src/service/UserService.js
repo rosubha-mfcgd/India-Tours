@@ -63,15 +63,15 @@ async loginUser(email,mobile,loginOTP)
             user = await userRepo.update(user._id,{"otp":loginOTP});
             if(user)
             {
-            console.log(' user logged in successfully');
-            return constants.YES;
+              console.log('user logged in successfully');
+              return constants.YES;
             }else{
             console.log('Login failed');
              return constants.NO;
           }
           }else{
-            console.log('Login failed');
-             return constants.NO;
+            console.log('User not signed up yet');
+             return constants.NO_USER_FOUND;
           }
         }catch(err){
         

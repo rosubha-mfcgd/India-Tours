@@ -68,7 +68,7 @@ class UserService {
                 if (user) {
                     user = yield userRepo.update(user._id, { "otp": loginOTP });
                     if (user) {
-                        console.log(' user logged in successfully');
+                        console.log('user logged in successfully');
                         return constants.YES;
                     }
                     else {
@@ -77,8 +77,8 @@ class UserService {
                     }
                 }
                 else {
-                    console.log('Login failed');
-                    return constants.NO;
+                    console.log('User not signed up yet');
+                    return constants.NO_USER_FOUND;
                 }
             }
             catch (err) {

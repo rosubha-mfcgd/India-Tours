@@ -1,4 +1,4 @@
-import { StyleSheet, Text, View,ScrollView } from 'react-native';
+import { Text, View,ScrollView ,ActivityIndicator} from 'react-native';
 import TourCommonStyle from '../../styles/tourCommonStyle.js'; 
 import TextStyle from '../../styles/textStyles.js'
 import {formatINR} from "../../admin/utility.js";
@@ -49,6 +49,7 @@ useEffect(()=>{
             };
         },[])
     return(
+
         <ScrollView style={{backgroundColor:'#ebe9ee7e'}}>
              {
            events.length>0 ?
@@ -80,7 +81,8 @@ useEffect(()=>{
                   </TouchableOpacity>
             </View> 
             </View>
-            :<View/>
+            :<View style={TourCommonStyle.centeredContainer}><ActivityIndicator 
+            size="large" color="#3c3ca7ff"/></View>
             }
         </ScrollView>
 
