@@ -8,10 +8,8 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
-const express = require('express');
 const session = require('express-session');
 require("../logNginx");
-const { User } = require("../../dist/model/user");
 const apputil = require('../utils/appUtility');
 const EmailService = require('../service/EmailService');
 const UserService = require('../service/UserService');
@@ -55,6 +53,36 @@ const doLogin = (req_1, res_1, ...args_1) => __awaiter(void 0, [req_1, res_1, ..
     }
     return isLoggedin;
 });
-const resendOTP = (req, res) => {
-};
-module.exports = { doLogin };
+const resendOTP = (req_1, res_1, ...args_1) => __awaiter(void 0, [req_1, res_1, ...args_1], void 0, function* (req, res, retries = 3, delay = 1000) {
+    let { email, mobile, access_token } = req.body;
+    try {
+        if (access_token) {
+            session.access_token = access_token;
+        }
+        let loginOTP = apputil.generateOTP();
+        let result = yield new UserService().updateLoginOTP(email, mobile, loginOTP);
+        if (result === 'Y') {
+            if (email) {
+                console.log('Sending OTP to user email...');
+                yield new EmailService().send(email, subject, body.
+                    concat(" ").concat(loginOTP));
+            }
+            if (mobile) {
+                //Similar token logic to be implemented for mobile
+                console.log('Sending login OTP to user mobile...');
+            }
+            res.status(200).send({ "otp": loginOTP, "email": email, "mobile": mobile });
+        }
+        else {
+            res.status(500).send({ "email": email, "mobile": mobile, "error": "could not update otp" });
+        }
+    }
+    catch (err) {
+        if (retries > 0) {
+            yield new Promise(resolve => setTimeout(resolve, delay));
+            return resendOTP(req, res, retries - 1, delay);
+        }
+        logNginx(err.stack);
+    }
+});
+module.exports = { doLogin, resendOTP };

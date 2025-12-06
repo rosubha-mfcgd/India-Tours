@@ -12,6 +12,7 @@ const {getRegisteredTourManagers, getCities} = require("../controller/tourManage
 const {performBookings, performBookingsByMobile,getBookingsByBookingId,updateBookingsByBookingId} = require("../controller/tourBookings");
 const {getSearchOptions} = require("../controller/searchOptions");
 const { sendConfirmation } = require('../controller/sendCommunication');
+const {resendOTP} = require('../controller/loginuser');
 const router = express.Router();
 
 
@@ -40,5 +41,5 @@ router.post("/updateBookingsByBookingId",checkAuthenticated,updateBookingsByBook
 router.post("/sendConfirmation",checkAuthenticated,sendConfirmation);
 router.get("/searchMyOptions",checkAuthenticated,getSearchOptions);
 router.post("/tourItenerariesForTrip",checkAuthenticated,getTourItenerariesForTrip);
-
+router.post("/resendOTP",checkAuthenticated,resendOTP);
 module.exports = router 

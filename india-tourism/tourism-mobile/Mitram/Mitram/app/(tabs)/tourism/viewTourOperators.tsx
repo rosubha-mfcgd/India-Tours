@@ -1,10 +1,10 @@
 import { Text, View ,ScrollView, FlatList} from 'react-native';
 import TourCommonStyle from '../../styles/tourCommonStyle.js'; 
 import TextStyle from '../../styles/textStyles.js'
-import {getTourManagers,getCities,persistDataInCache,getDataFromCache} from "../../admin/admin";
+import {getTourManagers,getCities,persistDataInCache,getDataFromCache} from "../../admin/admin.js";
 import { TouchableOpacity, Image} from 'react-native';
-import {tourManagerImages} from "../../admin/imageManager";
-import Pagination from  '../../admin/pagination';
+import {tourManagerImages} from "../../admin/imageManager.js";
+import Pagination from  '../../admin/pagination.js';
 
 import { Table, THead, TH, TBody, TR, TD } from '@expo/html-elements';
 import { useLocalSearchParams,Link } from 'expo-router';

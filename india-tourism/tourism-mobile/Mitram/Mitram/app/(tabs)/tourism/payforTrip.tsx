@@ -2,7 +2,7 @@ import { Text, View ,ScrollView} from 'react-native';
 import TourCommonStyle from '../../styles/tourCommonStyle.js'; 
 import TextStyle from '../../styles/textStyles.js'
 import {performTripBooking} from "../../admin/admin.js";
-import {formatINR} from "../../admin/utility";
+import {formatINR} from "../../admin/utility.js";
 import { useEffect, useState, useContext } from "react";
 import {TouchableOpacity, TextInput} from 'react-native';
 import { Table,  TH, TBody, TR, TD } from '@expo/html-elements';

@@ -34,6 +34,10 @@ function generateOTP() {
     // Generates a random integer between 100000 (inclusive) and 999999 (inclusive)
     return crypto.randomInt(100000, 999999);
 }
+function generateDeviceID() {
+    // Generates a random integer between 100000 (inclusive) and 999999 (inclusive)
+    return crypto.randomInt(10000000, 99999999);
+}
 function generateBookingId() {
     // Generates a random integer between 100000 (inclusive) and 999999 (inclusive)
     return crypto.randomInt(10000000, 99999999);
@@ -41,6 +45,7 @@ function generateBookingId() {
 module.exports = {
     generateOTP: generateOTP,
     generateBookingId: generateBookingId,
+    generateDeviceID: generateDeviceID,
     decrypt: decrypt,
     encrypt: encrypt
 };

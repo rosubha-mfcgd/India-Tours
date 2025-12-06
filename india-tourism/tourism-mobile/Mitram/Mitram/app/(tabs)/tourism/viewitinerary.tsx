@@ -1,13 +1,13 @@
 import { StyleSheet, Text, View,ScrollView,FlatList } from 'react-native';
 import TourCommonStyle from '../../styles/tourCommonStyle.js'; 
 import TextStyle from '../../styles/textStyles.js'
-import {formatINR} from "../../admin/utility";
+import {formatINR} from "../../admin/utility.js";
 import { TouchableOpacity, Image} from 'react-native';
-import {tripListImages} from "../../admin/imageManager";
+import {tripListImages} from "../../admin/imageManager.js";
 import { Table, THead, TH, TBody, TR, TD } from '@expo/html-elements';
 import { useLocalSearchParams,Link,router } from 'expo-router';
 import { useEffect, useState } from 'react';
-import {getIteneraries} from '../../admin/admin'
+import {getIteneraries} from '../../admin/admin.js'
 
 export default function ViewItinerary()
 {

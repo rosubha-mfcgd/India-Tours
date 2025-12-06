@@ -31,15 +31,14 @@ async signupUser(email,mobile,name,signUpOTP)
       }
 }
 
-
-async loginUser(email,mobile,loginOTP)
+async updateLoginOTP(email,mobile,loginOTP)
 {
   try{
   const userRepo = new UserRepository();
-  let user = await userRepo.findOne({"emailID": email,"mobile":mobile,"signedUpFlag":"Y" });
+  let user = await userRepo.findOne({"emailID": email,"mobile":mobile });
           if (user) {
             user = await userRepo.update(user._id,{"otp":loginOTP});
-            console.log(' user logged in successfully');
+            console.log(' Login OTP updated successfully for user');
             return constants.YES;
           }else{
             console.log('Login failed');
@@ -51,6 +50,34 @@ async loginUser(email,mobile,loginOTP)
       }
       console.log('Login failed');
       return constants.NO;
+}
+
+
+
+async loginUser(email,mobile,loginOTP)
+{
+  try{
+  const userRepo = new UserRepository();
+  let user = await userRepo.findOne({"emailID": email,"mobile":mobile,"signedUpFlag":"Y" });
+          if (user) {
+            user = await userRepo.update(user._id,{"otp":loginOTP});
+            if(user)
+            {
+            console.log(' user logged in successfully');
+            return constants.YES;
+            }else{
+            console.log('Login failed');
+             return constants.NO;
+          }
+          }else{
+            console.log('Login failed');
+             return constants.NO;
+          }
+        }catch(err){
+        
+          logNginx(err.stack)
+      }
+     
 }
 async validateOTP(email,mobile,otp)
 {

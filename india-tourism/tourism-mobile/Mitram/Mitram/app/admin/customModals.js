@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Modal, View, Text, Button, StyleSheet } from 'react-native';
 import { AlertStyles } from '../styles/AlertButtonStyle';
-export  const CustomFirstDialog = ({ visible, onClose, children }) => {
+export default function CustomFirstDialog  ({ visible, onClose, children }) {
   return (
     <Modal
       animationType="slide"

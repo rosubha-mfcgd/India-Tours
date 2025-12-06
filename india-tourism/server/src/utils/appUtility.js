@@ -45,6 +45,11 @@ function decrypt(encryptedHex) {
   return crypto.randomInt(100000, 999999); 
  }
 
+ function generateDeviceID()
+ {
+     // Generates a random integer between 100000 (inclusive) and 999999 (inclusive)
+  return crypto.randomInt(10000000, 99999999); 
+ }
 
   function generateBookingId()
  {
@@ -54,6 +59,7 @@ function decrypt(encryptedHex) {
  module.exports = {
   generateOTP: generateOTP,
   generateBookingId:generateBookingId,
+  generateDeviceID:generateDeviceID,
   decrypt: decrypt,
   encrypt: encrypt
 };

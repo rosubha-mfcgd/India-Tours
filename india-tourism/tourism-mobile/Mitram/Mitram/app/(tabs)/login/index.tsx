@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import  { useEffect, useState } from 'react';
 import {KeyboardAvoidingView, View, Text, TextInput, 
     TouchableOpacity,Platform } from 'react-native';
 import * as SecureStore from 'expo-secure-store'; // For storing tokens
@@ -9,32 +9,31 @@ import { useFonts } from 'expo-font';
 import { Inter_900Black,Inter_900Black_Italic } from '@expo-google-fonts/inter'; 
 import {Poppins_400Regular, Poppins_600SemiBold} from '@expo-google-fonts/poppins';
 import {Link,useRouter} from 'expo-router';
-import {loginUser,getApiAccessToken,persistDataInCache,getDataFromCache } from '../../admin/admin';
+import {loginUser,getApiAccessToken,persistDataInCache,getDataFromCache} from '../../admin/admin.js';
 import Ionicons from '@expo/vector-icons/Ionicons';
-import DeviceInfo from 'react-native-device-info';
-import AuthCommonModal from '../../admin/authCommonModal'
-export default function Login({navigation}){
-const [email, setEmail] = useState('');
+import AuthCommonModal from '../../admin/authCommonModal.js'
+import 'react-native-get-random-values'; // This must precede `uuid`
+import { v4 as uuidv4 } from 'uuid';
+export default function LoginUser(){
+
+  const [email, setEmail] = useState('');
   const [mobile, setMobile] = useState('');
   const [error, setError] = useState('');
    const[modalVisible,setModalVisible] = useState(false);
    const [userProfile,setUserProfile] = useState('');
+   const[isLoggedIn,setLoggedIn] = useState(false)
    const router = useRouter();
+   
   const [fontsLoaded] = useFonts({
       'Inter-Black': Inter_900Black, // Assign a name to the loaded font
       'Poppins-Regular': Poppins_400Regular,
       'Poppins-SemiBold': Poppins_600SemiBold,
       'Inter-Black-Header': Inter_900Black_Italic
     });
-    if(!fontsLoaded)
-    {
-        return <AppLoading/>
-    }
+  
 
-    let deviceID = DeviceInfo.getUniqueId();
 
-     
-  const handleLogin = async () => {
+const handleLogin = async () => {
     setError(''); // Clear previous errors
 
     // Basic validation
@@ -46,12 +45,8 @@ const [email, setEmail] = useState('');
     }else{
       setModalVisible(false);
     }
-
     try {
-       // Get the unique device ID
-      console.log('device ID is...',deviceID);
-      
-      let token = await getApiAccessToken();
+     let token = await getApiAccessToken();
       
       if(token)
       {
@@ -64,55 +59,80 @@ const [email, setEmail] = useState('');
          // Replace with your actual API call
           const response = await loginUser(req_data);
        if (response) {
-        let data = response.data;
-        // Assuming your API returns a token on success
-        await SecureStore.setItemAsync(deviceID.toString(),  
-         JSON.stringify(data));
+        let data = response;
+        let deviceID = await SecureStore.getItemAsync('appDeviceID');
+        if(deviceID){
+              console.log('deviceID is ...',deviceID)
+              // Assuming your API returns a token on success
+            await SecureStore.setItemAsync(deviceID,  
+              JSON.stringify(data));
 
-        //await SecureStore.setItemAsync('userToken', data.token);
-       // await persistDataInCache(deviceID,token);
-        navigation.replace('Home'); // Navigate to home screen
+            // await SecureStore.setItemAsync('userToken', data.token);
+              //await persistDataInCache(deviceID,token);
+              router.push({
+                    pathname: "/login/profile",
+                params: {  mobile: mobile,email:email}
+                });
+        }
       } else {
-        setError(data.message || 'Login failed. Please try again.');
+        setError('Login failed. Please try again.');
         setModalVisible(true);
       }
+    }else{
+      console.log('No device id found')
+       setError('Invalid device detected, please try from an android or ios platform');
+        setModalVisible(true);
     }
+    
     } catch (err) {
       setError('An error occurred. Please check your internet connection.');
     }
   
-  };
-  useEffect(()=>{
+  }
+
+   useEffect(()=>{
      let mounted = true;
-    const timer = setTimeout(async () =>{
+      
+       console.log('useEffect invoked....');
+    const timer = setTimeout( () =>{
                 
                     const checkIfUserLoggedIn = async () =>{
-                         let result = await SecureStore.getItemAsync(deviceID.toString());
+                    
+                       let deviceID = await SecureStore.getItemAsync('appDeviceID');
+                       if(!deviceID)
+                       {
+                            deviceID = uuidv4();
+                            await SecureStore.setItemAsync('appDeviceID', deviceID);
+                          
+                       }
+                       
+                          console.log('deviceID is ...',deviceID)
+                         let result = await SecureStore.getItemAsync(deviceID);
+                      
                          if(result)
                          {
                             setUserProfile(result);
-                            return "Y";
-                         }
-                         else{
-                            return "N";
-                         }
-                    };
-                   if(mounted)
-                   {
-                        let isLoggedIn = await checkIfUserLoggedIn();
-                        if(isLoggedIn === 'Y')
-                        {
-                         router.push({
+                           setLoggedIn(true)
+                            router.push({
                          pathname: "/login/profile",
                          params: { 
                               profile: JSON.stringify(userProfile)
                            }})
-
-                        }
-                        mounted = false;
+                         }
+                         else{
+                            setLoggedIn(false)
+                         }
+                       
+                        
+                    };
+                   if(mounted)
+                   {
+                     
+                      checkIfUserLoggedIn();
+                       
+                    }
                    }
-                  
-                  },100);
+                  ,100);
 
                    return () => {
                         mounted = false; // Set flag to false on cleanup
@@ -123,13 +143,15 @@ const [email, setEmail] = useState('');
   },
   []);
 
+
   return (
+    fontsLoaded?
     <KeyboardAvoidingView style = {LoginSignUpStyle.centeredContainer}
      behavior={Platform.OS === 'ios' ? 'padding' : undefined}
           keyboardVerticalOffset={Platform.OS === 'ios' ? 64 : 0} // Adjust offset as needed
     
     >
-    <Text style={{ fontFamily: 'Inter-Black-Header',
+   <Text style={{ fontFamily: 'Inter-Black-Header',
       color:'#f3f3f3d7',fontSize:50 }}>Login</Text>
     <View
       style={LoginSignUpStyle.flexboxcontainer}>
@@ -148,6 +170,12 @@ const [email, setEmail] = useState('');
         autoCapitalize="none"
       />
 </View>
+<View>
+        {error ?  <AuthCommonModal modalVisible={modalVisible} 
+            setModalVisible={setModalVisible} errorMessage={error}/>
+        
+        : null}
+    </View>
 <View
       style={LoginSignUpStyle.flexboxcontainer}>
          <Text style={{fontFamily:'Poppins-Regular',textAlign: 'center'}}>OR</Text>
@@ -189,17 +217,13 @@ const [email, setEmail] = useState('');
                   </TouchableOpacity>
     </Link>
     
-      {/* Add a "Forgot Password" link or similar */}
+          
+    </View>
+    </View>
     
-    </View>
-    </View>
-    <View>
-        {error ?  <AuthCommonModal modalVisible={modalVisible} 
-            setModalVisible={setModalVisible} errorMessage={error}/>
-        
-        : null}
-    </View>
-    </KeyboardAvoidingView>
+    </KeyboardAvoidingView>:<AppLoading/>
+    
   );
+
 }
 

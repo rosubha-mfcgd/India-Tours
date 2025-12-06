@@ -19,8 +19,7 @@ const welcomeMessage = process.env.BOOKING_CONFIRMATION_WELCOME_MESSAGE;
 const sendConfirmation = (req_1, res_1, ...args_1) => __awaiter(void 0, [req_1, res_1, ...args_1], void 0, function* (req, res, retries = 5, delay = 1000) {
     const { email, tourmanagername, locationName, bookingid, startDate, endDate } = req.body;
     //console.log('email,tourmanagername, locationName, bookingid, startDate,endDate',
-    email, tourmanagername, locationName, bookingid, startDate, endDate;
-    ;
+    // email,tourmanagername, locationName, bookingid, startDate,endDate);
     let body = subject.concat(tourmanagername).concat(". ").concat("Your bookingID is ").concat(bookingid).concat(". ").concat(additionalInfo).concat(startdateinfo).concat(" ").concat(startDate).concat(" ").concat(enddateinfo).concat(" ").concat(endDate).concat(".").concat(welcomeMessage);
     console.log('emailbody....', body);
     try {

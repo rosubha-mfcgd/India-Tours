@@ -5,7 +5,7 @@ import ProductStyle from '../../styles/productStyle.js';
 import TourCommonStyle from '../../styles/tourCommonStyle.js'; 
 import TextStyle from '../../styles/textStyles.js' ;
 import BookingStyle from '../../styles/bookingStyle.js';
-import {getBookingsByBookingId} from "../../admin/admin";
+import {getBookingsByBookingId} from "../../admin/admin.js";
 import { useEffect, useState } from "react";
 import { TouchableOpacity} from 'react-native';
 import Ionicons from '@expo/vector-icons/Ionicons';

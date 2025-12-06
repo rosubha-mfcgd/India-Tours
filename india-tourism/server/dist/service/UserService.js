@@ -38,14 +38,14 @@ class UserService {
             }
         });
     }
-    loginUser(email, mobile, loginOTP) {
+    updateLoginOTP(email, mobile, loginOTP) {
         return __awaiter(this, void 0, void 0, function* () {
             try {
                 const userRepo = new UserRepository();
-                let user = yield userRepo.findOne({ "emailID": email, "mobile": mobile, "signedUpFlag": "Y" });
+                let user = yield userRepo.findOne({ "emailID": email, "mobile": mobile });
                 if (user) {
                     user = yield userRepo.update(user._id, { "otp": loginOTP });
-                    console.log(' user logged in successfully');
+                    console.log(' Login OTP updated successfully for user');
                     return constants.YES;
                 }
                 else {
@@ -58,6 +58,32 @@ class UserService {
             }
             console.log('Login failed');
             return constants.NO;
+        });
+    }
+    loginUser(email, mobile, loginOTP) {
+        return __awaiter(this, void 0, void 0, function* () {
+            try {
+                const userRepo = new UserRepository();
+                let user = yield userRepo.findOne({ "emailID": email, "mobile": mobile, "signedUpFlag": "Y" });
+                if (user) {
+                    user = yield userRepo.update(user._id, { "otp": loginOTP });
+                    if (user) {
+                        console.log(' user logged in successfully');
+                        return constants.YES;
+                    }
+                    else {
+                        console.log('Login failed');
+                        return constants.NO;
+                    }
+                }
+                else {
+                    console.log('Login failed');
+                    return constants.NO;
+                }
+            }
+            catch (err) {
+                logNginx(err.stack);
+            }
         });
     }
     validateOTP(email, mobile, otp) {

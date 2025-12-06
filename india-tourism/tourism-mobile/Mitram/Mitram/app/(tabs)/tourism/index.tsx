@@ -2,15 +2,15 @@ import { Text, View } from 'react-native';
 import CategoryStyle from '../../styles/categoryStyle.js'; 
 import TourCommonStyle from '../../styles/tourCommonStyle.js'; 
 import ModalStyle from '../../styles/modalStyle.js'
-import TextStyle from '../../styles/textStyles';
+import TextStyle from '../../styles/textStyles.js';
 import {updateAsFavorite,getCategories,getCities,
-    persistDataInCache,getDataFromCache,removeDataFromCache} from "../../admin/admin";
+    persistDataInCache,getDataFromCache,removeDataFromCache} from "../../admin/admin.js";
 import { useEffect, useState } from "react";
 
 import { FlatList, TouchableOpacity, Image} from 'react-native';
 import Ionicons from '@expo/vector-icons/Ionicons';
 import { Card } from '@rneui/themed';
-import {tripCategoryImages,tripCategoryBackImages} from "../../admin/imageManager";
+import {tripCategoryImages,tripCategoryBackImages} from "../../admin/imageManager.js";
 import { Link,useLocalSearchParams } from 'expo-router';
 import CustomSidebar from '../../navigation/drawerModal'; 
 export default function Categories()

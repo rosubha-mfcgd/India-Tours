@@ -1,17 +1,17 @@
 import { Text, View,FlatList, TouchableOpacity, ImageBackground,Platform } from 'react-native';
 import TripListStyle from '../../styles/tripListStyle.js'; 
 import FilterModalStyle from '../../styles/filtermodalStyle.js'; 
-import {formatINR} from "../../admin/utility";
+import {formatINR} from "../../admin/utility.js";
 import {updateAsFavorite,getTourManagers,getTripList,getDataFromCache,persistDataInCache} 
-from "../../admin/admin";
+from "../../admin/admin.js";
 import { useEffect, useState } from "react";
 import Ionicons from '@expo/vector-icons/Ionicons';
 import { Card } from '@rneui/themed';
-import {tripListImages} from "../../admin/imageManager";
+import {tripListImages} from "../../admin/imageManager.js";
 import { useLocalSearchParams } from 'expo-router';
 import { Link } from 'expo-router';
 import FilterSidebar from '../../navigation/filterModal';
-import TourCommonStyle from '../../styles/tourCommonStyle';
+import TourCommonStyle from '../../styles/tourCommonStyle.js';
 import DateTimePicker from '@react-native-community/datetimepicker';
 export default function TripList()
 {

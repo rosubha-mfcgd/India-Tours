@@ -9,10 +9,10 @@ import { useFonts } from 'expo-font';
 import { Inter_900Black,Inter_900Black_Italic } from '@expo-google-fonts/inter'; 
 import {Poppins_400Regular, Poppins_600SemiBold} from '@expo-google-fonts/poppins';
 import {Link} from 'expo-router';
-import {loginUser,getApiAccessToken,persistDataInCache,getDataFromCache } from '../../admin/admin';
+import {loginUser,getApiAccessToken,persistDataInCache,getDataFromCache } from '../../admin/admin.js';
 import Ionicons from '@expo/vector-icons/Ionicons';
 import DeviceInfo from 'react-native-device-info';
-import AuthCommonModal from '../../admin/authCommonModal'
+import AuthCommonModal from '../../admin/authCommonModal.js'
 import { useLocalSearchParams } from 'expo-router';
 
 

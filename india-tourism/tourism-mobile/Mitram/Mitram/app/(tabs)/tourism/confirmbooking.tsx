@@ -3,7 +3,7 @@ import { Text, View } from 'react-native';
 import TourCommonStyle from '../../styles/tourCommonStyle.js';
 import TextStyle from '../../styles/textStyles.js';
 import { useLocalSearchParams } from 'expo-router';
-import {sendConfirmationBookingEmail} from "../../admin/admin";
+import {sendConfirmationBookingEmail} from "../../admin/admin.js";
 import { useEffect,useState } from 'react';
 import Ionicons from '@expo/vector-icons/Ionicons.js';
 export default function ConfirmBooking()

@@ -1,7 +1,5 @@
-const express = require('express');
 const session = require('express-session');
 require("../logNginx");
-const {User} = require("../../dist/model/user");
 const apputil = require('../utils/appUtility');
 const EmailService = require('../service/EmailService');
 const UserService = require('../service/UserService');
@@ -61,8 +59,46 @@ try{
        return isLoggedin;
 }
 
-const resendOTP = (req,res) =>{
+const resendOTP = async(req,res,retries = 3, delay = 1000) => {
 
+   let { email,mobile,access_token } = req.body;
+   try{
+   if(access_token)
+    {
+        session.access_token = access_token;
+    }
+      let loginOTP =  apputil.generateOTP();
+    
+      let result = await new UserService().updateLoginOTP(email,mobile,loginOTP);
+
+      if(result === 'Y'){
+        if(email)
+        {
+            console.log('Sending OTP to user email...');
+            await new EmailService().send(email,subject,body.
+              concat(" ").concat(loginOTP));
+        }
+        if(mobile)
+        {
+            //Similar token logic to be implemented for mobile
+            console.log('Sending login OTP to user mobile...');
+        }
+
+        res.status(200).send({"otp":loginOTP,"email":email,"mobile":mobile});
+      }else{
+        
+        res.status(500).send({"email":email,"mobile":mobile, "error": "could not update otp"});
+      }
+
+      }catch(err)
+      {
+         if(retries>0)
+        {
+          await new Promise(resolve => setTimeout(resolve, delay));
+          return resendOTP(req,res,retries-1,delay);
+        }
+        logNginx(err.stack)
+      }
 }
 
-module.exports = {doLogin};
+module.exports = {doLogin,resendOTP};

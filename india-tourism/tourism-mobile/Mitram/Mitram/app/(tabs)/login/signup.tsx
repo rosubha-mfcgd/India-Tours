@@ -11,11 +11,10 @@ import {Poppins_400Regular, Poppins_600SemiBold} from '@expo-google-fonts/poppin
 import { Link,useRouter } from 'expo-router';
 import { signupUser,getApiAccessToken } from '../../admin/admin';
 import Ionicons from '@expo/vector-icons/Ionicons';
- import DeviceInfo from 'react-native-device-info';
  import AuthCommonModal from '../../admin/authCommonModal'
 
 
-export default function SignUp({navigation}){
+export default function SignUp(){
   const [name, setName] = useState('');
 const [email, setEmail] = useState('');
   const [mobile, setMobile] = useState('');
@@ -69,7 +68,7 @@ const [email, setEmail] = useState('');
 
         router.push({
               pathname: "/login/validateOTP",
-          params: {  mobile: mobile,email:email }
+          params: {  mobile: mobile,email:email,name:name }
           });
        }else if(code === 'E'){
         setError(response.message)

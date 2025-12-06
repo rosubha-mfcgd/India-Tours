@@ -7,12 +7,12 @@ import { TouchableOpacity} from 'react-native';
 import Ionicons from '@expo/vector-icons/Ionicons';
 import { useLocalSearchParams } from 'expo-router';
 import { Table,  TBody, TR, TD } from '@expo/html-elements';
-import {updateBooking,validateBookingData} from  '../../admin/utility';
+import {updateBooking,validateBookingData} from  '../../admin/utility.js';
  import TourismCommonModal from '../../admin/tourismCommonModal.js'
 
 import { useRouter } from 'expo-router';
 
-import RadioButton from '../../admin/RadioButton';
+import RadioButton from '../../admin/RadioButton.js';
 export default function BookMyTrip()
 {
     const {location,tourmanagerName,cityname,startdate,enddate,

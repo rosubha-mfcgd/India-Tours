@@ -586,8 +586,14 @@ try{
 export const persistDataInCache = async(key,value) =>{
     try{
         const jsonStrValue = JSON.stringify(value);
-        await AsyncStorage.setItem(key,jsonStrValue);
-        console.log('response successfully cached ');
+       let result =  await AsyncStorage.setItem(key,jsonStrValue);
+       if(result){
+            console.log('response successfully cached ');
+            return true;
+       }else{
+            console.log('response could not be cached ');
+            return false;
+       }
     }catch(err){
         console.error('response could not be cached ',err.stack);
     }
