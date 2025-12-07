@@ -22,6 +22,7 @@ export default function LoginUser(){
    const[modalVisible,setModalVisible] = useState(false);
    const [userProfile,setUserProfile] = useState('');
    const[isLoggedIn,setLoggedIn] = useState(false)
+   const [signupEnable,setSignupEnable] = useState(false)
    const router = useRouter();
    
   const [fontsLoaded] = useFonts({
@@ -65,6 +66,10 @@ const handleLogin = async () => {
         {
               setError(response.message);
               setModalVisible(true);
+              if(response.code === 'NF')
+              {
+                setSignupEnable(true);
+              }
         }else{
             let deviceID = await SecureStore.getItemAsync('appDeviceID');
             if(deviceID){
@@ -99,7 +104,7 @@ const handleLogin = async () => {
 
    useEffect(()=>{
      let mounted = true;
-      
+      setModalVisible(false);
        console.log('useEffect invoked....');
     const timer = setTimeout( () =>{
                 
@@ -152,7 +157,7 @@ const handleLogin = async () => {
 
 
   return (
-    fontsLoaded?
+    fontsLoaded ?
     <KeyboardAvoidingView style = {LoginSignUpStyle.centeredContainer}
      behavior={Platform.OS === 'ios' ? 'padding' : undefined}
           keyboardVerticalOffset={Platform.OS === 'ios' ? 64 : 0} // Adjust offset as needed
@@ -178,10 +183,15 @@ const handleLogin = async () => {
       />
 </View>
 <View>
-        {error ?  <AuthCommonModal modalVisible={modalVisible} 
-            setModalVisible={setModalVisible} errorMessage={error}/>
+        {error ?  
+        <View>
+           <ActivityIndicator 
+            size="large" color="#3c3ca7ff"/>
+        <AuthCommonModal modalVisible={modalVisible} 
+            setModalVisible={setModalVisible} errorMessage={error} setErrorMessage={setError}/>
+            </View>
         
-        : null}
+        : <View/>}
     </View>
 <View
       style={LoginSignUpStyle.flexboxcontainer}>
@@ -219,8 +229,10 @@ const handleLogin = async () => {
      <View style={LoginSignUpStyle.buttonscontainer}>
          <Link href={{pathname:"/login/signup"}} asChild>
             <TouchableOpacity 
-                    style={LoginSignUpStyle.loginbutton}>
-                    <Text style={TourCommonStyle.buttonText}>Sign Up</Text>
+                    style={signupEnable?LoginSignUpStyle.loginbutton:LoginSignUpStyle.disabledButton}>
+                    <Text style={TourCommonStyle.buttonText} 
+                    
+                    >Sign Up</Text>
                   </TouchableOpacity>
     </Link>
     

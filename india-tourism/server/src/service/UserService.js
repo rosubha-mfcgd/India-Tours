@@ -58,7 +58,23 @@ async loginUser(email,mobile,loginOTP)
 {
   try{
   const userRepo = new UserRepository();
-  let user = await userRepo.findOne({"emailID": email,"mobile":mobile,"signedUpFlag":"Y" });
+  let queryStr = '';
+  if(email && mobile){
+    queryStr = {"emailID": email,"mobile":mobile,"signedUpFlag":"Y" };
+  }
+  else if(email && !mobile)
+  {
+     queryStr = {"emailID": email,"signedUpFlag":"Y" };
+  }
+  else if(!email && mobile)
+  {
+     queryStr = {"mobile": mobile,"signedUpFlag":"Y" };
+  }
+  else{
+         console.log('Login failed');
+             return constants.NO;
+  }
+  let user = await userRepo.findOne(queryStr);
           if (user) {
             user = await userRepo.update(user._id,{"otp":loginOTP});
             if(user)

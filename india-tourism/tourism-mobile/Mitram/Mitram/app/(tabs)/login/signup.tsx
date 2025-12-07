@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import {KeyboardAvoidingView, View, Text, TextInput, 
-    TouchableOpacity,Platform } from 'react-native';
+    TouchableOpacity,Platform, 
+    ActivityIndicator} from 'react-native';
 import * as SecureStore from 'expo-secure-store'; // For storing tokens
 import LoginSignUpStyle from '../../styles/loginsignup';
 import TourCommonStyle from '../../styles/tourCommonStyle';
@@ -20,16 +21,17 @@ const [email, setEmail] = useState('');
   const [mobile, setMobile] = useState('');
    const[modalVisible,setModalVisible] = useState(false);
   const [error, setError] = useState('');
+  const [loginEnable,setLoginEnable] = useState(false)
   const [fontsLoaded] = useFonts({
       'Inter-Black': Inter_900Black, // Assign a name to the loaded font
       'Poppins-Regular': Poppins_400Regular,
     'Poppins-SemiBold': Poppins_600SemiBold,
     'Inter-Black-Header': Inter_900Black_Italic
     });
-    if(!fontsLoaded)
-    {
-        return <AppLoading/>
-    }
+    // if(!fontsLoaded)
+    // {
+    //     return <AppLoading/>
+    // }
 
     const router = useRouter();
   const handleSignup = async () => {
@@ -71,12 +73,14 @@ const [email, setEmail] = useState('');
           params: {  mobile: mobile,email:email,name:name }
           });
        }else if(code === 'E'){
+        
         setError(response.message)
         setModalVisible(true)
-       }
+        setLoginEnable(true)
+      }
 
       } else {
-        setError(response.message || 'Login failed. Please try again.');
+        setError(response.message || 'Signup failed. Please try again.');
          setModalVisible(true)
       }
     }
@@ -88,6 +92,7 @@ const [email, setEmail] = useState('');
   };
 
   return (
+    fontsLoaded?
     <KeyboardAvoidingView style = {LoginSignUpStyle.centeredContainer}  
     behavior={Platform.OS === 'ios' ? 'padding' : undefined}
               keyboardVerticalOffset={Platform.OS === 'ios' ? 64 : 0} // Adjust offset as needed
@@ -141,7 +146,8 @@ const [email, setEmail] = useState('');
    
             <TouchableOpacity 
                     style={LoginSignUpStyle.loginbutton}>
-                    <Text style={TourCommonStyle.buttonText} onPress={handleSignup}>SignUp</Text>
+                    <Text style={TourCommonStyle.buttonText} 
+                    onPress={handleSignup}>SignUp</Text>
                   </TouchableOpacity>
     
       {/* Add a "Forgot Password" link or similar */}
@@ -149,12 +155,14 @@ const [email, setEmail] = useState('');
     </View>
      <View>
         {error ? <AuthCommonModal modalVisible={modalVisible} 
-                    setModalVisible={setModalVisible} errorMessage={error}/> : null}
+                    setModalVisible={setModalVisible} errorMessage={error} 
+                    setErrorMessage={setError}
+                    /> : null}
     </View>
     <View style={LoginSignUpStyle.buttonscontainer}>
    <Link href={{pathname:"/login/"}} asChild>
             <TouchableOpacity 
-                    style={LoginSignUpStyle.loginbutton}>
+                    style={loginEnable ? LoginSignUpStyle.loginbutton:LoginSignUpStyle.disabledButton}>
                     <Text style={TourCommonStyle.buttonText}>Login</Text>
                   </TouchableOpacity>
     </Link>
@@ -165,7 +173,10 @@ const [email, setEmail] = useState('');
     
     </View>
    
-    </KeyboardAvoidingView>
+    </KeyboardAvoidingView>: <View style={TourCommonStyle.centeredContainer}>
+            <ActivityIndicator 
+            size="large" color="#3c3ca7ff"/>
+            </View>
   );
 }
 

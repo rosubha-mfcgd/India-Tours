@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { View, Text, TextInput, 
-    TouchableOpacity,KeyboardAvoidingView,Platform } from 'react-native';
+    TouchableOpacity,KeyboardAvoidingView,ActivityIndicator,Platform } from 'react-native';
 import * as SecureStore from 'expo-secure-store'; // For storing tokens
 import LoginSignUpStyle from '../../styles/loginsignup.js';
 import TourCommonStyle from '../../styles/tourCommonStyle.js';
@@ -25,10 +25,10 @@ export default function ValidateOTP(){
     'Poppins-SemiBold': Poppins_600SemiBold,
     'Inter-Black-Header': Inter_900Black_Italic
     });
-    if(!fontsLoaded)
-    {
-        return <AppLoading/>
-    }
+    // if(!fontsLoaded)
+    // {
+    //     return <AppLoading/>
+    // }
 
    
     const {email,mobile,access_token} = useLocalSearchParams();
@@ -62,8 +62,8 @@ export default function ValidateOTP(){
 
             if(otpValid)
             {
-                router.push( { pathname: "/",
-          params: {mobile: mobile,email:email,access_token:access_token,productID:'1'} 
+                router.push( { pathname: "/login/profile",
+          params: {mobile: mobile,email:email,access_token:access_token} 
           })
             }
             else{
@@ -129,6 +129,7 @@ export default function ValidateOTP(){
     }
   };
   return (
+    fontsLoaded?
     <KeyboardAvoidingView style = {LoginSignUpStyle.centeredContainer}  
     behavior={Platform.OS === 'ios' ? 'padding' : undefined}
               keyboardVerticalOffset={Platform.OS === 'ios' ? 64 : 0} // Adjust offset as needed
@@ -172,7 +173,9 @@ export default function ValidateOTP(){
       />
        <View>
         {error ? <AuthCommonModal modalVisible={modalVisible} 
-                    setModalVisible={setModalVisible} errorMessage={error}/> : null}
+                    setModalVisible={setModalVisible} errorMessage={error}
+                     setErrorMessage={setError}
+                    /> : null}
     </View>
      </View>
       <View
@@ -203,7 +206,11 @@ export default function ValidateOTP(){
     </View>
      </View>
   
-    </KeyboardAvoidingView>
+    </KeyboardAvoidingView>:
+    <View style={TourCommonStyle.centeredContainer}>
+            <ActivityIndicator 
+            size="large" color="#3c3ca7ff"/>
+            </View>
   );
 }
 

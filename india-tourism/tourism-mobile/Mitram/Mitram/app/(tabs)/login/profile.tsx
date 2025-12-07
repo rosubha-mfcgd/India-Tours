@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import {KeyboardAvoidingView, View, Text, TextInput, 
-    TouchableOpacity,Platform } from 'react-native';
+    TouchableOpacity,ActivityIndicator,Platform } from 'react-native';
 import * as SecureStore from 'expo-secure-store'; // For storing tokens
 import LoginSignUpStyle from '../../styles/loginsignup.js';
 import TourCommonStyle from '../../styles/tourCommonStyle.js';
@@ -25,12 +25,9 @@ export default function Profile(){
     'Poppins-SemiBold': Poppins_600SemiBold,
     'Inter-Black-Header': Inter_900Black_Italic
     });
-    if(!fontsLoaded)
-    {
-        return <AppLoading/>
-    }
-
+    
 return (
+  fontsLoaded?
  <KeyboardAvoidingView style = {LoginSignUpStyle.centeredContainer}  
     behavior={Platform.OS === 'ios' ? 'padding' : undefined}
               keyboardVerticalOffset={Platform.OS === 'ios' ? 64 : 0} // Adjust offset as needed
@@ -72,7 +69,10 @@ return (
 
 
 
-</KeyboardAvoidingView>
+</KeyboardAvoidingView>: <View style={TourCommonStyle.centeredContainer}>
+            <ActivityIndicator 
+            size="large" color="#3c3ca7ff"/>
+            </View>
 
 )
 

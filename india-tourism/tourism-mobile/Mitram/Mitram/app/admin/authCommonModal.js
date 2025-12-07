@@ -2,12 +2,13 @@ import React from 'react';
 import {  Modal, Text, View ,Pressable} from 'react-native';
 import ModalStyle from '../styles/modalStyle.js';
  
-export default function AuthCommonModal({modalVisible,setModalVisible,errorMessage}) {
+export default function AuthCommonModal({modalVisible,setModalVisible,errorMessage,setErrorMessage}) {
  
    const handleOk = () => {
     // Logic for "OK" action
     console.log('OK Pressed');
     setModalVisible(false);
+    setErrorMessage(false)
   };
 
   const handleCancel = () => {
