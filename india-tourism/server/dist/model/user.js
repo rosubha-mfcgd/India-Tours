@@ -10,10 +10,10 @@ const userSchema = new mongoose_1.Schema({
     otp: { type: String },
     address1: { type: String },
     address2: { type: String },
+    city: { type: String },
     zipcode: { type: String },
     points: { type: Number },
-    preference1: { type: String },
-    preference2: { type: String },
+    preference: { type: [] },
     tourmanagerId: { type: String }
 });
 exports.UserModel = (0, mongoose_1.model)('User', userSchema);

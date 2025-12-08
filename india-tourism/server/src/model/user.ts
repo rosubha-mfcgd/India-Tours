@@ -10,11 +10,11 @@ const userSchema = new Schema<IUser>({
   otp : { type: String },
   address1 : {type: String},
   address2 : {type: String},
+   city:  {type: String},
   zipcode : {type: String},
   points : {type: Number},
-  preference1 : {type: String},
-  preference2 : {type: String},
-  tourmanagerId : {type: String}
+  preference : {type: []},
+ tourmanagerId : {type: String}
 });
 
 export const UserModel = model<IUser>('User', userSchema);

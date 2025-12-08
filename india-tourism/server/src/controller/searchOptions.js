@@ -1,4 +1,5 @@
 const TaskOperationService = require('../service/TaskOperationService');
+const PreferenceService = require('../service/PreferenceService')
 require("../logNginx");
 
 const getSearchOptions = async(req,res,retries = 3, delay = 1000) =>{
@@ -28,4 +29,27 @@ const getSearchOptions = async(req,res,retries = 3, delay = 1000) =>{
                 {"errormessage":"could not load options for productid "+productID+" and categoryid "+categoryID});
        }
     }
-    module.exports={getSearchOptions}
+
+    const getPreferences = async(req,res,retries = 3, delay = 1000) =>{
+
+      try{
+         let preferences = await new PreferenceService().getPreferences();
+         if(preferences)
+         {
+           res.status(200).send(preferences);
+         }
+        }
+        catch(err){
+              if(retries>0)
+            {
+                console.log('retry attempted...')
+              await new Promise(resolve => setTimeout(resolve, delay));
+              return getPreferences(req,res,retries-1,delay);
+            }
+          logNginx(err.stack);
+        res.status(400).send(
+                {"errormessage":"could not load preferences"});
+       }
+
+    }
+    module.exports={getSearchOptions,getPreferences}

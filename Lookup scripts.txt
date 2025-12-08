@@ -461,3 +461,29 @@ db.touritineraries.insertMany([
 	"itinerary" : [{"day":"1","plan": "Morning: Arrival and Naini Lake|Afternoon: Naina Devi Temple and Mall Road|Evening: Tibetan Market"},{"day":"2",
 	"plan": "Morning: Snow View Point|Afternoon: Tiffin Top and Eco Cave Gardens|Evening: St. John/'s Church"},{"day":"3","plan": "Morning to afternoon: Lake tour|Evening: Kainchi Dham|Late evening: Departure"}]
 	}]);
+
+
+Preferences
+============
+db.preferences.insertMany([
+  {
+    code: 1,
+    desc: "Hiking/Trekking"
+  },
+{
+    code: 2,
+    desc: "Adventure sports"
+},
+{
+    code: 3,
+    desc: "Leisure"
+},
+{
+    code: 4,
+    desc: "Religious Trips"
+},
+{
+    code: 5,
+    desc: "Sea Surfing"
+}
+]);

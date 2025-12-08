@@ -22,7 +22,15 @@ centeredContainer: {
     height: 60, // Adjust as needed
     backgroundColor: '#673AB7', // Example: Purple background
   },
-  buttonscontainer: {
+   sectionheader: {
+    padding: 10,
+    backgroundColor: '#f0f0f0',
+  },
+  rowContainer: {
+      flexDirection: 'row',
+    alignItems: 'center',
+  },
+ buttonscontainer: {
     flexDirection: 'row', // Arranges children horizontally
     justifyContent: 'space-around', // Distributes space evenly around items
     alignItems: 'center', // Aligns items vertically in the center
@@ -157,6 +165,10 @@ color: '#fff',
 fontSize: 16, 
 fontWeight: 'bold', 
 }, 
+ headerTitle: {
+    fontWeight: 'bold',
+    fontSize: 18,
+  },
 icon: { 
 marginRight: 8, 
 },

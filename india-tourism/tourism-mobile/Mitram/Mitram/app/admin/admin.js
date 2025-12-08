@@ -624,3 +624,60 @@ export const removeDataFromCache = async (key) => {
     console.error('Error removing data:', error);
   }
 };
+
+export const searchUserProfile = async(data) =>{
+    let res_data = " search user profile failed";
+   try{
+    
+     let access_token = await getApiAccessToken();
+     if(access_token){
+        console.log('access_token found...',access_token.data)
+    const headers = {
+            "Content-type": "application/json; charset=UTF-8",
+            "Authorization":"Bearer "+access_token.data.access_token
+            };
+   
+  const response = await axios.post(
+        process.env.EXPO_PUBLIC_SERVER_URI + "findUser",
+        data,
+       {headers}
+    );
+     if(response){
+        res_data = response.data;
+    }
+    }
+   
+}catch(err){
+     console.error('Error while user search:::', err);
+     throw err;
+}
+return res_data;
+}
+
+
+export const getPreferenceList = async() =>{
+     let res_data = "signup failed";
+   try{
+    let access_token = await getApiAccessToken();
+    
+    if(access_token){
+        console.log('access_token found...',access_token.data)
+        const headers = {
+                "Content-type": "application/json; charset=UTF-8",
+                "Authorization":"Bearer "+access_token.data.access_token
+            };
+    
+    const response = await axios.get(
+            process.env.EXPO_PUBLIC_SERVER_URI + "preferences",
+            {headers});
+      if(response){
+       res_data = response.data;; 
+        } 
+    }
+}catch(err){
+     console.error('Error while fetching prefences:::', err);
+     throw err;
+}
+
+    return res_data;
+}

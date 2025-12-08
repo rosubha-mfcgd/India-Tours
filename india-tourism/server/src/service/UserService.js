@@ -16,7 +16,8 @@ async signupUser(email,mobile,name,signUpOTP)
   let user = await userRepo.findOne({"emailID": email,"mobile":mobile, "name":name});
           if (!user) {
             console.log('Creating user entity..');
-            user = await userRepo.create({"emailID": email,"mobile":mobile, "name":name,"signedUpFlag":"N",
+            user = await userRepo.create({"emailID": email,"mobile":mobile, "name":name,
+              "signedUpFlag":"N",
               "otp":signUpOTP
              });
             console.log('Signed up user successfully with object id ',user._id);
@@ -51,7 +52,52 @@ async updateLoginOTP(email,mobile,loginOTP)
       console.log('Login failed');
       return constants.NO;
 }
+async updateUserDetails(email,mobile,prefs,address,city,zipcode)
+{
+  try{
 
+     let user = null;
+     let strQuery = '';
+     if(email && mobile)
+     {
+        strQuery = {"emailID": email,"mobile":mobile,"signedUpFlag":"Y" };
+     }
+     else if(email)
+     {
+       strQuery = {"emailID": email,"signedUpFlag":"Y"};
+     }
+     else if(mobile)
+     {
+       strQuery = {"mobile": mobile,"signedUpFlag":"Y"};
+     }
+     else {
+      console.log('no search params found')
+     }
+
+     if (strQuery) {
+
+          user = await userRepo.findOne(strQuery);
+        if(user)
+        {
+
+            user = await userRepo.update(user._id,{"preference":prefs,
+              "address1":address,"city":city,"zipcode":zipcode});
+              
+              if(user){
+                   console.log(' Details updated successfully for user id...',user._id);
+                
+              }
+              return user;
+       }
+    }
+}
+catch(err){
+    console.log(err.stack)
+    logNginx(err.stack)
+
+  }
+  return null;
+}
 
 
 async loginUser(email,mobile,loginOTP)
@@ -95,6 +141,40 @@ async loginUser(email,mobile,loginOTP)
       }
      
 }
+
+async findUser(email,mobile)
+{
+  try{
+  const userRepo = new UserRepository();
+  let queryStr = '';
+  if(email && mobile){
+    queryStr = {"emailID": email,"mobile":mobile,"signedUpFlag":"Y" };
+  }
+  else if(email && !mobile)
+  {
+     queryStr = {"emailID": email,"signedUpFlag":"Y" };
+  }
+  else if(!email && mobile)
+  {
+     queryStr = {"mobile": mobile,"signedUpFlag":"Y" };
+  }
+  else{
+         console.log('No request parameters found');
+             return null;
+  }
+  let user = await userRepo.findOne(queryStr);
+  if(user)
+  {
+    return user;
+  }
+}catch(err)
+{
+  logNginx(err.stack);
+
+}
+}
+
+
 async validateOTP(email,mobile,otp)
 {
   try{

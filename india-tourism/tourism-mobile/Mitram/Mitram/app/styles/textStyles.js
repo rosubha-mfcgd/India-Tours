@@ -75,7 +75,10 @@ infotext: {
     height:40,
     backgroundColor:'#f7f8f8ff',
     borderRadius: 30
-}
+},
+paragraph: {
+    marginLeft: 8,
+  },
 
 
 });

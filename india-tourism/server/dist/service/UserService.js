@@ -22,7 +22,8 @@ class UserService {
                 let user = yield userRepo.findOne({ "emailID": email, "mobile": mobile, "name": name });
                 if (!user) {
                     console.log('Creating user entity..');
-                    user = yield userRepo.create({ "emailID": email, "mobile": mobile, "name": name, "signedUpFlag": "N",
+                    user = yield userRepo.create({ "emailID": email, "mobile": mobile, "name": name,
+                        "signedUpFlag": "N",
                         "otp": signUpOTP
                     });
                     console.log('Signed up user successfully with object id ', user._id);
@@ -60,6 +61,42 @@ class UserService {
             return constants.NO;
         });
     }
+    updateUserDetails(email, mobile, prefs, address, city, zipcode) {
+        return __awaiter(this, void 0, void 0, function* () {
+            try {
+                let user = null;
+                let strQuery = '';
+                if (email && mobile) {
+                    strQuery = { "emailID": email, "mobile": mobile, "signedUpFlag": "Y" };
+                }
+                else if (email) {
+                    strQuery = { "emailID": email, "signedUpFlag": "Y" };
+                }
+                else if (mobile) {
+                    strQuery = { "mobile": mobile, "signedUpFlag": "Y" };
+                }
+                else {
+                    console.log('no search params found');
+                }
+                if (strQuery) {
+                    user = yield userRepo.findOne(strQuery);
+                    if (user) {
+                        user = yield userRepo.update(user._id, { "preference": prefs,
+                            "address1": address, "city": city, "zipcode": zipcode });
+                        if (user) {
+                            console.log(' Details updated successfully for user id...', user._id);
+                        }
+                        return user;
+                    }
+                }
+            }
+            catch (err) {
+                console.log(err.stack);
+                logNginx(err.stack);
+            }
+            return null;
+        });
+    }
     loginUser(email, mobile, loginOTP) {
         return __awaiter(this, void 0, void 0, function* () {
             try {
@@ -93,6 +130,34 @@ class UserService {
                 else {
                     console.log('User not signed up yet');
                     return constants.NO_USER_FOUND;
+                }
+            }
+            catch (err) {
+                logNginx(err.stack);
+            }
+        });
+    }
+    findUser(email, mobile) {
+        return __awaiter(this, void 0, void 0, function* () {
+            try {
+                const userRepo = new UserRepository();
+                let queryStr = '';
+                if (email && mobile) {
+                    queryStr = { "emailID": email, "mobile": mobile, "signedUpFlag": "Y" };
+                }
+                else if (email && !mobile) {
+                    queryStr = { "emailID": email, "signedUpFlag": "Y" };
+                }
+                else if (!email && mobile) {
+                    queryStr = { "mobile": mobile, "signedUpFlag": "Y" };
+                }
+                else {
+                    console.log('No request parameters found');
+                    return null;
+                }
+                let user = yield userRepo.findOne(queryStr);
+                if (user) {
+                    return user;
                 }
             }
             catch (err) {

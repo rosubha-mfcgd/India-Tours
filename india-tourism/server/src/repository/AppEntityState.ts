@@ -25,9 +25,9 @@ export interface IUser extends Document{
      address1 : String,
      address2 : String,
      zipcode : String,
+     city: String,
      points : Number,
-     preference1 : String,
-    preference2 : String,
+     preference : [],
     tourmanagerId : String
 }
 export interface ITourDetails extends Document{
@@ -193,6 +193,17 @@ export interface ICategory extends Document{
     cityDesc: String
     
   }
+
+  export interface IPreferences extends Document{
+    code:{
+       type: Number,
+      required: true
+    },
+    
+    desc: String
+    
+  }
+
    export interface IHotels extends Document{
     hotelCode:{
        type: Number,

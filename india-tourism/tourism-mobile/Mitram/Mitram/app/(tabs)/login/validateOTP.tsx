@@ -10,7 +10,7 @@ import { Inter_900Black,Inter_900Black_Italic } from '@expo-google-fonts/inter';
 import {Poppins_400Regular, Poppins_600SemiBold} from '@expo-google-fonts/poppins';
 import { useLocalSearchParams } from 'expo-router';
 import {validateOTPForLogin,resendOTPForLogin} from '../../admin/admin.js'
-import { Link,useRouter } from 'expo-router';
+import { useRouter } from 'expo-router';
 import Ionicons from '@expo/vector-icons/Ionicons';
 import AuthCommonModal from '../../admin/authCommonModal.js'
 import PleaseWaitScreen from '../../admin/waitscreen.js'

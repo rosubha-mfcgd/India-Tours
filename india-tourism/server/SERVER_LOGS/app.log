@@ -32,3 +32,25 @@ Sat Dec 06 2025 15:11:46 GMT-0500 (Eastern Standard Time): TokenExpiredError: jw
     at next (C:\Users\royco\India-tourism-App\India-Tours\india-tourism\server\node_modules\router\lib\route.js:157:13)
     at Route.dispatch (C:\Users\royco\India-tourism-App\India-Tours\india-tourism\server\node_modules\router\lib\route.js:117:3)
     at handle (C:\Users\royco\India-tourism-App\India-Tours\india-tourism\server\node_modules\router\index.js:435:11)
+Sun Dec 07 2025 19:33:07 GMT-0500 (Eastern Standard Time): TypeError: PreferenceService is not a constructor
+    at C:\Users\royco\India-tourism-App\India-Tours\india-tourism\server\dist\controller\searchOptions.js:39:33
+    at Generator.next (<anonymous>)
+    at C:\Users\royco\India-tourism-App\India-Tours\india-tourism\server\dist\controller\searchOptions.js:8:71
+    at new Promise (<anonymous>)
+    at __awaiter (C:\Users\royco\India-tourism-App\India-Tours\india-tourism\server\dist\controller\searchOptions.js:4:12)
+    at getPreferences (C:\Users\royco\India-tourism-App\India-Tours\india-tourism\server\dist\controller\searchOptions.js:37:53)
+    at Layer.handleRequest (C:\Users\royco\India-tourism-App\India-Tours\india-tourism\server\node_modules\router\lib\layer.js:152:17)
+    at next (C:\Users\royco\India-tourism-App\India-Tours\india-tourism\server\node_modules\router\lib\route.js:157:13)
+    at C:\Users\royco\India-tourism-App\India-Tours\india-tourism\server\dist\middlewares\auth.js:44:13
+    at C:\Users\royco\India-tourism-App\India-Tours\india-tourism\server\dist\middlewares\auth.js:65:16
+Sun Dec 07 2025 19:35:35 GMT-0500 (Eastern Standard Time): TypeError: PreferenceService is not a constructor
+    at C:\Users\royco\India-tourism-App\India-Tours\india-tourism\server\dist\controller\searchOptions.js:39:33
+    at Generator.next (<anonymous>)
+    at C:\Users\royco\India-tourism-App\India-Tours\india-tourism\server\dist\controller\searchOptions.js:8:71
+    at new Promise (<anonymous>)
+    at __awaiter (C:\Users\royco\India-tourism-App\India-Tours\india-tourism\server\dist\controller\searchOptions.js:4:12)
+    at getPreferences (C:\Users\royco\India-tourism-App\India-Tours\india-tourism\server\dist\controller\searchOptions.js:37:53)
+    at Layer.handleRequest (C:\Users\royco\India-tourism-App\India-Tours\india-tourism\server\node_modules\router\lib\layer.js:152:17)
+    at next (C:\Users\royco\India-tourism-App\India-Tours\india-tourism\server\node_modules\router\lib\route.js:157:13)
+    at C:\Users\royco\India-tourism-App\India-Tours\india-tourism\server\dist\middlewares\auth.js:44:13
+    at C:\Users\royco\India-tourism-App\India-Tours\india-tourism\server\dist\middlewares\auth.js:65:16
