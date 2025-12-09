@@ -4,12 +4,12 @@ import {KeyboardAvoidingView, View, Text, TextInput, ActivityIndicator,
 import * as SecureStore from 'expo-secure-store'; // For storing tokens
 import LoginSignUpStyle from '../../styles/loginsignup.js';
 import TourCommonStyle from '../../styles/tourCommonStyle.js';
-import AppLoading from 'expo-app-loading';
+
 import { useFonts } from 'expo-font';
 import { Inter_900Black,Inter_900Black_Italic } from '@expo-google-fonts/inter'; 
 import {Poppins_400Regular, Poppins_600SemiBold} from '@expo-google-fonts/poppins';
 import {Link,useRouter} from 'expo-router';
-import {loginUser,getApiAccessToken,persistDataInCache,getDataFromCache} from '../../admin/admin.js';
+import {loginUser,getApiAccessToken,validateTokenWithSession,getTokenFromSession,persistDataInCache,getDataFromCache} from '../../admin/admin.js';
 import Ionicons from '@expo/vector-icons/Ionicons';
 import AuthCommonModal from '../../admin/authCommonModal.js'
 import 'react-native-get-random-values'; // This must precede `uuid`
@@ -73,18 +73,24 @@ const handleLogin = async () => {
         }else{
             let deviceID = await SecureStore.getItemAsync('appDeviceID');
             if(deviceID){
-                  console.log('deviceID is ...',deviceID)
+                 
                   // Assuming your API returns a token on success
-                await SecureStore.setItemAsync(deviceID,  
-                  JSON.stringify(data));
-
+                    await SecureStore.setItemAsync(deviceID, JSON.stringify(data));
+              
+                //  let resultData = await SecureStore.getItemAsync(deviceID);
+                  
                 // await SecureStore.setItemAsync('userToken', data.token);
                   //await persistDataInCache(deviceID,token);
+                
+            }else{
+                  await SecureStore.setItemAsync(deviceID,  
+                  JSON.stringify(data));
+            }
+              
                   router.push({
                         pathname: "/login/profile",
                     params: {  mobile: mobile,email:email}
                     });
-            }
       }
       } else {
         setError('Login failed. Please try again.');
@@ -105,11 +111,12 @@ const handleLogin = async () => {
    useEffect(()=>{
      let mounted = true;
       setModalVisible(false);
-       console.log('useEffect invoked....');
+      // console.log('useEffect invoked....');
     const timer = setTimeout( () =>{
                 
                     const checkIfUserLoggedIn = async () =>{
                     
+                       let request_token = await SecureStore.getItemAsync('token');
                        let deviceID = await SecureStore.getItemAsync('appDeviceID');
                        if(!deviceID)
                        {
@@ -120,22 +127,35 @@ const handleLogin = async () => {
                        
                           console.log('deviceID is ...',deviceID)
                          let result = await SecureStore.getItemAsync(deviceID);
-                      
-                         if(result)
+                          
+                         if(result && request_token)
                          {
-                            setUserProfile(result);
-                           setLoggedIn(true)
+                           // setUserProfile(result);
+                           console.log('result email...',email)
+                           console.log('result mobile...',mobile)
+
+                          let response = await validateTokenWithSession({access_token: request_token});
+                          if(response.isValidRequest === 'Y')
+                          {
+                           setLoggedIn(true);
                             router.push({
                          pathname: "/login/profile",
                          params: { 
-                              profile: JSON.stringify(userProfile)
-                           }})
-                         }
-                         else{
-                            setLoggedIn(false)
-                         }
-                       
-                        
+                              email: result.email,
+                              mobile: result.mobile,
+                              access_token: request_token                         
+                           }
+                          })
+                        }else  if(response.isValidRequest === 'Y')
+                        {
+                             setLoggedIn(false);
+                        }
+                        }
+                         else
+                        {
+                            setLoggedIn(false);
+                        }
+                                               
                     };
                    if(mounted)
                    {

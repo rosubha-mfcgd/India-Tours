@@ -20,7 +20,7 @@ import CheckBox from 'expo-checkbox';
 
 export default function Userprofile(){
 
-     const {email,mobile,access_token} = useLocalSearchParams();
+     const {email,mobile} = useLocalSearchParams();
      const[userName,setUserName] = useState('');
      const [pref,setPref] = useState([])
 

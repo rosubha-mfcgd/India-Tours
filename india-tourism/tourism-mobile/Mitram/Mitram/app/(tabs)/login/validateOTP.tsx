@@ -4,12 +4,12 @@ import { View, Text, TextInput,
 import * as SecureStore from 'expo-secure-store'; // For storing tokens
 import LoginSignUpStyle from '../../styles/loginsignup.js';
 import TourCommonStyle from '../../styles/tourCommonStyle.js';
-import AppLoading from 'expo-app-loading';
+
 import { useFonts } from 'expo-font';
 import { Inter_900Black,Inter_900Black_Italic } from '@expo-google-fonts/inter'; 
 import {Poppins_400Regular, Poppins_600SemiBold} from '@expo-google-fonts/poppins';
 import { useLocalSearchParams } from 'expo-router';
-import {validateOTPForLogin,resendOTPForLogin} from '../../admin/admin.js'
+import {validateOTPForLogin,resendOTPForLogin,getTokenFromSession} from '../../admin/admin'
 import { useRouter } from 'expo-router';
 import Ionicons from '@expo/vector-icons/Ionicons';
 import AuthCommonModal from '../../admin/authCommonModal.js'
@@ -62,9 +62,17 @@ export default function ValidateOTP(){
 
             if(otpValid)
             {
-                router.push( { pathname: "/login/profile",
-          params: {mobile: mobile,email:email,access_token:access_token} 
-          })
+               let result = await getTokenFromSession();
+               if(result)
+               {
+                 
+                await SecureStore.setItemAsync('token', result.access_token).then(
+                    response =>{
+                        router.push( { pathname: "/login/profile",
+                      params: {mobile: mobile,email:email,access_token:result.access_token} 
+                });
+              });
+              }
             }
             else{
               setIsloading(false)
@@ -128,6 +136,9 @@ export default function ValidateOTP(){
       setError('An error occurred. Please check your internet connection.');
     }
   };
+
+  
+
   return (
     fontsLoaded?
     <KeyboardAvoidingView style = {LoginSignUpStyle.centeredContainer}  

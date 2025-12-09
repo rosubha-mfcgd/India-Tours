@@ -4,7 +4,8 @@ import TourCommonStyle from '../../styles/tourCommonStyle.js';
 import ModalStyle from '../../styles/modalStyle.js'
 import TextStyle from '../../styles/textStyles.js';
 import {updateAsFavorite,getCategories,getCities,
-    persistDataInCache,getDataFromCache,removeDataFromCache} from "../../admin/admin.js";
+    persistDataInCache,getDataFromCache,removeDataFromCache,
+    validateTokenWithSession} from "../../admin/admin.js";
 import { useEffect, useState } from "react";
 
 import { FlatList, TouchableOpacity, Image} from 'react-native';

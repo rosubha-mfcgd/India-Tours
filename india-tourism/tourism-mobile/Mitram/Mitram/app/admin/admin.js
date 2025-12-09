@@ -681,3 +681,59 @@ export const getPreferenceList = async() =>{
 
     return res_data;
 }
+
+
+
+export const getTokenFromSession = async() =>{
+     let res_data = "Token from session failed";
+   try{
+    let access_token = await getApiAccessToken();
+    
+    if(access_token){
+        console.log('access_token found...',access_token.data)
+        const headers = {
+                "Content-type": "application/json; charset=UTF-8",
+                "Authorization":"Bearer "+access_token.data.access_token
+            };
+    
+    const response = await axios.get(
+            process.env.EXPO_PUBLIC_SERVER_URI + "handleToken",
+            {headers});
+      if(response){
+       res_data = response.data;; 
+        } 
+    }
+}catch(err){
+     console.error('Error while token from session:::', err);
+     throw err;
+}
+
+    return res_data;
+}
+
+export const validateTokenWithSession = async() =>{
+     let res_data = "Token validation from session failed";
+   try{
+    let access_token = await getApiAccessToken();
+    
+    if(access_token){
+        console.log('access_token found...',access_token.data)
+        const headers = {
+                "Content-type": "application/json; charset=UTF-8",
+                "Authorization":"Bearer "+access_token.data.access_token
+            };
+    
+    const response = await axios.post(
+            process.env.EXPO_PUBLIC_SERVER_URI + "validateTokenWithSession",
+            {headers});
+      if(response){
+       res_data = response.data;; 
+        } 
+    }
+}catch(err){
+     console.error('Error while validating token from session:::', err);
+     throw err;
+}
+
+    return res_data;
+}

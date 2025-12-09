@@ -45,7 +45,8 @@ router.post("/tourItenerariesForTrip",checkAuthenticated,getTourItenerariesForTr
 router.post("/resendOTP",checkAuthenticated,resendOTP);
 router.post("/findUser",checkAuthenticated,findUser);
 router.post("/updateProfile",checkAuthenticated,updateProfile);
-router.get("/preferences",checkAuthenticated,getPreferences)
+router.get("/preferences",checkAuthenticated,getPreferences);
+
 module.exports = router 
 
 updateProfile

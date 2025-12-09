@@ -99,8 +99,6 @@ const resendOTP = async(req,res,retries = 3, delay = 1000) => {
         }
         logNginx(err.stack)
       }
+      
 }
-
-
-
 module.exports = {doLogin,resendOTP};

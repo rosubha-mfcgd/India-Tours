@@ -72,6 +72,7 @@ app.use(session({secret:'xcfsaqarpl',// A secret used to sign the session ID coo
 
 //Route for handling user registration and login
 const userRouter = require("./dist/routers/routers");
+const { checkAuthenticated } = require('./dist/middlewares/auth.js');
 //code for using implemented routes
 app.use("/api", userRouter);
 
@@ -283,6 +284,53 @@ app.post("/api/findUpcomingEvents", async(req,res) =>{
                 }
               
 })
+
+
+app.post('/api/handleToken',checkAuthenticated,async(req,res) =>{
+  let { email,mobile } = req.body;
+   
+    
+  if(!email && !mobile)
+  {
+     res.status(400).send({"error":"No email/mobile found"})
+  }
+  else if(session && session.access_token)
+  {
+    res.status(200).send({"access_token":session.access_token});
+  }
+else{
+   await axios.post(process.env.BASE_APP_URI+"/token").then(
+      response => {
+        console.log('response....',response)
+        console.log('access token....',response.data.access_token)
+        session.access_token = response.data.access_token;
+        console.log('session access token...',session.access_token);
+          res.status(200).send({"access_token":session.access_token});
+      }
+    ).catch(error =>
+    {
+        logNginx("error in receiving token....",error);
+        res.status(401).send({"error":"Invalid token found"});
+    });
+  }
+})
+
+
+app.post('/api/validateTokenWithSession',checkAuthenticated,async(req,res) =>{
+  let { access_token } = req.body;
+  if(!access_token)
+  {
+     res.status(400).send({"error":"No access  token found"})
+  }
+  else if(session && session.access_token === access_token)
+  {
+    res.status(200).send({"isValidRequest":"Y"});
+  }
+else{
+   res.status(400).send({"isValidRequest":"N"});
+  }
+})
+
 
 
 
