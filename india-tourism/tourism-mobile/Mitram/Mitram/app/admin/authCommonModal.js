@@ -8,7 +8,7 @@ export default function AuthCommonModal({modalVisible,setModalVisible,errorMessa
     // Logic for "OK" action
     console.log('OK Pressed');
     setModalVisible(false);
-    setErrorMessage(false)
+    setErrorMessage(false);
   };
 
   const handleCancel = () => {

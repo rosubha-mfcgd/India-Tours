@@ -326,7 +326,8 @@ app.post('/api/validateTokenWithSession',checkAuthenticated,async(req,res) =>{
   {
     res.status(200).send({"isValidRequest":"Y"});
   }
-else{
+else
+  {
    res.status(400).send({"isValidRequest":"N"});
   }
 })

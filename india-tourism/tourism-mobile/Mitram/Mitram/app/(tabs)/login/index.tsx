@@ -133,7 +133,7 @@ const handleLogin = async () => {
                            // setUserProfile(result);
                            console.log('result email...',email)
                            console.log('result mobile...',mobile)
-
+                          
                           let response = await validateTokenWithSession({access_token: request_token});
                           if(response.isValidRequest === 'Y')
                           {
@@ -146,7 +146,7 @@ const handleLogin = async () => {
                               access_token: request_token                         
                            }
                           })
-                        }else  if(response.isValidRequest === 'Y')
+                        }else if(response.isValidRequest === 'N')
                         {
                              setLoggedIn(false);
                         }

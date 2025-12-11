@@ -711,7 +711,7 @@ export const getTokenFromSession = async() =>{
     return res_data;
 }
 
-export const validateTokenWithSession = async() =>{
+export const validateTokenWithSession = async(data) =>{
      let res_data = "Token validation from session failed";
    try{
     let access_token = await getApiAccessToken();
@@ -724,7 +724,7 @@ export const validateTokenWithSession = async() =>{
             };
     
     const response = await axios.post(
-            process.env.EXPO_PUBLIC_SERVER_URI + "validateTokenWithSession",
+            process.env.EXPO_PUBLIC_SERVER_URI + "validateTokenWithSession",data,
             {headers});
       if(response){
        res_data = response.data;; 

@@ -35,8 +35,8 @@ const NavBar = ({access_token,triggerDisplayOptionsByCatId,
     const navigate = useNavigate();
      const location = useLocation();
     const { notification} = useContext(NavContext);
-     const [items, setItems] = useState('')
-    
+     const [items, setItems] = useState([])
+    const [sections, setSections] = useState([])
     const navLinkStyles = ({isActive})=>{
             return {
                 fontWeight:isActive?'bold':'normal',
@@ -85,13 +85,16 @@ const NavBar = ({access_token,triggerDisplayOptionsByCatId,
                     if(categories)
                     {
                         console.log('categories...',categories);
+                         
                         setItems(categories);
+                        setSections(prev =>[...prev,{title:"Tour Categories", data:items}])
+
                     }
                    
                 };
 
                 
-                if(items==='')
+                if(items && items.length===0)
                 {
                     getTripCategories(productID);
                 }},100);
@@ -107,15 +110,32 @@ const NavBar = ({access_token,triggerDisplayOptionsByCatId,
     return (
         <div className="navbar-grid">
         <div className="navbar">
-            <Grid container spacing={10} justify="center" width="70%">
-             {items && items.length>0 ?
+           
+            
+            <div className="navbar-sectioned-list-container">
+                
+                {sections && sections.length>0 ?
+                sections.map((section) =>(
+                    <div key={section.title} className="navbar-section-group">
+                        
+                            <Typography variant="body2" color="text.secondary" sx={{whiteSpace: 'pre-wrap'}}>
+                            {section.title}
+                            </Typography>
+                            
+                         <Grid container spacing={5} className="navbar-grid-container" >
+                        <ul className="navbar-list-container">
+
+             {
+             items && items.length>0 ?
+              
 
                 items.map((item) => (
+                    <li key={item.title} className="navbar-list-item-style">
                <div>
                  
-                <Grid item xs = {12} sm={4}  key={item.categoryID}>
+                <Grid item xs = {12} sm={4}  key={item.categoryID} className="navbar-grid-container" >
 
-                    <Card className="card"
+                    <Card className="navbar-card"
                      >
                     
                     <CardMedia component= "img"  height="100"
@@ -143,15 +163,25 @@ const NavBar = ({access_token,triggerDisplayOptionsByCatId,
                     style={{ cursor: 'pointer',backgroundColor: '#8a77f8ff',color:'#0c0c0fff'}}>
                         Click to View</button>
                     </Card>
+                    
                 </Grid>
                 
-                </div>
+                </div></li>
                 )
-                ):<div>Cannot load categories</div>
+                ):<div> <Typography variant="body2" color="text.secondary" sx={{whiteSpace: 'pre-wrap'}}>
+                    Cannot load categories</Typography></div>
                 
              }
-            
+             
+            </ul>
             </Grid>
+            </div>
+                )):<div><Typography variant="body2" color="text.secondary" sx={{whiteSpace: 'pre-wrap'}}>
+                    Cannot load tour sections</Typography></div>
+            }
+          
+           
+             </div>
           {notification ?
                <div style={{position: 'fixed', top:70,right:0}} >    
                <SideBarNotification/> 

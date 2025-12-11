@@ -39,8 +39,8 @@ export default function ValidateOTP(){
     setModalVisible(false)
    
     // Basic validation
-    if (!email && !mobile) {
-      setError('Please enter and email and mobile.');
+    if (!otp) {
+      setError('Please enter the OTP');
       setModalVisible(true)
       setIsloading(false)
       return
@@ -80,15 +80,16 @@ export default function ValidateOTP(){
                setModalVisible(true)
             }
         // Assuming your API returns a token on success
-      //  await SecureStore.setItemAsync('userToken', data.token);
-        //navigation.replace('Home'); // Navigate to home screen
+       //navigation.replace('Home'); // Navigate to home screen
       } else {
-        setError(data.message || 'Login failed. Please try again.');
+        setError('Login failed. Please try again.');
+         setModalVisible(true)
         setIsloading(false)
       }
     } catch (err) {
       setError('An error occurred. Please check your internet connection.');
       setIsloading(false)
+       setModalVisible(true)
     }
   };
 
@@ -97,7 +98,7 @@ export default function ValidateOTP(){
     setError(''); // Clear previous errors
     setModalVisible(false)
     // Basic validation
-    if (!email && !mobile) {
+    if (!otp) {
       setError('Please enter and email and mobile.');
       setModalVisible(true)
       return
