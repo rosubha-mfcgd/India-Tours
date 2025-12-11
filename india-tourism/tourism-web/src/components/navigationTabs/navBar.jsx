@@ -22,7 +22,7 @@ import {
     CardMedia,
     CardContent
   } from "@mui/material";
-
+   import Collapse from '@mui/material/Collapse';
 import { getCategories,updateAsFavorite } from "../admin/admin";
 import { NavContext } from '../navigationContext/navigationContext.jsx';
 import SideBarNotification from './sideBarNotification.jsx'
@@ -37,6 +37,11 @@ const NavBar = ({access_token,triggerDisplayOptionsByCatId,
     const { notification} = useContext(NavContext);
      const [items, setItems] = useState([])
     const [sections, setSections] = useState([])
+     const [open, setOpen] = useState(true);
+
+  const handleToggle = () => {
+    setOpen(!open);
+  };
     const navLinkStyles = ({isActive})=>{
             return {
                 fontWeight:isActive?'bold':'normal',
@@ -109,8 +114,13 @@ const NavBar = ({access_token,triggerDisplayOptionsByCatId,
 
     return (
         <div className="navbar-grid">
+              
+               <Button variant="contained" onClick={handleToggle} sx={{ mb: 2 }}>
+        {open ? 'Hide Details' : 'Show Details'}
+      </Button>
         <div className="navbar">
-           
+        
+            <Collapse in={open} timeout="auto" unmountOnExit>
             
             <div className="navbar-sectioned-list-container">
                 
@@ -133,7 +143,7 @@ const NavBar = ({access_token,triggerDisplayOptionsByCatId,
                     <li key={item.title} className="navbar-list-item-style">
                <div>
                  
-                <Grid item xs = {12} sm={4}  key={item.categoryID} className="navbar-grid-container" >
+                <Grid item xs = {5} sm={4}  key={item.categoryID} className="navbar-grid-container" >
 
                     <Card className="navbar-card"
                      >
@@ -182,6 +192,7 @@ const NavBar = ({access_token,triggerDisplayOptionsByCatId,
           
            
              </div>
+             </Collapse>
           {notification ?
                <div style={{position: 'fixed', top:70,right:0}} >    
                <SideBarNotification/> 
