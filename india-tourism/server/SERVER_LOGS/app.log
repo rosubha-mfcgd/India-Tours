@@ -1,14 +1,11 @@
 
-Mon Dec 08 2025 20:54:58 GMT-0500 (Eastern Standard Time): error in receiving token....
-Mon Dec 08 2025 20:57:32 GMT-0500 (Eastern Standard Time): error in receiving token....
-Mon Dec 08 2025 21:24:59 GMT-0500 (Eastern Standard Time): error in receiving token....
-Mon Dec 08 2025 23:29:22 GMT-0500 (Eastern Standard Time): Error: Email / Mobile Number not found
-    at C:\Users\royco\India-tourism-App\India-Tours\india-tourism\server\dist\controller\validations.js:60:19
+Sat Dec 20 2025 12:43:16 GMT-0500 (Eastern Standard Time): TypeError: axios.post(...).then(...).else is not a function
+    at C:\Users\royco\India-tourism-App\India-Tours\india-tourism\server\dist\controller\loginuser.js:105:16
     at Generator.next (<anonymous>)
-    at C:\Users\royco\India-tourism-App\India-Tours\india-tourism\server\dist\controller\validations.js:8:71
+    at C:\Users\royco\India-tourism-App\India-Tours\india-tourism\server\dist\controller\loginuser.js:8:71
     at new Promise (<anonymous>)
-    at __awaiter (C:\Users\royco\India-tourism-App\India-Tours\india-tourism\server\dist\controller\validations.js:4:12)
-    at validateOTP (C:\Users\royco\India-tourism-App\India-Tours\india-tourism\server\dist\controller\validations.js:55:50)
+    at __awaiter (C:\Users\royco\India-tourism-App\India-Tours\india-tourism\server\dist\controller\loginuser.js:4:12)
+    at getKeycloakAuthToken (C:\Users\royco\India-tourism-App\India-Tours\india-tourism\server\dist\controller\loginuser.js:90:59)
     at Layer.handleRequest (C:\Users\royco\India-tourism-App\India-Tours\india-tourism\server\node_modules\router\lib\layer.js:152:17)
     at next (C:\Users\royco\India-tourism-App\India-Tours\india-tourism\server\node_modules\router\lib\route.js:157:13)
     at C:\Users\royco\India-tourism-App\India-Tours\india-tourism\server\dist\middlewares\auth.js:44:13

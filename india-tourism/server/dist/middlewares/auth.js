@@ -1,19 +1,7 @@
 "use strict";
 require("../logNginx");
-const crypto = require("crypto");
 const jwksConfig = require('../../certs/jwks.json');
 const jsonwebtoken = require('jsonwebtoken');
-const session = require('express-session');
-const GOOGLE_CLIENT_ID = process.env.CLIENT_ID;
-const GOOGLE_CLIENT_SECRET = process.env.CLIENT_SECRET;
-const GOOGLE_ACCESS_TOKEN_URL = process.env.GOOGLE_ACCESS_TOKEN_URL;
-const GOOGLE_REDIRECT_URL = process.env.GOOGLE_OAUTH_CALLBACK_URL;
-const GOOGLE_OAUTH_URL = process.env.GOOGLE_OAUTH_URL;
-const GOOGLE_CALLBACK_URL = process.env.GOOGLE_OAUTH_CALLBACK_URL;
-const GOOGLE_OAUTH_SCOPES = [
-    "https%3A//www.googleapis.com/auth/userinfo.email",
-    "https%3A//www.googleapis.com/auth/userinfo.profile",
-];
 var jwt = require('jsonwebtoken');
 var jwkToPem = require('jwk-to-pem');
 const jsonWebKeys = jwksConfig.keys;

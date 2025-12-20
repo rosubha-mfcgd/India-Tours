@@ -56,7 +56,7 @@ const validateOTP = async(req,res,retries = 3, delay = 1000) =>{
     let {email,mobile,otp} = req.body;
     console.log('req body....',req.body);
     try{
-    if ((email === undefined || email === "") || (mobile === undefined || mobile === "")){
+    if (!email && !mobile){
         throw new Error("Email / Mobile Number not found")
       }
 
@@ -90,6 +90,7 @@ const validateOTP = async(req,res,retries = 3, delay = 1000) =>{
                  await new Promise(resolve => setTimeout(resolve, delay));
                 return validateOTP(req,res,retries-1,delay);
             }
+            console.log(e.stack)
       logNginx(e.stack);
       res.status(400).send(e.message);
     }

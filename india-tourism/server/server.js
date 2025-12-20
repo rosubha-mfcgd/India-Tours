@@ -7,6 +7,7 @@ const session = require('express-session');
 //loads environment variables from .env file into process.env
 require("dotenv").config();
 const crypto = require("crypto")
+const jwt = require('jsonwebtoken');
 require("./src/logNginx.js");
 const mongoose = require('mongoose');
 const axios = require('axios');
@@ -14,8 +15,12 @@ const cors = require('cors');
 //parses cookies attached to the client request object
 //const cookieParser = require("cookie-parser");
 const { env } = require('process');
+const fs = require('fs');
 const { GoogleGenerativeAI } = require('@google/generative-ai');
 const app = express();
+const passport = require('passport');
+const SamlStrategy = require('passport-saml').Strategy;
+const bodyParser = require('body-parser');
 
 const { OAuth2Client } = require('google-auth-library');
 const { doSignup } = require('./dist/controller/signup');
@@ -69,6 +74,14 @@ app.use(session({secret:'xcfsaqarpl',// A secret used to sign the session ID coo
   saveUninitialized: true,// Don't save uninitialized sessions
   cookie: { maxAge: 3600000 } // Example: session expires in 1 hour
 }));
+
+const secretKey = 'xcfsaqarpl'; 
+const options = {
+    expiresIn: '1h' // Token expires in 1 hour
+};
+
+
+app.use(passport.initialize());
 
 //Route for handling user registration and login
 const userRouter = require("./dist/routers/routers");
@@ -134,8 +147,59 @@ app.post("/api/signup", async(req,res) =>{
         }
     }});
       
+passport.serializeUser(function(user, done) {
+  done(null, user);
+});
 
-app.post("/api/loginUser", async(req,res) =>{
+passport.deserializeUser(function(user, done) {
+  done(null, user);
+});
+
+    // --- Passport SAML Strategy Setup ---
+passport.use(new SamlStrategy(
+  {
+   // --- KEY CONFIGURATION FIELDS ---
+    entryPoint: process.env.SSO_SAML_ENTRYPOINT_URL, // This is the IdP SSO URL
+    issuer: process.env.SSO_SAML_ISSUER, // Your Service Provider (SP) identifier
+    path: process.env.SSO_CALLBACK_URL, // Your app's assertion consumer service URL
+    // --- Security configurations ---
+    cert: fs.readFileSync(__dirname + '/certs/dev-da1syrfigotxjolb.pem', 'utf-8'), // Your SP private key
+    validateInResponseTo: true,
+  },
+  function(profile, done) {
+    // User validation logic here
+    // The 'profile' object contains attributes returned by the IdP
+    return done(null, profile);
+  }
+));
+
+// Routes
+app.get('/auth',
+  passport.authenticate('saml', { failureRedirect: '/', failureFlash: true }),
+  function(req, res) {
+    res.redirect('/');
+  }
+);
+
+
+app.post('/auth/callback', 
+  passport.authenticate('saml', { failureRedirect: '/' }),
+  function(req, res) {
+    // On success, generate a token (e.g., JWT) and redirect to the React Native deep link
+    // Generate the token
+    let payload = req.body;
+const appToken = jwt.sign(payload, secretKey, options);
+  console.log('appToken...',appToken)
+    res.redirect(`yourapp://sso-callback?token=${appToken}`); //
+});
+
+// --- Serialize/Deserialize User (for sessions) ---
+passport.serializeUser((user, done) => done(null, user));
+passport.deserializeUser((user, done) => done(null, user));
+
+// --- Routes ---
+
+app.post("/api/loginUser", checkAuthenticated,async(req,res) =>{
 
  const authorizeUrl = oAuth2Client.generateAuthUrl({
         access_type: 'offline', // Request a refresh token
@@ -143,8 +207,7 @@ app.post("/api/loginUser", async(req,res) =>{
           'https://www.googleapis.com/auth/userinfo.email'],
     });
     const {access_token} = req.body;
-    if(access_token)
-    {
+    
 
       console.log('session token...',access_token)
       
@@ -181,7 +244,7 @@ app.post("/api/loginUser", async(req,res) =>{
           console.log('Token not found..');
           res.status(400).send({message: "User Login failed, Try again"});
         }
-    }});
+    });
 
 app.get("/api/callback", async (req, res) => {
   console.log(req.query);
@@ -249,7 +312,7 @@ app.post("/api/token", async(req,res) =>{
     });
 });
 
-app.post("/api/findUpcomingEvents", async(req,res) =>{
+app.post("/api/findUpcomingEvents",checkAuthenticated, async(req,res) =>{
 
     if (!GOOGLE_GEMINI_API_KEY) {
           console.log("API_KEY not found in .env file. Please ensure it's set.");
@@ -296,6 +359,7 @@ app.post('/api/handleToken',checkAuthenticated,async(req,res) =>{
   }
   else if(session && session.access_token)
   {
+
     res.status(200).send({"access_token":session.access_token});
   }
 else{

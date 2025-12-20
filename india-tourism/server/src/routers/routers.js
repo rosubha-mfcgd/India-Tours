@@ -12,8 +12,9 @@ const {getRegisteredTourManagers, getCities} = require("../controller/tourManage
 const {performBookings, performBookingsByMobile,getBookingsByBookingId,updateBookingsByBookingId} = require("../controller/tourBookings");
 const {getSearchOptions,getPreferences} = require("../controller/searchOptions");
 const { sendConfirmation } = require('../controller/sendCommunication');
-const {resendOTP} = require('../controller/loginuser');
+const {resendOTP,getKeycloakAuthToken} = require('../controller/loginuser');
 const {findUser,updateProfile} = require('../controller/userprofile')
+const {checkUserAuthenticated} = require("../middlewares/userAuth")
 const router = express.Router();
 
 
@@ -46,7 +47,6 @@ router.post("/resendOTP",checkAuthenticated,resendOTP);
 router.post("/findUser",checkAuthenticated,findUser);
 router.post("/updateProfile",checkAuthenticated,updateProfile);
 router.get("/preferences",checkAuthenticated,getPreferences);
-
-module.exports = router 
-
-updateProfile
+router.post("/authToken",checkAuthenticated,getKeycloakAuthToken);
+router.get("/checkUserAuthenticated",checkUserAuthenticated);
+module.exports = router

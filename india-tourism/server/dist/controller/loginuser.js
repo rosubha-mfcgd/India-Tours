@@ -13,6 +13,8 @@ require("../logNginx");
 const apputil = require('../utils/appUtility');
 const EmailService = require('../service/EmailService');
 const UserService = require('../service/UserService');
+const axios = require('axios');
+const querystring = require('querystring');
 const subject = process.env.SIGNUP_EMAIL_SUBJECT;
 const body = process.env.LOGIN_EMAIL_BODY;
 const doLogin = (req_1, res_1, ...args_1) => __awaiter(void 0, [req_1, res_1, ...args_1], void 0, function* (req, res, retries = 3, delay = 1000) {
@@ -85,4 +87,33 @@ const resendOTP = (req_1, res_1, ...args_1) => __awaiter(void 0, [req_1, res_1, 
         logNginx(err.stack);
     }
 });
-module.exports = { doLogin, resendOTP };
+const getKeycloakAuthToken = (req_1, res_1, ...args_1) => __awaiter(void 0, [req_1, res_1, ...args_1], void 0, function* (req, res, retries = 3, delay = 1000) {
+    // let { email,mobile,access_token } = req.body;
+    //    let isLoggedin = null;
+    let data = {
+        client_id: process.env.AUTH_CLIENT_ID,
+        client_secret: process.env.AUTH_CLIENT_SECRET,
+        grant_type: process.env.GRANT_TYPE
+    };
+    try {
+        yield axios.post(process.env.AUTH_SERVER_URI, querystring.stringify(data), {
+            headers: {
+                'Content-Type': 'application/x-www-form-urlencoded',
+            }
+        }).then(response => {
+            res.status(200).send(response.data);
+        }).catch(error => {
+            logNginx("error in receiving auth keycloak token....", error);
+            res.status(401).send({ "error": "Invalid token found" });
+        });
+    }
+    catch (err) {
+        if (retries > 0) {
+            yield new Promise(resolve => setTimeout(resolve, delay));
+            return getKeycloakAuthToken(req, res, retries - 1, delay);
+        }
+        logNginx(err.stack);
+    }
+    //  return isLoggedin;
+});
+module.exports = { doLogin, resendOTP, getKeycloakAuthToken };

@@ -169,9 +169,23 @@ class UserService {
         return __awaiter(this, void 0, void 0, function* () {
             try {
                 const userRepo = new UserRepository();
-                let user = yield userRepo.findOne({ "emailID": email, "mobile": mobile, "otp": otp });
-                console.log('user....', user);
+                let strQuery = '';
+                if (!otp) {
+                    console.log('invalid otp...');
+                    return constants.NO;
+                }
+                if (email && mobile && otp) {
+                    strQuery = { "emailID": email, "mobile": mobile, "otp": otp };
+                }
+                else if (email && otp) {
+                    strQuery = { "emailID": email, "otp": otp };
+                }
+                else if (mobile && otp) {
+                    strQuery = { "mobile": mobile, "otp": otp };
+                }
+                let user = yield userRepo.findOne(strQuery);
                 if (user) {
+                    console.log('user....', user);
                     console.log('valid otp');
                     let _id = user._id;
                     console.log('Update signed up flag to Yes');

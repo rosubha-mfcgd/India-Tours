@@ -56,7 +56,7 @@ const validateOTP = (req_1, res_1, ...args_1) => __awaiter(void 0, [req_1, res_1
     let { email, mobile, otp } = req.body;
     console.log('req body....', req.body);
     try {
-        if ((email === undefined || email === "") || (mobile === undefined || mobile === "")) {
+        if (!email && !mobile) {
             throw new Error("Email / Mobile Number not found");
         }
         if (!otp) {
@@ -85,6 +85,7 @@ const validateOTP = (req_1, res_1, ...args_1) => __awaiter(void 0, [req_1, res_1
             yield new Promise(resolve => setTimeout(resolve, delay));
             return validateOTP(req, res, retries - 1, delay);
         }
+        console.log(e.stack);
         logNginx(e.stack);
         res.status(400).send(e.message);
     }
