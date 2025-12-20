@@ -2,6 +2,7 @@
   "expo": {
     "name": "Mitram",
     "slug": "Mitram",
+	"scheme": "mitram",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",

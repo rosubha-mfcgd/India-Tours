@@ -684,7 +684,7 @@ export const getPreferenceList = async() =>{
 
 
 
-export const getTokenFromSession = async() =>{
+export const getTokenFromSession = async(data) =>{
      let res_data = "Token from session failed";
    try{
     let access_token = await getApiAccessToken();
@@ -737,3 +737,87 @@ export const validateTokenWithSession = async(data) =>{
 
     return res_data;
 }
+
+export const keycloakConfig = {
+  issuer: 'http://localhost:8080/realms/mitram-dev', // e.g., https://auth.example.com/realms/my-expo-realm
+  clientId: 'confidential',
+  redirectUrl: 'exp://10.0.0.185:8081/login/profile', // Must match the Valid Redirect URI in Keycloak
+  scopes: ['openid', 'profile', 'email', 'offline_access'], // Add 'offline_access' for refresh tokens
+  serviceConfiguration: {
+    authorizationEndpoint: 'http://localhost:8080/realms/mitram-dev/protocol/openid-connect/auth',
+    tokenEndpoint: 'http://localhost:8080/realms/mitram-dev/protocol/openid-connect/token',
+  },
+};
+
+export const getAuthAccessToken = async() =>{
+
+     let res_data = "";
+    // let tokenUri = process.env.EXPO_AUTH_SERVER_URI;
+   try{
+      let access_token = await getApiAccessToken();
+
+      if(access_token){
+         console.log('access_token found...',access_token.data)
+        const response = await axios.post(process.env.EXPO_PUBLIC_SERVER_URI+'authToken',
+           {
+            headers: {
+                'Content-Type': 'application/x-www-form-urlencoded',
+                "Authorization":"Bearer "+access_token.data.access_token
+            }            
+          });
+      if(response)
+    {
+        console.log('response from keycloak...',response)
+        const tokens = await response.data;
+            if(tokens)
+            {
+            console.log('Access Tokens:', tokens);
+            res_data = tokens;
+            }
+        } 
+    }
+}catch(err){
+    console.log(err.stack)
+     console.error('Error while token from session:::', err);
+     throw err;
+}
+return res_data;
+}
+
+export const exchangeAuthToken = async(code,codeVerifier, tokenUri) =>{
+     let res_data = "";
+   try{
+       // console.log('access_token found...',access_token.data)
+            
+        const response = await axios.post(tokenUri,
+           {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/x-www-form-urlencoded',
+            },
+        body: new URLSearchParams({
+                grant_type: 'authorization_code',
+                client_id: 'mitram-expo-client',
+                redirect_uri: redirectUri,
+                code,
+                code_verifier: codeVerifier, // This is the crucial PKCE piece
+      }).toString(),
+    });
+      if(response){
+        const tokens = await response.json();
+        if(tokens)
+        {
+            console.log('Access Tokens:', tokens);
+            res_data = tokens;
+        }
+    } 
+    
+}catch(err){
+     console.error('Error while token from session:::', err);
+     throw err;
+}
+
+    return res_data;
+}
+
+

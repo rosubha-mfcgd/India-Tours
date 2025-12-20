@@ -58,3 +58,30 @@ Run following commands
  ==============
  
  eas build:configure
+ 
+ 
+ 
+OAuth IDP
+
+roy.cognizant.subhankar623@gmail.com/Kolkata2026@123@
+(recovery code - 56V9WHC5W26FMASR6DKD1B9C)
+
+clientID - slAxMIMqDlPW95fdG5c4xDlVGDQmFBau
+
+https://manage.auth0.com/dashboard/jp/dev-da1syrfigotxjolb/externalapps/create/g-suite
+
+IDP certificate - https://dev-da1syrfigotxjolb.jp.auth0.com/pem
+
+
+https://dev-da1syrfigotxjolb.jp.auth0.com/samlp/VcewOtRbRiHQS40WNiHOpNqm1ohqp4RW
+
+https://dev-da1syrfigotxjolb.jp.auth0.com/samlp/metadata/VcewOtRbRiHQS40WNiHOpNqm1ohqp4RW
+
+VcewOtRbRiHQS40WNiHOpNqm1ohqp4RW
+Kolkata2026@123@
+
+docker run --name keycloak -p 8080:8080 -e KEYCLOAK_ADMIN=admin -e KEYCLOAK_ADMIN_PASSWORD=admin quay.io/keycloak/keycloak:latest start-dev
+
+http://localhost:8080/realms/mitram-dev/protocol/openid-connect/token
+
+keycloak secret - yNPZfWcvwJ5jVGjysyVzGjsiqc4b10Jc
