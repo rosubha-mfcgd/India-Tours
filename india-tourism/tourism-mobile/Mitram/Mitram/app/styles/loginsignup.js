@@ -50,6 +50,26 @@ inputs:{
     gap:25
 },
 
+ gridContainer: {
+    flex: 1,
+    flexDirection: 'row', // Main axis is now horizontal for the grid layout
+    flexWrap: 'wrap', // Allows items to wrap to the next line
+  },
+
+   columnHeader: {
+    width: '80%', // Each column takes up half the container width
+    padding: 10,
+    // Below properties align children within the column (main axis: vertical, cross axis: horizontal)
+    justifyContent: 'center', // Centers items vertically within the column
+    alignItems: 'center',    // Centers items horizontally within the column
+  },
+  columnBtn: {
+    width: '20%', // Each column takes up half the container width
+    padding: 10,
+    // Below properties align children within the column (main axis: vertical, cross axis: horizontal)
+    justifyContent: 'center', // Centers items vertically within the column
+    alignItems: 'center',    // Centers items horizontally within the column
+  },
 input:{
     alignitems: 'center',
     margin: 'auto',
@@ -198,13 +218,24 @@ textfieldunderlinedInput: {
     backgroundColor:'#f7f8f8ff',
     borderRadius: 30
   },
+   contentContainer: {
+    alignItems: 'center', // Centers content horizontally
+    justifyContent: 'center', // Centers content vertically (if scrollable area allows)
+    paddingVertical: 20,
+    backgroundColor:'#110ddd6b'
+  },
   flexboxcontainer: {
     flexDirection: 'row', // Arranges children horizontally
     alignItems: 'center', // Vertically aligns items in the center
     padding: 10,
-    width:'100%',
     justifyContent: 'center',
    
+  },
+  rowContainer: {
+    flexDirection: 'column', // Key style to place items in a row
+    justifyContent: 'space-around', // Distribute items evenly
+    padding: 10,
+    borderBottomColor: '#ccc',
   },
   buttonscontainer: {
     flexDirection: 'row', // Arranges children horizontally
@@ -246,6 +277,14 @@ elevation: 5,
     color: 'red',
     marginBottom: 10,
   },
+   wrapperCustom: {
+    borderRadius: 8,
+    padding: 10,
+    alignItems: 'center',
+    justifyContent: 'center',
+    borderWidth: 1,
+    borderColor: '#ccc',
+  }
   // Add more common styles here
 });
 

@@ -101,10 +101,8 @@ const getKeycloakAuthToken = (req_1, res_1, ...args_1) => __awaiter(void 0, [req
                 'Content-Type': 'application/x-www-form-urlencoded',
             }
         }).then(response => {
+            console.log('response data....', response.data);
             res.status(200).send(response.data);
-        }).catch(error => {
-            logNginx("error in receiving auth keycloak token....", error);
-            res.status(401).send({ "error": "Invalid token found" });
         });
     }
     catch (err) {

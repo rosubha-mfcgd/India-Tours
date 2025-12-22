@@ -31,7 +31,7 @@ async function findjsonWebKeys() {
         const certs = await axios.get(jwks_uri);
         if(certs)
         {
-            console.log('certs....', JSON.stringify(certs,getCircularReplacer())); 
+           // console.log('certs....', JSON.stringify(certs,getCircularReplacer())); 
            return JSON.stringify(certs,getCircularReplacer());
         }else{
           //  res.status(400).send({"error":"no config found"});
@@ -52,12 +52,14 @@ async function checkUserAuthenticated (req, res, next)  {
        let jsonWebKeys = await findjsonWebKeys();
        if(jsonWebKeys)
        {
-            session.jsonWebKeys = jsonWebKeys.data;
+            console.log('jsonWebkeys.....',jsonWebKeys);
+
+            session.jsonWebKeys = (JSON.parse(jsonWebKeys)).data.keys;
+            console.log('session jsonWebkeys....',session.jsonWebKeys)
        }
     }
-      
-         // Access 'Authorization' header
-        const authorizationHeader = req.get('Authorization');
+    // Access 'Authorization' header
+        const authorizationHeader = req.get('User-Authorization');
         const hostHeader = req.get('Host'); // Access 'Host' header
         console.log('Authorization:', authorizationHeader);
         console.log('Host:', hostHeader);
@@ -74,12 +76,12 @@ function validateToken(token,res,next) {
     verifyJsonWebTokenSignature(token, jsonWebKey, function(err, decodedToken) {
         if (err) 
             {
-           // console.log(err);
-             logNginx(err.stack);
              console.log('invalid token....');
+             logNginx(err.stack);
              res.status(401).send({message:"Auth token not found"}); 
         } else {
-            console.log(decodedToken);
+
+            console.log("user token valid...", decodedToken);
             
             next(); 
         }

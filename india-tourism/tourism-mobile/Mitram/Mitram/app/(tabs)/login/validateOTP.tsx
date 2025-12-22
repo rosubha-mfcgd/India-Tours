@@ -150,11 +150,7 @@ export default function ValidateOTP(){
 
             if(otpValid)
             {
-              
-              // generateNonce();
-              // generateNewId();
-
-              let response = await getAuthAccessToken();
+             let response = await getAuthAccessToken();
               if(response)
               {
                   //setCodeChallenge(response.codeChallenge);
@@ -169,6 +165,8 @@ export default function ValidateOTP(){
                            }
                  // promptAsync();
               //  let result = await getTokenFromSession(data);
+              }
+                );
               }
             }
             else{

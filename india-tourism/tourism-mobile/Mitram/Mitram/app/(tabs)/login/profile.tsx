@@ -1,5 +1,5 @@
 import React, { useState,useEffect } from 'react';
-import {KeyboardAvoidingView, View, Text, TextInput, 
+import {ScrollView, View, Text, TextInput, Pressable,
     TouchableOpacity,ActivityIndicator,Platform, 
     SectionList} from 'react-native';
 import * as SecureStore from 'expo-secure-store'; // For storing tokens
@@ -20,14 +20,18 @@ import CheckBox from 'expo-checkbox';
 
 export default function Userprofile(){
 
-     const {email,mobile} = useLocalSearchParams();
+     const {email,mobile,access_token} = useLocalSearchParams();
      const[userName,setUserName] = useState('');
      const [pref,setPref] = useState([])
 
      const [userPref,setUserPref] = useState([])
      const [address,setAddress] = useState('')
      const [city, setCity] = useState('');
+     const[mobileNo,setMobileNo] = useState('');
      const [section, setSection] = useState([]);
+     const [selectPref,setSelectPref] = useState([])
+     const [isExpanded, setIsExpanded] = useState(false);
+     const[hidePref,setHidePref] = useState(false)
     const [fontsLoaded] = useFonts({
       'Inter-Black': Inter_900Black, // Assign a name to the loaded font
       'Poppins-Regular': Poppins_400Regular,
@@ -35,32 +39,74 @@ export default function Userprofile(){
     'Inter-Black-Header': Inter_900Black_Italic
     });
 
-    const handleChecked = async(data)=>{
-
+    const handleChecked = async(item)=>{
+      // console.log('selected is...',selectPref[id])
+      //   selectPref[id] = !selectPref[id]?true:false;
+      //    console.log('selected now is...',selectPref[id])
+      selectPref[item.code-1] = !selectPref[item.code-1]?true:false;
+      if(selectPref[item.code-1])
+      {
+        userPref[item.code-1] = item.code;
+       
+      }else{
+         userPref[item.code-1] = 0;
+      }
+      console.log('preference selected ....',selectPref,item.code);
+       console.log('user preference selected ....',userPref);
     }
 
+    const saveProfile = async()=>{
+    }
+
+    const editProfile = async()=>{
+    }
+// Determine the icon name based on the state
+  const iconName = hidePref ? 'remove-circle' : 'add-circle';
      const renderPrefHeader = ({ section: { title } }) => (
     <View style={TourCommonStyle.sectionheader}>
-      <Text style={TourCommonStyle.headerTitle}>{title}</Text>
+      
+      <Text style={[TourCommonStyle.headerTitle,TourCommonStyle.headerColWidth]} 
+      onPress={()=>setHidePref(!hidePref)}>{title}</Text>
+   
+      
+        <Ionicons
+          name={iconName}
+          size={24}
+          color="blue"  style={TourCommonStyle.buttonColWidth} 
+          onPress={()=>setHidePref(!hidePref)}
+        /> 
+
+     
     </View>
   );
 
 
 
-    const RenderPrefList = ({item,index}) =>{
-
-      let isChecked = (userPref.indexOf[item.code] !== -1);
-      return(
-         <View style={TourCommonStyle.rowContainer}>
-      
-        <CheckBox id={index}
-          value={isChecked}
-          onValueChange={()=>handleChecked(item)}
-          color={true ? '#4630EB' : undefined}
-        />
-        <Text style={TextStyle.paragraph}>{item.desc}</Text>
-      </View>
+    const RenderPrefList = ({item}) =>{
      
+      let isChecked = (userPref.indexOf[item.code] !== -1);
+      console.log('pref item....',item)
+      selectPref[item.code-1] = !item.selectPref ? false:item.selectPref ;
+      
+      return(
+        hidePref?
+         <View style={LoginSignUpStyle.rowContainer}>
+          <Pressable 
+           onPress={() => {
+            handleChecked(item)
+         }}
+      style={({ pressed }) => [ // The style prop receives the 'pressed' state
+        LoginSignUpStyle.wrapperCustom,
+        {
+          backgroundColor: (pressed || userPref[item.code-1]) ? '#52667cff':'#ece1e1ff' , // Optional: change background
+        },
+      ]}
+    >
+     <Text style={TextStyle.paragraph}>{item.desc}</Text>
+         
+            </Pressable>
+        </View>:<View/>
+    
       );
        
     
@@ -70,40 +116,51 @@ useEffect(()=>{
  let mounted = true;
      // setModalVisible(false);
      const timer = setTimeout( () =>{
-        const searchUserProfileDetails = async(email,mobile)=>{
+        const searchUserProfileDetails = async(email,mobile,access_token)=>{
             let req_data = {
-              email:email, mobile:mobile
+              email:email, 
+              mobile:mobile,
+              access_token:access_token
             }
 
             let result = await searchUserProfile(req_data);
             
             if(result)
             {
-              let resp = JSON.parse(result)
-              if(resp.name){
-                setUserName(resp.name);
-              }
-              if(resp.pref && resp.pref,length>0)
-              {
-                setUserPref(resp.pref);
-              }
+              console.log('result is....',result)
+                //  let resp = result
+                  if(result.name)
+                  {
+                    console.log('result name ....',result.name)
+                    setUserName(result.name);
+                  }
+                  if(result.preference && result.preference.length>0)
+                  {
+                    setUserPref(result.preference);
+                  }
 
-                if(resp.address1)
-                {
-                  setAddress(resp.address1)
-                }
-                if(resp.city)
-                setCity(resp.city)
+                    if(result.address1)
+                    {
+                      setAddress(result.address1)
+                    }
+                    if(result.city)
+                       setCity(result.city)
+
+                    if(result.mobile)
+                      setMobileNo(result.mobile)
             }
         }
 
-          const getPreferences = async()=>{
-              let result = await getPreferenceList();
+          const getPreferences = async(access_token)=>{
+            let data = {access_token:access_token}
+              let result = await getPreferenceList(data);
               if(result && result.length>0)
               {
-                  setPref(JSON.parse(result));
-                  let data = [{title: "My Preferences", data: pref}];
-                  setSection(data);
+                console.log('pref result is....',result)
+                  setPref(result);
+                  let sections = [{title: "My Preferences", data: result}];
+                  setSection(sections);
+                  console.log('sections is...',section)
               }
           }
 
@@ -112,11 +169,11 @@ useEffect(()=>{
         {
             if(!pref || pref.length===0)
             {
-                 getPreferences();
+               getPreferences(access_token);
             }
             if(!userName)
             {
-              searchUserProfileDetails(email,mobile);
+              searchUserProfileDetails(email,mobile,access_token);
             }
             mounted = false;
         }
@@ -133,16 +190,14 @@ useEffect(()=>{
 
 return (
   fontsLoaded && pref.length>0?
- <KeyboardAvoidingView style = {LoginSignUpStyle.centeredContainer}  
-    behavior={Platform.OS === 'ios' ? 'padding' : undefined}
-              keyboardVerticalOffset={Platform.OS === 'ios' ? 64 : 0} // Adjust offset as needed
-              >
+  <View style = {LoginSignUpStyle.contentContainer} 
+               >
     <Text style={{ fontFamily: 'Inter-Black-Header',color:'#f3f3f3d7',fontSize:50 }}>My Profile</Text>
 
     <View
       style={LoginSignUpStyle.flexboxcontainer}>
     <Text
-         style={{fontFamily:'Poppins-SemiBold'}}>Name</Text>
+         style={{fontFamily:'Poppins-SemiBold'}}>Name : </Text>
 
         <Text
          style={{fontFamily:'Poppins-SemiBold'}}
@@ -153,7 +208,7 @@ return (
     <View
       style={LoginSignUpStyle.flexboxcontainer}>
     <Text
-         style={{fontFamily:'Poppins-SemiBold'}}>Email</Text>
+         style={{fontFamily:'Poppins-SemiBold'}}>Email-id : </Text>
 
         <Text
          style={{fontFamily:'Poppins-SemiBold'}}
@@ -164,11 +219,29 @@ return (
       <View
       style={LoginSignUpStyle.flexboxcontainer}>
     <Text
-         style={{fontFamily:'Poppins-SemiBold'}}>Mobile</Text>
+         style={{fontFamily:'Poppins-SemiBold'}}>Mobile : </Text>
 
         <Text
          style={{fontFamily:'Poppins-SemiBold'}}
-        >{mobile}</Text>
+        >{mobileNo}</Text>
+
+    </View>
+
+    <View
+      style={LoginSignUpStyle.flexboxcontainer}>
+    <Text
+         style={{fontFamily:'Poppins-SemiBold'}}>Address : </Text>
+
+        <Text
+         style={{fontFamily:'Poppins-SemiBold'}}
+        >{address}</Text>
+
+         <Text
+         style={{fontFamily:'Poppins-SemiBold'}}>City : </Text>
+
+        <Text
+         style={{fontFamily:'Poppins-SemiBold'}}
+        >{city}</Text>
 
     </View>
 
@@ -178,26 +251,40 @@ return (
 
        <SectionList 
        sections={section}
-              renderItem={({item,index})=> <RenderPrefList item = {item} index={index}/>}
+              renderItem={({item})=> <RenderPrefList item = {item}/>}
               renderSectionHeader={renderPrefHeader}
               keyExtractor={item =>`${item._id}`}
         />
 
-    </View>
 
-<View
+    </View>
+     <View
       style={LoginSignUpStyle.flexboxcontainer}>
-    <Text
-         style={{fontFamily:'Poppins-SemiBold'}}>Mobile</Text>
-
-        <Text
-         style={{fontFamily:'Poppins-SemiBold'}}
-        >{mobile}</Text>
-
+    <View style={LoginSignUpStyle.buttonscontainer}>
+    
+            <TouchableOpacity 
+                    style={LoginSignUpStyle.loginbutton}>
+                    <Text style={TourCommonStyle.buttonText} 
+                    onPress={saveProfile} >Save</Text>
+                  </TouchableOpacity>
+       
+      {/* Add a "Forgot Password" link or similar */}
+    
     </View>
 
-
-</KeyboardAvoidingView>: 
+     <View style={LoginSignUpStyle.buttonscontainer}>
+        
+            <TouchableOpacity 
+                    style={LoginSignUpStyle.loginbutton}>
+                    <Text style={TourCommonStyle.buttonText} 
+                    onPress={editProfile}
+                    >Edit</Text>
+                  </TouchableOpacity>
+   
+          
+    </View>
+    </View>
+</View>: 
 <View style={TourCommonStyle.centeredContainer}>
             <ActivityIndicator 
             size="large" color="#3c3ca7ff"/>

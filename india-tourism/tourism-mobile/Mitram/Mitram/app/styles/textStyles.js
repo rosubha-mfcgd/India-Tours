@@ -78,7 +78,20 @@ infotext: {
 },
 paragraph: {
     marginLeft: 8,
+    // Styles for the items within the sections
+    padding: 16,
+    borderBottomWidth: 1,
+    borderBottomColor: '#eee',
+    backgroundColor: '#fff',
   },
+  selectedparagraph: {
+    marginLeft: 8,
+    // Styles for the items within the sections
+    padding: 16,
+    borderBottomWidth: 1,
+    borderBottomColor: '#4b2bd8ff',
+    backgroundColor: '#4b2bd8ff',
+  }
 
 
 });

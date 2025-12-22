@@ -29,10 +29,11 @@ const findUser = async(req,res,retries = 3, delay = 1000) => {
             let result = await new UserService().findUser(email,mobile);
             if(result)
             {
+                console.log('result....',result);
                 res.status(200).send({"name":result.name, "mobile":result.mobile, 
                     "emailID":result.emailID});
             }
-        }
+    }
     }catch(error)
     {
         if(retries>0)

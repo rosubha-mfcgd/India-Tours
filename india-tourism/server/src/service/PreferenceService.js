@@ -24,9 +24,9 @@ class PreferenceService{
                             }
                 }
                 catch(err){
-                    // console.log(err.stack);
-                    logNginx(err.stack);
                     
+                    logNginx(err.stack);
+                    console.log(err.stack);
                   }
                   return [];
         }

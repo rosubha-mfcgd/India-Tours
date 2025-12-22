@@ -631,10 +631,11 @@ export const searchUserProfile = async(data) =>{
     
      let access_token = await getApiAccessToken();
      if(access_token){
-        console.log('access_token found...',access_token.data)
+        console.log('access_token found for user profile search...',access_token.data)
     const headers = {
             "Content-type": "application/json; charset=UTF-8",
-            "Authorization":"Bearer "+access_token.data.access_token
+            "Authorization":"Bearer "+access_token.data.access_token,
+            "User-Authorization": data.access_token
             };
    
   const response = await axios.post(
@@ -642,10 +643,11 @@ export const searchUserProfile = async(data) =>{
         data,
        {headers}
     );
-     if(response){
+     if(response)
+    {
         res_data = response.data;
     }
-    }
+}
    
 }catch(err){
      console.error('Error while user search:::', err);
@@ -655,7 +657,7 @@ return res_data;
 }
 
 
-export const getPreferenceList = async() =>{
+export const getPreferenceList = async(data) =>{
      let res_data = "signup failed";
    try{
     let access_token = await getApiAccessToken();
@@ -664,7 +666,8 @@ export const getPreferenceList = async() =>{
         console.log('access_token found...',access_token.data)
         const headers = {
                 "Content-type": "application/json; charset=UTF-8",
-                "Authorization":"Bearer "+access_token.data.access_token
+                "Authorization":"Bearer "+access_token.data.access_token,
+                 "User-Authorization": data.access_token
             };
     
     const response = await axios.get(
@@ -757,14 +760,15 @@ export const getAuthAccessToken = async() =>{
       let access_token = await getApiAccessToken();
 
       if(access_token){
-         console.log('access_token found...',access_token.data)
+         console.log('access_token found for user Auth...',access_token.data)
         const response = await axios.post(process.env.EXPO_PUBLIC_SERVER_URI+'authToken',
+            {},
            {
             headers: {
-                'Content-Type': 'application/x-www-form-urlencoded',
+                "Content-type": "application/json; charset=UTF-8",
                 "Authorization":"Bearer "+access_token.data.access_token
-            }            
-          });
+            }}           
+          );
       if(response)
     {
         console.log('response from keycloak...',response)

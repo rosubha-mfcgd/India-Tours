@@ -122,16 +122,13 @@ try{
       'Content-Type': 'application/x-www-form-urlencoded',
       }}).then(
       response => {
-
+          console.log('response data....',response.data)
           res.status(200).send(response.data);
       }
-    ).catch(error =>
-    {
-      logNginx("error in receiving auth keycloak token....",error);
-      res.status(401).send({"error":"Invalid token found"});
-    });
+    );
 
-    }catch(err)
+    }
+    catch(err)
       {
          if(retries>0)
         {

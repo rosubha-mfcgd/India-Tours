@@ -32,6 +32,7 @@ const findUser = (req_1, res_1, ...args_1) => __awaiter(void 0, [req_1, res_1, .
         if (access_token) {
             let result = yield new UserService().findUser(email, mobile);
             if (result) {
+                console.log('result....', result);
                 res.status(200).send({ "name": result.name, "mobile": result.mobile,
                     "emailID": result.emailID });
             }

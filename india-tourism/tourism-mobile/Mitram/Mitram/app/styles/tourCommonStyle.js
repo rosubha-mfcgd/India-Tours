@@ -25,6 +25,7 @@ centeredContainer: {
    sectionheader: {
     padding: 10,
     backgroundColor: '#f0f0f0',
+    flexDirection: 'row'
   },
   rowContainer: {
       flexDirection: 'row',
@@ -168,6 +169,12 @@ fontWeight: 'bold',
  headerTitle: {
     fontWeight: 'bold',
     fontSize: 18,
+  },
+   headerColWidth: {
+  width:'80%'
+  },
+   buttonColWidth: {
+  width:'20%'
   },
 icon: { 
 marginRight: 8, 

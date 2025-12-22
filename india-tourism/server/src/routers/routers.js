@@ -44,9 +44,8 @@ router.post("/sendConfirmation",checkAuthenticated,sendConfirmation);
 router.get("/searchMyOptions",checkAuthenticated,getSearchOptions);
 router.post("/tourItenerariesForTrip",checkAuthenticated,getTourItenerariesForTrip);
 router.post("/resendOTP",checkAuthenticated,resendOTP);
-router.post("/findUser",checkAuthenticated,findUser);
+router.post("/findUser",checkAuthenticated,checkUserAuthenticated,findUser);
 router.post("/updateProfile",checkAuthenticated,updateProfile);
-router.get("/preferences",checkAuthenticated,getPreferences);
+router.get("/preferences",checkAuthenticated,checkUserAuthenticated, getPreferences);
 router.post("/authToken",checkAuthenticated,getKeycloakAuthToken);
-router.get("/checkUserAuthenticated",checkUserAuthenticated);
 module.exports = router
