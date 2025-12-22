@@ -25,6 +25,7 @@ export default function Categories()
     const [activeNotification,setActiveNotification] = useState(false)
     const [favorite,setFavorite] = useState(new Map())
     const [changeFav,setChangeFav] = useState(true)
+     
      const menuList = [
     { id: '1', name: 'Upcoming Events' },
     { id: '2', name: 'Exciting Offers' },

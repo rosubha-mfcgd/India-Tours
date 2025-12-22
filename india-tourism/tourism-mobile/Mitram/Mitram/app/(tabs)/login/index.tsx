@@ -17,8 +17,7 @@ import 'react-native-get-random-values'; // This must precede `uuid`
 import { v4 as uuidv4 } from 'uuid';
 import * as Linking from 'expo-linking';
 import { authorize } from 'react-native-app-auth';
-import * as WebBrowser from 'expo-web-browser';
-import { useAuthRequest, makeRedirectUri } from 'expo-auth-session';
+import PleaseWaitScreen from '../../admin/waitscreen.js'
 export default function LoginUser(){
 
   const [email, setEmail] = useState('');
@@ -28,6 +27,7 @@ export default function LoginUser(){
    const [userProfile,setUserProfile] = useState('');
    const[isLoggedIn,setLoggedIn] = useState(false)
    const [signupEnable,setSignupEnable] = useState(false)
+   const [isloading,setIsloading] = useState(false)
    const router = useRouter();
    const redirectUri = Linking.createURL('redirect', {});
 
@@ -89,7 +89,7 @@ const config = {
 
 const handleLogin = async () => {
     setError(''); // Clear previous errors
-
+    
     // Basic validation
     if (!email && !mobile) 
     {
@@ -100,6 +100,7 @@ const handleLogin = async () => {
       setModalVisible(false);
     }
     try {
+      setIsloading(true)
      let logintoken = await getApiAccessToken();
         let deviceID = await SecureStore.getItemAsync('appDeviceID');
       if(logintoken && deviceID)
@@ -242,6 +243,12 @@ const handleLogin = async () => {
         autoCapitalize="none"
       />
 </View>
+{
+  isloading ?
+   
+       <PleaseWaitScreen/>:<View/>
+    
+}
 <View>
         {error ?  
         <View>
@@ -253,6 +260,7 @@ const handleLogin = async () => {
         
         : <View/>}
     </View>
+
 <View
       style={LoginSignUpStyle.flexboxcontainer}>
          <Text style={{fontFamily:'Poppins-Regular',textAlign: 'center'}}>OR</Text>
