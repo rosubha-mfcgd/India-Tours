@@ -34,7 +34,7 @@ const getSearchOptions = async(req,res,retries = 3, delay = 1000) =>{
 
       try{
          let preferences = await new PreferenceService().getPreferences();
-         if(preferences)
+         if(preferences && preferences.lenggth)
          {
            res.status(200).send(preferences);
          }
