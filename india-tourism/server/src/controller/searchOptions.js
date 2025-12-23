@@ -34,12 +34,16 @@ const getSearchOptions = async(req,res,retries = 3, delay = 1000) =>{
 
       try{
          let preferences = await new PreferenceService().getPreferences();
-         if(preferences && preferences.lenggth)
+         if(preferences && preferences.length)
          {
+          console.log('preferences retrieved....',preferences)
            res.status(200).send(preferences);
+         }else if(!preferences){
+          res.status(200).send([]);
          }
         }
-        catch(err){
+        catch(err)
+        {
               if(retries>0)
             {
                 console.log('retry attempted...')

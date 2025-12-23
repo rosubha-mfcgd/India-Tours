@@ -11,27 +11,31 @@ import { Inter_900Black,Inter_900Black_Italic } from '@expo-google-fonts/inter';
 import {Poppins_400Regular, Poppins_600SemiBold} from '@expo-google-fonts/poppins';
 import {Link} from 'expo-router';
 import TextStyle from '../../styles/textStyles' ;
-import {searchUserProfile,getPreferenceList} from '../../admin/admin.js';
+import {searchUserProfile,getPreferenceList,updateUserProfile} from '../../admin/admin';
 import Ionicons from '@expo/vector-icons/Ionicons';
 import DeviceInfo from 'react-native-device-info';
-import AuthCommonModal from '../../admin/authCommonModal.js'
+import AuthCommonModal from '../../admin/authCommonModal'
 import { useLocalSearchParams } from 'expo-router';
-import CheckBox from 'expo-checkbox';
+
 
 export default function Userprofile(){
 
      const {email,mobile,access_token} = useLocalSearchParams();
      const[userName,setUserName] = useState('');
      const [pref,setPref] = useState([])
-
+      const [points,setPoints] = useState(0);
      const [userPref,setUserPref] = useState([])
      const [address,setAddress] = useState('')
      const [city, setCity] = useState('');
-     const[mobileNo,setMobileNo] = useState('');
+     const[mobileFromDB,setMobileFromDB] = useState('');
+     const[emailFromDB,setEmailFromDB] = useState('');
      const [section, setSection] = useState([]);
      const [selectPref,setSelectPref] = useState([])
-     const [isExpanded, setIsExpanded] = useState(false);
-     const[hidePref,setHidePref] = useState(false)
+     const[hidePref,setHidePref] = useState(false);
+     const[modalVisible,setModalVisible] = useState(false);
+     const[isEditable,setIsEditable] = useState(false);
+     const [error, setError] = useState('');
+
     const [fontsLoaded] = useFonts({
       'Inter-Black': Inter_900Black, // Assign a name to the loaded font
       'Poppins-Regular': Poppins_400Regular,
@@ -56,9 +60,32 @@ export default function Userprofile(){
     }
 
     const saveProfile = async()=>{
+       setError('');
+       setModalVisible(false);
+      try{
+        let data = {
+          email:emailFromDB,
+          mobile:mobileFromDB,
+          prefs: userPref,
+          address: address,
+          city: city
+        }
+
+       let user =  await updateUserProfile(data);
+       if(user)
+       {
+          setError('User profile updated successfully');
+          setModalVisible(true);
+       }
+      }catch(err){
+        console.log(err.stack);
+         setError('Failed to update User profile');
+          setModalVisible(true);
+      }
     }
 
     const editProfile = async()=>{
+      setIsEditable(!isEditable);
     }
 // Determine the icon name based on the state
   const iconName = hidePref ? 'remove-circle' : 'add-circle';
@@ -98,7 +125,8 @@ export default function Userprofile(){
       style={({ pressed }) => [ // The style prop receives the 'pressed' state
         LoginSignUpStyle.wrapperCustom,
         {
-          backgroundColor: (pressed || userPref[item.code-1]) ? '#52667cff':'#ece1e1ff' , // Optional: change background
+          backgroundColor: (pressed ||userPref && userPref.length>0 &&
+             userPref[item.code-1]) ? '#52667cff':'#ece1e1ff' , // Optional: change background
         },
       ]}
     >
@@ -129,6 +157,11 @@ useEffect(()=>{
             {
               console.log('result is....',result)
                 //  let resp = result
+                  if(result.emailID)
+                  {
+                    setEmailFromDB(result.emailID);
+                  }
+
                   if(result.name)
                   {
                     console.log('result name ....',result.name)
@@ -147,7 +180,7 @@ useEffect(()=>{
                        setCity(result.city)
 
                     if(result.mobile)
-                      setMobileNo(result.mobile)
+                      setMobileFromDB(result.mobile)
             }
         }
 
@@ -223,29 +256,60 @@ return (
 
         <Text
          style={{fontFamily:'Poppins-SemiBold'}}
-        >{mobileNo}</Text>
+        >{mobileFromDB}</Text>
 
     </View>
+    <View>
+            {error ? <AuthCommonModal modalVisible={modalVisible} 
+                        setModalVisible={setModalVisible} errorMessage={error} 
+                        setErrorMessage={setError}
+                        /> : null}
+        </View>
 
     <View
       style={LoginSignUpStyle.flexboxcontainer}>
     <Text
          style={{fontFamily:'Poppins-SemiBold'}}>Address : </Text>
 
+      {isEditable?
+       <TextInput 
+              placeholder="" key={`"address"`}  
+              style={LoginSignUpStyle.textfieldunderlinedInput}
+        value={address} onChangeText={text=>
+        {
+          setAddress(text);
+        }}/>:
         <Text
          style={{fontFamily:'Poppins-SemiBold'}}
         >{address}</Text>
-
+      }
+      </View>
+       <View
+      style={LoginSignUpStyle.flexboxcontainer}>
          <Text
          style={{fontFamily:'Poppins-SemiBold'}}>City : </Text>
-
+          {isEditable?
+          <TextInput 
+              placeholder="" key={`"city"`}  
+              style={LoginSignUpStyle.textfieldunderlinedInput}
+        value={city} onChangeText={text=>
+        {
+          setCity(text);
+        }}/>:
         <Text
          style={{fontFamily:'Poppins-SemiBold'}}
         >{city}</Text>
-
+          }    
     </View>
 
-
+ <View
+      style={LoginSignUpStyle.flexboxcontainer}>
+         <Text
+         style={{fontFamily:'Poppins-SemiBold'}}>Your Points : </Text>
+  
+          <Text
+         style={{fontFamily:'Poppins-SemiBold'}}
+        >{points}</Text>
      <View
       style={LoginSignUpStyle.flexboxcontainer}>
 

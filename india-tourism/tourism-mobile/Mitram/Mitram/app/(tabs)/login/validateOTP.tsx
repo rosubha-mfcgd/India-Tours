@@ -9,7 +9,7 @@ import { useFonts } from 'expo-font';
 import { Inter_900Black,Inter_900Black_Italic } from '@expo-google-fonts/inter'; 
 import {Poppins_400Regular, Poppins_600SemiBold} from '@expo-google-fonts/poppins';
 import { useLocalSearchParams } from 'expo-router';
-import {validateOTPForLogin,resendOTPForLogin,getAuthAccessToken,exchangeAuthToken} from '../../admin/admin'
+import {validateOTPForLogin,resendOTPForLogin,getAuthAccessToken,exchangeAuthToken,persistDataInCache} from '../../admin/admin'
 import { useRouter } from 'expo-router';
 import Ionicons from '@expo/vector-icons/Ionicons';
 import AuthCommonModal from '../../admin/authCommonModal.js'
@@ -21,7 +21,7 @@ import * as AuthSession from 'expo-auth-session';
 import 'react-native-get-random-values'; // Import this at the very top of your application entry file
 import { v4 as uuidv4 } from 'uuid';
 import {getPKCE} from '../../admin/generateCodeChallenge';
-
+ 
 export default function ValidateOTP(){
 
   const [otp, setOtp] = useState('');
@@ -151,11 +151,21 @@ export default function ValidateOTP(){
             if(otpValid)
             {
              let response = await getAuthAccessToken();
-              if(response)
+              let deviceID = await SecureStore.getItemAsync('appDeviceID');
+              if(response && deviceID)
               {
                   //setCodeChallenge(response.codeChallenge);
                   //let tokenUrl =  'http://localhost:8080/realms/mitram-dev/protocol/openid-connect/token'                  setTokenEndPoint(tokenUrl)
                   console.log('response...',response);
+                
+                await SecureStore.setItemAsync('refreshToken',response.refresh_token);
+                if(email && mobile)
+                   await SecureStore.setItemAsync(deviceID,email+'|'+mobile);
+                else if(email)
+                    await SecureStore.setItemAsync(deviceID,email);
+                 else if(mobile)
+                     await SecureStore.setItemAsync(deviceID,mobile);
+
                 router.push({
                          pathname: "/login/profile",
                          params: { 
@@ -163,9 +173,7 @@ export default function ValidateOTP(){
                               mobile: mobile,
                               access_token: response.access_token                         
                            }
-                 // promptAsync();
-              //  let result = await getTokenFromSession(data);
-              }
+                   }
                 );
               }
             }
@@ -175,7 +183,7 @@ export default function ValidateOTP(){
                setModalVisible(true)
             }
         // Assuming your API returns a token on success
-       //navigation.replace('Home'); // Navigate to home screen
+       
       } else {
         setError('Login failed. Please try again.');
          setModalVisible(true)

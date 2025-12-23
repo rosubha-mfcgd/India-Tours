@@ -63,6 +63,7 @@ class UserService {
     }
     updateUserDetails(email, mobile, prefs, address, city, zipcode) {
         return __awaiter(this, void 0, void 0, function* () {
+            const userRepo = new UserRepository();
             try {
                 let user = null;
                 let strQuery = '';

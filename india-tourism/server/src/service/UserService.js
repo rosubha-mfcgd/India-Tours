@@ -54,6 +54,7 @@ async updateLoginOTP(email,mobile,loginOTP)
 }
 async updateUserDetails(email,mobile,prefs,address,city,zipcode)
 {
+  const userRepo = new UserRepository();
   try{
 
      let user = null;

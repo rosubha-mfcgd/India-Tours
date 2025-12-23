@@ -89,6 +89,34 @@ export const validateOTPForLogin = async(data) =>{
 return res_data;
 }
 
+
+export const updateUserProfile = async(data) =>{
+    let res_data = "user profile update failed";
+   try{
+   
+   let access_token = await getApiAccessToken();
+     if(access_token){
+        console.log('access_token found...',access_token.data.access_token)
+         let headers = {
+            "Content-type": "application/json; charset=UTF-8",
+            "Authorization":"Bearer "+access_token.data.access_token
+            };
+        let response = await axios.post(
+        process.env.EXPO_PUBLIC_SERVER_URI + "updateProfile",
+        data,
+       {headers});
+    if(response){
+       res_data = response.data;; 
+    }
+}
+    
+}catch(err){
+     console.error('Error while profile update:::', err.stack);
+     throw err;
+}
+return res_data;
+}
+
 export const resendOTPForLogin = async(data) =>{
       let res_data = "resend otp failed";
    try{
@@ -674,6 +702,7 @@ export const getPreferenceList = async(data) =>{
             process.env.EXPO_PUBLIC_SERVER_URI + "preferences",
             {headers});
       if(response){
+        console.log('preferences found....',response.data)
        res_data = response.data;; 
         } 
     }

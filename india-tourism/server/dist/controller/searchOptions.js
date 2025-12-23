@@ -37,8 +37,12 @@ const getSearchOptions = (req_1, res_1, ...args_1) => __awaiter(void 0, [req_1, 
 const getPreferences = (req_1, res_1, ...args_1) => __awaiter(void 0, [req_1, res_1, ...args_1], void 0, function* (req, res, retries = 3, delay = 1000) {
     try {
         let preferences = yield new PreferenceService().getPreferences();
-        if (preferences) {
+        if (preferences && preferences.length) {
+            console.log('preferences retrieved....', preferences);
             res.status(200).send(preferences);
+        }
+        else if (!preferences) {
+            res.status(200).send([]);
         }
     }
     catch (err) {

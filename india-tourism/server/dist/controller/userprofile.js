@@ -47,16 +47,15 @@ const findUser = (req_1, res_1, ...args_1) => __awaiter(void 0, [req_1, res_1, .
     }
 });
 const updateProfile = (req_1, res_1, ...args_1) => __awaiter(void 0, [req_1, res_1, ...args_1], void 0, function* (req, res, retries = 3, delay = 1000) {
-    let { email, mobile, prefs, address, city, zipcode, access_token } = req.body;
+    let { email, mobile, prefs, address, city, zipcode } = req.body;
     try {
-        if (access_token) {
-            let result = yield new UserService().updateUserDetails(email, mobile, prefs, address, city, zipcode);
-            if (result) {
-                res.status(200).send({ "name": result.name, "mobile": result.mobile, "emailID": result.emailID });
-            }
-            else {
-                res.status(400).send({ "error": "Profile could not be updated, try again" });
-            }
+        console.log('Here for update profile....');
+        let result = yield new UserService().updateUserDetails(email, mobile, prefs, address, city, zipcode);
+        if (result) {
+            res.status(200).send({ "name": result.name, "mobile": result.mobile, "emailID": result.emailID });
+        }
+        else {
+            res.status(400).send({ "error": "Profile could not be updated, try again" });
         }
     }
     catch (err) {

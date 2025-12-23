@@ -49,11 +49,11 @@ const findUser = async(req,res,retries = 3, delay = 1000) => {
 
 const updateProfile = async(req,res,retries = 3, delay = 1000) =>{
 
- let { email,mobile,prefs, address, city, zipcode, access_token } = req.body;
+ let { email,mobile,prefs, address, city, zipcode } = req.body;
 
  try{
-   if(access_token)
-   {
+    console.log('Here for update profile....')
+   
          let result = await new UserService().updateUserDetails(email,mobile,prefs,address,city,zipcode);
          if(result)
          {
@@ -61,7 +61,7 @@ const updateProfile = async(req,res,retries = 3, delay = 1000) =>{
          }else{
                 res.status(400).send({"error":"Profile could not be updated, try again"});
             }
-         }
+         
     }
          catch(err){
                 if(retries>0)
