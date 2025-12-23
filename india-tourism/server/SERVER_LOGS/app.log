@@ -31,3 +31,25 @@ Mon Dec 22 2025 22:09:40 GMT-0500 (Eastern Standard Time): ReferenceError: userR
     at Generator.next (<anonymous>)
     at C:\Users\royco\India-tourism-App\India-Tours\india-tourism\server\dist\controller\userprofile.js:8:71
     at new Promise (<anonymous>)
+Mon Dec 22 2025 22:40:15 GMT-0500 (Eastern Standard Time): TokenExpiredError: jwt expired
+    at C:\Users\royco\India-tourism-App\India-Tours\india-tourism\server\node_modules\jsonwebtoken\verify.js:190:21
+    at getSecret (C:\Users\royco\India-tourism-App\India-Tours\india-tourism\server\node_modules\jsonwebtoken\verify.js:97:14)
+    at module.exports [as verify] (C:\Users\royco\India-tourism-App\India-Tours\india-tourism\server\node_modules\jsonwebtoken\verify.js:101:10)
+    at verifyJsonWebTokenSignature (C:\Users\royco\India-tourism-App\India-Tours\india-tourism\server\dist\middlewares\userAuth.js:107:18)
+    at validateToken (C:\Users\royco\India-tourism-App\India-Tours\india-tourism\server\dist\middlewares\userAuth.js:78:5)
+    at C:\Users\royco\India-tourism-App\India-Tours\india-tourism\server\dist\middlewares\userAuth.js:72:9
+    at Generator.next (<anonymous>)
+    at C:\Users\royco\India-tourism-App\India-Tours\india-tourism\server\dist\middlewares\userAuth.js:8:71
+    at new Promise (<anonymous>)
+    at __awaiter (C:\Users\royco\India-tourism-App\India-Tours\india-tourism\server\dist\middlewares\userAuth.js:4:12)
+Mon Dec 22 2025 22:40:15 GMT-0500 (Eastern Standard Time): TokenExpiredError: jwt expired
+    at C:\Users\royco\India-tourism-App\India-Tours\india-tourism\server\node_modules\jsonwebtoken\verify.js:190:21
+    at getSecret (C:\Users\royco\India-tourism-App\India-Tours\india-tourism\server\node_modules\jsonwebtoken\verify.js:97:14)
+    at module.exports [as verify] (C:\Users\royco\India-tourism-App\India-Tours\india-tourism\server\node_modules\jsonwebtoken\verify.js:101:10)
+    at verifyJsonWebTokenSignature (C:\Users\royco\India-tourism-App\India-Tours\india-tourism\server\dist\middlewares\userAuth.js:107:18)
+    at validateToken (C:\Users\royco\India-tourism-App\India-Tours\india-tourism\server\dist\middlewares\userAuth.js:78:5)
+    at C:\Users\royco\India-tourism-App\India-Tours\india-tourism\server\dist\middlewares\userAuth.js:72:9
+    at Generator.next (<anonymous>)
+    at C:\Users\royco\India-tourism-App\India-Tours\india-tourism\server\dist\middlewares\userAuth.js:8:71
+    at new Promise (<anonymous>)
+    at __awaiter (C:\Users\royco\India-tourism-App\India-Tours\india-tourism\server\dist\middlewares\userAuth.js:4:12)

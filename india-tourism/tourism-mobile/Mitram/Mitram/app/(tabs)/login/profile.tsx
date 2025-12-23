@@ -16,7 +16,7 @@ import Ionicons from '@expo/vector-icons/Ionicons';
 import DeviceInfo from 'react-native-device-info';
 import AuthCommonModal from '../../admin/authCommonModal'
 import { useLocalSearchParams } from 'expo-router';
-
+import PleaseWaitScreen from '../../admin/waitscreen'
 
 export default function Userprofile(){
 
@@ -35,7 +35,7 @@ export default function Userprofile(){
      const[modalVisible,setModalVisible] = useState(false);
      const[isEditable,setIsEditable] = useState(false);
      const [error, setError] = useState('');
-
+    const [isloading,setIsloading] = useState(false)
     const [fontsLoaded] = useFonts({
       'Inter-Black': Inter_900Black, // Assign a name to the loaded font
       'Poppins-Regular': Poppins_400Regular,
@@ -62,6 +62,7 @@ export default function Userprofile(){
     const saveProfile = async()=>{
        setError('');
        setModalVisible(false);
+       setIsloading(true)
       try{
         let data = {
           email:emailFromDB,
@@ -259,6 +260,13 @@ return (
         >{mobileFromDB}</Text>
 
     </View>
+    {
+      isloading ?
+       
+           <PleaseWaitScreen/>:<View/>
+        
+    }
+   
     <View>
             {error ? <AuthCommonModal modalVisible={modalVisible} 
                         setModalVisible={setModalVisible} errorMessage={error} 
@@ -310,6 +318,7 @@ return (
           <Text
          style={{fontFamily:'Poppins-SemiBold'}}
         >{points}</Text>
+        </View>
      <View
       style={LoginSignUpStyle.flexboxcontainer}>
 
