@@ -132,7 +132,7 @@ const NavBar = ({access_token,triggerDisplayOptionsByCatId,
                             {section.title}
                             </Typography>
                             
-                         <Grid container spacing={10} justify="center" width="70%" >
+                         <Grid container spacing={0.5} justify="center" width="70%" >
                        
 
              {
@@ -143,7 +143,7 @@ const NavBar = ({access_token,triggerDisplayOptionsByCatId,
                     
                <div>
                  
-                <Grid item xs = {12} sm={3} key={item.categoryID}  >
+                <Grid item xs = {12} sm={4} key={item.categoryID}  >
 
                     <Card className="navbar-card" sx={{ marginBottom: 2 }}
                      >
