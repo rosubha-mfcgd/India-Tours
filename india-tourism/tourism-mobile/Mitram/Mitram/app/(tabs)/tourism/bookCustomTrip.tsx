@@ -1,4 +1,4 @@
-import { ScrollView, Text,TextInput,View } from 'react-native';
+import { KeyboardAvoidingView, Text,TextInput,View,Platform } from 'react-native';
 import LoginSignUpStyle from '../../styles/loginsignup.js'; 
 import CardStyle from '../../styles/cards.js'; 
 import ProductStyle from '../../styles/productStyle.js';
@@ -13,8 +13,11 @@ import { useLocalSearchParams } from 'expo-router';
 
 export default function BookCustomTrip(){
     return(
-        <View>
+          <KeyboardAvoidingView
+              behavior={Platform.OS === 'ios' ? 'padding' : 'height'} // 'padding' works best for iOS, 'height' or 'padding' for Android
+              style={{ flex: 1 }}
+            >
             <Text>Book your custom trip here !!</Text>
-        </View>
+        </KeyboardAvoidingView>
     )
 }

@@ -1,7 +1,6 @@
 import { Text, View,ScrollView ,ActivityIndicator} from 'react-native';
 import TourCommonStyle from '../../styles/tourCommonStyle.js'; 
 import TextStyle from '../../styles/textStyles.js'
-import {formatINR} from "../../admin/utility.js";
 import { TouchableOpacity, Image} from 'react-native';
 import { Table, THead, TH, TBody, TR, TD } from '@expo/html-elements';
 import { useLocalSearchParams,Link,router } from 'expo-router';
