@@ -31,7 +31,8 @@ const findUser = async(req,res,retries = 3, delay = 1000) => {
             {
                 console.log('result....',result);
                 res.status(200).send({"name":result.name, "mobile":result.mobile, 
-                    "emailID":result.emailID});
+                    "emailID":result.emailID, "city": result.city, "prefs":result.preference, 
+                    "address": result.address1,"points":!result.points?0:result.points});
             }
     }
     }catch(error)
@@ -57,7 +58,10 @@ const updateProfile = async(req,res,retries = 3, delay = 1000) =>{
          let result = await new UserService().updateUserDetails(email,mobile,prefs,address,city,zipcode);
          if(result)
          {
-             res.status(200).send({"name":result.name, "mobile":result.mobile, "emailID":result.emailID});
+             res.status(200).send({"name":result.name, "mobile":result.mobile, "emailID":result.emailID,
+                "city": result.city, "prefs":result.preference, "address": result.address1,
+                "points":!result.points?0:result.points
+             });
          }else{
                 res.status(400).send({"error":"Profile could not be updated, try again"});
             }

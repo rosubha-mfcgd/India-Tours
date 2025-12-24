@@ -132,20 +132,20 @@ const NavBar = ({access_token,triggerDisplayOptionsByCatId,
                             {section.title}
                             </Typography>
                             
-                         <Grid container spacing={5} className="navbar-grid-container" >
-                        <ul className="navbar-list-container">
+                         <Grid container spacing={10} justify="center" width="70%" >
+                       
 
              {
              items && items.length>0 ?
               
 
                 items.map((item) => (
-                    <li key={item.title} className="navbar-list-item-style">
+                    
                <div>
                  
-                <Grid item xs = {5} sm={4}  key={item.categoryID} className="navbar-grid-container" >
+                <Grid item xs = {12} sm={3} key={item.categoryID}  >
 
-                    <Card className="navbar-card"
+                    <Card className="navbar-card" sx={{ marginBottom: 2 }}
                      >
                     
                     <CardMedia component= "img"  height="100"
@@ -176,14 +176,14 @@ const NavBar = ({access_token,triggerDisplayOptionsByCatId,
                     
                 </Grid>
                 
-                </div></li>
+                </div>
                 )
                 ):<div> <Typography variant="body2" color="text.secondary" sx={{whiteSpace: 'pre-wrap'}}>
                     Cannot load categories</Typography></div>
                 
              }
              
-            </ul>
+           
             </Grid>
             </div>
                 )):<div><Typography variant="body2" color="text.secondary" sx={{whiteSpace: 'pre-wrap'}}>

@@ -2,7 +2,7 @@ import {Text, TextInput, View,
     TouchableOpacity ,FlatList,Pressable } 
 from 'react-native';
 import { SafeAreaProvider, useSafeAreaInsets,SafeAreaView } from 'react-native-safe-area-context'
-import {CustomFirstDialog} from '../../admin/customModals'
+import CustomFirstDialog from '../../admin/customModals'
 import PreviewBookingStyle from '../../styles/previewbookingStyle.js';
 import TourCommonStyle from '../../styles/tourCommonStyle';
 import { AlertStyles } from '../../styles/AlertButtonStyle';

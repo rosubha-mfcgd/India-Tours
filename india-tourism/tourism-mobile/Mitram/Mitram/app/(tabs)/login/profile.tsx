@@ -12,7 +12,7 @@ import {Poppins_400Regular, Poppins_600SemiBold} from '@expo-google-fonts/poppin
 import {Link} from 'expo-router';
 import TextStyle from '../../styles/textStyles' ;
 import {searchUserProfile,getPreferenceList,updateUserProfile} from '../../admin/admin';
-import Ionicons from '@expo/vector-icons/Ionicons';
+import { Ionicons } from '@expo/vector-icons';
 import DeviceInfo from 'react-native-device-info';
 import AuthCommonModal from '../../admin/authCommonModal'
 import { useLocalSearchParams } from 'expo-router';
@@ -33,7 +33,8 @@ export default function Userprofile(){
      const [selectPref,setSelectPref] = useState([])
      const[hidePref,setHidePref] = useState(false);
      const[modalVisible,setModalVisible] = useState(false);
-     const[isEditable,setIsEditable] = useState(false);
+     const[cityEditable,setCityEditable] = useState(false);
+     const[addressEditable,setAddressEditable] = useState(false);
      const [error, setError] = useState('');
     const [isloading,setIsloading] = useState(false)
     const [fontsLoaded] = useFonts({
@@ -47,15 +48,12 @@ export default function Userprofile(){
       // console.log('selected is...',selectPref[id])
       //   selectPref[id] = !selectPref[id]?true:false;
       //    console.log('selected now is...',selectPref[id])
-      selectPref[item.code-1] = !selectPref[item.code-1]?true:false;
-      if(selectPref[item.code-1])
-      {
+      if(userPref.indexOf(item.code) != -1)
+        userPref[item.code-1]=0
+      else
         userPref[item.code-1] = item.code;
-       
-      }else{
-         userPref[item.code-1] = 0;
-      }
-      console.log('preference selected ....',selectPref,item.code);
+     
+     
        console.log('user preference selected ....',userPref);
     }
 
@@ -77,17 +75,17 @@ export default function Userprofile(){
        {
           setError('User profile updated successfully');
           setModalVisible(true);
+          setIsloading(false);
        }
       }catch(err){
         console.log(err.stack);
          setError('Failed to update User profile');
           setModalVisible(true);
+          setIsloading(false);
       }
     }
 
-    const editProfile = async()=>{
-      setIsEditable(!isEditable);
-    }
+    
 // Determine the icon name based on the state
   const iconName = hidePref ? 'remove-circle' : 'add-circle';
      const renderPrefHeader = ({ section: { title } }) => (
@@ -111,11 +109,8 @@ export default function Userprofile(){
 
 
     const RenderPrefList = ({item}) =>{
-     
-      let isChecked = (userPref.indexOf[item.code] !== -1);
-      console.log('pref item....',item)
-      selectPref[item.code-1] = !item.selectPref ? false:item.selectPref ;
-      
+  
+      console.log('selected preference is...',selectPref[item.code-1]);
       return(
         hidePref?
          <View style={LoginSignUpStyle.rowContainer}>
@@ -127,7 +122,7 @@ export default function Userprofile(){
         LoginSignUpStyle.wrapperCustom,
         {
           backgroundColor: (pressed ||userPref && userPref.length>0 &&
-             userPref[item.code-1]) ? '#52667cff':'#ece1e1ff' , // Optional: change background
+             userPref.indexOf(item.code)!=-1) ? '#52667cff':'#ece1e1ff' , // Optional: change background
         },
       ]}
     >
@@ -144,6 +139,7 @@ export default function Userprofile(){
 useEffect(()=>{
  let mounted = true;
      // setModalVisible(false);
+     selectPref.fill(false);
      const timer = setTimeout( () =>{
         const searchUserProfileDetails = async(email,mobile,access_token)=>{
             let req_data = {
@@ -168,14 +164,14 @@ useEffect(()=>{
                     console.log('result name ....',result.name)
                     setUserName(result.name);
                   }
-                  if(result.preference && result.preference.length>0)
+                  if(result.prefs && result.prefs.length>0)
                   {
-                    setUserPref(result.preference);
+                    setUserPref(result.prefs);
                   }
 
-                    if(result.address1)
+                    if(result.address)
                     {
-                      setAddress(result.address1)
+                      setAddress(result.address)
                     }
                     if(result.city)
                        setCity(result.city)
@@ -201,6 +197,8 @@ useEffect(()=>{
         
         if(mounted)
         {
+          setIsloading(false);
+          setModalVisible(false);
             if(!pref || pref.length===0)
             {
                getPreferences(access_token);
@@ -278,8 +276,8 @@ return (
       style={LoginSignUpStyle.flexboxcontainer}>
     <Text
          style={{fontFamily:'Poppins-SemiBold'}}>Address : </Text>
-
-      {isEditable?
+        
+      {addressEditable?
        <TextInput 
               placeholder="" key={`"address"`}  
               style={LoginSignUpStyle.textfieldunderlinedInput}
@@ -287,16 +285,21 @@ return (
         {
           setAddress(text);
         }}/>:
+        <View>
         <Text
          style={{fontFamily:'Poppins-SemiBold'}}
-        >{address}</Text>
+        >{address} </Text>
+        <Ionicons name="pencil" size={16} color="black" 
+        onPress={()=>setAddressEditable(!addressEditable)}/>
+       </View>
+
       }
       </View>
        <View
       style={LoginSignUpStyle.flexboxcontainer}>
          <Text
          style={{fontFamily:'Poppins-SemiBold'}}>City : </Text>
-          {isEditable?
+          {cityEditable?
           <TextInput 
               placeholder="" key={`"city"`}  
               style={LoginSignUpStyle.textfieldunderlinedInput}
@@ -304,9 +307,13 @@ return (
         {
           setCity(text);
         }}/>:
+        <View>
         <Text
          style={{fontFamily:'Poppins-SemiBold'}}
         >{city}</Text>
+        <Ionicons name="pencil-outline" size={16} color="black" 
+        onPress={()=>setCityEditable(!cityEditable)}/>
+        </View>
           }    
     </View>
 
@@ -345,7 +352,7 @@ return (
     
     </View>
 
-     <View style={LoginSignUpStyle.buttonscontainer}>
+     {/* <View style={LoginSignUpStyle.buttonscontainer}>
         
             <TouchableOpacity 
                     style={LoginSignUpStyle.loginbutton}>
@@ -355,7 +362,7 @@ return (
                   </TouchableOpacity>
    
           
-    </View>
+    </View> */}
     </View>
 </View>: 
 <View style={TourCommonStyle.centeredContainer}>

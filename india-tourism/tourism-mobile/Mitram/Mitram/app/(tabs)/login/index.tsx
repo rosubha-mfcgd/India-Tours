@@ -46,45 +46,45 @@ const config = {
   scopes: ['openid', 'profile', 'email', 'offline_access'],
 };
 
- const handleDeepLink = useCallback((url) => {
-    // Check if the URL is relevant to the auth flow and process it.
-    // react-native-app-auth's internal mechanisms typically manage this
-    // without explicit manual parsing if correctly configured.
-    console.log('Deep link received:', url);
-    // If manual handling is required, you would pass the URL to a specific handler function.
-  }, []);
+//  const handleDeepLink = useCallback((url) => {
+//     // Check if the URL is relevant to the auth flow and process it.
+//     // react-native-app-auth's internal mechanisms typically manage this
+//     // without explicit manual parsing if correctly configured.
+//     console.log('Deep link received:', url);
+//     // If manual handling is required, you would pass the URL to a specific handler function.
+//   }, []);
 
 
-  useEffect(() => {
-    // 1. Handle the initial URL (app launched from a closed state)
-    Linking.getInitialURL().then((url) => {
-      if (url) {
-        handleDeepLink(url);
-      }
-    });
+//   useEffect(() => {
+//     // 1. Handle the initial URL (app launched from a closed state)
+//     Linking.getInitialURL().then((url) => {
+//       if (url) {
+//         handleDeepLink(url);
+//       }
+//     });
 
-// 2. Handle deep links while the app is already running (foreground/background)
-    const subscription = Linking.addEventListener('url', ({ url }) => {
-      handleDeepLink(url);
-    });
+// // 2. Handle deep links while the app is already running (foreground/background)
+//     const subscription = Linking.addEventListener('url', ({ url }) => {
+//       handleDeepLink(url);
+//     });
 
-    return () => {
-      // Clean up the event listener
-      subscription.remove();
-    };
-  }, [handleDeepLink]);
+//     return () => {
+//       // Clean up the event listener
+//       subscription.remove();
+//     };
+//   }, [handleDeepLink]);
 
-   // Example authorization function
-  const onAuthorize = async () => {
-    try {
-      // react-native-app-auth will use the configured redirectUrl and listen
-      // for the corresponding deep link automatically.
-      const result = await authorize(config);
-      console.log('Authorization result', result);
-    } catch (error) {
-      console.error('Authorization error', error);
-    }
-  };
+//    // Example authorization function
+//   const onAuthorize = async () => {
+//     try {
+//       // react-native-app-auth will use the configured redirectUrl and listen
+//       // for the corresponding deep link automatically.
+//       const result = await authorize(config);
+//       console.log('Authorization result', result);
+//     } catch (error) {
+//       console.error('Authorization error', error);
+//     }
+//   };
 
 
 const handleLogin = async () => {
@@ -153,6 +153,7 @@ const handleLogin = async () => {
    useEffect(()=>{
      let mounted = true;
       setModalVisible(false);
+      setIsloading(false);
       // console.log('useEffect invoked....');
     const timer = setTimeout( () =>{
                 
