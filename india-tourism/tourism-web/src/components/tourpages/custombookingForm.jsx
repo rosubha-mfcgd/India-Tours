@@ -10,6 +10,7 @@ import SideBarNotification from '../navigationTabs/sideBarNotification.jsx';
 import close_button from '../Assets/images/close-button.png';
 import failure_animation from '../Assets/images/failure_animation.gif';
 import { NavContext } from '../navigationContext/navigationContext.jsx';
+import { IoAdd} from 'react-icons/io5';
 import {
     TextField,
     Button,
@@ -40,12 +41,15 @@ import {
     DialogContentText,
     DialogActions
   } from "@mui/material";
+import { green } from '@mui/material/colors';
 
 
 const CustomBookingForm = ({access_token,cityList,triggerDisplayOptionsByCatId}) =>{
    // console.log('tourdetails.....',tourDetails);
     const [startBooking,setStartBooking] = useState(false);
-    const [touristCount, setTouristCount] = useState(0);
+    const [selected, setSelected] = useState('Train');
+    const [touristCount, setTouristCount] = useState(1);
+    const [touristMap, setTouristMap] = useState([]);
     const[openBookingForm,setOpenBookingForm] = useState(true);
     const [noOfTourist,setNoOfTourist] = useState(0);
     const [bookingPageMessage,setBookingPageMessage] = useState('');
@@ -54,8 +58,9 @@ const CustomBookingForm = ({access_token,cityList,triggerDisplayOptionsByCatId})
      const[currentBooking,setCurrentBooking] = useState('');
      const[displayErrorDialog,setDisplayErrorDialog] = useState(false);
      const[errorMessage,setErrorMessage] = useState('');
-         const [dialogOpen, setDialogOpen] = useState(false);
+      const [dialogOpen, setDialogOpen] = useState(false);
          const[showBookingBtn,setShowBookingBtn] = useState(true);
+    
   const { notification} = useContext(NavContext);
     const CssTextField = styled(TextField)({
       '& label': {
@@ -73,31 +78,24 @@ const CustomBookingForm = ({access_token,cityList,triggerDisplayOptionsByCatId})
     console.log('Form Data Submitted:', formData);
     alert('Thank you for your message!');
   };
+const handleTravelModeChange = ()=>{
+  console.log('travel mode is..');
+}
+
+const addTourist = ()=>{
+    setTouristCount(touristCount++);
+}
+
+useEffect (()=>{
+  let tourist =  {"touristCount": touristCount};
+  setTouristMap(touristItem =>[...touristItem,tourist]);
+},[touristCount]);
  return(
         <div className = "center-container">
-              
-                    <div className="original-content">
-             <div className="form-container">
+ <div className="original-content">
+   <div className="form-container">
       <form className="contact-form" onSubmit={handleSubmit}>
-        <h2>Book My Trip</h2>
-        
-        <div className="form-group">
-          <label htmlFor="username">Full Name</label>
-          <input type="text" id="username" name="username" required />
-        </div>
-
-        <div className="form-group">
-          <label htmlFor="email">Email Address</label>
-          <input type="email" id="email" name="email" required />
-        </div>
-
-         <div className="form-group">
-          <label htmlFor="mobile">Mobile #</label>
-          <input type="mobile" id="mobile" name="mobile" required />
-        </div>
-
-
-        <div className="form-group">
+          <div className="form-group">
           <label htmlFor="source">Travelling from:</label>
           <input type="text" id="source" name="source" required />
         </div>
@@ -118,15 +116,83 @@ const CustomBookingForm = ({access_token,cityList,triggerDisplayOptionsByCatId})
           <input type="date" id="todate" name="todate" required />
         </div>
 
+          <div className="form-group">
+ <fieldset style={{ border: 'none', padding: 0 }}>
+      <legend style={{ fontWeight: 'bold' }}>Preferred Travel Mode:</legend>
       
+      <label>
+        <input 
+          type="radio" 
+          name="choice" 
+          value="Flight" 
+          checked={selected === 'Flight'} 
+          onChange={handleTravelModeChange} 
+        />
+        Flight
+      </label>
 
+      <label style={{ marginLeft: '10px' }}>
+        <input 
+          type="radio" 
+          name="choice" 
+          value="Train" 
+          checked={selected === 'Train'} 
+          onChange={handleTravelModeChange} 
+        />
+        Train
+      </label>
+      <label style={{ marginLeft: '10px' }}>
+        <input 
+          type="radio" 
+          name="choice" 
+          value="Bus" 
+          checked={selected === 'Bus'} 
+          onChange={handleTravelModeChange} 
+        />
+        Bus
+      </label>
+      <label style={{ marginLeft: '10px' }}>
+        <input 
+          type="radio" 
+          name="choice" 
+          value="Car" 
+          checked={selected === 'Car'} 
+          onChange={handleTravelModeChange} 
+        />
+        Car
+      </label>
+    </fieldset>
+
+          </div>     
+                   
+            
+        <h2>Book My Trip  <IoAdd size={32} color="green" title='Add new tourist' onclick={addTourist}/></h2>
+        
+        {touristMap && touristMap.length>0 ?
+        touristMap.map((tourist)=>(
+          <div>
+              <h2>TOURIST # {tourist.touristCount}</h2>
         <div className="form-group">
-          <label htmlFor="message">Travelling from:</label>
-          <textarea id="source" name="source" rows="4"></textarea>
+          <label htmlFor="username">Full Name</label>
+          <input type="text" id="username" name="username" required />
         </div>
 
-        <button type="submit" className="submit-btn">Submit Request</button>
-      </form>
+        <div className="form-group">
+          <label htmlFor="email">Email Address</label>
+          <input type="email" id="email" name="email" required />
+        </div>
+
+         <div className="form-group">
+          <label htmlFor="mobile">Mobile #</label>
+          <input type="mobile" id="mobile" name="mobile" required />
+        </div></div>
+        )):<div/>
+        }
+       
+      
+       
+      <button type="submit" className="submit-btn">Submit Request</button>
+     </form>
     </div>
     </div>
     </div>
