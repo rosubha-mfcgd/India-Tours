@@ -17,7 +17,7 @@ import TripList from "./tripList.jsx";
 import TripDetails from "./tripDetails.jsx";
 import BookingForm from "./bookingForm.jsx";
 import PreviewForm from "./previewbooking.jsx";
- 
+import CustomBookingForm from "./custombookingForm.jsx"; 
 import { getCities } from "../admin/admin";
 import ChatButton from '../Utilities/ChatButton.jsx';
 import ChatWindow from '../Utilities/ChatWindow.jsx';
@@ -32,7 +32,7 @@ const Welcome =()=>{
      const [showCategories,setShowCategories] = useState(false);
      const [previewbooking,setPreviewbooking] = useState(false);
      const [searchOptions,setSearchOptions] = useState(false);
-
+    const [userBooking,setUserBooking] = useState(false);
      const [cityList,setCityList] = useState('');
      const[tripListParam,setTripListParam] = useState('');
      const[productID,setProductID] = useState('');
@@ -51,18 +51,27 @@ const Welcome =()=>{
       console.log('categoryId....',categoryId)
       setShowTripDetails(false);
 
-        if(categoryId && categoryId != 9)
+        if(categoryId && categoryId != 9 && categoryId != 10)
         {
+          console.log('here in categoryId 1...')
           setTripListParam(categoryId);
           setShowTrips(true);
         }
-        else if(categoryId == 9){
+        else if(categoryId === 9){
+           console.log('here in categoryId 2...')
           setCategoryID(categoryId);
           setShowCategories(false);
+          setUserBooking(false);
              setSearchOptions(true);
         }        
-        else{
+        else if(categoryId === 10){
+           console.log('here in categoryId 3...')
+          setCategoryID(categoryID);
+          setShowCategories(false);
           setShowTrips(false);
+          setSearchOptions(false);
+          setUserBooking(true);
+
         }
      }
     const triggerDisplayBookings = async(data,tourDetailInfo) =>{
@@ -220,9 +229,12 @@ const openBookingForm = (tourDetails) =>{
             :(previewbooking)?
             <PreviewForm access_token={access_token} bookings={bookings} 
             tourDetailsParam = {tourDetailsParam}/>:
+             (userBooking)?
+            <CustomBookingForm access_token={access_token} cityList = {cityList}
+            triggerDisplayOptionsByCatId={triggerDisplayOptionsByCatId}/>:
             <Product access_token={access_token} 
              triggerDisplayTripsByProductId={triggerDisplayTripsByProductId} />
-          }
+         }
           </Layout>
           
           <ChatButton toggleChat={toggleChat} />
