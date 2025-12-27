@@ -65,7 +65,9 @@ const Welcome =()=>{
              setSearchOptions(true);
         }        
         else if(categoryId === 10){
+
            console.log('here in categoryId 3...')
+           console.log('cityList....',cityList)
           setCategoryID(categoryID);
           setShowCategories(false);
           setShowTrips(false);

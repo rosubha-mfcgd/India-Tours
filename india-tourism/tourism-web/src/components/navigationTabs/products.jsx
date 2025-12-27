@@ -121,7 +121,8 @@ const Products = ({access_token,triggerDisplayTripsByProductId}) =>{
               }
               
               </CardContent>
-              <button type="submit" class="button"  onClick={()=>triggerDisplayTripsByProductId(item.productID)} 
+              <button type="submit" class="button"  
+              onClick={()=>triggerDisplayTripsByProductId(item.productID)} 
                     style={{ cursor: 'pointer',backgroundColor: '#8a77f8ff',color:'#0c0c0fff'}}>
                         Click to View</button>
                     </Card>

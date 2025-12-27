@@ -334,6 +334,48 @@ export interface ICategory extends Document{
 		}
    }
 
+   export interface IUserBookings  extends Document{
+    _id: {
+			primaryKey: true,
+			type: Object,
+			required: true
+		},
+		tourManagerId: {
+			type: string
+		},
+    bookingId: {
+      type: string,
+			required: true
+    },
+		startDate: {
+			type: Date,
+			required: true
+		},
+		endDate: {
+			type: Date,
+			required: true
+		},
+		fromLocation: {
+			type: string,
+			required: true
+		},
+		destLocation: {
+			type: string,
+			required: true
+		},
+		package_cost: {
+			type: number,
+			},
+		touristData: {
+			type: [],
+			required: true
+		},
+    
+		reviews: {
+			type: []
+		}
+   }
+
     export interface ITouritinerary  extends Document{
     
     locationName: {

@@ -13,47 +13,26 @@ import { NavContext } from '../navigationContext/navigationContext.jsx';
 import { IoAdd} from 'react-icons/io5';
 import Select from 'react-select';
 import {
-    TextField,
-    Button,
-    Table,
-    TableBody,
-    TableCell,
-    TableContainer,
-    TableHead,
-    TableRow,
-    Paper,
-    Modal,
-    Box,
-    Snackbar,
-    Card,
-    Grid,
-    Typography,
-    CardMedia,
-    CardContent,
-    FormGroup,
-    FormControl,  
-    Input,
-    Switch,
-    InputLabel,
-    TextareaAutosize,
-    Dialog,
-    DialogTitle,
-    DialogContent,
-    DialogContentText,
-    DialogActions
-  } from "@mui/material";
+    TextField
+   } from "@mui/material";
 import { green } from '@mui/material/colors';
 
 
 const CustomBookingForm = ({access_token,cityList,triggerDisplayOptionsByCatId}) =>{
    // console.log('tourdetails.....',tourDetails);
     const [startBooking,setStartBooking] = useState(false);
-    const [selected, setSelected] = useState('Train');
-    
-    const [selectedFromCity, setSelectedFromCity] = useState('Kolkata');
+    const [selectedTravelType, setSelectedTravelType] = useState('Train');
+    const [selectedTravelerType, setSelectedTravelerType] = useState('');
+    const [selectedHotelType, setSelectedHotelType] = useState('');
+    const [selectedFromCity, setSelectedFromCity] = useState(null);
     const [selectedToCity, setSelectedToCity] = useState('');
+
+    const [selectedFromDate, setSelectedFromDate] = useState(null);
+    const [selectedToDate, setSelectedToDate] = useState(null);
+
     const [touristCount, setTouristCount] = useState(1);
-    const [clickAdd, setClickAdd] = useState(false);
+    
+    const [citydropdownList, setCitydropdownList] = useState([]);
     
     const [touristMap, setTouristMap] = useState([{"touristCount": 1}]);
     const[openBookingForm,setOpenBookingForm] = useState(true);
@@ -74,21 +53,56 @@ const CustomBookingForm = ({access_token,cityList,triggerDisplayOptionsByCatId})
        }  
   });
 
-    const [formData, setFormData] = useState({
-    username: '',
-    email: '',
-    message: ''
-  });
+  //   const [formData, setFormData] = useState({
+  //   username: '',
+  //   email: '',
+  //   message: '',
+  //   startdate: '',
+  //   todate: '',
+  // });
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log('Form Data Submitted:', formData);
+   // console.log('Form Data Submitted:', formData);
     alert('Thank you for your message!');
   };
-const handleTravelModeChange = ()=>{
-  console.log('travel mode is..');
+const handleTravelModeChange = (e)=>{
+  const { name, value, type } = e.target||{}; 
+ //  const data = e.target.value;
+ if(name === 'travelMode' && type === 'radio'){
+  console.log('travel mode is..',value);
+  setSelectedTravelType(value);
+ }
+ 
 }
-const handleTravellerType = ()=>{
-  console.log('travel mode is..');
+const handleHotelChange = (e)=>{
+   const { name, value, type } = e.target||{}; 
+  if(name === 'hotelType' && type === 'radio'){
+   console.log('hotel mode is..',value);
+  setSelectedHotelType(value)
+ }
+}
+const handleTravellerType = (e)=>{
+ const { name, value, type } = e.target||{}; 
+  if(name === 'travellerType' && type === 'text'){
+  console.log('traveller type is..',value);
+  setSelectedTravelerType(value);
+  }
+}
+
+const handleFromDate = (e)=>{
+  const { name, value, type } = e.target||{}; 
+  if(name === 'startdate' && type === 'date'){
+  console.log('from date is..',value);
+  setSelectedFromDate(value);
+  }
+}
+
+const handleToDate = (e)=>{
+    const { name, value, type } = e.target||{}; 
+      if(name === 'todate' && type === 'date'){
+        console.log('to date is..',value);
+        setSelectedToDate(value);
+      }
 }
 const addTourist = ()=>{
   
@@ -96,7 +110,7 @@ const addTourist = ()=>{
     
 }
 
- const updateBooking = async(name,index,id) =>{
+ const updateBooking = (name,index,id) =>{
       
       if(document.getElementsByName(id)[index-1])
       {
@@ -109,13 +123,37 @@ const addTourist = ()=>{
       }
     }
 
+    const handleFromCityDropdown = async(option) =>{
+
+        setSelectedFromCity(option);
+       // setSelectedToCity(citydropdownList);
+    }
+
+     const handleToCityDropdown = async(option) =>{
+
+       // setSelectedFromCity(option);
+        setSelectedToCity(option);
+    }
 useEffect (()=>{
   if(touristCount>1){
         let tourist =  {"touristCount": touristCount};
         
           setTouristMap(touristItem =>[...touristItem,tourist]);
-          //setClickAdd(false)
+          
   }
+  //setClickAdd(false)
+           if(citydropdownList && citydropdownList.length === 0)
+            {
+              for(let city of cityList)
+              {
+                if(city.citycode>0)
+                {
+                  let data = {value:city.citycode,label:city.cityname};
+                  setCitydropdownList(citydropdown =>[...citydropdown,data]);
+                }
+              }
+        }
+ 
 },[touristCount]);
  return(
         <div className = "center-container">
@@ -126,9 +164,10 @@ useEffect (()=>{
           <label htmlFor="source">Travelling from:</label>
         <Select
         id="from-city-select"
-        options={cityList}
+        options={citydropdownList}
         value={selectedFromCity}
-        onChange={setSelectedFromCity}
+        onChange={handleFromCityDropdown}
+        isClearable
         isSearchable={true} // Enables type assist
         placeholder="Type to search..."
         noOptionsMessage={() => "Source city not found"}
@@ -140,9 +179,10 @@ useEffect (()=>{
           <label htmlFor="destination">Travelling to:</label>
             <Select
         id="to-city-select"
-        options={cityList}
+        options={citydropdownList}
         value={selectedToCity}
-        onChange={setSelectedToCity}
+        onChange={handleToCityDropdown}
+        isClearable
         isSearchable={true} // Enables type assist
         placeholder="Type to search..."
         noOptionsMessage={() => "Destination city not found"}
@@ -151,12 +191,15 @@ useEffect (()=>{
 
        <div className="form-group">
           <label htmlFor="startdate">From:</label>
-          <input type="date" id="startdate" name="startdate" required />
+          <input type="date" id="startdate" name="startdate" 
+          onChange={handleFromDate}
+          required />
         </div>
 
           <div className="form-group">
           <label htmlFor="enddate">To:</label>
-          <input type="date" id="todate" name="todate" required />
+          <input type="date" id="todate" name="todate" onChange={handleToDate}
+           required />
         </div>
 
           <div className="form-group">
@@ -168,7 +211,7 @@ useEffect (()=>{
           type="radio" 
           name="travelMode" 
           value="Flight" 
-          checked={selected === 'Flight'} 
+          checked={selectedTravelType === 'Flight'} 
           onChange={handleTravelModeChange} 
         />
         Flight
@@ -179,7 +222,7 @@ useEffect (()=>{
           type="radio" 
           name="travelMode" 
           value="Train" 
-          checked={selected === 'Train'} 
+          checked={selectedTravelType === 'Train'} 
           onChange={handleTravelModeChange} 
         />
         Train
@@ -189,7 +232,7 @@ useEffect (()=>{
           type="radio" 
           name="travelMode" 
           value="Bus" 
-          checked={selected === 'Bus'} 
+          checked={selectedTravelType === 'Bus'} 
           onChange={handleTravelModeChange} 
         />
         Bus
@@ -199,7 +242,7 @@ useEffect (()=>{
           type="radio" 
           name="travelMode" 
           value="Car" 
-          checked={selected === 'Car'} 
+          checked={selectedTravelType === 'Car'} 
           onChange={handleTravelModeChange} 
         />
         Car
@@ -207,7 +250,45 @@ useEffect (()=>{
     </fieldset>
 
           </div>     
-                   
+    
+   <div className="form-group">
+ <fieldset style={{ border: 'none', padding: 0 }}>
+      <legend style={{ fontWeight: 'bold' }}>Preferred Hotel Type:</legend>
+      
+      <label>
+        <input 
+          type="radio" 
+          name="hotelType" 
+          value="Luxury" 
+          checked={selectedHotelType === 'Luxury'} 
+          onChange={handleHotelChange} 
+        />
+        Luxury (5-Star, 4 -Star)
+      </label>
+
+      <label style={{ marginLeft: '10px' }}>
+        <input 
+          type="radio" 
+          name="hotelType" 
+          value="Budget" 
+          checked={selectedHotelType === 'Budget'} 
+          onChange={handleHotelChange} 
+        />
+        Budget (3-Star)
+      </label>
+      <label style={{ marginLeft: '10px' }}>
+        <input 
+          type="radio" 
+          name="hotelType" 
+          value="Economy" 
+          checked={selectedHotelType === 'Economy'} 
+          onChange={handleHotelChange} 
+        />
+        Economy
+      </label>
+      </fieldset>
+      </div>
+
             
         <h2>Book My Trip  <IoAdd size={32} color="green" title='Add new tourist' onClick={addTourist}/></h2>
         
@@ -240,7 +321,7 @@ useEffect (()=>{
       <label>
         <input 
           type="radio" 
-          name="travelerType" 
+          name="travellerType" 
           value="1" 
           onChange={handleTravellerType} 
         />
@@ -250,7 +331,7 @@ useEffect (()=>{
       <label style={{ marginLeft: '10px' }}>
         <input 
           type="radio" 
-          name="travelerType" 
+          name="travellerType" 
           value="2" 
           onChange={handleTravellerType} 
         />

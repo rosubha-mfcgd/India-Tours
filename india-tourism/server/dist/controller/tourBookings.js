@@ -9,6 +9,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 const TourBookingService = require('../service/TourBookingService');
+const UserBookingService = require('../service/UserBookingService');
 require("../logNginx");
 const performBookings = (req_1, res_1, ...args_1) => __awaiter(void 0, [req_1, res_1, ...args_1], void 0, function* (req, res, retries = 3, delay = 1000) {
     const { tourManagerId, locationName, startDate, endDate, domesticOrInternational, package_cost, primarybookings, dependantbookings } = req.body;
@@ -111,4 +112,33 @@ const updateBookingsByBookingId = (req_1, res_1, ...args_1) => __awaiter(void 0,
         res.status(400).send({ "errormessage": "could not update booking by bookingId " + bookingId });
     }
 });
-module.exports = { performBookings, performBookingsByMobile, getBookingsByBookingId, updateBookingsByBookingId };
+const performUserBookings = (req_1, res_1, ...args_1) => __awaiter(void 0, [req_1, res_1, ...args_1], void 0, function* (req, res, retries = 3, delay = 1000) {
+    const { startDate, endDate, fromLocation, destLocation, touristData } = req.body;
+    try {
+        if (touristData && touristData.length === 0) {
+            res.status(200).send({ "errorDetails": "No toursits found" });
+        }
+        else {
+            let userBookingService = new UserBookingService();
+            let bookings = yield userBookingService.createUserBookings(startDate, endDate, fromLocation, destLocation, touristData);
+            if (bookings) {
+                console.log('bookings...', bookings);
+                res.status(200).send({ "bookingid": bookings });
+            }
+            else {
+                throw new Error("could not create a booking on attempt #:-", retries);
+            }
+        }
+    }
+    catch (err) {
+        if (retries > 0) {
+            console.log('retry attempted...');
+            yield new Promise(resolve => setTimeout(resolve, delay));
+            return performBookings(req, res, retries - 1, delay);
+        }
+        logNginx(err.stack);
+        res.status(400).send({ "errormessage": "could not create a booking" });
+    }
+});
+module.exports = { performBookings, performBookingsByMobile, getBookingsByBookingId,
+    updateBookingsByBookingId, performUserBookings };
