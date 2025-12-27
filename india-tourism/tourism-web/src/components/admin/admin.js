@@ -343,6 +343,36 @@ export const performTripBooking = async(data) =>{
 return res_data;
 }
 
+export const performCustomUserTripBooking = async(data) =>{
+  let res_data = "failed to create user bookings";
+     try{
+        let access_token = await getApiAccessToken();
+        if(access_token){
+            console.log('access_token found...',access_token.data)
+        console.log('data...',data);
+        
+        const headers = {
+            "Content-type": "application/json; charset=UTF-8",
+            "Authorization":"Bearer "+access_token.data.access_token
+            };
+            let response = await axios.post(
+        process.env.REACT_APP_SERVER_URI + "performUserBookings",
+            data, {headers});
+        if(response)
+     {
+        console.log('response....',response);
+        res_data = response.data;
+     }
+     }
+     
+}catch(err){
+     console.error('Could not update trip bookings:::', err.stack);
+    // throw err;
+}
+return res_data;
+}
+
+
 
 export const getBookingsByBookingId = async(data) =>{
   let res_data = "failed to fetch bookings by booking id";

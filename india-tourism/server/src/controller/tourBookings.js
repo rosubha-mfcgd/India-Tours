@@ -143,7 +143,7 @@ const performBookings = async(req,res,retries = 3, delay = 1000) =>{
     const performUserBookings = async(req,res,retries = 3, delay = 1000) =>{
 
     const {startDate,endDate,fromLocation,destLocation,
-       touristData} = req.body;
+       touristData,travelMode,hotelType} = req.body;
 
         try{
            if(touristData && touristData.length ===0)
@@ -153,8 +153,8 @@ const performBookings = async(req,res,retries = 3, delay = 1000) =>{
             {
                 let userBookingService =  new UserBookingService();
                 
-            let bookings = await userBookingService.createUserBookings(startDate,endDate,fromLocation,destLocation,
-       touristData);
+            let bookings = await userBookingService.createUserBookings(startDate,endDate,fromLocation,
+              destLocation,hotelType,travelMode,touristData);
                 if(bookings){
                   console.log('bookings...',bookings);
                 res.status(200).send({"bookingid":bookings});

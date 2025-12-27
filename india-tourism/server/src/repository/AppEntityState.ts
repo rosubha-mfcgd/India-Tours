@@ -359,6 +359,14 @@ export interface ICategory extends Document{
 			type: string,
 			required: true
 		},
+    travelMode: {
+      type: String,
+			required: true
+    },
+    hotelType: {
+      type: String,
+			required: true
+     },
 		destLocation: {
 			type: string,
 			required: true

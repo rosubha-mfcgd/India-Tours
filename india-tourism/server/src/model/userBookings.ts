@@ -26,6 +26,14 @@ const userBookingSchema = new Schema<IUserBookings>({
 			type: String,
 			required: true
 		},
+        travelMode: {
+            type: String,
+			required: true
+        },
+        hotelType: {
+             type: String,
+			required: true
+        },
 		package_cost: {
 			type: Number,
 			},

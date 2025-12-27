@@ -26,6 +26,14 @@ const userBookingSchema = new mongoose_1.Schema({
         type: String,
         required: true
     },
+    travelMode: {
+        type: String,
+        required: true
+    },
+    hotelType: {
+        type: String,
+        required: true
+    },
     package_cost: {
         type: Number,
     },

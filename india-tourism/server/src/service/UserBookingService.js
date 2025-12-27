@@ -9,7 +9,7 @@ class UserBookingService{
 
     	
 
-  async createUserBookings(startDate,endDate,fromLocation,destLocation,
+  async createUserBookings(startDate,endDate,fromLocation,destLocation,hotelType,travelMode,
        touristData)
         {
             let bookings = [];
@@ -22,6 +22,8 @@ class UserBookingService{
                                 "fromLocation":fromLocation,
                                 "destLocation":destLocation,
                                 "bookingId":bookingId,
+                                "hotelType":hotelType,
+                                "travelMode":travelMode,
                                 "touristData":touristData
                             };
                     bookings = await userbookingRepository.create(data);
