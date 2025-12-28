@@ -37,10 +37,17 @@ const NavBar = ({access_token,triggerDisplayOptionsByCatId,
     const { notification} = useContext(NavContext);
      const [items, setItems] = useState([])
     const [sections, setSections] = useState([])
-     const [open, setOpen] = useState(true);
+      const [personalTripItems, setPersonalTripItems] = useState([])
+    const [personalTripsections, setPersonalTripsections] = useState([])
+     const [packageTripSectionOpen, setPackageTripSectionOpen] = useState(true);
+     const [personalTripSectionOpen, setpersonalTripSectionOpen] = useState(true);
+      const [personalTripOpen, setPersonalTripOpen] = useState(true);
 
   const handleToggle = () => {
-    setOpen(!open);
+    setPackageTripSectionOpen(!packageTripSectionOpen);
+  };
+    const handleFamilyTripToggle = () => {
+    setpersonalTripSectionOpen(!personalTripSectionOpen);
   };
     const navLinkStyles = ({isActive})=>{
             return {
@@ -90,10 +97,24 @@ const NavBar = ({access_token,triggerDisplayOptionsByCatId,
                     if(categories)
                     {
                         console.log('categories...',categories);
-                         
-                        setItems(categories);
-                        setSections(prev =>[...prev,{title:"Tour Categories", data:items}])
-
+                       let operatedTourCategories = [];
+                       let personalTripCategories = [];
+                       for(let category of categories)
+                       {
+                            if(category && category.categoryID != 10 && 
+                                category.categoryID != 9 && category.categoryID != 7)
+                            {
+                                  operatedTourCategories.push(category);  
+                            }
+                            else{
+                                personalTripCategories.push(category);
+                            }
+                           
+                       }
+                        setItems(operatedTourCategories);
+                        setPersonalTripItems(personalTripCategories);
+                        setSections(prev =>[...prev,{title:"Package Tours", data:items}])
+                        setPersonalTripsections(prev =>[...prev,{title:"Family/Personal Tours", data:personalTripItems}])
                     }
                    
                 };
@@ -115,12 +136,10 @@ const NavBar = ({access_token,triggerDisplayOptionsByCatId,
     return (
         <div className="navbar-grid">
               
-               <Button variant="contained" onClick={handleToggle} sx={{ mb: 2 }}>
-        {open ? 'Hide Details' : 'Show Details'}
-      </Button>
-        <div className="navbar">
         
-            <Collapse in={open} timeout="auto" unmountOnExit>
+        <div className="navbar">
+           
+            <Collapse in={packageTripSectionOpen} timeout="auto" unmountOnExit>
             
             <div className="navbar-sectioned-list-container">
                 
@@ -128,9 +147,14 @@ const NavBar = ({access_token,triggerDisplayOptionsByCatId,
                 sections.map((section) =>(
                     <div key={section.title} className="navbar-section-group">
                         
-                            <Typography variant="body2" color="text.secondary" sx={{whiteSpace: 'pre-wrap'}}>
-                            {section.title}
-                            </Typography>
+                             <header className="app-header">
+                                <div className="header-content">
+                           <h1>{section.title}</h1>
+                            {/* <Button variant="contained" onClick={handleToggle} sx={{ mb: 2 }}>
+                             {packageTripSectionOpen ? 'Hide Details' : 'Show Details'}
+                             </Button> */}
+                           </div>
+                           </header>
                             
                          <Grid container spacing={0.5} justify="center" width="70%" >
                        
@@ -179,20 +203,98 @@ const NavBar = ({access_token,triggerDisplayOptionsByCatId,
                 </div>
                 )
                 ):<div> <Typography variant="body2" color="text.secondary" sx={{whiteSpace: 'pre-wrap'}}>
-                    Cannot load categories</Typography></div>
+                    Cannot load pacakage tours</Typography></div>
                 
              }
-             
-           
-            </Grid>
+
+             </Grid>
+              
             </div>
                 )):<div><Typography variant="body2" color="text.secondary" sx={{whiteSpace: 'pre-wrap'}}>
-                    Cannot load tour sections</Typography></div>
+                    Cannot load pacakage tour sections</Typography></div>
             }
           
            
              </div>
              </Collapse>
+            </div>
+ <div className="navbar">
+        
+            <Collapse in={personalTripSectionOpen} timeout="auto" unmountOnExit>
+             <div className="navbar-sectioned-list-container">
+                  {personalTripsections && personalTripsections.length>0 ?
+                personalTripsections.map((personalTripsection) =>(
+                      <div key={personalTripsection.title} className="navbar-section-group">
+                        
+                             <header className="app-header">
+                                <div className="header-content">
+                           <h1>{personalTripsection.title}</h1>
+                           </div>
+                           </header>
+                            {/* <Button variant="contained" onClick={handleFamilyTripToggle} sx={{ mb: 2 }}>
+                             {personalTripSectionOpen ? 'Hide Details' : 'Show Details'}
+                             </Button> */}
+                            <Grid container spacing={0.5} justify="center" width="70%" >
+                             
+                                  {
+             personalTripItems && personalTripItems.length>0 ?
+              
+
+                personalTripItems.map((personalTripItem) => (
+                        <div>
+                            <Grid item xs = {12} sm={4} key={personalTripItem.categoryID}  >
+
+                    <Card className="navbar-card" sx={{ marginBottom: 2 }}
+                     >
+                    
+                    <CardMedia component= "img"  height="100"
+                    image = {personalTripItem.image} alt={personalTripItem.categoryDesc} 
+                    onClick={()=>triggerDisplayOptionsByCatId(personalTripItem.categoryID)} 
+                    style={{ cursor: 'pointer' }} 
+                     />
+                                     
+                    <CardContent>
+                        <Typography gutterBottom variant="body1" component="div" sx={{whiteSpace: 'pre-wrap'}}>
+                {personalTripItem.categoryName}
+              </Typography>
+              <Typography variant="body2" color="text.secondary" sx={{whiteSpace: 'pre-wrap'}}>
+                {personalTripItem.categoryDesc}
+              </Typography>
+              {(personalTripItem.favorite === 'Y') ?
+                <FavoriteIcon sx={{ color: '#f04646ff' }} onClick = {(event) => updateFavorites(
+                    personalTripItem.categoryID,'N',event)} style={{ cursor: 'pointer' }}/>:
+                <FavoriteIcon onClick = {(event) => updateFavorites(
+                    personalTripItem.categoryID,'Y',event)} style={{ cursor: 'pointer' }}/>
+              }
+              
+              </CardContent>
+              <button type="submit" class="button"  onClick={()=>triggerDisplayOptionsByCatId(personalTripItem.categoryID)} 
+                    style={{ cursor: 'pointer',backgroundColor: '#8a77f8ff',color:'#0c0c0fff'}}>
+                        Click to View</button>
+                    </Card>
+                    
+                </Grid>
+                        </div>
+                       )
+                        ):<div> 
+                    <Typography variant="body2" color="text.secondary" sx={{whiteSpace: 'pre-wrap'}}>
+                    Cannot load personal tours</Typography></div>
+
+                             }
+                             </Grid>
+                           </div>
+
+
+
+                )):<div><Typography variant="body2" color="text.secondary" sx={{whiteSpace: 'pre-wrap'}}>
+                    Cannot load personal tour sections</Typography></div>
+                    }
+
+             </div>
+            </Collapse>
+            </div>
+           
+           
           {notification ?
                <div style={{position: 'fixed', top:70,right:0}} >    
                <SideBarNotification/> 
@@ -200,8 +302,8 @@ const NavBar = ({access_token,triggerDisplayOptionsByCatId,
             :<div></div>
              }
             </div>
-        </div>
-
+       
+        
     )
 }
 export default NavBar;

@@ -113,14 +113,14 @@ const updateBookingsByBookingId = (req_1, res_1, ...args_1) => __awaiter(void 0,
     }
 });
 const performUserBookings = (req_1, res_1, ...args_1) => __awaiter(void 0, [req_1, res_1, ...args_1], void 0, function* (req, res, retries = 3, delay = 1000) {
-    const { startDate, endDate, fromLocation, destLocation, touristData, travelMode, hotelType } = req.body;
+    const { startDate, endDate, fromLocation, destLocation, touristData, travelMode, hotelType, status } = req.body;
     try {
         if (touristData && touristData.length === 0) {
             res.status(200).send({ "errorDetails": "No toursits found" });
         }
         else {
             let userBookingService = new UserBookingService();
-            let bookings = yield userBookingService.createUserBookings(startDate, endDate, fromLocation, destLocation, hotelType, travelMode, touristData);
+            let bookings = yield userBookingService.createUserBookings(startDate, endDate, fromLocation, destLocation, hotelType, travelMode, touristData, status);
             if (bookings) {
                 console.log('bookings...', bookings);
                 res.status(200).send({ "bookingid": bookings });

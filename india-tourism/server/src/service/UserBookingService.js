@@ -10,7 +10,7 @@ class UserBookingService{
     	
 
   async createUserBookings(startDate,endDate,fromLocation,destLocation,hotelType,travelMode,
-       touristData)
+       touristData,status)
         {
             let bookings = [];
             let bookingId = '';
@@ -22,6 +22,7 @@ class UserBookingService{
                                 "fromLocation":fromLocation,
                                 "destLocation":destLocation,
                                 "bookingId":bookingId,
+                                "status": status,
                                 "hotelType":hotelType,
                                 "travelMode":travelMode,
                                 "touristData":touristData

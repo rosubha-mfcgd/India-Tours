@@ -15,7 +15,7 @@ class UserBookingService {
     constructor() {
         this.errorMsg = "Message not found";
     }
-    createUserBookings(startDate, endDate, fromLocation, destLocation, hotelType, travelMode, touristData) {
+    createUserBookings(startDate, endDate, fromLocation, destLocation, hotelType, travelMode, touristData, status) {
         return __awaiter(this, void 0, void 0, function* () {
             let bookings = [];
             let bookingId = '';
@@ -27,6 +27,7 @@ class UserBookingService {
                     "fromLocation": fromLocation,
                     "destLocation": destLocation,
                     "bookingId": bookingId,
+                    "status": status,
                     "hotelType": hotelType,
                     "travelMode": travelMode,
                     "touristData": touristData

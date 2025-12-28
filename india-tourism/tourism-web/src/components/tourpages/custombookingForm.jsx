@@ -127,7 +127,8 @@ const CustomBookingForm = ({access_token,cityList,triggerDisplayOptionsByCatId})
       let resultData = await performCustomUserTripBooking(result);
       if(resultData)
       {
-        setErrorMessage('Booking submitted with id '+result.bookingid);
+        console.log('resultData...',resultData);
+        setErrorMessage('Booking submitted with id '+resultData.bookingid);
          setIsLoading(false);
         
          setDisplayErrorDialog(true);
@@ -381,7 +382,7 @@ useEffect (()=>{
       </div>
 
             
-        <h2>Book My Trip  <IoAdd size={32} color="green" title='Add new tourist' onClick={addTourist}/></h2>
+        <h2>Book My Trip  <IoAdd size={32} color={green} title='Add new tourist' onClick={addTourist}/></h2>
         
         {touristMap && touristMap.length>0 ?
         touristMap.map((tourist)=>(
