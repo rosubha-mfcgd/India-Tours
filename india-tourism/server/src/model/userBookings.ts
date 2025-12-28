@@ -34,6 +34,10 @@ const userBookingSchema = new Schema<IUserBookings>({
              type: String,
 			required: true
         },
+        status: {
+            type: String,
+			required: true
+        },
 		package_cost: {
 			type: Number,
 			},

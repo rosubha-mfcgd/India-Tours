@@ -367,6 +367,10 @@ export interface ICategory extends Document{
       type: String,
 			required: true
      },
+     status: {
+      type: String,
+			required: true
+        },
 		destLocation: {
 			type: string,
 			required: true

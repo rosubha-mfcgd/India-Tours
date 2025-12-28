@@ -34,6 +34,10 @@ const userBookingSchema = new mongoose_1.Schema({
         type: String,
         required: true
     },
+    status: {
+        type: String,
+        required: true
+    },
     package_cost: {
         type: Number,
     },

@@ -13,7 +13,15 @@ import { NavContext } from '../navigationContext/navigationContext.jsx';
 import { IoAdd} from 'react-icons/io5';
 import Select from 'react-select';
 import {
-    TextField
+    TextField,
+     Button,
+        Box,
+        CircularProgress,
+        Dialog,
+        DialogTitle,
+        DialogContent,
+        DialogContentText,
+        DialogActions
    } from "@mui/material";
 import { green } from '@mui/material/colors';
 
@@ -34,13 +42,9 @@ const CustomBookingForm = ({access_token,cityList,triggerDisplayOptionsByCatId})
     const [citydropdownList, setCitydropdownList] = useState([]);
     
     const [touristMap, setTouristMap] = useState([{"touristCount": 1}]);
-    const[openBookingForm,setOpenBookingForm] = useState(true);
-    const [noOfTourist,setNoOfTourist] = useState(0);
-    const [bookingPageMessage,setBookingPageMessage] = useState('');
-    const [bookingid,setBookingid] = useState('');
+   const [isLoading, setIsLoading] = useState(false);
     const [bookingData,setBookingData] = useState([]);
-     const[currentBooking,setCurrentBooking] = useState('');
-     const[displayErrorDialog,setDisplayErrorDialog] = useState(false);
+    const[displayErrorDialog,setDisplayErrorDialog] = useState(false);
      const[errorMessage,setErrorMessage] = useState('');
       const [dialogOpen, setDialogOpen] = useState(false);
          const[showBookingBtn,setShowBookingBtn] = useState(true);
@@ -59,20 +63,97 @@ const CustomBookingForm = ({access_token,cityList,triggerDisplayOptionsByCatId})
   //   startdate: '',
   //   todate: '',
   // });
-  const handleSubmit = (e) => {
+
+  const validateFields=()=>{
+    let isValid = true;
+      if(!selectedFromCity){
+        isValid = false;
+          setErrorMessage('Select the city you will be travelling from');
+      }
+      else if(!selectedToCity){
+         isValid = false;
+        setErrorMessage('Select the city you will be travelling to');
+      }
+       else if(!selectedFromDate){
+         isValid = false;
+        setErrorMessage('Select your travel start date');
+      }
+       else if(!selectedToDate){
+         isValid = false;
+        setErrorMessage('Select your travel end date');
+      }
+       else if(!selectedTravelType){
+         isValid = false;
+        setErrorMessage('Select your preferred travel mode');
+      }
+       else if(!selectedHotelType){
+         isValid = false;
+        setErrorMessage('Select your hotel preference');
+      }
+      else if(bookingData.length<1){
+         isValid = false;
+        setErrorMessage('Select the tourist details');
+      }
+       if(new Date(selectedToDate)<new Date(selectedFromDate)){
+         isValid = false;
+        setErrorMessage('To date cannot be less than From date');
+      }
+      if(!isValid)
+      {
+        setDialogOpen(true)
+        setDisplayErrorDialog(true)
+      }
+      return isValid;
+
+  }
+  const handleSubmit = async(e) => {
     e.preventDefault();
    // console.log('Form Data Submitted:', formData);
+  let isValid = validateFields();
+  if(isValid){
    let result = {};
    result.fromLocation = selectedFromCity.value;
    result.destLocation = selectedToCity.value;
    result.startDate = selectedFromDate;
    result.endDate = selectedToDate;
    result.travelMode = selectedTravelType;
-   result.hotelType = selectedHotelType;
+   result.hotelType = selectedHotelType?selectedHotelType:'Luxury';
+   result.status = 'SUBMITTED'
    result.touristData = bookingData;
-    alert('Thank you for your message!');
+    
     console.log('result is...',result);
+    setIsLoading(true);
+    try{
+      let resultData = await performCustomUserTripBooking(result);
+      if(resultData)
+      {
+        setErrorMessage('Booking submitted with id '+result.bookingid);
+         setIsLoading(false);
+        
+         setDisplayErrorDialog(true);
+          setDialogOpen(true);
+      }
+    }catch(err)
+    {
+      console.log(err.stack);
+       setDisplayErrorDialog(false);
+
+    }
+    finally 
+    {
+      setIsLoading(false); // Hide spinner after fetch (success or error)
+    }
+  }
   };
+  const handleClickOpenOrClose = () => {
+        
+        setDialogOpen(!dialogOpen);
+        if(!dialogOpen)
+        {
+           setDisplayErrorDialog(false);
+         // setDialogOpen(false);
+        }
+    };
 const handleTravelModeChange = (e)=>{
   const { name, value, type } = e.target||{}; 
  //  const data = e.target.value;
@@ -139,7 +220,7 @@ const addTourist = ()=>{
         setSelectedToCity(option);
     }
 useEffect (()=>{
-  let data = [];
+ 
   if(touristCount>1){
         let tourist =  {"touristCount": touristCount};
         
@@ -325,6 +406,47 @@ useEffect (()=>{
           onChange={(event)=>updateCustomBooking(tourist.touristCount,"mobile",event)}
           required />
         </div>
+        <div>
+          {displayErrorDialog?
+                               <Dialog
+                  open={dialogOpen}
+                  onClose={handleClickOpenOrClose}
+                  aria-labelledby="dialog-title"
+                  aria-describedby="dialog-description"
+                >
+                  <DialogTitle id="dialog-title">Mitram Message</DialogTitle>
+                  <DialogContent>
+                     
+                    <DialogContentText id="dialog-description">
+                    
+                    {errorMessage}
+                    </DialogContentText>
+                  </DialogContent>
+                  <DialogActions>
+                    <Button onClick={handleClickOpenOrClose}>Cancel</Button>
+                    <Button onClick={handleClickOpenOrClose} autoFocus>
+                     OK
+                    </Button>
+                    {dialogOpen?
+                    <img src={failure_animation} alt="" width="40" height="40"/>:
+                    <div></div>}
+                  </DialogActions>
+                </Dialog>:<div></div>}
+         {isLoading ? (
+        
+                  <Box
+      sx={{
+        display: 'flex',
+        justifyContent: 'center',
+        alignItems: 'center',
+        minHeight: '100vh', // Optional: Centers vertically within the viewport
+      }}
+    >
+                     <CircularProgress />
+                     </Box>
+                ):<div/>
+              }
+            </div>
             <div className="form-group">
         <fieldset style={{ border: 'none', padding: 0 }}>
          
