@@ -10,7 +10,7 @@ import mobile_icon from '../Assets/input/mobile.png';
 import Loading from "../Utilities/Loading/Loading.js";
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import { useNavigate } from 'react-router-dom';
-import {signupUser,loginUser} from '../admin/admin';
+import {signupUser,loginUser,getAuthAccessToken} from '../admin/admin';
 
 
 import {
@@ -61,18 +61,31 @@ const LoginSignup =() => {
 
   
         //SIGNUP A NEW USER
-        const googlesignup = useGoogleLogin ({
-            client_id:process.env.REACT_APP_CLIENT_ID,
-            onSuccess: async(codeResponse) => {
+        const signup = async() =>{
+
+        // const googlesignup = useGoogleLogin ({
+        //     client_id:process.env.REACT_APP_CLIENT_ID,
+        //     onSuccess: async(codeResponse) => {
                 
-                setAction("Sign Up");
-                const req_data = {
-                    name:name,
-                    email:email,
-                    mobile:mobile,
-                    access_token:codeResponse.access_token
-                };
+        //         setAction("Sign Up");
+        //         const req_data = {
+        //             name:name,
+        //             email:email,
+        //             mobile:mobile,
+        //             access_token:codeResponse.access_token
+        //         };
                 try{
+                    setAction("Sign Up")
+                     let codeResponse = await getAuthAccessToken();
+                     if(codeResponse)
+                    {
+                        console.log('codeResponse token for signup...',codeResponse.access_token)
+                      const req_data = {
+                           name:name,
+                     email:email,
+                     mobile:mobile,
+                     access_token:codeResponse.access_token
+                 }
                     setButtonclick(true);
                
                     let resdata = await signupUser(req_data);
@@ -95,33 +108,48 @@ const LoginSignup =() => {
                         }
                     }
                 }
+                }else{
+                   
+                    setErrorMessage('Sign Up attempt failed, please try again')
+                }
             }catch(error){
                 console.log(error);
                 
             }finally {
                 setButtonclick(false); // Hide spinner after fetch (success or error)
              }
-            }, 
+        //     }, 
             
-            onError: (error) => console.log('Login Failed:', error)
-        });
+        //     onError: (error) => console.log('Login Failed:', error)
+        // });
+            
+    }
     
         //LOGIN USER
-        const googleLogin =  useGoogleLogin({
-            client_id:process.env.REACT_APP_CLIENT_ID,
-            onSuccess: async(codeResponse) => {
+        const loginUsertoApp = async() =>{
+        // const googleLogin =  useGoogleLogin({
+        //     client_id:process.env.REACT_APP_CLIENT_ID,
+        //     onSuccess: async(codeResponse) => {
                 console.log('Trying google auth...')
                 setAction("Send Otp");
                 // navigate('sendotp', { replace: true });
                // setAction("Login");
                 
-                const req_data = {
-                    email:email,
-                    mobile:mobile,
-                    access_token:codeResponse.access_token
-                };
+                
                 try{
-                    setButtonclick(true);
+                     setAction("Send Otp")
+                     let codeResponse = await getAuthAccessToken();
+                    if(codeResponse)
+                    {
+
+                            setButtonclick(true);
+                            console.log('codeResponse token for login...',codeResponse.access_token)
+                            const req_data = {
+                            email:email,
+                            mobile:mobile,
+                            access_token:codeResponse.access_token
+                        };
+
                     let resdata = await loginUser(req_data);
                 
                 if(resdata)
@@ -142,15 +170,17 @@ const LoginSignup =() => {
                         }
                     }
                 }
-            }catch(error){
-                 console.log(error);
+            }
+            }catch(err){
+                 console.log(err);
             }
             finally{
                   setButtonclick(false); // Hide spinner after fetch (success or error)
             }
-            },
-            onError: (error) => console.log('Login Failed:', error)
-        });          
+        //     },
+        //     onError: (error) => console.log('Login Failed:', error)
+        // });
+        }          
          useEffect(()=>
            {
 
@@ -250,7 +280,7 @@ const LoginSignup =() => {
                         <div className='submit-container'>
                     
                         <div className={action==="Login"?"submit gray":"submit"} 
-                        onClick={()=>googlesignup()}>Sign Up</div>
+                        onClick={signup}>Sign Up</div>
                     
                             <div className={action==='Sign Up'?'submit gray':'submit'} 
                             onClick={()=>{setAction("Login");}}>Login</div>
@@ -259,7 +289,7 @@ const LoginSignup =() => {
 
                         {action === 'Login'?
                         <div className='submit-container'>
-                    <div className="submit" onClick={()=>{googleLogin();}}>Send Otp</div>
+                    <div className="submit" onClick={loginUsertoApp}>Send Otp</div>
                     <div className={action==="Login"?"submit gray":"submit"} 
                         onClick={()=>{setAction("Sign Up");
                         navigate('-1');
