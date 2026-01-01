@@ -101,12 +101,13 @@ const NavBar = ({access_token,triggerDisplayOptionsByCatId,
                        let personalTripCategories = [];
                        for(let category of categories)
                        {
-                            if(category && category.categoryID != 10 && 
-                                category.categoryID != 9 && category.categoryID != 7)
+                            if(category && category.categoryID !== 10 && 
+                                category.categoryID !== 9 && category.categoryID !== 7)
                             {
                                   operatedTourCategories.push(category);  
                             }
-                            else{
+                            else
+							{
                                 personalTripCategories.push(category);
                             }
                            
