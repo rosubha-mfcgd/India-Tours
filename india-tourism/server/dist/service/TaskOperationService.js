@@ -8,7 +8,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
-const { SearchOptionsRepository } = require('../repository/SearchOptionsRepository');
+const { SearchOptionsRepository } = require('../../dist/repository/SearchOptionsRepository');
 require("../logNginx");
 class TaskOperationService {
     constructor() {

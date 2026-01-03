@@ -1,4 +1,4 @@
-const { SearchOptionsRepository } = require('../repository/SearchOptionsRepository');
+const { SearchOptionsRepository } = require('../../dist/repository/SearchOptionsRepository');
 
 require("../logNginx");
 

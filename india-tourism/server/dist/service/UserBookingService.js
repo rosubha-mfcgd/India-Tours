@@ -8,7 +8,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
-const { UserbookingRepository } = require('../repository/UserbookingRepository');
+const { UserbookingRepository } = require('../../dist/repository/UserbookingRepository');
 require("../logNginx");
 const apputil = require('../utils/appUtility');
 class UserBookingService {

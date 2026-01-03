@@ -9,12 +9,12 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 const { CategoryRepository } = require('../../dist/repository/CategoryRepository');
-const { TourRepository } = require('../repository/TourRepository');
-const { TourItineraryRepository } = require('../repository/TourItineraryRepository');
-const { TourManagerRepository } = require('../repository/TourManagerRepository');
+const { TourRepository } = require('../../dist/repository/TourRepository');
+const { TourItineraryRepository } = require('../../dist/repository/TourItineraryRepository');
+const { TourManagerRepository } = require('../../dist/repository/TourManagerRepository');
 const { ProductRepository } = require('../../dist/repository/ProductRepository');
 const { CityRepository } = require('../../dist/repository/CityRepository');
-const { BookingRepository } = require('../repository/BookingRepository');
+const { BookingRepository } = require('../../dist/repository/BookingRepository');
 require("../logNginx");
 class TourDetailService {
     constructor() {

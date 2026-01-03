@@ -23,8 +23,8 @@ const SamlStrategy = require('passport-saml').Strategy;
 const bodyParser = require('body-parser');
 
 const { OAuth2Client } = require('google-auth-library');
-const { doSignup } = require('./dist/controller/signup');
-const { doLogin } = require('./dist/controller/loginuser');
+const { doSignup } = require('./src/controller/signup');
+const { doLogin } = require('./src/controller/loginuser');
 const PORT = process.env.PORT || 5000;
 const GOOGLE_OAUTH_URL = process.env.GOOGLE_OAUTH_URL;
 const GOOGLE_CLIENT_ID = process.env.CLIENT_ID;
@@ -84,8 +84,8 @@ const options = {
 app.use(passport.initialize());
 
 //Route for handling user registration and login
-const userRouter = require("./dist/routers/routers");
-const { checkAuthenticated } = require('./dist/middlewares/auth.js');
+const userRouter = require("./src/routers/routers");
+const { checkAuthenticated } = require('./src/middlewares/auth.js');
 //code for using implemented routes
 app.use("/api", userRouter);
 

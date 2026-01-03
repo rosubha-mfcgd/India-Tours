@@ -1,6 +1,4 @@
-const express = require("express");
 require("../logNginx");
-const {User} = require("../../dist/model/user");
 const apputil = require('../utils/appUtility');
 const EmailService = require('../service/EmailService');
 const UserService = require('../service/UserService');

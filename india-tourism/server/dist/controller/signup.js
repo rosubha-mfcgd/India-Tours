@@ -8,9 +8,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
-const express = require("express");
 require("../logNginx");
-const { User } = require("../../dist/model/user");
 const apputil = require('../utils/appUtility');
 const EmailService = require('../service/EmailService');
 const UserService = require('../service/UserService');

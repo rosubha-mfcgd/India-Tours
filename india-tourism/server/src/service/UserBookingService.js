@@ -1,4 +1,4 @@
-const { UserbookingRepository } = require('../repository/UserbookingRepository');
+const { UserbookingRepository } = require('../../dist/repository/UserbookingRepository');
 require("../logNginx");
 const apputil = require('../utils/appUtility');
 class UserBookingService{

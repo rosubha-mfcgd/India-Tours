@@ -1,0 +1,28 @@
+services:
+  api:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: mitram-img:latest
+    ports:
+      - "8090:8090"
+    env_file:
+      - .env
+    depends_on:
+      - mongo
+    networks:
+      - app-network
+  mongo:
+    image: mongo:latest
+    ports:
+      - "27017:27017"
+    volumes:
+      - mongo-data:/data/db
+    networks:
+      - app-network
+networks:
+  app-network:
+    driver: bridge
+volumes:
+  mongo-data:
+    driver: local

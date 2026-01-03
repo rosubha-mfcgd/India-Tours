@@ -1,4 +1,4 @@
-const { PreferenceRepository } = require('../repository/PreferenceRepository');
+const { PreferenceRepository } = require('../../dist/repository/PreferenceRepository');
 
 require("../logNginx");
 
