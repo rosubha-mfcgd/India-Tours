@@ -3,7 +3,7 @@ services:
     build:
       context: .
       dockerfile: Dockerfile
-    image: mitram-img:latest
+    image: mitram-user-service-img:latest
     ports:
       - "8090:8090"
     env_file:
