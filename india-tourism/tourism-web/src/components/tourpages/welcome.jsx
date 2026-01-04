@@ -151,19 +151,21 @@ const openBookingForm = (tourDetails) =>{
             let tourDtls = {"locationName":tourDetails.locationName,
                 "tourManagerName":tourManager.tourManagerName,
                 "tourManagerId":tourManager.tourManagerId,
-                "triplength":tourDetails.triplength,
+                "triplength":tourDetails.tripLength,
                 "image":tourDetails.image,
-                "desc":tourDetails.desc,
+                "nights": tourDetails.nights,
+                "desc":tourDetails.description,
                 "contact":tourManager.contact,            
                 "startDate":tourDetails.startDate,
                 "endDate":tourDetails.endDate,
-                "package_cost":tourDetails.package_cost,
-                "max_tourist":tourDetails.max_tourist,
-                "seats_left":tourDetails.seats_left,
-                "ticket_cost":tourDetails.ticket_cost,
+                "currency":tourDetails.currency,
+                "package_cost":tourDetails.packageCost,
+                "max_tourist":tourDetails.maxTourist,
+                "seats_left":tourDetails.seatsLeft,
+                "ticket_cost":tourDetails.ticketCost,
                 "itinerary": tourDetails.itinerary,
                 "categoryId":tourDetails.categoryId,
-                "domesticOrInternational":tourDetails.domesticOrinternational
+                "domesticOrInternational":tourDetails.tourType
             };
 
             console.log('tourDetails is...',tourDtls)

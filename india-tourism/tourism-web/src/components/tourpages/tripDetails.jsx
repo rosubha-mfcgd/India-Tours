@@ -76,7 +76,7 @@ import {
       />
            </Card>
             <Typography variant="body2" style={{ color: '#FFFFFF' }}>
-                           {tourDetails.desc}
+                           {tourDetails.description}
                          </Typography>
             <Typography variant="body2" style={{ color: '#FFFFFF' }}>
                           This tour is operated by :- <strong>{tourDetails.tourManagerName}</strong>
@@ -113,7 +113,7 @@ import {
                      <TableRow>
                     <TableCell>
                         <Typography variant="body2" style={{ color: '#FFFFFF' }}>
-                       Trip Type : <strong> {tourDetails.domesticOrInternational === "D"? "Domestic"
+                       Trip Type : <strong> {tourDetails.tourType === "Domestic"? "Domestic"
                        :"International"}  </strong>
                         </Typography>  
                     </TableCell>
@@ -137,7 +137,7 @@ import {
                       <TableRow>
                       <TableCell>
                          <Typography variant="body2" style={{ color: '#FFFFFF' }}>
-                      Package Cost/person: <strong> {tourDetails.package_cost}</strong> 
+                      Package Cost/person: <strong>{tourDetails.currency} {tourDetails.package_cost}</strong> 
                         </Typography>   
                     </TableCell>
                     </TableRow>

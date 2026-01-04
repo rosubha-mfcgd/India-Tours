@@ -142,14 +142,14 @@ const TripList = ({access_token,categoryId,cityList,showDetails}) =>{
                     if(tours)
                     {
                         
-                        if(selectedValue === 'I' || selectedValue === 'D'){
+                        if(selectedValue === 'International' || selectedValue === 'Domestic'){
                         for(let tour of alltours)
                         {
                             let tripLength = (new Date(tour.endDate).getTime() - 
                             new Date(tour.startDate).getTime())/(24*3600*1000);
                                 console.log('tripLength....',tripLength);
-                            if(tour.domesticOrinternational === selectedValue  && 
-                                Number(tour.package_cost)<=(Number(priceValue)) && 
+                            if(tour.tourType === selectedValue  && 
+                                Number(tour.packageCost)<=(Number(priceValue)) && 
                             Number(tripLength)<=Number(triplengthValue) && (
                                 tourManagerMap.get(tour.tourManagerId) && 
                                 ((tourManagerMap.get(tour.tourManagerId)).citycode == cityvalue)||
@@ -168,7 +168,7 @@ const TripList = ({access_token,categoryId,cityList,showDetails}) =>{
                             {
                                  let tripLength = (new Date(tour.endDate).getTime() - 
                             new Date(tour.startDate).getTime())/(24*3600*1000);
-                                if(Number(tour.package_cost)<=(Number(priceValue)) && 
+                                if(Number(tour.packageCost)<=(Number(priceValue)) && 
                             Number(tripLength)<=Number(triplengthValue) && (tourManagerMap.get(tour.tourManagerId) && 
                             (tourManagerMap.get(tour.tourManagerId)).citycode == cityvalue)||
                         (tourManagerMap.get(tour.tourManagerId).citycode == '0'))
@@ -209,7 +209,7 @@ const TripList = ({access_token,categoryId,cityList,showDetails}) =>{
                         access_token)} style={{ cursor: 'pointer' }}>
                     
                     <CardMedia component= "img"  height="100"
-                    image = {tour.image} alt={tour.desc} 
+                    image = {tour.image} alt={tour.description} 
                                       
                     />
                                      
@@ -233,7 +233,7 @@ const TripList = ({access_token,categoryId,cityList,showDetails}) =>{
               </Typography>
              
                     <Typography variant="body2" color="text.secondary">
-                 {tour.domesticOrinternational === "D"? "Domestic":"International"}
+                 {tour.tourType === "Domestic"? "Domestic":"International"}
               </Typography>
                  <button type="submit" class="button"  onClick={()=>showDetails(tour,getValuesFromTourManagerMap(tour.tourManagerId))} 
                     style={{ cursor: 'pointer',backgroundColor: '#8a77f8ff',color:'#0c0c0fff'}}>

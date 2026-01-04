@@ -183,8 +183,8 @@ cityList.map((city) =>(
         value={selectedValue}
         onChange={handleChange}
       >
-        <FormControlLabel value="I" control={<Radio/>} label="International" />
-        <FormControlLabel value="D" control={<Radio/>} label="Domestic" />
+        <FormControlLabel value="International" control={<Radio/>} label="International" />
+        <FormControlLabel value="Domestic" control={<Radio/>} label="Domestic" />
          <FormControlLabel value="B" control={<Radio/>} label="Both" />
      </RadioGroup>
      </FormControl>

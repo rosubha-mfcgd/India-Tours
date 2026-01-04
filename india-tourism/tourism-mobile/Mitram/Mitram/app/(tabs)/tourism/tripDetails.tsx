@@ -25,7 +25,7 @@ export default function TripDetails()
                </TR>
             <TR>
               <TD style={TourCommonStyle.cell}>
-                <Text style={TextStyle.body}>{itemObject.desc}</Text>
+                <Text style={TextStyle.body}>{itemObject.description}</Text>
               </TD>
              
             </TR>

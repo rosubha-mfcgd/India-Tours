@@ -1,0 +1,21 @@
+version: "3.8"
+services:
+  mongo:
+    image: mongo:latest
+    ports:
+      - "27017:27017" # Optional: for connecting from outside docker (e.g., MongoDB Compass)
+    volumes:
+      - mongo-data:/data/db # Optional: for data persistence
+  api-service:
+    image: mitram-touroperator-service-img:latest
+    container_name: mitram-touroperator-service-1.0
+    depends_on:
+      - mongo # Ensures MongoDB starts first
+    env_file:
+      # Use the service name 'mongo' as the hostname
+      - .env
+    ports:
+      - "8092:8092" # Expose your API's port
+volumes:
+  mongo-data:
+    driver: local
