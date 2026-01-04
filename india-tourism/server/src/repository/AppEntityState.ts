@@ -30,14 +30,17 @@ export interface IUser extends Document{
      preference : [],
     tourmanagerId : String
 }
+
+
+
 export interface ITourDetails extends Document{
     locationName:{
-       type: String,
+      type: String,
       required: true,
       trim: true,
     },
     categoryID:{
-       type: Number,
+      type: Number,
       required: true,
       trim: true,
     },
@@ -46,7 +49,7 @@ export interface ITourDetails extends Document{
          required: true,
          trim: true,
     },
-    triplength:{
+    tripLength:{
          type: String,
       required: true
       },
@@ -58,27 +61,39 @@ export interface ITourDetails extends Document{
           type: Date,
           required: true
       },
-    package_cost:{
+      createdAt:{
+         type: Date,
+         required: true
+      },
+      updatedAt:{
+         type: Date,
+         required: true
+      },
+    packageCost:{
         type: String,
       required: true,
     },
-    max_tourist:{
+    maxTourist:{
          type: String,
          required: true,
     },
-    seats_left:{
+    seatsLeft:{
          type: String,
          required: true,
     },
-     domesticOrInternational:{
+    currency:{
+        type: String,
+        required: true,
+    },
+     tourType:{
          type: String,
          required: true,
     },
-    ticket_cost:{
+    ticketCost:{
          type: String,
          required: true,
     },
-    desc: {
+    description: {
       type : String
     },
     itinerary:{

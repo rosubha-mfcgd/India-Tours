@@ -16,23 +16,27 @@ const toursSchema = new Schema<ITourDetails>({
       required: true,
       trim: true,
     },
-    triplength:{
+    tripLength:{
          type: String,
       required: true
       },
-    package_cost:{
+    packageCost:{
         type: String,
       required: true,
     },
-    ticket_cost:{
+    currency:{
+        type: String,
+        required: true,
+    },
+    ticketCost:{
         type: String,
       required: true,
     },
-    max_tourist:{
+    maxTourist:{
          type: String,
          required: true,
     },
-    seats_left:{
+    seatsLeft:{
          type: String,
          required: true,
     },
@@ -40,16 +44,15 @@ const toursSchema = new Schema<ITourDetails>({
          type: Date,
          required: true,
     },
-
     endDate:{
          type: Date,
          required: true,
     },
-     domesticOrInternational:{
+    tourType:{
          type: String,
          required: true,
     },
-    desc: {
+    description: {
       type : String
     },
      itinerary:{

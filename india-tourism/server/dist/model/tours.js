@@ -17,23 +17,27 @@ const toursSchema = new mongoose_1.Schema({
         required: true,
         trim: true,
     },
-    triplength: {
+    tripLength: {
         type: String,
         required: true
     },
-    package_cost: {
+    packageCost: {
         type: String,
         required: true,
     },
-    ticket_cost: {
+    currency: {
         type: String,
         required: true,
     },
-    max_tourist: {
+    ticketCost: {
         type: String,
         required: true,
     },
-    seats_left: {
+    maxTourist: {
+        type: String,
+        required: true,
+    },
+    seatsLeft: {
         type: String,
         required: true,
     },
@@ -49,7 +53,7 @@ const toursSchema = new mongoose_1.Schema({
         type: String,
         required: true,
     },
-    desc: {
+    description: {
         type: String
     },
     itinerary: {
