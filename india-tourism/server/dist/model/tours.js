@@ -49,7 +49,7 @@ const toursSchema = new mongoose_1.Schema({
         type: Date,
         required: true,
     },
-    domesticOrInternational: {
+    tourType: {
         type: String,
         required: true,
     },
@@ -60,4 +60,4 @@ const toursSchema = new mongoose_1.Schema({
         type: String
     }
 });
-exports.ToursModel = (0, mongoose_1.model)('Tourdetails', toursSchema);
+exports.ToursModel = (0, mongoose_1.model)('Tours', toursSchema);

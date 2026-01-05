@@ -60,4 +60,4 @@ const toursSchema = new Schema<ITourDetails>({
     }
     });
 
-export const ToursModel = model<ITourDetails>('Tourdetails',toursSchema);
+export const ToursModel = model<ITourDetails>('Tours',toursSchema);
