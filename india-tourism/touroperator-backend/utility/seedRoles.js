@@ -1,20 +1,28 @@
 const Role = require("../models/Role");
+const Counter = require("../models/Counter");
 
 const seedRoles = async () => {
   try {
     const roles = [
-      { roleID: 1, roleName: "superadmin" },
-      { roleID: 2, roleName: "touroperator" },
-      { roleID: 3, roleName: "user" }
+      { _id: 1, roleName: "superadmin" },
+      { _id: 2, roleName: "touroperator" },
+      { _id: 3, roleName: "user" },
     ];
 
-    for (let role of roles) {
-      const exists = await Role.findOne({ roleID: role.roleID });
+    for (const role of roles) {
+      const exists = await Role.findById(role._id);
       if (!exists) {
         await Role.create(role);
         console.log(`Role ${role.roleName} created`);
       }
     }
+
+    // Sync role counter so future roles don’t collide
+    await Counter.findOneAndUpdate(
+      { _id: "role" },
+      { $set: { seq: 3 } },
+      { upsert: true }
+    );
   } catch (err) {
     console.error("Error seeding roles:", err);
   }

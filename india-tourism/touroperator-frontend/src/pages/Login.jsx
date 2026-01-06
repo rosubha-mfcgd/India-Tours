@@ -10,7 +10,6 @@ import {
 import Slider from "react-slick";
 import { useNavigate } from "react-router-dom";
 import { AuthContext } from "../context/AuthContext";
-import { loginUser } from "../apiconfig/authApi";
 import ForgotAuthModal from "../components/ForgotAuthModal";
 
 // Carousel images
@@ -37,9 +36,9 @@ export default function Login() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     setError(null);
+
     try {
-      const res = await loginUser(form); // call API wrapper
-      await login(res.data.token); // store token & fetch user info
+      await login(form); // login via AuthContext (cookies used automatically)
       navigate("/dashboard"); // redirect after login
     } catch (err) {
       setError(err.response?.data?.message || "Login failed");

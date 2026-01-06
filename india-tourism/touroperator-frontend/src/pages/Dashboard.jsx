@@ -1,144 +1,73 @@
-import React, { useEffect, useState, useContext } from "react";
+import React, { useEffect, useState } from "react";
 import {
   Typography,
   Grid,
   Card,
   CardContent,
   CircularProgress,
-  Modal,
   Box,
-  TextField,
-  Button,
-  MenuItem,
-  Stack,
-  Alert
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableRow,
+  Alert,
 } from "@mui/material";
-import axiosClient from "../apiconfig/axiosClient";
-import { AuthContext } from "../context/AuthContext";
-
-// Modal styling
-const modalStyle = {
-  position: "absolute",
-  top: "50%",
-  left: "50%",
-  transform: "translate(-50%, -50%)",
-  width: 500,
-  bgcolor: "background.paper",
-  boxShadow: 24,
-  p: 4,
-  borderRadius: 2
-};
+import { getTours } from "../apiconfig/tourApi";
+import { getBookings } from "../apiconfig/bookingApi";
 
 export default function Dashboard() {
-  const { user } = useContext(AuthContext);
-
   const [tours, setTours] = useState([]);
+  const [bookings, setBookings] = useState([]);
+  const [tourBookingData, setTourBookingData] = useState([]);
   const [loading, setLoading] = useState(true);
-
-  // Modal state
-  const [openModal, setOpenModal] = useState(false);
-  const [form, setForm] = useState({
-    location: "",
-    city: "",
-    state: "",
-    categoryID: "",
-    triplength: "",
-    startDate: "",
-    endDate: "",
-    package_cost: "",
-    max_tourist: "",
-    seats_left: "",
-    tourType: "domestic",
-    ticket_cost: "",
-    desc: "",
-    image: "",
-    itinerary: ""
-  });
   const [error, setError] = useState(null);
-  const [success, setSuccess] = useState(null);
 
-  // Fetch tours
   useEffect(() => {
-    const fetchTours = async () => {
+    const fetchDashboardData = async () => {
+      setLoading(true);
+      setError(null);
+
       try {
-        const res = await axiosClient.get("/tours", {
-          headers: { Authorization: `Bearer ${localStorage.getItem("token")}` }
+        // 1️⃣ Fetch all tours
+        const toursRes = await getTours();
+        const allTours = toursRes.data || [];
+        setTours(allTours);
+
+        // 2️⃣ Fetch all bookings
+        const bookingsRes = await getBookings();
+        const allBookings = bookingsRes.data || [];
+        setBookings(allBookings);
+
+        // 3️⃣ Compute bookings per tour
+        const bookingCounts = {};
+        allBookings.forEach((b) => {
+          const tourIdStr =  b.tourId?._id?.toString() || b.tourId?.toString();
+          bookingCounts[tourIdStr] = (bookingCounts[tourIdStr] || 0) + 1;
         });
-        setTours(res.data);
+
+        const tourData = allTours.map((tour) => {
+          const tourIdStr = tour._id.toString(); // Convert to string
+          return {
+            tourId: tour._id,
+            description: tour.description,
+            packageCost: tour.packageCost,
+            currency: tour.currency || "INR",
+            bookingsCount: bookingCounts[tourIdStr] || 0,
+          };
+        });
+        console.log("Tour booking data:", tourData);
+      setTourBookingData(tourData);
       } catch (err) {
-        console.error("Failed to fetch tours:", err);
+        console.error("Dashboard fetch failed:", err);
+        setError("Failed to load dashboard data.");
       } finally {
         setLoading(false);
       }
     };
-    fetchTours();
+
+    fetchDashboardData();
   }, []);
-
-  const handleOpenModal = () => {
-    setForm({
-      location: "",
-      city: "",
-      state: "",
-      categoryID: "",
-      triplength: "",
-      startDate: "",
-      endDate: "",
-      package_cost: "",
-      max_tourist: "",
-      seats_left: "",
-      tourType: "domestic",
-      ticket_cost: "",
-      desc: "",
-      image: "",
-      itinerary: ""
-    });
-    setError(null);
-    setSuccess(null);
-    setOpenModal(true);
-  };
-
-  const handleCloseModal = () => setOpenModal(false);
-
-  // Update form fields
-  const handleChange = (e) => {
-    const { name, value } = e.target;
-
-    // Autofill city/state if location changes (example)
-    if (name === "location") {
-      // In real app, fetch city/state from API
-      if (value.toLowerCase() === "shimla") {
-        setForm((prev) => ({ ...prev, city: "Shimla", state: "Himachal Pradesh", location: value }));
-      } else {
-        setForm((prev) => ({ ...prev, city: "", state: "", location: value }));
-      }
-    } else {
-      setForm((prev) => ({ ...prev, [name]: value }));
-    }
-  };
-
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    setError(null);
-    setSuccess(null);
-
-    try {
-      // Only roleID 1 or 2 can create tour
-      if (![1, 2].includes(user.roleID)) {
-        setError("You do not have permission to create tours.");
-        return;
-      }
-
-      const res = await axiosClient.post("/tours", form, {
-        headers: { Authorization: `Bearer ${localStorage.getItem("token")}` }
-      });
-
-      setSuccess("Tour created successfully!");
-      setTours((prev) => [...prev, res.data]); // Update tours list
-      handleCloseModal();
-    } catch (err) {
-      setError(err.response?.data?.message || "Failed to create tour.");
-    }
-  };
 
   if (loading) {
     return (
@@ -148,185 +77,121 @@ export default function Dashboard() {
     );
   }
 
-  return (
-    <div>
+   return (
+    <Box sx={{ p: { xs: 2, sm: 3, md: 4 } }}>
       <Typography variant="h4" gutterBottom>
         Dashboard
       </Typography>
 
-      <Grid container spacing={3}>
-        {/* Tours Available Card */}
+      {error && (
+        <Alert severity="error" sx={{ mb: 3 }}>
+          {error}
+        </Alert>
+      )}
+
+      {/* Total Tours & Bookings Cards */}
+      <Grid container spacing={3} sx={{ mb: 4 }}>
+        {/* Total Tours */}
         <Grid item xs={12} sm={6} md={4}>
           <Card
-            elevation={3}
-            sx={{ cursor: "pointer" }}
-            onClick={handleOpenModal}
+            elevation={6}
+            sx={{
+              height: "100%",
+              display: "flex",
+              flexDirection: "column",
+              justifyContent: "center",
+              alignItems: "center",
+              textAlign: "center",
+              p: 2,
+            }}
           >
             <CardContent>
-              <Typography variant="h6">Tours Available</Typography>
+              <Typography variant="h6">Total Tours</Typography>
               <Typography variant="h3" color="primary">
                 {tours.length}
               </Typography>
               <Typography variant="body2" color="textSecondary">
-                Click to add a new tour
+                Number of tours available
+              </Typography>
+            </CardContent>
+          </Card>
+        </Grid>
+
+        {/* Total Bookings */}
+        <Grid item xs={12} sm={6} md={4}>
+          <Card
+            elevation={6}
+            sx={{
+              height: "100%",
+              display: "flex",
+              flexDirection: "column",
+              justifyContent: "center",
+              alignItems: "center",
+              textAlign: "center",
+              p: 2,
+            }}
+          >
+            <CardContent>
+              <Typography variant="h6">Total Bookings</Typography>
+              <Typography variant="h3" color="secondary">
+                {bookings.length}
+              </Typography>
+              <Typography variant="body2" color="textSecondary">
+                Total bookings made
               </Typography>
             </CardContent>
           </Card>
         </Grid>
       </Grid>
 
-      {/* Add Tour Modal */}
-      <Modal open={openModal} onClose={handleCloseModal}>
-        <Box sx={modalStyle}>
-          <Typography variant="h6" gutterBottom>
-            Add New Tour
-          </Typography>
-          {error && <Alert severity="error" sx={{ mb: 2 }}>{error}</Alert>}
-          {success && <Alert severity="success" sx={{ mb: 2 }}>{success}</Alert>}
-          <form onSubmit={handleSubmit}>
-            <Stack spacing={2}>
-              <TextField
-                label="Location"
-                name="location"
-                value={form.location}
-                onChange={handleChange}
-                fullWidth
-                required
-              />
-              <TextField
-                label="City"
-                name="city"
-                value={form.city}
-                onChange={handleChange}
-                fullWidth
-                required
-              />
-              <TextField
-                label="State"
-                name="state"
-                value={form.state}
-                onChange={handleChange}
-                fullWidth
-                required
-              />
-              <TextField
-                label="Category ID"
-                name="categoryID"
-                type="number"
-                value={form.categoryID}
-                onChange={handleChange}
-                fullWidth
-                required
-              />
-              <TextField
-                label="Trip Length"
-                name="triplength"
-                value={form.triplength}
-                onChange={handleChange}
-                fullWidth
-                required
-              />
-              <TextField
-                label="Start Date"
-                name="startDate"
-                type="date"
-                value={form.startDate}
-                onChange={handleChange}
-                fullWidth
-                InputLabelProps={{ shrink: true }}
-                required
-              />
-              <TextField
-                label="End Date"
-                name="endDate"
-                type="date"
-                value={form.endDate}
-                onChange={handleChange}
-                fullWidth
-                InputLabelProps={{ shrink: true }}
-                required
-              />
-              <TextField
-                label="Package Cost"
-                name="package_cost"
-                type="number"
-                value={form.package_cost}
-                onChange={handleChange}
-                fullWidth
-                required
-              />
-              <TextField
-                label="Max Tourists"
-                name="max_tourist"
-                type="number"
-                value={form.max_tourist}
-                onChange={handleChange}
-                fullWidth
-                required
-              />
-              <TextField
-                label="Seats Left"
-                name="seats_left"
-                type="number"
-                value={form.seats_left}
-                onChange={handleChange}
-                fullWidth
-                required
-              />
-              <TextField
-                select
-                label="Tour Type"
-                name="tourType"
-                value={form.tourType}
-                onChange={handleChange}
-                fullWidth
-                required
+      {/* Bookings per Tour Table */}
+      <Typography variant="h5" gutterBottom sx={{ mb: 2 }}>
+        Bookings by Tour
+      </Typography>
+
+      <Box sx={{ overflowX: "auto" }}>
+        <Table
+          sx={{
+            minWidth: 650,
+            border: 1,
+            borderColor: "divider",
+            borderStyle: "dotted",
+            borderRadius: 2,
+            boxShadow: 3,
+            overflow: "hidden",
+          }}
+        >
+          <TableHead sx={{ backgroundColor: "primary.main" }}>
+            <TableRow>
+              <TableCell sx={{ color: "white", fontWeight: 600 }}>Tour Name</TableCell>
+              <TableCell sx={{ color: "white", fontWeight: 600 }}>Price</TableCell>
+              <TableCell sx={{ color: "white", fontWeight: 600 }}>Total Bookings</TableCell>
+            </TableRow>
+          </TableHead>
+
+          <TableBody>
+            {tourBookingData.map((tour, idx) => (
+              <TableRow
+                key={tour.tourId}
+                sx={{
+                  backgroundColor: idx % 2 === 0 ? "grey.100" : "white",
+                  "&:hover": { backgroundColor: "grey.200" },
+                }}
               >
-                <MenuItem value="domestic">Domestic</MenuItem>
-                <MenuItem value="international">International</MenuItem>
-              </TextField>
-              <TextField
-                label="Ticket Cost"
-                name="ticket_cost"
-                type="number"
-                value={form.ticket_cost}
-                onChange={handleChange}
-                fullWidth
-                required
-              />
-              <TextField
-                label="Description"
-                name="desc"
-                value={form.desc}
-                onChange={handleChange}
-                multiline
-                rows={3}
-                fullWidth
-                required
-              />
-              <TextField
-                label="Image URL"
-                name="image"
-                value={form.image}
-                onChange={handleChange}
-                fullWidth
-              />
-              <TextField
-                label="Itinerary"
-                name="itinerary"
-                value={form.itinerary}
-                onChange={handleChange}
-                multiline
-                rows={3}
-                fullWidth
-              />
-              <Button type="submit" variant="contained" fullWidth>
-                Save Tour
-              </Button>
-            </Stack>
-          </form>
-        </Box>
-      </Modal>
-    </div>
+                <TableCell sx={{ fontWeight: 500 }}>{tour.description}</TableCell>
+                <TableCell sx={{ fontWeight: 500 }}>
+                  {new Intl.NumberFormat("en-IN", {
+                    style: "currency",
+                    currency: tour.currency,
+                  }).format(tour.packageCost)}
+                </TableCell>
+                <TableCell sx={{ fontWeight: 500 }}>{tour.bookingsCount}</TableCell>
+              </TableRow>
+            ))}
+          </TableBody>
+        </Table>
+      </Box>
+    </Box>
   );
 }
+

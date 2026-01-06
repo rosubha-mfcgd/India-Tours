@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { getStates } from "../../apiconfig/stateApi";
-import { getCities } from "../../apiconfig/cityApi";
+import { getCitiesByState } from "../../apiconfig/cityApi"; // updated import
 import { Box, FormControl, InputLabel, Select, MenuItem, Button } from "@mui/material";
 
 function FilterPanel({ onFilter }) {
@@ -9,29 +9,42 @@ function FilterPanel({ onFilter }) {
   const [selectedState, setSelectedState] = useState("");
   const [selectedCity, setSelectedCity] = useState("");
 
+  // Fetch all states on mount
   useEffect(() => {
     fetchStates();
   }, []);
 
+  // Fetch cities whenever selectedState changes
   useEffect(() => {
     if (selectedState) {
-      fetchCities(selectedState);
-      setSelectedCity("");
+      fetchCitiesForState(selectedState);
+      console.log("Fetching cities for state:", selectedState);
+      setSelectedCity(""); // reset city selection
     } else {
       setCities([]);
       setSelectedCity("");
     }
   }, [selectedState]);
 
+  // Fetch all states
   const fetchStates = async () => {
-    const res = await getStates();
-    setStates(res.data);
+    try {
+      const res = await getStates();
+      setStates(res.data);
+    } catch (err) {
+      console.error("Failed to fetch states:", err);
+    }
   };
 
-  const fetchCities = async (stateId) => {
-    const res = await getCities();
-    const filtered = res.data.filter((city) => city.state._id === stateId);
-    setCities(filtered);
+  // Fetch cities for a specific state
+  const fetchCitiesForState = async (stateId) => {
+    try {
+      const res = await getCitiesByState(stateId); // calls /api/cities/:stateId
+      setCities(res.data);
+    } catch (err) {
+      console.error("Failed to fetch cities for state:", err);
+      setCities([]);
+    }
   };
 
   const handleFilter = () => {

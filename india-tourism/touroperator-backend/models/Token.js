@@ -1,10 +1,41 @@
 const mongoose = require("mongoose");
 
-const TokenSchema = new mongoose.Schema({
-  userId: { type: mongoose.Schema.Types.ObjectId, ref: "User", required: true },
-  token: { type: String, required: true },
-  startTime: { type: Date, required: true },
-  expiresIn: { type: Date, required: true },
-});
+const tokenSchema = new mongoose.Schema(
+  {
+    _id: {
+      type: Number,
+      unique: true,
+      index: true,
+    },
 
-module.exports = mongoose.model("Token", TokenSchema);
+    userId: {
+      type: Number,        // numeric User._id
+      ref: "User",
+      required: true,
+      index: true,
+    },
+
+    token: {
+      type: String,
+      required: true,
+      index: true,
+    },
+
+    startTime: {
+      type: Date,
+      required: true,
+      default: Date.now,
+    },
+
+    expiresIn: {
+      type: Date,
+      required: true,
+    },
+  },
+  { timestamps: true }
+);
+
+// Optional: prevent duplicate active tokens per user
+// tokenSchema.index({ userId: 1 }, { unique: true });
+
+module.exports = mongoose.model("Token", tokenSchema);

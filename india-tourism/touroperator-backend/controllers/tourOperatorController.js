@@ -1,6 +1,6 @@
 const User = require("../models/User");
 const {gridFsStorageForTours} = require("../middleware/upload");
-
+const getNextSequence = require("../utility/getNextSequence");
 
 
 // Admin creates Tour Operator (roleID = 2)
@@ -33,29 +33,47 @@ exports.createTourOperator = async (req, res) => {
   try {
     const { firstName, lastName, email, password } = req.body;
 
-    // Enforce role creation rule
+    if (!firstName || !lastName || !password) {
+      return res.status(400).json({
+        message: "First name, last name, and password are required",
+      });
+    }
+
     const ROLE_TOUR_OPERATOR = 2;
 
-    // Generate unique username
-    let username = generateUsername(firstName, lastName);
+    // 1️⃣ Generate numeric user _id
+    const numericUserId = await getNextSequence("user");
 
-    // Ensure username is unique in DB
+    if (!numericUserId && numericUserId !== 0) {
+      return res.status(500).json({
+        message: "Failed to generate user ID",
+      });
+    }
+
+    // 2️⃣ Generate unique username
+    let username = generateUsername(firstName, lastName);
     let exists = await User.findOne({ username });
     let attempt = 0;
+
     while (exists && attempt < 10) {
       username = generateUsername(firstName, lastName);
       exists = await User.findOne({ username });
       attempt++;
     }
+
     if (exists) {
-      return res.status(400).json({ message: "Failed to generate unique username" });
+      return res.status(400).json({
+        message: "Failed to generate unique username",
+      });
     }
 
+    // 3️⃣ Create tour operator with numeric _id
     const newUser = new User({
+      _id: numericUserId,
       firstName,
       lastName,
       username,
-      password,
+      password, // hashed by pre-save hook
       email,
       roleID: ROLE_TOUR_OPERATOR,
     });
@@ -65,24 +83,44 @@ exports.createTourOperator = async (req, res) => {
     res.status(201).json({
       message: "Tour Operator created successfully",
       user: {
-        id: newUser._id,
+        _id: newUser._id, // numeric
         username: newUser.username,
         roleID: newUser.roleID,
       },
     });
   } catch (err) {
     console.error("Create Tour Operator Error:", err);
-    res.status(500).json({ message: "Server error" });
+    res.status(500).json({ message: err.message });
   }
 };
 /**
  * GET ALL TOUR OPERATORS
  * Admin only
  */
+// Role mapping
+const ROLE_MAP = {
+  1: "SuperAdmin",
+  2: "Tour Operator",
+  3: "User",
+};
+
 exports.getAllTourOperators = async (req, res) => {
   try {
     const operators = await User.find({ roleID: 2 }).select("-password");
-    res.json(operators);
+
+    // Map numeric roleID to string
+    const response = operators.map(user => ({
+      _id: user._id,
+      firstName: user.firstName,
+      lastName: user.lastName,
+      username: user.username,
+      email: user.email,
+      role: ROLE_MAP[user.roleID] || "Unknown",
+      createdAt: user.createdAt,
+      updatedAt: user.updatedAt,
+    }));
+
+    res.json(response);
   } catch (err) {
     console.error("Get Tour Operators Error:", err);
     res.status(500).json({ message: "Server error" });

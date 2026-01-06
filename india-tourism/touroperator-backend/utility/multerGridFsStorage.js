@@ -8,7 +8,7 @@ const storage = new GridFsStorage({
     const filename = `product-${Date.now()}-${crypto.randomBytes(8).toString("hex")}`;
     return {
       filename,
-      bucketName: "productImages",
+      bucketName: "categoryImages",
     };
   },
 });

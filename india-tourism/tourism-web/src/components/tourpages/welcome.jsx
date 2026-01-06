@@ -21,6 +21,9 @@ import CustomBookingForm from "./custombookingForm.jsx";
 import { getCities } from "../admin/admin";
 import ChatButton from '../Utilities/ChatButton.jsx';
 import ChatWindow from '../Utilities/ChatWindow.jsx';
+import { WhatsAppWidget } from 'react-whatsapp-widget';
+import 'react-whatsapp-widget/dist/index.css'; // Import the default styles
+
 const Welcome =()=>{
 
      const location = useLocation();
@@ -241,8 +244,16 @@ const openBookingForm = (tourDetails) =>{
          }
           </Layout>
           
-          <ChatButton toggleChat={toggleChat} />
-                    {isChatOpen && <ChatWindow onClose={toggleChat} />}
+          {/* <ChatButton toggleChat={toggleChat} />
+                    {isChatOpen && <ChatWindow onClose={toggleChat} /> */}
+                   {
+                    <WhatsAppWidget
+      phoneNumber="+919836266731" // Your international phone number
+      companyName="Mitram Support"
+      replyTimeText="Typically replies within an hour"
+      message="Hello! 👋🏼\n\nHow can we help you today?"
+    />
+          }
           </div>
           </div>
         

@@ -9,14 +9,15 @@ export const formatINR = (amount) => {
 };
 
 export const validationSchema = Yup.object().shape({
-  mobile: Yup.string().matches(/^[0-9]{10}$/, 'Phone number is not valid') // Example regex for a 10-digit number
-    .required('Phone number is invalid'),
+  mobile: Yup.string().required('Mobile number is required')
+  .matches(/^[0-9]{10}$/, 'Mobile number is not valid') // Example regex for a 10-digit number
+    .required('Mobile number is invalid'),
   age: Yup.number()
     .required('Age is required')
     .integer('Age must be an integer')
    .max(92, 'You must be younger than 92 years old') // Sets a maximum age
     .positive('Age must be a positive number'),
-  name: Yup.string()
+  name: Yup.string().required('Name is required')
     .min(2, 'Name is too short - should be 2 chars minimum.')
     .max(50, 'Name is too long - should be 50 chars maximum.')
     .matches(/^[a-zA-Z\s]+$/, 'Name can only contain letters and spaces') // Optional: enforce format

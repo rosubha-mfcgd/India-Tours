@@ -1,18 +1,41 @@
 const City = require('../models/City');
-
+const getNextSequence = require("../utility/getNextSequence");
 /**
  * Add new city
  */
 exports.addCity = async (req, res) => {
-    try {
-        const { name, stateId } = req.body;
-        const city = new City({ name, state: stateId });
-        await city.save();
-        res.status(201).json(city);
-    } catch (err) {
-        res.status(400).json({ error: err.message });
+  try {
+    const { name, state } = req.body;
+
+    if (!name || !name.trim()) {
+      return res.status(400).json({ error: "City name is required" });
     }
+
+    if (!state || isNaN(Number(state))) {
+      return res.status(400).json({ error: "Valid stateId is required" });
+    }
+
+    // Generate numeric _id for City
+    const numericId = await getNextSequence("city");
+    console.log(' Generated city numericId ', numericId );
+    const city = new City({
+      _id: numericId,
+      name: name.trim(),
+      state: Number(state)
+    });
+
+    await city.save();
+
+    res.status(201).json({
+      cityId: city._id,       // numeric city ID
+      name: city.name,
+      state: city.state
+    });
+  } catch (err) {
+    res.status(400).json({ error: err.message });
+  }
 };
+
 
 /*
 * Get Cities by State ID

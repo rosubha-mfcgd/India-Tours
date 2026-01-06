@@ -31,8 +31,8 @@ import { getTripList,getTourManagers } from "../admin/admin";
 const TripList = ({access_token,categoryId,cityList,showDetails}) =>{
     
    //console.log('categoryID is...',categoryId); 
-    const[tours,setTours] = useState('');
-    const[alltours,setAlltours] = useState('');
+    const[tours,setTours] = useState([]);
+    const[alltours,setAlltours] = useState([]);
     //combined state variable holding info from tours and tour managers
    const [ tourManagers, setTourManagers] = useState('');
     // const { name,email,mobile,categoryId} = location.state || {};
@@ -90,7 +90,7 @@ const TripList = ({access_token,categoryId,cityList,showDetails}) =>{
         console.log('formatted date...', date.toLocaleDateString('en-GB')); // Or 'en-GB' for a different locale
         return date.toLocaleDateString('en-GB');
     }
-  
+   useEffect(()=>{
        const getTripListByCategoryId = async (categoryId) =>{
                        console.log('categoryId...',categoryId);
                        let tourOps = '';
@@ -129,20 +129,22 @@ const TripList = ({access_token,categoryId,cityList,showDetails}) =>{
                               setTours(plannedTours);
                               setAlltours(plannedTours);
                           }
-                }
-                if(tours === '')
+                        }
+                if(tours.length===0)
                 {
                     getTripListByCategoryId(categoryId);
                 }
+   },[]);
          useEffect(()=>{
             const selectedTours = [];
                 // console.log('alltours in useEffect...',alltours)
                 
-                //console.log('selectedValue in useEffect...',selectedValue)
-                    if(tours)
+               
+                    if(tours.length === 0)
                     {
-                        
+                         
                         if(selectedValue === 'International' || selectedValue === 'Domestic'){
+                      
                         for(let tour of alltours)
                         {
                             let tripLength = (new Date(tour.endDate).getTime() - 

@@ -1,48 +1,53 @@
 import React, { createContext, useState, useEffect } from "react";
-import axiosClient from "../apiconfig/axiosClient"; // axiosClient with baseURL
+import axiosClient from "../apiconfig/axiosClient";
+import { loginUser, logout } from "../apiconfig/authApi";
 
 export const AuthContext = createContext();
 
 export const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(null);
+  const [loading, setLoading] = useState(true); // loading while fetching user
 
-  // Initialize user from token on app load
-  useEffect(() => {
-    const token = localStorage.getItem("token");
-    if (token) {
-      fetchUser(token);
-    }
-  }, []);
-
-  // Login: store token + fetch user details
-  const login = async (token) => {
-    localStorage.setItem("token", token);
-    await fetchUser(token);
-  };
-
-  // Fetch user details using token
-  const fetchUser = async (token) => {
+  // ---------------- Fetch current logged-in user from backend
+  const fetchUser = async () => {
     try {
-      const res = await axiosClient.get("/auth/getUser", {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      });
+      const res = await axiosClient.get("/auth/getUser", { withCredentials: true });
       setUser(res.data);
     } catch (err) {
-      console.error("Failed to fetch user:", err);
-      logout(); // if token invalid or expired
+      setUser(null); // not logged in or session expired
+    } finally {
+      setLoading(false);
     }
   };
 
-  // Logout: remove token + clear user
-  const logout = () => {
-    localStorage.removeItem("token");
-    setUser(null);
+  // ---------------- Login
+  const login = async (credentials) => {
+    try {
+      await loginUser(credentials); // backend sets HTTP-only cookie
+      await fetchUser(); // fetch user after login
+    } catch (err) {
+      throw err;
+    }
   };
 
+  // ---------------- Logout
+  const logoutUser = async () => {
+    try {
+      await logout(); // backend clears cookie
+    } catch (err) {
+      console.error("Logout failed", err);
+    } finally {
+      setUser(null);
+    }
+  };
+
+  // ---------------- Fetch user on mount
+  useEffect(() => {
+    fetchUser();
+  }, []);
+
   return (
-    <AuthContext.Provider value={{ user, login, logout }}>
+    <AuthContext.Provider value={{ user, loading, login, logout: logoutUser }}>
       {children}
     </AuthContext.Provider>
   );

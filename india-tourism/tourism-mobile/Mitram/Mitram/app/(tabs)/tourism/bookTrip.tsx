@@ -47,7 +47,7 @@ export default function BookMyTrip()
       console.log('bookingData for validation....',booking)
        let errorMessage = await validateBookingData(booking.bookingData);
        
-       if(errorMessage && errorMessage != '')
+       if(errorMessage)
        {
         console.log('errorMessage....',errorMessage);
        setErrorMessage(errorMessage);
@@ -67,6 +67,14 @@ export default function BookMyTrip()
       console.log('bookingData for validation....',data)
      let errMesage = '';
      setErrorMessage(null)
+      setModalVisible(false)
+      
+      if(!data){
+          errMesage =  field+' is required'
+           setErrorMessage(errMesage)
+           setModalVisible(true)
+        }
+       else{
      if("name" === field)
       {
        if(!(/^[a-zA-Z\s]+$/).test(data))
@@ -114,19 +122,25 @@ export default function BookMyTrip()
            streetaddress[index] = '';
        }
       } 
-      
-      if(errorMessage && errorMessage != '')
+      console.log('errormessage is...',errorMessage)
+      if(errorMessage)
       {
+         setErrorMessage(errMesage)
         setModalVisible(true)
       }else{
         setModalVisible(false)
       }
     }
+    }
 
-    const changeTouristCount=(action) =>{
+    const changeTouristCount=async(action) =>{
        
+       let errorMessage = await validateBookingData(booking.bookingData);
+      
+       if(!errorMessage)
+       {
         let currentVal = +count;
-       
+        
         if(action === 'add'){
              currentVal = currentVal+1;
              console.log('currentVal....',currentVal)
@@ -141,7 +155,11 @@ export default function BookMyTrip()
                 setCount(0);
             }
         }
-       }
+      }else{
+        setErrorMessage(errorMessage);
+       setModalVisible(true);
+      }
+    }
 
    
     const updateTourBooking = (key,name,value) =>{

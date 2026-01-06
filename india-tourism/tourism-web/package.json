@@ -55,6 +55,7 @@
     "react-select": "^5.10.2",
     "react-slick": "^0.23.1",
     "react-use-googlelogin": "^0.12.5",
+    "react-whatsapp-widget": "^2.2.0",
     "styled-components": "^6.1.17",
     "web-vitals": "^2.1.4"
   },

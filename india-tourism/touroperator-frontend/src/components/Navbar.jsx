@@ -45,7 +45,10 @@ export default function Navbar() {
 
         {/* Center/Right side: Links */}
         <Box sx={{ display: "flex", alignItems: "center", gap: 1 }}>
-          <Button component={RouterLink} to="/" color="inherit">
+          <Button component={RouterLink} to="/dashboard" color="inherit">
+            Dashboard
+          </Button>
+          <Button component={RouterLink} to="/market-place" color="inherit">
             Marketplace
           </Button>
           <Button component={RouterLink} to="/tours" color="inherit">
@@ -56,8 +59,8 @@ export default function Navbar() {
               <Button component={RouterLink} to="/tour-operators" color="inherit">
                 Tour Operators
               </Button>
-              <Button component={RouterLink} to="/products" color="inherit">
-                Products
+              <Button component={RouterLink} to="/categories" color="inherit">
+                Categories
               </Button>
             </>
           )}

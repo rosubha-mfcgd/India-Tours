@@ -8,107 +8,141 @@ import {
   Button,
   IconButton,
   Box,
+  FormControl,
+  InputLabel,
+  Select,
+  MenuItem,
 } from "@mui/material";
 import EditIcon from "@mui/icons-material/Edit";
 import DeleteIcon from "@mui/icons-material/Delete";
 
 import TourModal from "./TourModal";
-import { getTours , deleteTour } from "../../apiconfig/tourApi";
+import { getTours, deleteTour } from "../../apiconfig/tourApi";
 import { getImage } from "../../apiconfig/imageDetailsApi";
+import { getStates } from "../../apiconfig/stateApi";
+import { getCities } from "../../apiconfig/cityApi";
+import { getCategories } from "../../apiconfig/categoryApi";
 import { AuthContext } from "../../context/AuthContext";
-import DeleteConfirmationModal from "../../components/DeleteConfirmationModal";
 import DeleteConfirmModal from "../../components/DeleteConfirmModal";
+import DeleteConfirmationModal from "../../components/DeleteConfirmationModal";
 
-const API_BASE = process.env.REACT_APP_API_URL;
-
-export default function TourDashboard({ filters }) {
+export default function TourDashboard() {
   const { user } = useContext(AuthContext);
 
+  // ---------------- Data
   const [tours, setTours] = useState([]);
-  const [imageMap, setImageMap] = useState({}); // tourId -> objectURL
+  const [imageMap, setImageMap] = useState({});
+
+  // ---------------- Modals / actions
   const [openModal, setOpenModal] = useState(false);
   const [editingTour, setEditingTour] = useState(null);
   const [reloadKey, setReloadKey] = useState(0);
 
   const [confirmDeleteOpen, setConfirmDeleteOpen] = useState(false);
   const [tourToDelete, setTourToDelete] = useState(null);
-
   const [deleteModalOpen, setDeleteModalOpen] = useState(false);
   const [deletedTourDesc, setDeletedTourDesc] = useState("");
 
-  // ------------------------
-  // Fetch tours
-  // ------------------------
-  const fetchTours = async (appliedFilters = {}) => {
+  // ---------------- Filters data
+  const [states, setStates] = useState([]);
+  const [allCities, setAllCities] = useState([]);
+  const [cities, setCities] = useState([]);
+  const [categories, setCategories] = useState([]);
+
+  // ---------------- Filter selections
+  const [selectedState, setSelectedState] = useState("");
+  const [selectedCity, setSelectedCity] = useState("");
+  const [selectedCategory, setSelectedCategory] = useState("");
+
+  // ---------------- Fetch filters
+  const fetchFilters = async () => {
     try {
-      const res = await getTours(appliedFilters);
-      setTours(res.data);
+      const [stateRes, cityRes, categoryRes] = await Promise.all([
+        getStates(),
+        getCities(),
+        getCategories(),
+      ]);
+      setStates(stateRes.data || []);
+      setAllCities(cityRes.data || []);
+      setCities(cityRes.data || []);
+      setCategories(categoryRes.data || []);
     } catch (err) {
-      console.error(err);
+      console.error("Failed to fetch filters", err);
     }
   };
 
-  const confirmDeleteTour = async () => {
-  if (!tourToDelete) return;
-
+  // ---------------- Fetch tours
+const fetchTours = async () => {
   try {
-    await deleteTour(tourToDelete._id);
+    const params = {};
+    if (selectedState) params.stateId = selectedState;
+    if (selectedCity) params.cityId = selectedCity;
+    if (selectedCategory) params.categoryId = selectedCategory;
 
-    setDeletedTourDesc(tourToDelete.description);
-    setDeleteModalOpen(true);
-
-    setConfirmDeleteOpen(false);
-    setTourToDelete(null);
-
-    // Refresh list
-    setReloadKey((k) => k + 1);
-  } catch (error) {
-    console.error("Delete failed", error);
-  }
-};
-
-  // ------------------------
-  // Fetch image blob
-  // ------------------------
-  const fetchImageBlob = async (tour) => {
-  if (!tour.image?.fileId) return;
-
-  try {
-    const res = await getImage(tour.image.fileId); // call API helper
-    const blob = res.data; // axios returns blob in data
-    const objectUrl = URL.createObjectURL(blob);
-
-    setImageMap((prev) => ({
-      ...prev,
-      [tour._id]: objectUrl,
-    }));
+    console.log("Sending params:", params);
+    
+    const res = await getTours(params);
+    setTours(res.data || []);
   } catch (err) {
-    console.error("Image fetch failed", err);
+    console.error("Failed to fetch tours", err);
   }
 };
 
-  // ------------------------
-  // Effects
-  // ------------------------
-  useEffect(() => {
-    fetchTours(filters);
-  }, [filters, reloadKey]);
+  // ---------------- Fetch images
+  const fetchImageBlob = async (tour) => {
+    if (!tour.image?.fileId) return;
+    try {
+      const res = await getImage(tour.image.fileId);
+      const url = URL.createObjectURL(res.data);
+      setImageMap((prev) => ({ ...prev, [tour._id]: url }));
+    } catch (err) {
+      console.error("Image fetch failed", err);
+    }
+  };
 
+  // ---------------- Effects
+  // Initial load: filters
+  useEffect(() => {
+    fetchFilters();
+  }, []);
+
+  // Fetch tours whenever any filter changes OR reloadKey changes
+  useEffect(() => {
+    fetchTours();
+  }, [selectedState, selectedCity, selectedCategory, reloadKey]);
+
+  // Fetch images
   useEffect(() => {
     tours.forEach(fetchImageBlob);
-
-    // cleanup object URLs
-    return () => {
-      Object.values(imageMap).forEach((url) => URL.revokeObjectURL(url));
-    };
+    return () => Object.values(imageMap).forEach(URL.revokeObjectURL);
   }, [tours]);
 
-  // ------------------------
-  // Handlers
-  // ------------------------
-  const handleSuccess = () => {
-    setReloadKey((k) => k + 1);
-    setEditingTour(null);
+  // ---------------- Filter cities by selected state
+  useEffect(() => {
+    if (selectedState) {
+      const filteredCities = allCities.filter((c) => c.state?._id === selectedState);
+      setCities(filteredCities);
+      if (!filteredCities.some((c) => c._id === selectedCity)) {
+        setSelectedCity(""); // reset city if it does not belong to new state
+      }
+    } else {
+      setCities(allCities);
+    }
+  }, [selectedState, allCities]);
+
+  // ---------------- Delete tour
+  const confirmDeleteTour = async () => {
+    if (!tourToDelete) return;
+    try {
+      await deleteTour(tourToDelete._id);
+      setDeletedTourDesc(tourToDelete.description);
+      setDeleteModalOpen(true);
+      setConfirmDeleteOpen(false);
+      setTourToDelete(null);
+      setReloadKey((k) => k + 1);
+    } catch (err) {
+      console.error("Delete failed", err);
+    }
   };
 
   const handleEdit = (tour) => {
@@ -116,17 +150,9 @@ export default function TourDashboard({ filters }) {
     setOpenModal(true);
   };
 
-  const handleDelete = (tour) => {
-    setTourToDelete(tour);
-    setConfirmDeleteOpen(true);
-  };
-
-  // ------------------------
-  // Render
-  // ------------------------
   return (
-    <>
-      {/* HEADER */}
+    <Box sx={{ p: 2 }}>
+      {/* Header */}
       <Stack direction="row" justifyContent="space-between" alignItems="center" sx={{ mb: 2 }}>
         <Typography variant="h4">Tours Dashboard</Typography>
         <Button
@@ -140,10 +166,68 @@ export default function TourDashboard({ filters }) {
         </Button>
       </Stack>
 
-      {/* TOUR LIST */}
+      {/* Filters */}
+      <Stack direction={{ xs: "column", sm: "row" }} spacing={2} mb={3}>
+        <FormControl sx={{ minWidth: 160 }}>
+          <InputLabel>Category</InputLabel>
+          <Select
+            value={selectedCategory}
+            label="Category"
+            onChange={(e) => setSelectedCategory(e.target.value)}
+          >
+            <MenuItem value="">
+              <em>All Categories</em>
+            </MenuItem>
+            {categories.map((c) => (
+              <MenuItem key={c._id} value={c._id}>
+                {c.name}
+              </MenuItem>
+            ))}
+          </Select>
+        </FormControl>
+
+        <FormControl sx={{ minWidth: 160 }}>
+          <InputLabel>State</InputLabel>
+          <Select
+            value={selectedState}
+            label="State"
+            onChange={(e) => setSelectedState(e.target.value)}
+          >
+            <MenuItem value="">
+              <em>All States</em>
+            </MenuItem>
+            {states.map((s) => (
+              <MenuItem key={s._id} value={s._id}>
+                {s.name}
+              </MenuItem>
+            ))}
+          </Select>
+        </FormControl>
+
+        <FormControl sx={{ minWidth: 160 }}>
+          <InputLabel>City</InputLabel>
+          <Select
+            value={selectedCity}
+            label="City"
+            onChange={(e) => setSelectedCity(e.target.value)}
+            disabled={cities.length === 0}
+          >
+            <MenuItem value="">
+              <em>All Cities</em>
+            </MenuItem>
+            {cities.map((c) => (
+              <MenuItem key={c._id} value={c._id}>
+                {c.name}
+              </MenuItem>
+            ))}
+          </Select>
+        </FormControl>
+      </Stack>
+
+      {/* Tour List */}
       <Stack spacing={2}>
         {tours.map((tour) => (
-          <Card key={tour._id} sx={{ display: "flex", flexDirection: "row" }}>
+          <Card key={tour._id} sx={{ display: "flex" }}>
             <CardContent sx={{ flex: 1 }}>
               <Stack direction="row" justifyContent="space-between">
                 <Typography variant="h6">{tour.description}</Typography>
@@ -151,7 +235,13 @@ export default function TourDashboard({ filters }) {
                   <IconButton size="small" onClick={() => handleEdit(tour)}>
                     <EditIcon fontSize="small" />
                   </IconButton>
-                  <IconButton size="small" onClick={() => handleDelete(tour)}>
+                  <IconButton
+                    size="small"
+                    onClick={() => {
+                      setTourToDelete(tour);
+                      setConfirmDeleteOpen(true);
+                    }}
+                  >
                     <DeleteIcon fontSize="small" />
                   </IconButton>
                 </Stack>
@@ -161,44 +251,32 @@ export default function TourDashboard({ filters }) {
                 Operator: {tour.tourOperatorName || "-"}
               </Typography>
               <Typography variant="body2" color="text.secondary">
-                City: {tour.cityId?.name || "-"} | State: {tour.stateId?.name || "-"}
+                Category: {tour.category?.name || "-"}
+              </Typography>
+              <Typography variant="body2" color="text.secondary">
+                City: {tour.city?.name || "-"} | State: {tour.state?.name || "-"}
               </Typography>
               <Typography variant="body2">
                 Trip Length: {tour.tripLength} | Nights: {tour.nights} | Days: {tour.days}
               </Typography>
               <Typography variant="body2">
                 Package Cost:{" "}
-                {new Intl.NumberFormat("en-IN", {
-                  style: "currency",
-                  currency: tour.currency || "INR",
-                }).format(tour.packageCost)}
-                {" | "}
-                Ticket Cost:{" "}
-                {new Intl.NumberFormat("en-IN", {
-                  style: "currency",
-                  currency: tour.currency || "INR",
-                }).format(tour.ticketCost)}
+                {new Intl.NumberFormat("en-IN", { style: "currency", currency: tour.currency || "INR" }).format(
+                  tour.packageCost
+                )}
               </Typography>
               <Typography variant="body2">
                 Max Tourist: {tour.maxTourist} | Seats Left: {tour.seatsLeft}
               </Typography>
-              <Typography variant="body2">Tour Type: {tour.tourType}</Typography>
               <Typography variant="body2">
-                Dates:{" "}
-                {new Date(tour.startDate).toLocaleDateString()} -{" "}
-                {new Date(tour.endDate).toLocaleDateString()}
+                Dates: {new Date(tour.startDate).toLocaleDateString()} – {new Date(tour.endDate).toLocaleDateString()}
               </Typography>
             </CardContent>
 
             {imageMap[tour._id] && (
               <CardMedia
                 component="img"
-                sx={{
-                  width: 160,           // fixed width or percentage
-                  height: "100%",       // fill the card row height
-                  objectFit: "cover",   // crop but maintain aspect ratio
-                  borderRadius: 1       // optional: rounded corners
-                }}
+                sx={{ width: 160, objectFit: "cover" }}
                 image={imageMap[tour._id]}
                 alt={tour.description}
               />
@@ -207,17 +285,17 @@ export default function TourDashboard({ filters }) {
         ))}
       </Stack>
 
-      {/* MODAL */}
+      {/* Modals */}
       {openModal && (
         <TourModal
           open={openModal}
           onClose={() => setOpenModal(false)}
-          onSuccess={handleSuccess}
+          onSuccess={() => setReloadKey((k) => k + 1)}
           tourOperatorId={user?._id}
           editingTour={editingTour}
         />
       )}
-     {/* DELETE CONFIRM MODAL */}
+
       <DeleteConfirmModal
         open={confirmDeleteOpen}
         tourDescription={tourToDelete?.description || ""}
@@ -225,12 +303,11 @@ export default function TourDashboard({ filters }) {
         onConfirm={confirmDeleteTour}
       />
 
-      {/* DELETE SUCCESS MODAL */}
       <DeleteConfirmationModal
         open={deleteModalOpen}
         tourDescription={deletedTourDesc}
         onClose={() => setDeleteModalOpen(false)}
       />
-    </>
+    </Box>
   );
 }

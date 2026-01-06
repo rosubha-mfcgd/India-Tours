@@ -242,8 +242,8 @@ const onTripendChange = () => {
                             let tripLength = (new Date(tour.endDate).getTime() - 
                             new Date(tour.startDate).getTime())/(24*3600*1000);
                                 console.log('tripLength....',tripLength);
-                            if(tour.domesticOrinternational === selectedValue  && 
-                                Number(tour.package_cost)<=(Number(priceValue)) && 
+                            if(tour.tourType === selectedValue  && 
+                                Number(tour.packageCost)<=(Number(priceValue)) && 
                             Number(tripLength)<=Number(triplengthValue) && (
                                 tourMgrMap[tour.tourManagerId] && 
                                 ((tourMgrMap[tour.tourManagerId]).citycode == cityvalue)||
@@ -262,7 +262,7 @@ const onTripendChange = () => {
                             {
                                  let tripLength = (new Date(tour.endDate).getTime() - 
                             new Date(tour.startDate).getTime())/(24*3600*1000);
-                                if(Number(tour.package_cost)<=(Number(priceValue)) && 
+                                if(Number(tour.packageCost)<=(Number(priceValue)) && 
                             Number(tripLength)<=Number(triplengthValue) && 
                             (tourMgrMap[tour.tourManagerId] && 
                             (tourMgrMap[tour.tourManagerId]).citycode == cityvalue)||
@@ -337,7 +337,7 @@ const onTripendChange = () => {
             <Text style={TripListStyle.screenText}>{item.customStartDate}</Text>
             <Text style={TripListStyle.screenText}>-</Text>
             <Text style={TripListStyle.screenText}>{item. customEndDate}{"\n"}</Text>
-            <Text style={TripListStyle.screenText}>{formatINR(item.package_cost)}{"\n"}</Text>
+            <Text style={TripListStyle.screenText}>{formatINR(item.packageCost)}{"\n"}</Text>
                      
         </Card.Title>
         <Card.Divider/>

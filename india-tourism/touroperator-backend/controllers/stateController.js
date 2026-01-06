@@ -1,17 +1,35 @@
-const State = require('../models/State');
+const State = require("../models/State");
+const getNextSequence = require("../utility/getNextSequence");
 
 /**
  * Add new state
  */
 exports.addState = async (req, res) => {
-    try {
-        const { name } = req.body;
-        const state = new State({ name });
-        await state.save();
-        res.status(201).json(state);
-    } catch (err) {
-        res.status(400).json({ error: err.message });
+  try {
+    const { name } = req.body;
+
+    if (!name || !name.trim()) {
+      return res.status(400).json({ error: "State name is required" });
     }
+
+    // Generate numeric ID for _id
+    const numericId = await getNextSequence("state");
+
+    const state = new State({
+      _id: numericId,
+      name: name.trim()
+    });
+
+    await state.save();
+
+    // Return numeric _id as stateId
+    res.status(201).json({
+      stateId: state._id,
+      name: state.name
+    });
+  } catch (err) {
+    res.status(400).json({ error: err.message });
+  }
 };
 
 /**

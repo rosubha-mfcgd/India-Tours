@@ -214,7 +214,7 @@ db.tourmanagers.insertMany([
 
 TourDetails
 ============
-db.tourdetails.insertMany([
+db.tours.insertMany([
   {
     "locationName": "Shimla",
     "categoryID": 1,

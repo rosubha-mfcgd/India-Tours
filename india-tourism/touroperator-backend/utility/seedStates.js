@@ -1,4 +1,5 @@
-const State = require("../models/State"); // make sure your State model exists
+const State = require("../models/State");
+const getNextSequence = require("../utility/getNextSequence");
 
 const seedStates = async () => {
   try {
@@ -43,11 +44,21 @@ const seedStates = async () => {
 
     for (const stateName of states) {
       const exists = await State.findOne({ name: stateName });
+
       if (!exists) {
-        await State.create({ name: stateName });
-        console.log(`State "${stateName}" created`);
+        // Generate numeric _id for the state
+        const numericId = await getNextSequence("state");
+
+        await State.create({
+          _id: numericId,  // numeric _id
+          name: stateName
+        });
+
+        console.log(`State "${stateName}" created with _id ${numericId}`);
       }
     }
+
+    console.log("All states seeded successfully.");
   } catch (err) {
     console.error("Error seeding states:", err);
   }

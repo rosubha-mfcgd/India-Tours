@@ -45,7 +45,7 @@ export default function TripDetails()
            
             <TR>
               <TD>
-               <Text style={TextStyle.body}>Trip Type :{itemObject.domesticOrinternational === 'D'?"Domestic":"International"}</Text>
+               <Text style={TextStyle.body}>Trip Type :{itemObject.tourType === "Domestic"?"Domestic":"International"}</Text>
               </TD>
               </TR>
               <TR>
@@ -65,7 +65,7 @@ export default function TripDetails()
               </TR>
               <TR>
               <TD>
-                <Text style={TextStyle.body}>Package Cost  {formatINR(itemObject.ticket_cost)}</Text>
+                <Text style={TextStyle.body}>Package Cost  {formatINR(itemObject.ticketCost)}</Text>
               </TD>
             </TR>
              <TR>
@@ -101,8 +101,8 @@ export default function TripDetails()
                                                 startdate: itemObject.customStartDate,
                                                 enddate: itemObject.customEndDate,
                                                 tourManagerId: itemObject.tourManagerId,
-                                                domesticOrInternational:itemObject.domesticOrinternational,
-                                                packageCost:itemObject.package_cost
+                                                domesticOrInternational:itemObject.tourType,
+                                                packageCost:itemObject.packageCost
                                              }
                                           }} asChild>
                 <TouchableOpacity 
@@ -120,8 +120,8 @@ export default function TripDetails()
                                                 startdate: itemObject.customStartDate,
                                                 enddate: itemObject.enddate,
                                                 tourManagerId: itemObject.tourManagerId,
-                                                domesticOrInternational:itemObject.domesticOrInternational,
-                                                packageCost:itemObject.package_cost
+                                                domesticOrInternational:itemObject.tourType,
+                                                packageCost:itemObject.packageCost
                                              }
                                           }} asChild>
                 <TouchableOpacity 

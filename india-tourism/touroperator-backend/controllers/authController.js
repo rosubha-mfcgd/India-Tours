@@ -3,26 +3,65 @@ const User = require("../models/User");
 const Token = require("../models/Token");
 const jwt = require("jsonwebtoken");
 const bcrypt = require("bcryptjs");
+const getNextSequence = require("../utility/getNextSequence");
 require("dotenv").config();
 
 // Register
 exports.register = async (req, res) => {
   try {
-    const { username, password, email , roleID } = req.body;
+    const { username, password, email, roleID, firstName, lastName } = req.body;
+
+    // ---------------- Validations
+    if (!username || !password) {
+      return res.status(400).json({ message: "Username and password are required" });
+    }
+
+    if (!firstName || !lastName) {
+      return res.status(400).json({ message: "First name and last name are required" });
+    }
+
+    if (!roleID) {
+      return res.status(400).json({ message: "Role ID is required" });
+    }
+
+    // ---------------- Check existing user
     const existingUser = await User.findOne({ username });
-    if (existingUser) return res.status(400).json({ message: "User already exists" });
-    if (!username || !password) return res.status(400).json({ message: "Username and password are required" });
-    if(!firstName  || !lastName) return res.status(400).json({ message: "First name and Last name are required" });
-    if(!roleID ) return res.status(400).json({ message: "Role ID is required" });
-    
-    const saltPassword = await bcrypt.genSalt(10);
-    const hashPassword = await bcrypt.hash(password, saltPassword);
-    const user = new User({ username, firstName, lastName, password, email, roleID });
+    if (existingUser) {
+      return res.status(400).json({ message: "User already exists" });
+    }
+
+    // ---------------- Generate numeric user _id
+    const numericUserId = await getNextSequence("user");
+    if (!numericUserId && numericUserId !== 0) {
+      return res.status(500).json({ message: "Failed to generate user ID" });
+    }
+
+    // ---------------- Create user
+    const user = new User({
+      _id: numericUserId,
+      username,
+      firstName,
+      lastName,
+      password, // hashed by pre-save hook
+      email,
+      roleID,
+    });
+
     await user.save();
-    
-    res.status(201).json({ message: "User registered successfully" });
+
+    res.status(201).json({
+      message: "User registered successfully",
+      user: {
+        _id: user._id,
+        username: user.username,
+        firstName: user.firstName,
+        lastName: user.lastName,
+        roleID: user.roleID,
+      },
+    });
   } catch (err) {
-    res.status(500).json({ message: "Server error" });
+    console.error("Register error:", err);
+    res.status(500).json({ message: err.message });
   }
 };
 
@@ -30,45 +69,80 @@ exports.register = async (req, res) => {
 exports.login = async (req, res) => {
   try {
     const { username, password } = req.body;
+
+    //  Find user
     const user = await User.findOne({ username });
     if (!user) return res.status(400).json({ message: "Invalid credentials" });
 
+    //  Check password
     const isMatch = await user.comparePassword(password);
     if (!isMatch) return res.status(400).json({ message: "Invalid credentials" });
-    // Set token expiry in seconds (e.g., 1 hour = 3600s)
-    const expiresInSec = parseInt(process.env.JWT_EXPIRES_IN) * 60 * 1000;
-    console.log('expiresInSec : ', expiresInSec);
-    const token = jwt.sign({ id: user._id, roleID: user.roleID }, process.env.JWT_SECRET, { expiresIn: expiresInSec });
-     // Save token in backend
+
+    // Token expiry
+    const expiresInMinutes = parseInt(process.env.JWT_EXPIRES_IN) || 60; // default 60 min
+    const expiresInMs = expiresInMinutes * 60 * 1000;
+
+    //  Generate JWT
+    const token = jwt.sign({ id: user._id, roleID: user.roleID }, process.env.JWT_SECRET, { expiresIn: `${expiresInMinutes}m` });
+    const tokenId = await getNextSequence("token");
+    // Save token in DB
     const now = new Date();
-    const expiryDate = new Date(now.getTime() + expiresInSec); // 1 hour later
+    const expiryDate = new Date(now.getTime() + expiresInMs);
     const tokenDoc = new Token({
+      _id: tokenId,
       userId: user._id,
       token,
       startTime: now,
       expiresIn: expiryDate,
     });
     await tokenDoc.save();
-    res.json({ token });
+
+    // Set HTTP-only cookie
+    res.cookie("token", token, {
+      httpOnly: true,
+      secure: process.env.NODE_ENV === "production",
+      sameSite: "Lax",
+      maxAge: expiresInMs,
+    });
+
+    // Return user info (without token)
+    res.json({
+      message: "Login successful",
+      user: { id: user._id, username: user.username, roleID: user.roleID },
+    });
   } catch (err) {
+    console.error(err);
     res.status(500).json({ message: "Server error" });
   }
 };
-
 // Logout - delete token
+// Make sure you have cookie-parser installed and used in your app
+// app.use(cookieParser());
+
 exports.logout = async (req, res) => {
   try {
-    const token = req.token; // retrieved from authMiddleware
+    // Read token from cookie
+    const token = req.cookies?.token;
 
     if (!token) return res.status(400).json({ message: "No token provided" });
 
+    // Remove token from database
     await Token.findOneAndDelete({ token });
+
+    // Clear cookie
+    res.clearCookie("token", {
+      httpOnly: true,
+      secure: process.env.NODE_ENV === "production",
+      sameSite: "Lax",
+    });
+
     res.json({ message: "Logged out successfully" });
   } catch (err) {
     console.error(err);
     res.status(500).json({ message: "Server error" });
   }
 };
+
 
 // Forgot Username
 exports.forgotUsername = async (req, res) => {
@@ -144,30 +218,56 @@ http://localhost:5000/api/auth/create-superadmin
 */
 exports.createSuperAdmin = async (req, res) => {
   try {
-    // Check if super admin already exists
+    // 1️⃣ Check if super admin already exists
     const existingAdmin = await User.findOne({ roleID: 1 });
-    console.log('existingAdmin:', existingAdmin);
     if (existingAdmin) {
       return res.status(400).json({ message: "Super admin already exists" });
     }
 
-    const { username, password, email , roleID } = req.body;
-    if (!username || !password) {
-      return res.status(400).json({ message: "Username and password are required" });
+    const { username, password, email, roleID, firstName, lastName } = req.body;
+
+    if (!username || !password || !roleID || !firstName || !lastName) {
+      return res.status(400).json({
+        message: "Username, password, roleID, firstName, and lastName are required",
+      });
     }
 
+    // 2️⃣ Generate numeric user _id
+    const numericUserId = await getNextSequence("user");
+
+    if (!numericUserId && numericUserId !== 0) {
+      return res.status(500).json({
+        message: "Failed to generate user ID",
+      });
+    }
+
+    console.log("Generated user numericId:", numericUserId);
+
+    // 3️⃣ Create user with numeric _id
     const superAdmin = new User({
+      _id: numericUserId,
       username,
-      password,
+      firstName,
+      lastName,
+      password, // will be hashed by pre-save hook
       email,
-      roleID
+      roleID,
     });
 
     await superAdmin.save();
-    res.status(201).json({ message: "Super admin created successfully", user: superAdmin });
+
+    res.status(201).json({
+      message: "Super admin created successfully",
+      user: {
+        _id: superAdmin._id,
+        username: superAdmin.username,
+        email: superAdmin.email,
+        roleID: superAdmin.roleID,
+      },
+    });
   } catch (err) {
-    console.error(err);
-    res.status(500).json({ message: "Server error" });
+    console.error("Create super admin error:", err);
+    res.status(500).json({ message: err.message });
   }
 };
 

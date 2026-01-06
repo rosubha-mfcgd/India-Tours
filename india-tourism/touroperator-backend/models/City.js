@@ -1,9 +1,24 @@
 const mongoose = require('mongoose');
 
-const citySchema = new mongoose.Schema({
-    name: { type: String, required: true },
-    state: { type: mongoose.Schema.Types.ObjectId, ref: 'State', required: true }
-});
+const citySchema = new mongoose.Schema(
+ {
+     _id: {
+      type: Number,
+      unique: true,
+      index: true
+    },
+    name: {
+      type: String,
+      required: true
+    },
+    state: {
+      type: Number, // stateId
+      ref: "State",
+      required: true
+    }
+  },
+  { timestamps: true }
+);
 
 citySchema.index({ name: 1, state: 1 }, { unique: true });
 

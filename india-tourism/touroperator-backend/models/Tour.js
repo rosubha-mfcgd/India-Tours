@@ -1,93 +1,36 @@
-// models/Tour.js
 const mongoose = require("mongoose");
 
 const tourSchema = new mongoose.Schema(
   {
-    tourOperatorId: {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: "User",
-      required: true
-    },
+    _id: { type: Number }, // numeric ID
 
-    tripLength: {
-      type: Number,
-      required: true
-    },
+    tourOperator: { type: Number, ref: "User", required: true }, 
 
-    startDate: {
-      type: Date,
-      required: true
-    },
-
-    endDate: {
-      type: Date,
-      required: true
-    },
-
-    packageCost: {
-      type: Number,
-      required: true
-    },
-
+    tripLength: { type: Number, required: true },
+    startDate: { type: Date, required: true },
+    endDate: { type: Date, required: true },
+    packageCost: { type: Number, required: true },
     nights: Number,
     days: Number,
+    maxTourist: { type: Number, required: true },
+    seatsLeft: { type: Number, required: true },
 
-    maxTourist: {
-      type: Number,
-      required: true
+    tourType: { type: String, enum: ["Domestic", "International"], required: true },
+    ticketCost: { type: Number, required: true },
+    currency: { type: String, default: "INR" },
+
+    city: { type: Number, ref: "City", required: true },    // changed
+    state: { type: Number, ref: "State", required: true },   // changed
+    category: { type: Number, ref: "Category", required: true },// changed
+
+    description: { type: String, required: true },
+
+    image: {
+      fileId: { type: mongoose.Schema.Types.ObjectId, ref: "tourImages.files", required: true },
+      filename: { type: String, required: true },
     },
 
-    seatsLeft: {
-      type: Number,
-      required: true
-    },
-
-    tourType: {
-      type: String,
-      enum: ["Domestic", "International"],
-      required: true
-    },
-
-    ticketCost: {
-      type: Number,
-      required: true
-    },
-
-    currency: {
-      type: String,
-      default: "INR"
-    },
-
-    cityId: {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: "City",
-      required: true
-    },
-
-    stateId: {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: "State",
-      required: true
-    },
-
-    description: {
-      type: String,
-      required: true
-    },
-
-   image: {
-    fileId: {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: "tourImages.files",
-      required: true
-    },
-    filename: {
-      type: String,
-      required: true
-      }
-   },
-
-    itinerary: String
+    itinerary: String,
   },
   { timestamps: true }
 );

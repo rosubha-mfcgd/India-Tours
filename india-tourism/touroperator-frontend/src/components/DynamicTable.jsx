@@ -27,7 +27,7 @@ const EXCLUDED_FIELDS = ["_id", "__v"];
 
 // Add at the top of the file
 const API_MAPPING = {
-  products: "/admin/products",
+  category: "/category",
   "tour-operators": "/admin/tour-operators",
    tours: "/admin/tours",
   // add more mappings as needed

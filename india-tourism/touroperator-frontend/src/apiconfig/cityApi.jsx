@@ -5,11 +5,13 @@ import axiosClient from './axiosClient';
  */
 export const getCities = () => axiosClient.get('/cities');
 
+/*
+* Get cities by state ID
 /**
  * Get city by ID
  * @param {string} id - City ID
  */
-export const getCity = (id) => axiosClient.get(`/cities/${id}`);
+export const getCitiesByState = (stateId) => axiosClient.get(`/cities/${stateId}`);
 
 /**
  * Create a new city

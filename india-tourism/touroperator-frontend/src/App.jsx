@@ -15,11 +15,13 @@ import SignUp from "./pages/SignUp";
 import Dashboard from "./pages/Dashboard";
 import ItineraryBuilder from "./pages/Itinerary/ItineraryBuilder";
 import Checkout from "./pages/Payments/Checkout";
-import Tours from "./pages/Tours/TourDashboardLayout";
+import Tours from "./pages/Tours/TourDashboard";
+/* Market place */
+import Marketplace from "./pages/Marketplace/Marketplace";
 
 /* Admin pages */
 import TourOperatorsPage from "./pages/TourOperators/TourOperatorsPage";
-import ProductsPage from "./pages/Products/Products";
+import CategoriesPage from "./pages/Categories/Categories";
 
 /* Styles */
 import "slick-carousel/slick/slick.css";
@@ -61,6 +63,16 @@ export default function App() {
           <Route path="/login" element={<Login />} />
           <Route path="/register" element={<SignUp />} />
 
+           {/* ================= MARKET PLACE ================= */}
+          <Route
+            path="/market-place"
+            element={
+              <ProtectedRoute>
+                <Marketplace />
+              </ProtectedRoute>
+            }
+          />
+
           {/* ================= TOUR MANAGEMENT ================= */}
           <Route
             path="/tours"
@@ -92,10 +104,10 @@ export default function App() {
           />
 
           <Route
-            path="/products"
+            path="/categories"
             element={
               <ProtectedRoute>
-                <ProductsPage />
+                <CategoriesPage />
               </ProtectedRoute>
             }
           />
