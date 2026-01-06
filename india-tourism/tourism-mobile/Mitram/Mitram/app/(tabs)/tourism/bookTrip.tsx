@@ -64,9 +64,9 @@ export default function BookMyTrip()
     
     const handleValueOnBlur = (data,field,index) =>{
     
-      console.log('bookingData for validation....',data)
+      console.log('bookingData for validation....',data,field)
      let errMesage = '';
-     setErrorMessage(null)
+     setErrorMessage(null);
       setModalVisible(false)
       
       if(!data){
@@ -122,10 +122,10 @@ export default function BookMyTrip()
            streetaddress[index] = '';
        }
       } 
-      console.log('errormessage is...',errorMessage)
-      if(errorMessage)
+     
+      if(errMesage)
       {
-         setErrorMessage(errMesage)
+       setErrorMessage(errMesage)
         setModalVisible(true)
       }else{
         setModalVisible(false)
