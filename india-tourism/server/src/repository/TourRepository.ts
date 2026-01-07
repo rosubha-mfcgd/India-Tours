@@ -13,18 +13,28 @@ export class TourRepository extends BaseRepository<ITourDetails>
 
    }
 
-   async aggregatePlannedTours(query: object):Promise<ITourDetails[]|null>{
+   async aggregatePlannedTours(query: object[]):Promise<ITourDetails[]|null>{
 
     const result = await ToursModel.aggregate( [
           {
-            $match: query
+            $match: {
+                $and: query
+          }
+           
           },
-           {
+          {
+    // STEP 1: Convert the strings to real Date objects first
+    $addFields: {
+      startDate: { $toDate: "$startDate" },
+      endDate: { $toDate: "$endDate" }
+    }
+  },
+         {
             $addFields: {
                 customStartDate: 
                 {
                     $dateToString: {
-                         format: "%d-%B-%Y",
+                         format: "%Y-%m-%d",
                           date: "$startDate",
                           timezone: "Asia/Kolkata"
                     } 
@@ -32,7 +42,7 @@ export class TourRepository extends BaseRepository<ITourDetails>
           customEndDate: 
                 {
                    $dateToString: {
-                         format: "%d-%B-%Y",
+                         format: "%Y-%m-%d",
                           date: "$endDate",
                           timezone: "Asia/Kolkata"
                    }

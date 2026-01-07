@@ -91,7 +91,8 @@ app.use("/api", userRouter);
 
 // Connect to MongoDBl
 mongoose.connect(process.env.MONGO_DB_URI, 
-  { useNewUrlParser: true, useUnifiedTopology: true });
+  { useNewUrlParser: true, useUnifiedTopology: true
+   });
 
 
 app.post("/api/signup", async(req,res) =>{

@@ -53,3 +53,14 @@ Mon Dec 22 2025 22:40:15 GMT-0500 (Eastern Standard Time): TokenExpiredError: jw
     at C:\Users\royco\India-tourism-App\India-Tours\india-tourism\server\dist\middlewares\userAuth.js:8:71
     at new Promise (<anonymous>)
     at __awaiter (C:\Users\royco\India-tourism-App\India-Tours\india-tourism\server\dist\middlewares\userAuth.js:4:12)
+Tue Jan 06 2026 22:59:52 GMT-0500 (Eastern Standard Time): TokenExpiredError: jwt expired
+    at C:\Users\royco\India-tourism-App\India-Tours\india-tourism\server\node_modules\jsonwebtoken\verify.js:190:21
+    at getSecret (C:\Users\royco\India-tourism-App\India-Tours\india-tourism\server\node_modules\jsonwebtoken\verify.js:97:14)
+    at module.exports [as verify] (C:\Users\royco\India-tourism-App\India-Tours\india-tourism\server\node_modules\jsonwebtoken\verify.js:101:10)
+    at verifyJsonWebTokenSignature (C:\Users\royco\India-tourism-App\India-Tours\india-tourism\server\src\middlewares\auth.js:62:18)
+    at validateToken (C:\Users\royco\India-tourism-App\India-Tours\india-tourism\server\src\middlewares\auth.js:30:5)
+    at checkAuthenticated (C:\Users\royco\India-tourism-App\India-Tours\india-tourism\server\src\middlewares\auth.js:23:9)
+    at Layer.handleRequest (C:\Users\royco\India-tourism-App\India-Tours\india-tourism\server\node_modules\router\lib\layer.js:152:17)
+    at next (C:\Users\royco\India-tourism-App\India-Tours\india-tourism\server\node_modules\router\lib\route.js:157:13)
+    at Route.dispatch (C:\Users\royco\India-tourism-App\India-Tours\india-tourism\server\node_modules\router\lib\route.js:117:3)
+    at handle (C:\Users\royco\India-tourism-App\India-Tours\india-tourism\server\node_modules\router\index.js:435:11)

@@ -1,4 +1,4 @@
-import { Document } from 'mongoose';
+import { ObjectId,Document } from 'mongoose';
 
 export interface IUser extends Document{
      name:{
@@ -34,20 +34,24 @@ export interface IUser extends Document{
 
 
 export interface ITourDetails extends Document{
-    locationName:{
-      type: String,
+   _id:{
+    type: Number|ObjectId,
       required: true,
       trim: true,
+   },
+    image: {
+      fileId: ObjectId;
+     filename: String;
     },
     categoryID:{
       type: Number,
       required: true,
       trim: true,
     },
-     tourManagerId:{
-         type: String,
-         required: true,
-         trim: true,
+     tourOperator:{
+         _id: String,
+         firstName: String,
+         lastName: String,
     },
     tripLength:{
          type: String,
@@ -61,7 +65,19 @@ export interface ITourDetails extends Document{
           type: Date,
           required: true
       },
-      createdAt:{
+    city:{
+        _id: String,
+         name: String,
+    },
+     state:{
+      _id: String,
+      name: String,
+    },
+    category:{
+      _id: String,
+      name: String,
+    },
+   createdAt:{
          type: Date,
          required: true
       },
@@ -69,7 +85,24 @@ export interface ITourDetails extends Document{
          type: Date,
          required: true
       },
-    packageCost:{
+
+    days:{
+        type: String,
+      required: true,
+    },
+    night:{
+        type: String,
+      required: true,
+    },
+    cityName:{
+        type: String,
+      required: true,
+    },
+    stateName:{
+        type: String,
+      required: true,
+    },
+    tourOperatorName:{
         type: String,
       required: true,
     },

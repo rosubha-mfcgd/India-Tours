@@ -25,20 +25,29 @@ class TourRepository extends BaseRepository_1.BaseRepository {
         return __awaiter(this, void 0, void 0, function* () {
             const result = yield tours_1.ToursModel.aggregate([
                 {
-                    $match: query
+                    $match: {
+                        $and: query
+                    }
+                },
+                {
+                    // STEP 1: Convert the strings to real Date objects first
+                    $addFields: {
+                        startDate: { $toDate: "$startDate" },
+                        endDate: { $toDate: "$endDate" }
+                    }
                 },
                 {
                     $addFields: {
                         customStartDate: {
                             $dateToString: {
-                                format: "%d-%B-%Y",
+                                format: "%Y-%m-%d",
                                 date: "$startDate",
                                 timezone: "Asia/Kolkata"
                             }
                         },
                         customEndDate: {
                             $dateToString: {
-                                format: "%d-%B-%Y",
+                                format: "%Y-%m-%d",
                                 date: "$endDate",
                                 timezone: "Asia/Kolkata"
                             }

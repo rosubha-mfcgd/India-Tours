@@ -82,7 +82,8 @@ class TourDetailService {
             let plannedTours = [];
             try {
                 const tourRepository = new TourRepository();
-                plannedTours = yield tourRepository.aggregatePlannedTours({ "categoryID": Number(categoryId), "startDate": { $gt: new Date() } });
+                plannedTours = yield tourRepository.aggregatePlannedTours([{ "category._id": Number(categoryId) },
+                    { "startDate": { $gt: new Date().toLocaleDateString('en-CA') } }]);
                 if (plannedTours && plannedTours.length > 0) {
                     console.log('plannedTours...', plannedTours);
                 }
