@@ -40,7 +40,7 @@ exports.addTourWithImage = async (req, res) => {
       description,
       currency,
     } = req.body;
-
+    console.log('req body....',req.body);
     // -------------------- Basic validations --------------------
     if (!tourOperator) return res.status(400).json({ error: "tourOperator is required" });
     if (!description || typeof description !== "string")

@@ -12,11 +12,6 @@ const toursSchema = new mongoose_1.Schema({
         fileId: mongoose_1.Schema.Types.ObjectId,
         filename: String
     },
-    categoryID: {
-        type: Number,
-        required: true,
-        trim: true,
-    },
     tourOperator: {
         _id: String,
         firstName: String,

@@ -20,6 +20,13 @@ const categorySchema = new mongoose.Schema(
       type: mongoose.Schema.Types.ObjectId, // GridFS file ID
       ref: "categoryImages",
       default: null
+    },
+    favorite:{
+       type: String,
+     },
+     productID:{
+       type: Number,
+      required: true
     }
   },
   { timestamps: true }

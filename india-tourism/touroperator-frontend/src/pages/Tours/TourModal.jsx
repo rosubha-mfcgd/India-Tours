@@ -222,6 +222,7 @@ export default function TourModal({ open, onClose, onSuccess, editingTour = null
     onSuccess();
     onClose();
   } catch (err) {
+    console.log(err.stack)
     console.error("Tour save failed:", err);
   }
 };

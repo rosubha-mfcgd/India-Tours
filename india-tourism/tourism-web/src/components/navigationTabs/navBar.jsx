@@ -23,7 +23,7 @@ import {
     CardContent
   } from "@mui/material";
    import Collapse from '@mui/material/Collapse';
-import { getCategories,updateAsFavorite } from "../admin/admin";
+import { getCategories,updateAsFavorite,getImageById } from "../admin/admin";
 import { NavContext } from '../navigationContext/navigationContext.jsx';
 import SideBarNotification from './sideBarNotification.jsx'
 import FavoriteIcon from '@mui/icons-material/Favorite';
@@ -35,6 +35,7 @@ const NavBar = ({access_token,triggerDisplayOptionsByCatId,
     const navigate = useNavigate();
      const location = useLocation();
     const { notification} = useContext(NavContext);
+    const [images, setImages] = useState([]);
      const [items, setItems] = useState([])
     const [sections, setSections] = useState([])
       const [personalTripItems, setPersonalTripItems] = useState([])
@@ -42,7 +43,7 @@ const NavBar = ({access_token,triggerDisplayOptionsByCatId,
      const [packageTripSectionOpen, setPackageTripSectionOpen] = useState(true);
      const [personalTripSectionOpen, setpersonalTripSectionOpen] = useState(true);
       const [personalTripOpen, setPersonalTripOpen] = useState(true);
-
+ 
   const handleToggle = () => {
     setPackageTripSectionOpen(!packageTripSectionOpen);
   };
@@ -83,7 +84,17 @@ const NavBar = ({access_token,triggerDisplayOptionsByCatId,
                         console.log('could not update favorite')
                     }
        }
-         
+
+       const getCategoryImageFromFileId = async(imageid,bucketname) =>{
+                   if(imageid != null){
+                    
+                       let imageData = await getImageById(imageid,bucketname);
+                       if(imageData){
+                        console.log('imageData...',imageData);
+                           return imageData;
+                       }
+                   }
+           }
        
           useEffect(()=>{
             let mounted = true;
@@ -101,17 +112,26 @@ const NavBar = ({access_token,triggerDisplayOptionsByCatId,
                        let personalTripCategories = [];
                        for(let category of categories)
                        {
-                            if(category && category.categoryID !== 10 && 
-                                category.categoryID !== 9 && category.categoryID !== 7)
+                            if(category && category._id !== 10 && 
+                                category._id !== 9 && category._id !== 7)
                             {
                                   operatedTourCategories.push(category);  
                             }
                             else
-							{
-                                personalTripCategories.push(category);
+							              {
+                              personalTripCategories.push(category);
                             }
-                           
+                            
+                            let imageData = await 
+                              getCategoryImageFromFileId(category.image,'categoryImages');
+                           if(imageData)
+                           {
+                             // images[category._id] = imageData;
+                              setImages(img=>[...img,imageData]);
+                           }
                        }
+                      // console.log('images...',images)
+                     // console.log('imageMap...',imageMap);
                         setItems(operatedTourCategories);
                         setPersonalTripItems(personalTripCategories);
                         setSections(prev =>[...prev,{title:"Package Tours", data:items}])
@@ -161,40 +181,41 @@ const NavBar = ({access_token,triggerDisplayOptionsByCatId,
                        
 
              {
-             items && items.length>0 ?
+             items && items.length>0  ?
               
 
-                items.map((item) => (
+                items.map((item,index) => (
                     
                <div>
                  
-                <Grid item xs = {12} sm={4} key={item.categoryID}  >
+                <Grid item xs = {12} sm={4} key={item._id}  >
 
                     <Card className="navbar-card" sx={{ marginBottom: 2 }}
                      >
                     
                     <CardMedia component= "img"  height="100"
-                    image = {item.image} alt={item.categoryDesc} 
-                    onClick={()=>triggerDisplayOptionsByCatId(item.categoryID)} 
+                    image = {images[index]} 
+                    alt={item.description} 
+                    onClick={()=>triggerDisplayOptionsByCatId(item._id)} 
                     style={{ cursor: 'pointer' }} 
                      />
                                      
                     <CardContent>
                         <Typography gutterBottom variant="body1" component="div" sx={{whiteSpace: 'pre-wrap'}}>
-                {item.categoryName}
+                {item.name}
               </Typography>
               <Typography variant="body2" color="text.secondary" sx={{whiteSpace: 'pre-wrap'}}>
-                {item.categoryDesc}
+                {item.description}
               </Typography>
               {(item.favorite === 'Y') ?
                 <FavoriteIcon sx={{ color: '#f04646ff' }} onClick = {(event) => updateFavorites(
-                    item.categoryID,'N',event)} style={{ cursor: 'pointer' }}/>:
+                    item._id,'N',event)} style={{ cursor: 'pointer' }}/>:
                 <FavoriteIcon onClick = {(event) => updateFavorites(
-                    item.categoryID,'Y',event)} style={{ cursor: 'pointer' }}/>
+                    item._id,'Y',event)} style={{ cursor: 'pointer' }}/>
               }
               
               </CardContent>
-              <button type="submit" class="button"  onClick={()=>triggerDisplayOptionsByCatId(item.categoryID)} 
+              <button type="submit" class="button"  onClick={()=>triggerDisplayOptionsByCatId(item._id)} 
                     style={{ cursor: 'pointer',backgroundColor: '#8a77f8ff',color:'#0c0c0fff'}}>
                         Click to View</button>
                     </Card>
@@ -243,14 +264,14 @@ const NavBar = ({access_token,triggerDisplayOptionsByCatId,
 
                 personalTripItems.map((personalTripItem) => (
                         <div>
-                            <Grid item xs = {12} sm={4} key={personalTripItem.categoryID}  >
+                            <Grid item xs = {12} sm={4} key={personalTripItem._id}  >
 
                     <Card className="navbar-card" sx={{ marginBottom: 2 }}
                      >
                     
                     <CardMedia component= "img"  height="100"
-                    image = {personalTripItem.image} alt={personalTripItem.categoryDesc} 
-                    onClick={()=>triggerDisplayOptionsByCatId(personalTripItem.categoryID)} 
+                    image = {personalTripItem.image} alt={personalTripItem.description} 
+                    onClick={()=>triggerDisplayOptionsByCatId(personalTripItem._id)} 
                     style={{ cursor: 'pointer' }} 
                      />
                                      
@@ -269,7 +290,7 @@ const NavBar = ({access_token,triggerDisplayOptionsByCatId,
               }
               
               </CardContent>
-              <button type="submit" class="button"  onClick={()=>triggerDisplayOptionsByCatId(personalTripItem.categoryID)} 
+              <button type="submit" class="button"  onClick={()=>triggerDisplayOptionsByCatId(personalTripItem._id)} 
                     style={{ cursor: 'pointer',backgroundColor: '#8a77f8ff',color:'#0c0c0fff'}}>
                         Click to View</button>
                     </Card>

@@ -80,7 +80,8 @@ exports.createCategory = async (req, res) => {
       _id: numericId,
       name: categoryName.trim(),
       description: categoryDesc.trim(),
-      image: imageFileId
+      image: imageFileId,
+      productID:1
     });
 
     await category.save();

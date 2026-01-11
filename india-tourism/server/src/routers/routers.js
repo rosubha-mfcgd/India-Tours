@@ -16,6 +16,7 @@ const { sendConfirmation } = require('../controller/sendCommunication');
 const {resendOTP,getKeycloakAuthToken} = require('../controller/loginuser');
 const {findUser,updateProfile} = require('../controller/userprofile')
 const {checkUserAuthenticated} = require("../middlewares/userAuth")
+const {processImage} = require("../controller/imageProcessor");
 const router = express.Router();
 
 
@@ -50,5 +51,5 @@ router.post("/updateProfile",checkAuthenticated,updateProfile);
 router.get("/preferences",checkAuthenticated,checkUserAuthenticated, getPreferences);
 router.post("/authToken",checkAuthenticated,getKeycloakAuthToken);
 router.post("/performUserBookings",checkAuthenticated,performUserBookings);
-
+router.post("/processImage",checkAuthenticated,processImage);
 module.exports = router

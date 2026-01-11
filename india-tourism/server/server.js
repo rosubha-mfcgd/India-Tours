@@ -10,6 +10,7 @@ const crypto = require("crypto")
 const jwt = require('jsonwebtoken');
 require("./src/logNginx.js");
 const mongoose = require('mongoose');
+const { GridFSBucket, ObjectId } = require("mongodb");
 const axios = require('axios');
 const cors = require('cors');
 //parses cookies attached to the client request object
@@ -93,6 +94,19 @@ app.use("/api", userRouter);
 mongoose.connect(process.env.MONGO_DB_URI, 
   { useNewUrlParser: true, useUnifiedTopology: true
    });
+
+const conn = mongoose.connection;
+
+conn.on('error', console.error.bind(console, 'connection error:'));
+conn.once('open', function () {
+  console.log('Connected to MongoDB successfully!');
+  const db = conn.db;
+
+  // Create a new GridFSBucket instance
+  bucket = new GridFSBucket(db, {
+    bucketName: 'tourImages',
+  });
+});
 
 
 app.post("/api/signup", async(req,res) =>{
@@ -397,6 +411,33 @@ else
   }
 })
 
+app.get("/api/getImageFromDB/:fileId/:bucketname",checkAuthenticated, async(req,res)=>{
+   let { fileId,bucketname } = req.params;
+  if(!fileId)
+  {
+     res.status(400).send({"error":"No fileId found"})
+  }
+  console.log('fileID is ...',fileId)
+   // Convert the string fileId to a MongoDB ObjectId
+    const objectFileId  = new ObjectId(fileId);
+    // Open a download stream for the specified file ID
+     const bucket = new mongoose.mongo.GridFSBucket(conn.db, { bucketName: bucketname });
+      const downloadStream = bucket.openDownloadStream(objectFileId);
+      // Set content type and disposition headers for the client
+      const chunks = [];
+      downloadStream.on("data", (chunk) => chunks.push(chunk));
+      downloadStream.on("end", () => {
+        const buffer = Buffer.concat(chunks);
+        const base64Image = `data:image/png;base64,${buffer.toString("base64")}`;
+        res.json({ image: base64Image });
+      });
+     
+     downloadStream.on("error", (error) => {
+        console.error("Error during download:", error);
+        res.status(404).send("File not found or an error occurred.");
+      });
+
+})
 
 
 

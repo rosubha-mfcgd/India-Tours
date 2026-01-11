@@ -43,12 +43,7 @@ export interface ITourDetails extends Document{
       fileId: ObjectId;
      filename: String;
     },
-    categoryID:{
-      type: Number,
-      required: true,
-      trim: true,
-    },
-     tourOperator:{
+    tourOperator:{
          _id: String,
          firstName: String,
          lastName: String,
