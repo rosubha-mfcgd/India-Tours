@@ -157,7 +157,7 @@ export interface IProduct extends Document{
 
 
 export interface ICategory extends Document{
-    categoryID:{
+    _id:{
        type: Number,
       required: true
     },

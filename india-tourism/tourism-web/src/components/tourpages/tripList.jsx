@@ -18,7 +18,7 @@ import { getTripList,getTourManagers,getImageById } from "../admin/admin";
   import SideBarFilter from '../navigationTabs/sideBarFilter.jsx';
   import SideBarNotification from '../navigationTabs/sideBarNotification.jsx';
   import { NavContext } from '../navigationContext/navigationContext.jsx';
-
+//Populate the list of planned trips
 const TripList = ({access_token,categoryId,cityList,showDetails}) =>{
     
    //console.log('categoryID is...',categoryId); 
@@ -29,6 +29,7 @@ const TripList = ({access_token,categoryId,cityList,showDetails}) =>{
     // const { name,email,mobile,categoryId} = location.state || {};
     //const[mount,setMount] = useState(false);
     const[isOpen,setOpen] = useState(false);
+    const [images,setImages] = useState([]);
    const [anchorEl, setAnchorEl] = useState(null);
    const {triggerSorting,sortTrip} = useContext(NavContext);
     const { notification} = useContext(NavContext);
@@ -49,6 +50,7 @@ const TripList = ({access_token,categoryId,cityList,showDetails}) =>{
     const[priceValue, setPriceValue] = useState('100000');
     const [triplengthValue, setTriplengthValue] = useState('30');
     const [cityvalue, setCityvalue] = useState('0');  
+   
     const tourManagerMap = new Map(tourMgrMap);
    
     const updateTourMgrMap = (key,value) => {
@@ -76,10 +78,10 @@ const TripList = ({access_token,categoryId,cityList,showDetails}) =>{
         return "";
     }
    
-    const getImageFromFileId = async(data) =>{
+    const getImageFromFileId = async(data,bucketname) =>{
             if(data != null){
               
-                let imageData = await getImageById(data);
+                let imageData = await getImageById(data,bucketname);
                 if(imageData){
                     return imageData;
                 }
@@ -131,8 +133,19 @@ const TripList = ({access_token,categoryId,cityList,showDetails}) =>{
       
                           if(plannedTours)
                           {
+                            //populate images for each planned trip
+                            for(let plannedTour of plannedTours)
+                            {
+                                  let imageData = await 
+                              getImageFromFileId(plannedTour.image.fileId,'tourImages');
+                                    if(imageData)
+                                    {
+                                        // images[category._id] = imageData;
+                                        setImages(img=>[...img,imageData]);
+                                    }
+                            }
+
                               console.log('plannedTours...',plannedTours);
-                              
                               setTours(plannedTours);
                               setAlltours(plannedTours);
                           }
@@ -207,7 +220,7 @@ const TripList = ({access_token,categoryId,cityList,showDetails}) =>{
             <Grid container spacing={10} justify="center" width="70%">
              {tours && tours.length>0 ?
 
-                tours.map((tour) => (
+                tours.map((tour,index) => (
                     
                <div>
                  
@@ -218,7 +231,7 @@ const TripList = ({access_token,categoryId,cityList,showDetails}) =>{
                         access_token)} style={{ cursor: 'pointer' }}>
                     
                     <CardMedia component= "img"  height="100"
-                    image = {()=>getImageFromFileId(tour.image.fileId)} alt={tour.image.fileId} 
+                    image = {images[index]} alt={tour.image.fileId} 
                     />
                                      
                     <CardContent>

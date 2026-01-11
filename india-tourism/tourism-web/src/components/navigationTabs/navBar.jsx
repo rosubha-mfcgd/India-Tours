@@ -89,7 +89,8 @@ const NavBar = ({access_token,triggerDisplayOptionsByCatId,
                    if(imageid != null){
                     
                        let imageData = await getImageById(imageid,bucketname);
-                       if(imageData){
+                       if(imageData)
+                        {
                         console.log('imageData...',imageData);
                            return imageData;
                        }
@@ -130,8 +131,6 @@ const NavBar = ({access_token,triggerDisplayOptionsByCatId,
                               setImages(img=>[...img,imageData]);
                            }
                        }
-                      // console.log('images...',images)
-                     // console.log('imageMap...',imageMap);
                         setItems(operatedTourCategories);
                         setPersonalTripItems(personalTripCategories);
                         setSections(prev =>[...prev,{title:"Package Tours", data:items}])
@@ -201,7 +200,8 @@ const NavBar = ({access_token,triggerDisplayOptionsByCatId,
                      />
                                      
                     <CardContent>
-                        <Typography gutterBottom variant="body1" component="div" sx={{whiteSpace: 'pre-wrap'}}>
+                        <Typography gutterBottom variant="body1" component="div" 
+                        sx={{whiteSpace: 'pre-wrap'}}>
                 {item.name}
               </Typography>
               <Typography variant="body2" color="text.secondary" sx={{whiteSpace: 'pre-wrap'}}>

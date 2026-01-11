@@ -3,7 +3,7 @@ import { ICategory } from '../repository/AppEntityState';
 
 const categorySchema = new Schema<ICategory>({
 
-     categoryID:{
+     _id:{
        type: Number,
       required: true
     },

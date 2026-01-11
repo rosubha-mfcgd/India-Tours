@@ -3,7 +3,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.CategoryModel = void 0;
 const mongoose_1 = require("mongoose");
 const categorySchema = new mongoose_1.Schema({
-    categoryID: {
+    _id: {
         type: Number,
         required: true
     },
