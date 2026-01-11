@@ -184,7 +184,7 @@ TourManagers
 
 db.tourmanagers.insertMany([
   {
-    tourManagerId: "001",
+    tourManagerId: 1,
     tourManagerName: "TravelXPloria",
 	contact: "+917908593907",
 	backupcontact: "+917908593907",
@@ -193,7 +193,7 @@ db.tourmanagers.insertMany([
 	website: "https://travelxploria.com/"
   },
   {
-    tourManagerId: "002",
+    tourManagerId: 2,
     tourManagerName: "Wonder Vision",
 	contact: "+918420048046",
 	backupcontact: "+918420048046",
@@ -202,7 +202,7 @@ db.tourmanagers.insertMany([
 	website: "https://wondervision.com/"
   },
    {
-    tourManagerId: "003",
+    tourManagerId: 3,
     tourManagerName: "Travel for Fun",
 	contact: "+918420044043",
 	backupcontact: "+918420044043",
