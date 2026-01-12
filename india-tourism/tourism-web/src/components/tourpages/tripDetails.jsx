@@ -4,7 +4,7 @@ import '../../styles/TripDetails.css';
 import '../../styles/loginsignup.css';
 import SideBarNotification from '../navigationTabs/sideBarNotification.jsx';
 import { NavContext } from '../navigationContext/navigationContext.jsx';
-
+import { getImageById } from "../admin/admin";
 import {
     TextField,
     Button,
@@ -24,11 +24,12 @@ import {
     CardMedia,
     CardContent
   } from "@mui/material";
-
+//Shows the complete details of the trip
   const TripDetails = ({tourDetails,triggerDisplayOptionsByCatId,openBookingForm,cityList,access_token}) =>{
 
   const navigate = useNavigate();
 
+  const [image,setImage] = useState(null);
         const goBack = () =>{
             navigate(-1);
         }
@@ -52,11 +53,37 @@ import {
           date.toLocaleDateString('en-GB')); // Or 'en-GB' for a different locale
         return date.toLocaleDateString('en-GB');
     }
+     const getImageFromFileId = async(data,bucketname) =>{
+                if(data != null){
+                  
+                    let imageData = await getImageById(data,bucketname);
+                    if(imageData){
+                       return imageData;
+                    }
+                }
+        }
         const detailFlds = getFieldsForTripDetailsScreen();
         console.log('tourDetails...',tourDetails);
         const { notification} = useContext(NavContext);
+      
+        useEffect(()=>{
+           async function getTourImage() {
+            let imageData = await getImageFromFileId(tourDetails.image.fileId,'tourImages');
+            if(imageData)
+            {
+              setImage(imageData);
+            }
+          }
+          if(!image){
+              getTourImage();
+          }
+        },[]);
         
+
+
+
     return (
+     
         <div style={{ display: 'flex', flexDirection: 'column', 
         justifycontent: 'center',
         alignitems: 'center',
@@ -65,13 +92,15 @@ import {
       <div className="grid-item">
         <Grid item xs = {10} sm={4}></Grid>
       </div>
+        {image ?
             <div className="grid-item">
             <Grid item xs = {10} sm={4}>
+              
                  <Card className="card">
                     <CardMedia
         component="img"
         style={{ height: "200px",width: "350px" }}
-        image={tourDetails.image}
+        image={image}
         alt={tourDetails.locationName}
       />
            </Card>
@@ -200,7 +229,8 @@ import {
                              </div> 
                              :<div></div>
                               }
-            </div>
+            </div>:<div></div>
+                            }
                      
         </div>
         
