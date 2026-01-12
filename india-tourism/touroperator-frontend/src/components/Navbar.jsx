@@ -54,11 +54,15 @@ export default function Navbar() {
           <Button component={RouterLink} to="/tours" color="inherit">
             Tours
           </Button>
+           <Button component={RouterLink} to="/locations" color="inherit">
+              Locations
+           </Button>
           {user.roleID === 1 && (
             <>
               <Button component={RouterLink} to="/tour-operators" color="inherit">
                 Tour Operators
               </Button>
+             
               <Button component={RouterLink} to="/categories" color="inherit">
                 Categories
               </Button>

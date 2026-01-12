@@ -7,15 +7,13 @@ import {
   Button,
   TextField,
   Stack,
-  MenuItem,
-  FormControlLabel,
-  Switch,
+  MenuItem
 } from "@mui/material";
 
 import { AuthContext } from "../../context/AuthContext";
 import { createTour, updateTour } from "../../apiconfig/tourApi";
-import { getStates, createState } from "../../apiconfig/stateApi";
-import { getCities, createCity } from "../../apiconfig/cityApi";
+import { getStates } from "../../apiconfig/stateApi";
+import { getCities } from "../../apiconfig/cityApi";
 import { getCategories } from "../../apiconfig/categoryApi";
 import { getImage } from "../../apiconfig/imageDetailsApi";
 
@@ -43,14 +41,9 @@ export default function TourModal({ open, onClose, onSuccess, editingTour = null
   const [states, setStates] = useState([]);
   const [cities, setCities] = useState([]);
   const [categories, setCategories] = useState([]);
-  const [addState, setAddState] = useState(false);
-  const [addCity, setAddCity] = useState(false);
-  const [newState, setNewState] = useState("");
-  const [newCity, setNewCity] = useState("");
   const [imageFile, setImageFile] = useState(null);
   const [previewImage, setPreviewImage] = useState("");
 
-  // ---------------- Fetch tour image for edit mode
   const fetchImageBlob = async (tour) => {
     if (!tour.image?.fileId) return;
     try {
@@ -62,10 +55,8 @@ export default function TourModal({ open, onClose, onSuccess, editingTour = null
     }
   };
 
-  // ---------------- Load States & Categories
   useEffect(() => {
     if (!open) return;
-
     getStates().then(res => setStates(res.data)).catch(err => console.error(err));
     getCategories().then(res => {
       let cats = res.data || [];
@@ -76,10 +67,8 @@ export default function TourModal({ open, onClose, onSuccess, editingTour = null
     }).catch(err => console.error(err));
   }, [open, editingTour]);
 
-  // ---------------- Prefill form for edit mode
   useEffect(() => {
     if (!open) return;
-
     if (editingTour) {
       setForm({
         description: editingTour.description || "",
@@ -96,37 +85,25 @@ export default function TourModal({ open, onClose, onSuccess, editingTour = null
         maxTourist: editingTour.maxTourist || 0,
       });
       fetchImageBlob(editingTour);
-      setAddState(false);
-      setAddCity(false);
-      setNewState("");
-      setNewCity("");
-
       if (editingTour.state?._id) {
-        getCities(editingTour.state._id).then(res => {
-          setCities(res.data);
-          if (!res.data.find(c => c._id === editingTour.city?._id)) {
-            setForm(prev => ({ ...prev, city: "" }));
-          }
-        }).catch(err => console.error(err));
+        getCities(editingTour.state._id).then(res => setCities(res.data || [])).catch(err => console.error(err));
       }
     } else {
       setForm(initialForm);
       setCities([]);
-      setAddState(false);
-      setAddCity(false);
-      setNewState("");
-      setNewCity("");
       setImageFile(null);
       setPreviewImage("");
     }
   }, [editingTour, open]);
 
-  // ---------------- Load Cities when state changes
   useEffect(() => {
     if (form.state) {
       getCities(form.state).then(res => {
-        setCities(res.data);
-        if (!res.data.find(c => c._id === form.city)) setForm(prev => ({ ...prev, city: "" }));
+        setCities(res.data || []);
+        // Reset city if it doesn't belong to selected state
+        if (!res.data.find(c => c._id === form.city)) {
+          setForm(prev => ({ ...prev, city: "" }));
+        }
       }).catch(err => console.error(err));
     } else {
       setCities([]);
@@ -134,12 +111,6 @@ export default function TourModal({ open, onClose, onSuccess, editingTour = null
     }
   }, [form.state]);
 
-  // ---------------- Reset city when addCity toggled
-  useEffect(() => {
-    if (addCity) setForm(prev => ({ ...prev, city: "" }));
-  }, [addCity]);
-
-  // ---------------- Auto-calc Days & Nights
   useEffect(() => {
     if (form.startDate && form.endDate) {
       const start = new Date(form.startDate);
@@ -165,67 +136,30 @@ export default function TourModal({ open, onClose, onSuccess, editingTour = null
     }
   };
 
-  // ---------------- Submit form
   const handleSubmit = async () => {
-  try {
-    let stateId = form.state;
-    let cityId = form.city;
-    const categoryId = form.category;
-
-    // 1️⃣ Create new state (if toggled)
-    if (addState && newState.trim()) {
-      const stateRes = await createState({ name: newState.trim() });
-      stateId = stateRes.data._id;
-    }
-
-    // 2️⃣ Create new city using FINAL stateId
-    if (addCity && newCity.trim() && stateId) {
-      const cityRes = await createCity({
-        name: newCity.trim(),
-        state: stateId,
+    try {
+      const payload = {
+        ...form,
+        tripLength: Math.max(form.days, form.nights),
+        ticketCost: 0,
+        tourOperator: user.id,
+      };
+      const formData = new FormData();
+      Object.entries(payload).forEach(([k, v]) => {
+        if (v !== undefined && v !== null && v !== "") formData.append(k, v.toString());
       });
-      cityId = cityRes.data._id;
-    }
-
-    // 3️⃣ Calculate derived fields
-    const tripLength = Math.max(form.days, form.nights);
-
-    // 4️⃣ Build payload USING LOCAL IDS (NOT form state)
-    const payload = {
-      ...form,
-      state: stateId,
-      city: cityId,
-      category: categoryId,
-      tripLength,
-      ticketCost: 0,
-      tourOperator: user.id,
-    };
-
-    const formData = new FormData();
-    Object.entries(payload).forEach(([k, v]) => {
-      if (v !== undefined && v !== null && v !== "") {
-        formData.append(k, v.toString());
+      if (imageFile) formData.append("image", imageFile);
+      if (isEditMode) {
+        await updateTour(editingTour._id, formData);
+      } else {
+        await createTour(formData);
       }
-    });
-
-    if (imageFile) {
-      formData.append("image", imageFile);
+      onSuccess();
+      onClose();
+    } catch (err) {
+      console.error("Tour save failed:", err);
     }
-
-    // 5️⃣ Save
-    if (isEditMode) {
-      await updateTour(editingTour._id, formData);
-    } else {
-      await createTour(formData);
-    }
-
-    onSuccess();
-    onClose();
-  } catch (err) {
-    console.log(err.stack)
-    console.error("Tour save failed:", err);
-  }
-};
+  };
 
   return (
     <Dialog open={open} onClose={onClose} maxWidth="sm" fullWidth>
@@ -234,30 +168,24 @@ export default function TourModal({ open, onClose, onSuccess, editingTour = null
         <Stack spacing={2} sx={{ mt: 1 }}>
           <TextField label="Description" name="description" value={form.description} onChange={handleChange} fullWidth disabled={isViewMode} />
 
-          {/* State */}
-          <FormControlLabel control={<Switch checked={addState} onChange={() => setAddState(!addState)} disabled={isViewMode} />} label="Add New State" />
-          {addState ? <TextField label="New State" value={newState} onChange={e => setNewState(e.target.value)} fullWidth disabled={isViewMode} />
-            : <TextField select label="State" name="state" value={form.state} onChange={handleChange} fullWidth disabled={isViewMode}>{states.map(s => <MenuItem key={s._id} value={s._id}>{s.name}</MenuItem>)}</TextField>}
+          <TextField select label="State" name="state" value={form.state} onChange={handleChange} fullWidth disabled={isViewMode}>
+            {states.map(s => <MenuItem key={s._id} value={s._id}>{s.name}</MenuItem>)}
+          </TextField>
 
-          {/* City */}
-          <FormControlLabel control={<Switch checked={addCity} onChange={() => setAddCity(!addCity)} disabled={!addState && !form.state || isViewMode} />} label="Add New City" />
-          {addCity ? <TextField label="New City" value={newCity} onChange={e => setNewCity(e.target.value)} fullWidth disabled={isViewMode} />
-            : <TextField select label="City" name="city" value={form.city} onChange={handleChange} fullWidth disabled={!form.state || isViewMode}>{cities.map(c => <MenuItem key={c._id} value={c._id}>{c.name}</MenuItem>)}</TextField>}
+          <TextField select label="City" name="city" value={form.city} onChange={handleChange} fullWidth disabled={!form.state || isViewMode}>
+            {cities.map(c => <MenuItem key={c._id} value={c._id}>{c.name}</MenuItem>)}
+          </TextField>
 
-          {/* Category */}
           <TextField select label="Category" name="category" value={form.category || ""} onChange={handleChange} fullWidth disabled={isViewMode}>
             {categories.length === 0 ? <MenuItem value="">No categories available</MenuItem> : categories.map(cat => <MenuItem key={cat._id} value={cat._id}>{cat.name}</MenuItem>)}
           </TextField>
 
-          {/* Dates */}
           <TextField type="date" label="Start Date" name="startDate" value={form.startDate} onChange={handleChange} InputLabelProps={{ shrink: true }} disabled={isViewMode} />
           <TextField type="date" label="End Date" name="endDate" value={form.endDate} onChange={handleChange} InputLabelProps={{ shrink: true }} disabled={isViewMode} />
 
-          {/* Days & Nights */}
           <TextField label="Days" value={form.days} InputProps={{ readOnly: true }} disabled={isViewMode} />
           <TextField label="Nights" value={form.nights} InputProps={{ readOnly: true }} disabled={isViewMode} />
 
-          {/* Package & Type */}
           <TextField label="Package Cost" name="packageCost" type="number" value={form.packageCost} onChange={handleChange} disabled={isViewMode} />
           <TextField select label="Currency" name="currency" value={form.currency} onChange={handleChange} disabled={isViewMode}>
             <MenuItem value="INR">₹ INR</MenuItem>
@@ -269,10 +197,8 @@ export default function TourModal({ open, onClose, onSuccess, editingTour = null
             <MenuItem value="International">International</MenuItem>
           </TextField>
 
-          {/* Max Tourist */}
           <TextField label="Max Tourist" name="maxTourist" type="number" value={form.maxTourist} onChange={handleChange} disabled={isViewMode} />
 
-          {/* Image */}
           {!isViewMode && <Button variant="outlined" component="label">{imageFile || previewImage ? "Change Image" : "Upload Image"}<input type="file" hidden accept="image/*" onChange={handleImageChange} /></Button>}
           {previewImage && <img src={previewImage} alt="Tour" style={{ width: "100%", marginTop: 8, borderRadius: 4 }} />}
         </Stack>

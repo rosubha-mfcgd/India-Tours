@@ -45,8 +45,11 @@ exports.getCitiesByState = async (req, res) => {
         const { stateId } = req.params;
         if (!stateId) return res.status(400).json({ error: 'State ID required' });
         console.log(' getCitiesByState ', stateId);
-        const cities = await City.find({ state: stateId }).populate('state', 'name');
-        res.json(cities);
+        const numericStateId = Number(stateId); // convert param to number
+
+        const cities = await City.find({ state: numericStateId }).sort({ name: 1 });
+        res.json(cities); // returns array of { _id, name, state }
+         
     } catch (err) {
         res.status(400).json({ error: err.message });
     }
