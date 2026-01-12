@@ -1,4 +1,5 @@
 const {UserRepository} = require ('../../dist/repository/UserRepository');
+const {TourOperatorRepository} = require ('../../dist/repository/TourOperatorRepository');
 const constants = require("../utils/constants");
 require("../logNginx");
 
@@ -198,9 +199,6 @@ async validateOTP(email,mobile,otp)
  }
 
   let user = await userRepo.findOne(strQuery);
-
-  
-
   if(user){
     console.log('user....',user);
      console.log('valid otp');
@@ -248,6 +246,29 @@ async getPoints(email,mobile)
             logNginx(err.stack)
           }
             return points;
+  }
+
+  async getRegisteredTourOperators() 
+{
+   let operators = [];
+  try{
+    const tourOperatorRepository = new TourOperatorRepository();
+   
+     operators = await tourOperatorRepository.find({"roleID": { $in: [1,2]}});
+  
+          if (operators) {
+             console.log('found user profile for operator...');
+              return operators;
+            }
+            else{
+              console.log('could not find user profile...');
+              return [];
+             }
+          }catch(err)
+          {
+            logNginx(err.stack)
+          }
+            return [];
   }
 
 }

@@ -1,7 +1,7 @@
 import { Schema, model } from 'mongoose';
-import { IUser } from '../repository/AppEntityState';
+import { ICustomer } from '../repository/AppEntityState';
 
-const userSchema = new Schema<IUser>({
+const userSchema = new Schema<ICustomer>({
  
   name: { type: String, required: true },
   signedUpFlag: { type: String, required: true},
@@ -17,4 +17,4 @@ const userSchema = new Schema<IUser>({
  tourmanagerId : {type: String}
 });
 
-export const UserModel = model<IUser>('User', userSchema);
+export const UserModel = model<ICustomer>('Customer', userSchema);

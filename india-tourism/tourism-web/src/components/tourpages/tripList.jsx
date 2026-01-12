@@ -61,7 +61,7 @@ const TripList = ({access_token,categoryId,cityList,showDetails}) =>{
 
      function getValuesFromTourManagerMap(key) {
        console.log('tourMgrMap...',tourMgrMap)
-        return tourMgrMap.get(key.toString());
+        return tourMgrMap.get(key);
         
     }
 
@@ -111,16 +111,11 @@ const TripList = ({access_token,categoryId,cityList,showDetails}) =>{
                                 console.log('tourOps...',tourOps);
 
                                 tourOps.map((tourManager) =>{
-                                    updateTourMgrMap(tourManager.tourManagerId,
-                                        {"tourManagerId":tourManager.tourManagerId,
-                                        "tourManagerName":tourManager.tourManagerName,
-                                          "contact" : tourManager.contact,
-                                          "secondarycontact":tourManager.backupcontact,
-                                          "citycode":tourManager.citycode,
-                                          "tourOpLocation": getCityOfTourOperator(tourManager.citycode),
-                                          "desc": tourManager.desc,
-                                          "website":tourManager.website,
-                                          "categoryId":categoryId
+                                    updateTourMgrMap(tourManager._id,
+                                        {"tourManagerId":tourManager._id,
+                                        "tourManagerName":tourManager.firstName+"-"+tourManager.lastName,
+                                         "email": tourManager.email,
+                                         "categoryId":categoryId
                                         });
                                 }
                             );
@@ -227,7 +222,7 @@ const TripList = ({access_token,categoryId,cityList,showDetails}) =>{
                 <Grid item xs = {12} sm={4}  key={tour.category._id}>
 
                     <Card className="card" onClick={()=>showDetails(tour,
-                    getValuesFromTourManagerMap(tour.tourOperator._id),
+                    getValuesFromTourManagerMap(tour.tourOperator),
                         access_token)} style={{ cursor: 'pointer' }}>
                     
                     <CardMedia component= "img"  height="100"
@@ -247,16 +242,16 @@ const TripList = ({access_token,categoryId,cityList,showDetails}) =>{
               </Typography>
 
                <Typography variant="body2" color="text.secondary">
-                {tour.tourOperator.firstName}- {tour.tourOperator.lastName}
+                {(getValuesFromTourManagerMap(tour.tourOperator)).tourManagerName}
               </Typography>
-             <Typography variant="body2" color="text.secondary">
-                 {getValuesFromTourManagerMap(tour.tourOperator._id).contact}
-              </Typography>
+             {/* <Typography variant="body2" color="text.secondary">
+                 {getValuesFromTourManagerMap(tour.tourOperator).contact}
+              </Typography> */}
              
                     <Typography variant="body2" color="text.secondary">
                  {tour.tourType === "Domestic"? "Domestic":"International"}
               </Typography>
-                 <button type="submit" class="button"  onClick={()=>showDetails(tour,getValuesFromTourManagerMap(tour.tourOperator._id))} 
+                 <button type="submit" class="button"  onClick={()=>showDetails(tour,getValuesFromTourManagerMap(tour.tourOperator))} 
                     style={{ cursor: 'pointer',backgroundColor: '#8a77f8ff',color:'#0c0c0fff'}}>
                        Details</button>
               </CardContent>

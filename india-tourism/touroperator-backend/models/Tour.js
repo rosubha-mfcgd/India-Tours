@@ -22,7 +22,6 @@ const tourSchema = new mongoose.Schema(
     city: { type: Number, ref: "City", required: true },    // changed
     state: { type: Number, ref: "State", required: true },   // changed
     category: { type: Number, ref: "Category", required: true },// changed
-
     description: { type: String, required: true },
 
     image: {

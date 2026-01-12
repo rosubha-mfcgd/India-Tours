@@ -212,7 +212,7 @@ const appToken = jwt.sign(payload, secretKey, options);
 passport.serializeUser((user, done) => done(null, user));
 passport.deserializeUser((user, done) => done(null, user));
 
-// --- Routes ---
+// --- this method performs the user login ---
 
 app.post("/api/loginUser", checkAuthenticated,async(req,res) =>{
 
@@ -326,7 +326,7 @@ app.post("/api/token", async(req,res) =>{
       res.status(401).send({"error":"Invalid token found"});
     });
 });
-
+//This method finds the upcoming popular events using gemini AI
 app.post("/api/findUpcomingEvents",checkAuthenticated, async(req,res) =>{
 
     if (!GOOGLE_GEMINI_API_KEY) {

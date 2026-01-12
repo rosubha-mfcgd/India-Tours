@@ -1,10 +1,12 @@
 require("../logNginx");
 
 const TourDetailService = require('../service/TourDetailService');
+const UserService = require('../service/UserService');
+
 
 const getRegisteredTourManagers=async(req,res,retries = 3, delay = 1000) =>{
     try{
-    let tourManagers = await new TourDetailService().getTourManagers();
+    let tourManagers = await new UserService().getRegisteredTourOperators();
     if(tourManagers)
     {
         console.log('tourManagers..',tourManagers);

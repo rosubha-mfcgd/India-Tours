@@ -9,6 +9,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 const { UserRepository } = require('../../dist/repository/UserRepository');
+const { TourOperatorRepository } = require('../../dist/repository/TourOperatorRepository');
 const constants = require("../utils/constants");
 require("../logNginx");
 class UserService {
@@ -229,6 +230,27 @@ class UserService {
                 logNginx(err.stack);
             }
             return points;
+        });
+    }
+    getRegisteredTourOperators() {
+        return __awaiter(this, void 0, void 0, function* () {
+            let operators = [];
+            try {
+                const tourOperatorRepository = new TourOperatorRepository();
+                operators = yield tourOperatorRepository.findOne({ "roleID": 2 });
+                if (operators) {
+                    console.log('found user profile for operator...');
+                    return operators;
+                }
+                else {
+                    console.log('could not find user profile...');
+                    return [];
+                }
+            }
+            catch (err) {
+                logNginx(err.stack);
+            }
+            return [];
         });
     }
 }

@@ -3,15 +3,20 @@ import { ICity } from '../repository/AppEntityState';
 
 const citySchema = new Schema<ICity>({
 
-     cityCode:{
-       type: Number,
+     _id: {
+      type: Number,
+      unique: true,
+      index: true
+    },
+    name: {
+      type: String,
       required: true
     },
-    
-    cityDesc:{
-       type: String,
+    state: {
+      type: Number, // stateId
+      ref: "State",
       required: true
-    },
+    }
     
   });
 

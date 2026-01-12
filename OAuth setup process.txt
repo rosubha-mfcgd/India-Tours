@@ -82,6 +82,13 @@ Kolkata2026@123@
 
 docker run --name keycloak -p 8080:8080 -e KEYCLOAK_ADMIN=admin -e KEYCLOAK_ADMIN_PASSWORD=admin quay.io/keycloak/keycloak:latest start-dev
 
+docker run -it --name keycloak3 --entrypoint /bin/bash <image_name>
+
+docker start -ai keycloak2
+
+
 http://localhost:8080/realms/mitram-dev/protocol/openid-connect/token
 
 keycloak secret - yNPZfWcvwJ5jVGjysyVzGjsiqc4b10Jc
+
+AWS 

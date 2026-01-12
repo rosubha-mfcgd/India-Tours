@@ -1,19 +1,19 @@
 import { FilterQuery, UpdateQuery } from 'mongoose';
 import { UserModel } from '../model/user';
-import { IUser } from './AppEntityState';
+import { ICustomer } from './AppEntityState';
 import { BaseRepository } from './BaseRepository';
-export class UserRepository extends BaseRepository<IUser>
+export class UserRepository extends BaseRepository<ICustomer>
 {
    constructor(){
     super(UserModel);
    }
 
-   async findById(id: string):Promise<IUser|null>{
+   async findById(id: string):Promise<ICustomer|null>{
         return UserModel.findById(id).exec();
 
    }
 
- async findPoints(query: FilterQuery<IUser>):Promise<IUser|null>{
+ async findPoints(query: FilterQuery<ICustomer>):Promise<ICustomer|null>{
         return UserModel.findOne(query).exec();
    }
 

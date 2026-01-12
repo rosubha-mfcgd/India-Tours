@@ -15,6 +15,7 @@
     "@types/nodemailer": "^6.4.17",
     "axios": "^1.8.4",
     "bcrypt": "^5.1.1",
+    "bcryptjs": "^3.0.3",
     "buffer": "^6.0.3",
     "cookie-parser": "^1.4.7",
     "cookie-session": "^2.1.0",

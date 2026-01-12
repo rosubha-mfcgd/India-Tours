@@ -1,6 +1,6 @@
 import { ObjectId,Document } from 'mongoose';
 
-export interface IUser extends Document{
+export interface ICustomer extends Document{
      name:{
        type: String,
       required: true,
@@ -155,6 +155,22 @@ export interface IProduct extends Document{
     }
   }
 
+  export interface ITourOperator extends Document{
+    _id: {
+      type: Number, // numeric ID
+      unique: true,
+      index: true,
+    },
+    firstName: { type: String, required: true },
+    lastName: { type: String, required: true },
+    username: { type: String, required: true, unique: true },
+    password: { type: String, required: true },
+    email: { type: String },
+    roleID: { type: Number, required: true },
+    resetPasswordToken: { type: String },
+    resetPasswordExpire: { type: Date },
+  }
+
 
 export interface ICategory extends Document{
     _id:{
@@ -228,13 +244,32 @@ export interface ICategory extends Document{
   }
 
   export interface ICity extends Document{
-    cityCode:{
-       type: Number,
+    _id: {
+      type: Number,
+      unique: true,
+      index: true
+    },
+    name: {
+      type: String,
       required: true
     },
-    
-    cityDesc: String
-    
+    state: {
+      type: Number, // stateId
+      ref: "State",
+      required: true
+    }
+  }
+
+  export interface IState extends Document{
+    _id: {
+      type: Number,
+      unique: true,
+      index: true
+    },
+    name: {
+      type: String,
+      required: true
+    }    
   }
 
   export interface IPreferences extends Document{

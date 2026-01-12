@@ -4,15 +4,68 @@ const { TourItineraryRepository } = require('../../dist/repository/TourItinerary
 const { TourManagerRepository } = require('../../dist/repository/TourManagerRepository');
 const {ProductRepository} = require ('../../dist/repository/ProductRepository');
 const {CityRepository} = require ('../../dist/repository/CityRepository');
+const {StateRepository} = require ('../../dist/repository/StateRepository');
 const { BookingRepository } = require('../../dist/repository/BookingRepository');
+const {cityCache,stateCache} = require('../utils/cacheMap');
 require("../logNginx");
 
 class TourDetailService{
    
 
+static{
+   this.getAllCities().then(cities =>{
+       for(let city of cities)
+      {
+        cityCache.set(city._id, city);
+      }
+      console.log('city list...',cityCache)
+  });
+  
+this.getAllStates().then(states=>{
+   for(let state of states)
+      {
+        stateCache.set(state._id, state);
+      }
+      console.log('state list...',stateCache)
+});
+}
+
 constructor(){
       this.errorMsg = "Message not found";
     } 
+
+static async getAllCities()
+{
+  let cities = [];
+  try{
+     const cityRepository = new CityRepository();
+     cities = await cityRepository.findAll();
+     if(cities)
+     {
+        return cities;
+     }
+  }catch(err){
+    logNginx(err);
+  }
+  return [];
+}
+
+static async getAllStates()
+{
+  let states = [];
+  try{
+     const stateRepository = new StateRepository();
+     states = await stateRepository.findAll();
+     if(states)
+     {
+        return states;
+     }
+  }catch(err){
+    logNginx(err);
+  }
+  return [];
+}
+
 
 async getCategories(productID)
 {
@@ -86,19 +139,23 @@ async getCategories(productID)
    const tourRepository = new TourRepository();
    
       plannedTours = await tourRepository.aggregatePlannedTours(
-        [{"category._id":Number(categoryId)},
-        {"startDate":{$gt: new Date().toLocaleDateString('en-CA')}}]);
+        [{"category":Number(categoryId)},
+        {"startDate":{$gt: new Date()}}]);
       
       if(plannedTours && plannedTours.length >0){
-         console.log('plannedTours...',plannedTours);
+        // console.log('plannedTours...',plannedTours);
+          for(let plannedTour of plannedTours)
+      {
+        plannedTour["cityName"] = (cityCache.get(plannedTour.city)).name;
+        plannedTour["stateName"] = (stateCache.get(plannedTour.state)).name;
+      }
            
       }
+     
     }
     catch(err){
-         console.log(err.stack);
         logNginx(err.stack);
-        
-      }
+        }
   return plannedTours;
   }
 
@@ -108,8 +165,6 @@ async getCategories(productID)
       let itinerary = '';
       const tourItineraryRepository = new TourItineraryRepository();
       try{
-         // let isoStartDate = new Date(startDate);
-         // let isoEndDate = new Date(endDate);
           const isoStartDate = new Date(startDate);
           const isoEndDate = new Date(endDate);
           isoStartDate.setUTCHours(0, 0, 0, 0);
