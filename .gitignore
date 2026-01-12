@@ -1,4 +1,4 @@
-/backend/node_modules
-/frontend/node_modules
-/backend/dist
-/backend/.env
+/india-tourism/backend/node_modules
+/india-tourism/frontend/node_modules
+/india-tourism/backend/dist
+/india-tourism/backend/.env
