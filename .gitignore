@@ -1,4 +1,28 @@
-/india-tourism/backend/node_modules
-/india-tourism/frontend/node_modules
-/india-tourism/backend/dist
-/india-tourism/backend/.env
+# See https://help.github.com/articles/ignoring-files/ for more about ignoring files.
+/india-tourism/touroperator-backend/node_modules
+/india-tourism/touroperator-frontend/node_modules
+/india-tourism/touroperator-backend/dist
+/india-tourism/touroperator-backend/.env
+
+
+# dependencies
+/india-tourism/touroperator-frontend/node_modules
+/india-tourism/touroperator-frontend/.pnp
+/india-tourism/touroperator-frontend/.pnp.js
+
+# testing
+/india-tourism/touroperator-frontend/coverage
+
+# production
+/india-tourism/touroperator-frontend/build
+
+# misc
+.DS_Store
+/india-tourism/touroperator-frontend.env.local
+/india-tourism/touroperator-frontend.env.development.local
+/india-tourism/touroperator-frontend.env.test.local
+/india-tourism/touroperator-frontend.env.production.local
+
+/india-tourism/touroperator-frontendnpm-debug.log*
+/india-tourism/touroperator-frontendyarn-debug.log*
+/india-tourism/touroperator-frontendyarn-error.log*
