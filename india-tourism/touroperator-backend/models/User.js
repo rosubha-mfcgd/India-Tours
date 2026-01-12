@@ -1,5 +1,6 @@
 const mongoose = require("mongoose");
 const bcrypt = require("bcryptjs");
+const { phoneSchema } = require("./common/Phone");
 
 // ---------------- User Schema
 const userSchema = new mongoose.Schema(
