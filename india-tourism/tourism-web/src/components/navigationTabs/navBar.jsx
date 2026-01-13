@@ -36,7 +36,7 @@ const NavBar = ({access_token,triggerDisplayOptionsByCatId,
      const location = useLocation();
     const { notification} = useContext(NavContext);
     const [images, setImages] = useState([]);
-     const [items, setItems] = useState([])
+     const [items, setItems] = useState([]);
     const [sections, setSections] = useState([])
       const [personalTripItems, setPersonalTripItems] = useState([])
     const [personalTripsections, setPersonalTripsections] = useState([])
@@ -128,7 +128,8 @@ const NavBar = ({access_token,triggerDisplayOptionsByCatId,
                            if(imageData)
                            {
                              // images[category._id] = imageData;
-                              setImages(img=>[...img,imageData]);
+                            //  setImages(img=>[...img,imageData]);
+                            images[category._id] = imageData;
                            }
                        }
                         setItems(operatedTourCategories);
@@ -183,7 +184,7 @@ const NavBar = ({access_token,triggerDisplayOptionsByCatId,
              items && items.length>0  ?
               
 
-                items.map((item,index) => (
+                items.map((item) => (
                     
                <div>
                  
@@ -193,7 +194,7 @@ const NavBar = ({access_token,triggerDisplayOptionsByCatId,
                      >
                     
                     <CardMedia component= "img"  height="100"
-                    image = {images[index]} 
+                    image = {images[item._id]} 
                     alt={item.description} 
                     onClick={()=>triggerDisplayOptionsByCatId(item._id)} 
                     style={{ cursor: 'pointer' }} 

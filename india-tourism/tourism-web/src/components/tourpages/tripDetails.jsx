@@ -126,7 +126,7 @@ import {
                         <TableRow>
                     <TableCell>
                         <Typography variant="body2" style={{ color: '#FFFFFF' }}>
-                        LocationName : <strong>{tourDetails.locationName}</strong>    
+                        LocationName : <strong>{tourDetails.cityname} {tourDetails.statename}</strong>    
                         </Typography>
                     </TableCell>
                     </TableRow>
@@ -142,8 +142,7 @@ import {
                      <TableRow>
                     <TableCell>
                         <Typography variant="body2" style={{ color: '#FFFFFF' }}>
-                       Trip Type : <strong> {tourDetails.tourType === "Domestic"? "Domestic"
-                       :"International"}  </strong>
+                       Trip Type : <strong> {tourDetails.domesticOrInternational}  </strong>
                         </Typography>  
                     </TableCell>
                     

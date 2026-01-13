@@ -136,7 +136,8 @@ const TripList = ({access_token,categoryId,cityList,showDetails}) =>{
                                     if(imageData)
                                     {
                                         // images[category._id] = imageData;
-                                        setImages(img=>[...img,imageData]);
+                                       // setImages(img=>[...img,imageData]);
+                                       images[plannedTour._id] = imageData;
                                     }
                             }
 
@@ -215,7 +216,7 @@ const TripList = ({access_token,categoryId,cityList,showDetails}) =>{
             <Grid container spacing={10} justify="center" width="70%">
              {tours && tours.length>0 ?
 
-                tours.map((tour,index) => (
+                tours.map((tour) => (
                     
                <div>
                  
@@ -226,7 +227,7 @@ const TripList = ({access_token,categoryId,cityList,showDetails}) =>{
                         access_token)} style={{ cursor: 'pointer' }}>
                     
                     <CardMedia component= "img"  height="100"
-                    image = {images[index]} alt={tour.image.fileId} 
+                    image = {images[tour._id]} alt={tour.image.fileId} 
                     />
                                      
                     <CardContent>
