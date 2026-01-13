@@ -16,6 +16,7 @@ import Dashboard from "./pages/Dashboard";
 import ItineraryBuilder from "./pages/Itinerary/ItineraryBuilder";
 import Checkout from "./pages/Payments/Checkout";
 import Tours from "./pages/Tours/TourDashboard";
+import Locations from "./pages/Locations/LocationsPage";
 /* Market place */
 import Marketplace from "./pages/Marketplace/Marketplace";
 
@@ -79,6 +80,14 @@ export default function App() {
             element={
               <ProtectedRoute>
                 <Tours />
+              </ProtectedRoute>
+            }
+          />
+           <Route
+            path="/locations"
+            element={
+              <ProtectedRoute>
+                <Locations />
               </ProtectedRoute>
             }
           />

@@ -7,7 +7,13 @@ import {
   Button,
   TextField,
   Stack,
+  MenuItem,
+  Checkbox,
+  FormControlLabel,
+  IconButton,
+  Typography,
 } from "@mui/material";
+import { Plus, Minus } from "lucide-react";
 import { createTourOperator } from "../../apiconfig/tourManagersApi";
 
 export default function TourOperatorModal({ open, onClose, onSuccess }) {
@@ -16,18 +22,78 @@ export default function TourOperatorModal({ open, onClose, onSuccess }) {
     lastName: "",
     email: "",
     password: "",
+    phones: [
+      { number: "", type: "mobile", isPrimary: true },
+    ],
   });
 
-  const handleChange = (e) => {
-    const { name, value } = e.target;
-    setForm((prev) => ({ ...prev, [name]: value }));
+ const handleChange = (e) => {
+  const { name, value, type, checked } = e.target;
+  const phoneIndex = e.target.dataset.phoneIndex;
+
+  if (phoneIndex !== undefined) {
+    const index = parseInt(phoneIndex, 10);
+    setForm((prev) => {
+      const updatedPhones = [...prev.phones];
+      updatedPhones[index] = {
+        ...updatedPhones[index],
+        [name]: type === "checkbox" ? checked : value,
+      };
+
+      // Ensure only one primary
+      if (name === "isPrimary" && checked) {
+        updatedPhones.forEach((p, i) => {
+          if (i !== index) p.isPrimary = false;
+        });
+      }
+
+      return { ...prev, phones: updatedPhones };
+    });
+  } else {
+    setForm((prev) => ({
+      ...prev,
+      [name]: type === "checkbox" ? checked : value,
+    }));
+  }
+};
+
+
+  const addPhone = () => {
+    if (form.phones.length >= 3) return; // max 3 phones
+    setForm((prev) => ({
+      ...prev,
+      phones: [...prev.phones, { number: "", type: "mobile", isPrimary: false }],
+    }));
+  };
+
+  const removePhone = (index) => {
+    setForm((prev) => {
+      const updatedPhones = prev.phones.filter((_, i) => i !== index);
+      // Ensure at least one phone remains primary
+      if (!updatedPhones.some((p) => p.isPrimary) && updatedPhones.length > 0) {
+        updatedPhones[0].isPrimary = true;
+      }
+      return { ...prev, phones: updatedPhones };
+    });
   };
 
   const handleSubmit = async () => {
     try {
-      // Send the firstName and lastName to the backend
-      await createTourOperator(form);
-      onSuccess(); // refresh table + KPI
+      const payload = {
+        firstName: form.firstName,
+        lastName: form.lastName,
+        email: form.email,
+        password: form.password,
+        phones: form.phones.filter((p) => p.number.trim() !== ""),
+      };
+
+      // Ensure only one primary
+      if (payload.phones.filter((p) => p.isPrimary).length > 1) {
+        return alert("Only one primary phone is allowed");
+      }
+
+      await createTourOperator(payload);
+      onSuccess();
       onClose();
     } catch (err) {
       console.error(err);
@@ -40,6 +106,7 @@ export default function TourOperatorModal({ open, onClose, onSuccess }) {
 
       <DialogContent>
         <Stack spacing={2} sx={{ mt: 1 }}>
+          {/* Existing Fields */}
           <TextField
             label="First Name"
             name="firstName"
@@ -69,6 +136,59 @@ export default function TourOperatorModal({ open, onClose, onSuccess }) {
             onChange={handleChange}
             fullWidth
           />
+
+          {/* Phone Numbers */}
+          <Typography variant="subtitle1">Phone Numbers (max 3)</Typography>
+          {form.phones.map((phone, index) => (
+            <Stack key={index} direction="row" spacing={1} alignItems="center">
+            <TextField
+              label="Number"
+              name="number"
+              type="tel"                  // <-- change here
+              value={phone.number}
+              data-phone-index={index}
+              onChange={handleChange}
+              fullWidth
+            />
+              <TextField
+                select
+                label="Type"
+                name="type"
+                value={phone.type}
+                data-phone-index={index}
+                onChange={handleChange}
+                sx={{ width: 120 }}
+              >
+                <MenuItem value="mobile">Mobile</MenuItem>
+                <MenuItem value="home">Home</MenuItem>
+                <MenuItem value="work">Work</MenuItem>
+                <MenuItem value="office">Office</MenuItem>
+                <MenuItem value="other">Other</MenuItem>
+              </TextField>
+              <FormControlLabel
+                control={
+                  <Checkbox
+                    name="isPrimary"
+                    checked={phone.isPrimary}
+                    data-phone-index={index}
+                    onChange={handleChange}
+                  />
+                }
+                label="Primary"
+              />
+              {form.phones.length > 1 && (
+                <IconButton color="error" onClick={() => removePhone(index)}>
+                  <Minus size={20} />
+                </IconButton>
+              )}
+            </Stack>
+          ))}
+
+          {form.phones.length < 3 && (
+            <Button startIcon={<Plus size={16} />} onClick={addPhone}>
+              Add Phone
+            </Button>
+          )}
         </Stack>
       </DialogContent>
 

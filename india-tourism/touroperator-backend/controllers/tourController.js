@@ -40,7 +40,7 @@ exports.addTourWithImage = async (req, res) => {
       description,
       currency,
     } = req.body;
-    console.log('req body....',req.body);
+
     // -------------------- Basic validations --------------------
     if (!tourOperator) return res.status(400).json({ error: "tourOperator is required" });
     if (!description || typeof description !== "string")
@@ -308,7 +308,7 @@ exports.updateTour = async (req, res) => {
   try {
     const tourId = req.params.id;
     console.log("Updating tourId:", tourId);
-    if (!mongoose.Types.ObjectId.isValid(tourId)) 
+    if (!tourId) 
       return res.status(400).json({ error: "Invalid tour ID" });
 
     // ----------------- Allowed fields now include categoryId

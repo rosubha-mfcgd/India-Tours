@@ -1,5 +1,6 @@
 const mongoose = require("mongoose");
 const bcrypt = require("bcryptjs");
+const { phoneSchema } = require("./common/Phone");
 
 // ---------------- User Schema
 const userSchema = new mongoose.Schema(
@@ -14,6 +15,10 @@ const userSchema = new mongoose.Schema(
     username: { type: String, required: true, unique: true },
     password: { type: String, required: true },
     email: { type: String },
+    phones: {
+      type: [phoneSchema],
+      default: [],
+    },
     roleID: { type: Number, required: true },
     resetPasswordToken: { type: String },
     resetPasswordExpire: { type: Date },

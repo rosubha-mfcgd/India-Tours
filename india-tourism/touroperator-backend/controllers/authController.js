@@ -6,12 +6,19 @@ const bcrypt = require("bcryptjs");
 const getNextSequence = require("../utility/getNextSequence");
 require("dotenv").config();
 
-// Register
 exports.register = async (req, res) => {
   try {
-    const { username, password, email, roleID, firstName, lastName } = req.body;
+    const {
+      username,
+      password,
+      email,
+      roleID,
+      firstName,
+      lastName,
+      phones = [], // optional
+    } = req.body;
 
-    // ---------------- Validations
+    /* ---------------- Validations ---------------- */
     if (!username || !password) {
       return res.status(400).json({ message: "Username and password are required" });
     }
@@ -24,19 +31,47 @@ exports.register = async (req, res) => {
       return res.status(400).json({ message: "Role ID is required" });
     }
 
-    // ---------------- Check existing user
+    /* ---------------- Check existing user ---------------- */
     const existingUser = await User.findOne({ username });
     if (existingUser) {
       return res.status(400).json({ message: "User already exists" });
     }
 
-    // ---------------- Generate numeric user _id
+    /* ---------------- Generate numeric user _id ---------------- */
     const numericUserId = await getNextSequence("user");
-    if (!numericUserId && numericUserId !== 0) {
+    if (numericUserId === undefined || numericUserId === null) {
       return res.status(500).json({ message: "Failed to generate user ID" });
     }
 
-    // ---------------- Create user
+    /* ---------------- Prepare phones ---------------- */
+    let primaryPhoneCount = 0;
+
+    const preparedPhones = [];
+
+    for (const phone of phones) {
+      if (!phone.number) {
+        return res.status(400).json({ message: "Phone number is required" });
+      }
+
+      if (phone.isPrimary) primaryPhoneCount++;
+
+      const phoneId = await getNextSequence("phone");
+
+      preparedPhones.push({
+        _id: phoneId,
+        number: phone.number,
+        type: phone.type || "mobile",
+        isPrimary: !!phone.isPrimary,
+      });
+    }
+
+    if (primaryPhoneCount > 1) {
+      return res
+        .status(400)
+        .json({ message: "Only one primary phone is allowed" });
+    }
+
+    /* ---------------- Create user ---------------- */
     const user = new User({
       _id: numericUserId,
       username,
@@ -45,10 +80,12 @@ exports.register = async (req, res) => {
       password, // hashed by pre-save hook
       email,
       roleID,
+      phones: preparedPhones,
     });
 
     await user.save();
 
+    /* ---------------- Response ---------------- */
     res.status(201).json({
       message: "User registered successfully",
       user: {
@@ -56,7 +93,9 @@ exports.register = async (req, res) => {
         username: user.username,
         firstName: user.firstName,
         lastName: user.lastName,
+        email: user.email,
         roleID: user.roleID,
+        phones: user.phones,
       },
     });
   } catch (err) {
@@ -64,7 +103,6 @@ exports.register = async (req, res) => {
     res.status(500).json({ message: err.message });
   }
 };
-
 // Login
 exports.login = async (req, res) => {
   try {
@@ -212,50 +250,95 @@ http://localhost:5000/api/auth/create-superadmin
   "username": "superadmin",
   "password": "SuperSecurePassword123!",
   "email": "admin@example.com",
-  "roleID": 1
+  "firstName": "Super",
+  "lastName": "Admin",
+  "roleID": 1,
+  "phones": [
+    {
+      "number": "+44 7700 900000",
+      "isPrimary": true
+    }
+  ]
 }
-
 */
 exports.createSuperAdmin = async (req, res) => {
   try {
-    // 1️⃣ Check if super admin already exists
+    /* ---------------- Check existing super admin ---------------- */
     const existingAdmin = await User.findOne({ roleID: 1 });
     if (existingAdmin) {
       return res.status(400).json({ message: "Super admin already exists" });
     }
 
-    const { username, password, email, roleID, firstName, lastName } = req.body;
+    const {
+      username,
+      password,
+      email,
+      roleID,
+      firstName,
+      lastName,
+      phones = [], // optional
+    } = req.body;
 
+    /* ---------------- Validations ---------------- */
     if (!username || !password || !roleID || !firstName || !lastName) {
       return res.status(400).json({
-        message: "Username, password, roleID, firstName, and lastName are required",
+        message:
+          "Username, password, roleID, firstName, and lastName are required",
       });
     }
 
-    // 2️⃣ Generate numeric user _id
+    /* ---------------- Generate numeric user _id ---------------- */
     const numericUserId = await getNextSequence("user");
-
-    if (!numericUserId && numericUserId !== 0) {
+    if (numericUserId === undefined || numericUserId === null) {
       return res.status(500).json({
         message: "Failed to generate user ID",
       });
     }
 
-    console.log("Generated user numericId:", numericUserId);
+    /* ---------------- Prepare phones ---------------- */
+    let primaryPhoneCount = 0;
+    const preparedPhones = [];
 
-    // 3️⃣ Create user with numeric _id
+    for (const phone of phones) {
+      if (!phone.number) {
+        return res
+          .status(400)
+          .json({ message: "Phone number is required" });
+      }
+
+      if (phone.isPrimary) primaryPhoneCount++;
+
+      const phoneId = await getNextSequence("phone");
+
+      preparedPhones.push({
+        _id: phoneId,
+        number: phone.number,
+        type: phone.type || "mobile",
+        isPrimary: !!phone.isPrimary,
+      });
+    }
+
+    if (primaryPhoneCount > 1) {
+      return res
+        .status(400)
+        .json({ message: "Only one primary phone is allowed" });
+    }
+
+    /* ---------------- Create super admin ---------------- */
     const superAdmin = new User({
       _id: numericUserId,
       username,
       firstName,
       lastName,
-      password, // will be hashed by pre-save hook
+      password, // hashed by pre-save hook
       email,
       roleID,
+      phones: preparedPhones,
     });
 
     await superAdmin.save();
 
+    /* ---------------- Response ---------------- */
     res.status(201).json({
       message: "Super admin created successfully",
       user: {
@@ -263,6 +346,7 @@ exports.createSuperAdmin = async (req, res) => {
         username: superAdmin.username,
         email: superAdmin.email,
         roleID: superAdmin.roleID,
+        phones: superAdmin.phones,
       },
     });
   } catch (err) {
