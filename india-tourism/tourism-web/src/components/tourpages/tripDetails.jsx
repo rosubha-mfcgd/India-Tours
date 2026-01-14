@@ -126,7 +126,7 @@ import {
                         <TableRow>
                     <TableCell>
                         <Typography variant="body2" style={{ color: '#FFFFFF' }}>
-                        LocationName : <strong>{tourDetails.cityname} {tourDetails.statename}</strong>    
+                        LocationName : <strong>{tourDetails.locationName}</strong>    
                         </Typography>
                     </TableCell>
                     </TableRow>

@@ -113,13 +113,13 @@ const NavBar = ({access_token,triggerDisplayOptionsByCatId,
                        let personalTripCategories = [];
                        for(let category of categories)
                        {
-                            if(category && category._id !== 10 && 
-                                category._id !== 9 && category._id !== 7)
+                            if(category && category.name !== 'Office Trips' && 
+                                category.name !== 'Sports Tour')
                             {
                                   operatedTourCategories.push(category);  
                             }
                             else
-							              {
+							{
                               personalTripCategories.push(category);
                             }
                             
@@ -233,7 +233,8 @@ const NavBar = ({access_token,triggerDisplayOptionsByCatId,
              </Grid>
               
             </div>
-                )):<div><Typography variant="body2" color="text.secondary" sx={{whiteSpace: 'pre-wrap'}}>
+                )):<div>
+                    <Typography variant="body2" color="text.secondary" sx={{whiteSpace: 'pre-wrap'}}>
                     Cannot load pacakage tour sections</Typography></div>
             }
           
@@ -271,23 +272,23 @@ const NavBar = ({access_token,triggerDisplayOptionsByCatId,
                      >
                     
                     <CardMedia component= "img"  height="100"
-                    image = {personalTripItem.image} alt={personalTripItem.description} 
+                    image = {images[personalTripItem._id]} alt={personalTripItem.description} 
                     onClick={()=>triggerDisplayOptionsByCatId(personalTripItem._id)} 
                     style={{ cursor: 'pointer' }} 
                      />
                                      
                     <CardContent>
                         <Typography gutterBottom variant="body1" component="div" sx={{whiteSpace: 'pre-wrap'}}>
-                {personalTripItem.categoryName}
+                {personalTripItem.name}
               </Typography>
               <Typography variant="body2" color="text.secondary" sx={{whiteSpace: 'pre-wrap'}}>
-                {personalTripItem.categoryDesc}
+                {personalTripItem.description}
               </Typography>
               {(personalTripItem.favorite === 'Y') ?
                 <FavoriteIcon sx={{ color: '#f04646ff' }} onClick = {(event) => updateFavorites(
-                    personalTripItem.categoryID,'N',event)} style={{ cursor: 'pointer' }}/>:
+                    personalTripItem._id,'N',event)} style={{ cursor: 'pointer' }}/>:
                 <FavoriteIcon onClick = {(event) => updateFavorites(
-                    personalTripItem.categoryID,'Y',event)} style={{ cursor: 'pointer' }}/>
+                    personalTripItem._id,'Y',event)} style={{ cursor: 'pointer' }}/>
               }
               
               </CardContent>

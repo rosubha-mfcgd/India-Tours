@@ -410,7 +410,7 @@ else
    res.status(400).send({"isValidRequest":"N"});
   }
 })
-
+//This method pulls the image as base64 buffer from the SF bucket 
 app.get("/api/getImageFromDB/:fileId/:bucketname",checkAuthenticated, async(req,res)=>{
    let { fileId,bucketname } = req.params;
   if(!fileId)

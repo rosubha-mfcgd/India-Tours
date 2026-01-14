@@ -136,11 +136,25 @@ const openBookingForm = (tourDetails) =>{
       setBookTrip(false);
     }
 }
-
+      //This method populates the information in trip detail screen
        const showDetails = async (tourDetails,tourManager) =>{
         if(tourDetails){
             //tourDetails =   prepareDetails(tourDetails);
-            console.log('location....',tourDetails.locationName)
+            
+            let location = '';
+            if(tourDetails.cityName && tourDetails.stateName)
+              {
+                location = tourDetails.cityName +','+tourDetails.stateName;
+              } else if(tourDetails.cityName)
+              {
+                location = tourDetails.cityName;
+
+              }
+              else if(tourDetails.stateName)
+              {
+                 location = tourDetails.stateName;
+              }
+            console.log('location....',location)
             console.log('tourManager name....',tourManager.tourManagerName)
             console.log('tripLength....',tourDetails.tripLength)
             console.log('start date....',tourDetails.startDate)
@@ -151,7 +165,7 @@ const openBookingForm = (tourDetails) =>{
         if(tourDetails)
         {
    
-            let tourDtls = {"locationName":tourDetails.locationName,
+            let tourDtls = {"locationName":location,
                 "tourManagerName":tourManager.tourManagerName,
                 "tourManagerId":tourManager.tourManagerId,
                 "triplength":tourDetails.tripLength,
