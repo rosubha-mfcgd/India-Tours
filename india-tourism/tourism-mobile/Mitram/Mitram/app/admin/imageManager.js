@@ -14,7 +14,7 @@ export const productBackImages = {
 
 
 export const tripCategoryImages = {
-"Hill stations" : require("../../public/categories/hillstation.png"),
+"Hill Stations" : require("../../public/categories/hillstation.png"),
 "Sea beach":require("../../public/categories/seabeach.png"),
 "Desert":require("../../public/categories/desert.png"),
 "Jungle safari" : require("../../public/categories/junglesafari.png"),
@@ -27,7 +27,7 @@ export const tripCategoryImages = {
 }
 
 export const tripCategoryBackImages = {
-"Hill stations" : require("../../public/categories/backside/hillstation.png"),
+"Hill Stations" : require("../../public/categories/backside/hillstation.png"),
 "Sea beach":require("../../public/categories/backside/seabeach.png"),
 "Desert":require("../../public/categories/backside/desert.png"),
 "Jungle safari" : require("../../public/categories/backside/junglesafari.png"),

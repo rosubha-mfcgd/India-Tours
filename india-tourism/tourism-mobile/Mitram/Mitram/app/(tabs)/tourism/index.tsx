@@ -1,11 +1,11 @@
 import { Text, View } from 'react-native';
-import CategoryStyle from '../../styles/categoryStyle.js'; 
-import TourCommonStyle from '../../styles/tourCommonStyle.js'; 
-import ModalStyle from '../../styles/modalStyle.js'
-import TextStyle from '../../styles/textStyles.js';
-import {updateAsFavorite,getCategories,getCities,
+import CategoryStyle from '../../styles/categoryStyle'; 
+import TourCommonStyle from '../../styles/tourCommonStyle'; 
+import ModalStyle from '../../styles/modalStyle'
+import TextStyle from '../../styles/textStyles';
+import {updateAsFavorite,getCategories,getCities,getImageById,
     persistDataInCache,getDataFromCache,removeDataFromCache,
-    validateTokenWithSession} from "../../admin/admin.js";
+    validateTokenWithSession} from "../../admin/admin";
 import { useEffect, useState } from "react";
 
 import { FlatList, TouchableOpacity, Image} from 'react-native';
@@ -22,6 +22,7 @@ export default function Categories()
     const [items, setItems] = useState('');
     const[cityList,setCityList] = useState([]);
     const [showFlipImage,setShowFlipImage] = useState(false)
+    const [images, setImages] = useState([]);
     const [activeNotification,setActiveNotification] = useState(false)
     const [favorite,setFavorite] = useState(new Map())
     const [changeFav,setChangeFav] = useState(true)
@@ -63,6 +64,19 @@ export default function Categories()
         )
     }
 
+
+    const getCategoryImageFromFileId = async(imageid,bucketname) =>{
+                   if(imageid != null){
+                    
+                       let imageData = await getImageById(imageid,bucketname);
+                       if(imageData)
+                        {
+                        //console.log('imageData...',imageData);
+                           return imageData;
+                       }
+                   }
+           }
+
  const getItemFromFavoriteMap = (key) => {
     console.log('favorite...',favorite)
     let color = favorite.get(key) === 'Y'?'#f04646ff':'#635f5fff';
@@ -103,15 +117,15 @@ const updateFavorites = async(categoryid) =>{
               
             <TouchableOpacity style={CategoryStyle.touchableOpacity} onPress={toggleImage}>
                 {!showFlipImage?
-             <Image source={tripCategoryImages[item.categoryName]} style=
+             <Image source={tripCategoryImages[item.name]} style=
              {CategoryStyle.image}/> :
-             <Image source={tripCategoryBackImages[item.categoryName]} style=
+             <Image source={tripCategoryBackImages[item.name]} style=
              {CategoryStyle.image}/>
                 }
              </TouchableOpacity>
           <Card.Title>
-            <Text style={CategoryStyle.categoryscreenText}>{item.categoryName}{"\n"}</Text>
-                    <Text style={CategoryStyle.categoryscreenText}>{item.categoryDesc}</Text>
+            <Text style={CategoryStyle.categoryscreenText}>{item.name}{"\n"}</Text>
+                    <Text style={CategoryStyle.categoryscreenText}>{item.description}</Text>
                      
         </Card.Title>
         <Card.Divider/>
@@ -119,10 +133,10 @@ const updateFavorites = async(categoryid) =>{
               
               {changeFav?
                     <View style={{flexDirection:'row'}}>
-                    <Ionicons name = "heart" color={getItemFromFavoriteMap(item.categoryID)} 
+                    <Ionicons name = "heart" color={getItemFromFavoriteMap(item._id)} 
                     size={45} onPress={()=>
-                        updateFavorites(item.categoryID)}/>
-                        {favorite.get(item.categoryID) === 'Y'?
+                        updateFavorites(item._id)}/>
+                        {favorite.get(item._id) === 'Y'?
                             <Text style={TextStyle.h2}>My Favorite</Text>:
                             <View/>
                         }
@@ -130,7 +144,7 @@ const updateFavorites = async(categoryid) =>{
                         :<View/>
                     }
               <Link href={{pathname:"/tourism/tripList",
-                             params: { productID: item.productID, categoryId:item.categoryID,
+                             params: { productID: item.productID, categoryId:item._id,
                                 cityList:JSON.stringify(cityList)
                              }
                           }} asChild>
@@ -152,33 +166,44 @@ const updateFavorites = async(categoryid) =>{
             const timer = setTimeout(() =>{
                 
                     const getTripCategories = async (productID) =>{
-                   
+                   //Fetch categories from cache
                     let categories = await getDataFromCache(productID);
-                    
+                    //if not found in cache, lookup the DB
                     if(!categories){
                        categories = await getCategories(productID);
-                       if(categories)
-                       {
+                        if(categories)
+                        {
                             persistDataInCache(productID,categories);
-                            const favoriteMap = new Map(favorite); 
-                            for(let category of categories)
-                            {
-                               console.log('favorite map...',category.categoryID,
-                                 category.favorite)
-                                favoriteMap.set(category.categoryID, 
-                                    category.favorite === 'Y'?'Y':'N');
-                            }
-                            setFavorite(favoriteMap);
-                            persistDataInCache('favoriteCategory',favoriteMap)
-                       }
+                        }
                     }
-                    
+                       
+                 //If list of categories is found, prepare the image list and favoriteMap
                     if(categories)
                     {
-                        console.log('categories...',categories);
+        
+                        const favoriteMap = new Map(favorite); 
+                            for(let category of categories)
+                            {
+                               console.log('category...',category._id)
+                                favoriteMap.set(category._id, 
+                                    category.favorite === 'Y'?'Y':'N');
+                                
+                                   let imageData = getCategoryImageFromFileId(category.image,
+                                    'categoryImages');
+                                    if(imageData)
+                                    {
+                                        images[category._id] = imageData;
+                                    }
+                                
+                            }
+                            setFavorite(favoriteMap);
+                            persistDataInCache('favoriteCategory',favoriteMap);
+
+                       
                         setItems(categories);
-                   
+                        
                     }
+                
                    
                 };
                  const getCityList = async () =>{
@@ -191,7 +216,7 @@ const updateFavorites = async(categoryid) =>{
                     }
                     if(!cityList || cityList.length === 0)
                     {
-                      cities = await  getCities();
+                      cities = await getCities();
                     
                     }
                     if(cities)
@@ -226,12 +251,12 @@ const updateFavorites = async(categoryid) =>{
     return(
         <View style={TourCommonStyle.centeredContainer}>
     {
-        items ?
+        items && images.length>0?
         <FlatList
           data={items}
           renderItem={({item})=> <RenderTripCategories item = {item}/>}
           ListHeaderComponent={showHeaderInformation}
-          keyExtractor={item => item.categoryID}
+          keyExtractor={item => item._id+'_'+item.name+'_'+item.description+'_'+item.image}
         />:<View/>
     }
     </View>

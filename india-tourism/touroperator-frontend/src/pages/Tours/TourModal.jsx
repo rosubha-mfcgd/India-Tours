@@ -57,9 +57,11 @@ export default function TourModal({ open, onClose, onSuccess, editingTour = null
 
   useEffect(() => {
     if (!open) return;
+    
     getStates().then(res => setStates(res.data)).catch(err => console.error(err));
     getCategories().then(res => {
       let cats = res.data || [];
+      console.log('categories....',cats)
       if (editingTour?.category?._id && !cats.find(c => c._id === editingTour.category._id)) {
         cats.push({ _id: editingTour.category._id, name: editingTour.category.name });
       }

@@ -653,6 +653,18 @@ export const removeDataFromCache = async (key) => {
   }
 };
 
+export const clearAllData = async () => {
+  try {
+    await AsyncStorage.clear();
+    console.log('AsyncStorage cleared successfully!');
+  } catch (error) {
+    console.error('Error clearing AsyncStorage:', error);
+  }
+};
+
+
+
+
 export const searchUserProfile = async(data) =>{
     let res_data = " search user profile failed";
    try{
@@ -851,6 +863,27 @@ export const exchangeAuthToken = async(code,codeVerifier, tokenUri) =>{
 }
 
     return res_data;
+}
+
+
+export const getImageById = async(data,bucketname) =>{
+     let res_data = "failed to process image";
+     let access_token = await getApiAccessToken();
+        if(access_token)  {
+            const headers = {
+            "Content-type": "application/json; charset=UTF-8",
+            "Authorization":"Bearer "+access_token.data.access_token
+            };
+            let response = await axios.get(
+                process.env.EXPO_PUBLIC_SERVER_URI + "getImageFromDB"+"/"+data+"/"+bucketname,
+                {headers});
+        if(response)
+     {
+        //console.log('response....',response.data);
+        res_data = response.data.image;
+     }
+    }
+     return res_data;
 }
 
 

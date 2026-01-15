@@ -4,7 +4,7 @@ const { getCategories , getCategoryById, createCategory, uploadCategoryImage , u
 const { authenticate, authorizeRole } = require("../middleware/authMiddleware");
 
 // GET all products
-router.get("/", authenticate, authorizeRole(1), getCategories);
+router.get("/", authenticate, authorizeRole(1,2), getCategories);
 
 // GET product by ID
 router.get("/:id", authenticate, authorizeRole(1), getCategoryById);
@@ -27,7 +27,7 @@ router.put("/:id",
 
 router.delete("/:id", 
   authenticate,
-  authorizeRole(1,2),
+  authorizeRole(1),
   deleteCategory);
 module.exports = router;
 

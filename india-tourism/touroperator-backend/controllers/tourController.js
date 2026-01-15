@@ -219,16 +219,18 @@ if (typeof nights !== "number") return res.status(400).json({ error: "nights mus
  */
 exports.getAllTours = async (req, res) => {
   try {
-    const { stateId, cityId , categoryId } = req.query;
+    const { stateId, cityId , categoryId} = req.query;
     let filter ="";
     let tours = "";
+    console.log('req username...',req.user);
     // derive tourOperatorId from logged-in user
     const userId = req.user._id;
     console.log('getAllTours for stateId , ', stateId , ' cityId ',  cityId);
     console.log('getAllTours for userId ', userId , ' having role ', req.user.roleID );
     if(req.user.roleID == '2') {
     filter = {
-      tourOperator: new mongoose.Types.ObjectId(userId),
+      //tourOperator: new mongoose.Types.ObjectId(userId),
+      tourOperator: userId,
     };
   }
    if(stateId != undefined) {

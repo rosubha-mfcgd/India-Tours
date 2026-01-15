@@ -37,6 +37,7 @@ const NavBar = ({access_token,triggerDisplayOptionsByCatId,
     const { notification} = useContext(NavContext);
     const [images, setImages] = useState([]);
      const [items, setItems] = useState([]);
+     const [loading,setLoading] = useState(true);
     const [sections, setSections] = useState([])
       const [personalTripItems, setPersonalTripItems] = useState([])
     const [personalTripsections, setPersonalTripsections] = useState([])
@@ -108,6 +109,7 @@ const NavBar = ({access_token,triggerDisplayOptionsByCatId,
                     
                     if(categories)
                     {
+                        
                         console.log('categories...',categories);
                        let operatedTourCategories = [];
                        let personalTripCategories = [];
@@ -136,6 +138,7 @@ const NavBar = ({access_token,triggerDisplayOptionsByCatId,
                         setPersonalTripItems(personalTripCategories);
                         setSections(prev =>[...prev,{title:"Package Tours", data:items}])
                         setPersonalTripsections(prev =>[...prev,{title:"Family/Personal Tours", data:personalTripItems}])
+                       setLoading(false);
                     }
                    
                 };
@@ -155,6 +158,7 @@ const NavBar = ({access_token,triggerDisplayOptionsByCatId,
 
 
     return (
+               
         <div className="navbar-grid">
               
         
@@ -164,8 +168,9 @@ const NavBar = ({access_token,triggerDisplayOptionsByCatId,
             
             <div className="navbar-sectioned-list-container">
                 
-                {sections && sections.length>0 ?
-                sections.map((section) =>(
+                {
+                sections && sections.length>0 ?
+                    sections.map((section) =>(
                     <div key={section.title} className="navbar-section-group">
                         
                              <header className="app-header">
@@ -233,9 +238,12 @@ const NavBar = ({access_token,triggerDisplayOptionsByCatId,
              </Grid>
               
             </div>
-                )):<div>
+                )):
+                <div>
                     <Typography variant="body2" color="text.secondary" sx={{whiteSpace: 'pre-wrap'}}>
-                    Cannot load pacakage tour sections</Typography></div>
+                        Cannot load pacakage tour sections
+                 </Typography>
+                 </div>
             }
           
            
@@ -310,7 +318,9 @@ const NavBar = ({access_token,triggerDisplayOptionsByCatId,
 
 
 
-                )):<div><Typography variant="body2" color="text.secondary" sx={{whiteSpace: 'pre-wrap'}}>
+                )):<div>
+                
+                <Typography variant="body2" color="text.secondary" sx={{whiteSpace: 'pre-wrap'}}>
                     Cannot load personal tour sections</Typography></div>
                     }
 
@@ -326,8 +336,6 @@ const NavBar = ({access_token,triggerDisplayOptionsByCatId,
             :<div></div>
              }
             </div>
-       
-        
-    )
+            )
 }
 export default NavBar;

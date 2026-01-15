@@ -1,8 +1,8 @@
 import { StyleSheet, Text, View } from 'react-native';
-import LoginSignUpStyle from '../styles/loginsignup.js'; 
-import CardStyle from '../styles/cards.js'; 
-import ProductStyle from '../styles/productStyle.js'; 
-import {updateAsFavorite,getProducts,persistDataInCache,getDataFromCache,
+import LoginSignUpStyle from '../styles/loginsignup'; 
+import CardStyle from '../styles/cards'; 
+import ProductStyle from '../styles/productStyle'; 
+import {updateAsFavorite,getProducts,persistDataInCache,getDataFromCache,clearAllData,
    removeDataFromCache} from "../admin/admin";
 import { useEffect, useState, useContext } from "react";
 import { FlatList, TouchableOpacity, Image} from 'react-native';
@@ -14,7 +14,7 @@ import {productImages,productBackImages} from "../admin/imageManager";
 export default function Products()
 { 
 
-    const [items, setItems] = useState('');
+    const [items, setItems] = useState([]);
       const [showFlipImage,setShowFlipImage] = useState(false)
 
       const toggleImage = () =>{
@@ -92,7 +92,8 @@ export default function Products()
             const timer = setTimeout(() =>{
                 
                     const fetchProducts = async () =>{
-                   
+                    
+                    
                     let products = await getDataFromCache("products");
                     if(!products)
                     {
@@ -115,17 +116,19 @@ export default function Products()
                            
                          }
                     }
+                  
                 };
-                if(items==='')
+                if(items.length === 0)
                 {
-                   fetchProducts();
+                  clearAllData();
+                  fetchProducts();
                                    
                 }},100);
                  return () => {
         mounted = false; // Set flag to false on cleanup
         clearTimeout(timer); // Clean up the timer
     };
-            });
+   });
 
 
 return(
