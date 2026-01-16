@@ -192,7 +192,8 @@ const updateFavorites = async(categoryid) =>{
                                     'categoryImages');
                                     if(imageData)
                                     {
-                                        images[category._id] = imageData;
+                                        let imageurl =  `data:image/png;base64,${imageData}`;
+                                        images[category._id] = imageurl;
                                     }
                                 
                             }

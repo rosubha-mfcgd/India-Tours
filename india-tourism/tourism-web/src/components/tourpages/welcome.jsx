@@ -1,26 +1,24 @@
 import React, { useEffect,useState,useContext } from "react";  
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+ import CircularProgress from '@mui/material/CircularProgress';
 
-
-import NavBar from '../navigationTabs/navBar.jsx';
-import Product from '../navigationTabs/products.jsx';
-import DisplayOptions from '../navigationTabs/showOptions.jsx'
-import Header from '../header/header.jsx';
-import Layout from '../Layout/layout.jsx';
-import UserProfile from '../userprofile/userprofile.jsx';
+import NavBar from '../navigationTabs/navBar';
+import Product from '../navigationTabs/products';
+import DisplayOptions from '../navigationTabs/showOptions'
+import Header from '../header/header';
+import Layout from '../Layout/layout';
+import UserProfile from '../userprofile/userprofile';
 
 import '../../styles/loginsignup.css';
- import { NavProvider } from '../navigationContext/navigationContext.jsx';
+ import { NavContext } from '../navigationContext/navigationContext';
 
  import {useLocation } from 'react-router-dom';
-import TripList from "./tripList.jsx";
-import TripDetails from "./tripDetails.jsx";
-import BookingForm from "./bookingForm.jsx";
-import PreviewForm from "./previewbooking.jsx";
-import CustomBookingForm from "./custombookingForm.jsx"; 
+import TripList from "./tripList";
+import TripDetails from "./tripDetails";
+import BookingForm from "./bookingForm";
+import PreviewForm from "./previewbooking";
+import CustomBookingForm from "./custombookingForm"; 
 import { getCities } from "../admin/admin";
-import ChatButton from '../Utilities/ChatButton.jsx';
-import ChatWindow from '../Utilities/ChatWindow.jsx';
 import { WhatsAppWidget } from 'react-whatsapp-widget';
 import 'react-whatsapp-widget/dist/index.css'; // Import the default styles
 
@@ -44,6 +42,8 @@ const Welcome =()=>{
      const[bookings,setBookings] = useState('');
      const[tourDetailsParam,setTourDetailsParam] = useState('');
      const [isChatOpen, setIsChatOpen] = useState(false);
+      const {loading} = useContext(NavContext);
+     
     console.log('showTrips....',showTrips);
     console.log('showTripDetails....',showTripDetails);
     console.log('bookTrip....',bookTrip);
@@ -204,7 +204,7 @@ const openBookingForm = (tourDetails) =>{
    return (
    
     <div className="center-container">
-         <NavProvider>
+       
           
         <div>
            
@@ -222,9 +222,10 @@ const openBookingForm = (tourDetails) =>{
            
 
          <div className="original-content">
-      
+         
          <Layout access_token={access_token} > {/* Wrap your routes with the Layout component */}
           {
+           
            (showTrips)? 
               <TripList access_token={access_token} categoryId={tripListParam} 
               showDetails={showDetails}
@@ -243,24 +244,21 @@ const openBookingForm = (tourDetails) =>{
              :(showCategories) ?
              <NavBar access_token={access_token} 
              triggerDisplayOptionsByCatId={triggerDisplayOptionsByCatId} 
-             productID={productID} cityList={cityList}/>:
-             (searchOptions)?
+             productID={productID} cityList={cityList}/>
+             :(searchOptions)?
              <DisplayOptions access_token={access_token} productID={productID} 
              categoryID={categoryID} triggerDisplayTasksByOptionID={triggerDisplayTasksByOptionID}/>
             :(previewbooking)?
             <PreviewForm access_token={access_token} bookings={bookings} 
-            tourDetailsParam = {tourDetailsParam}/>:
-             (userBooking)?
+            tourDetailsParam = {tourDetailsParam}/>
+            : (userBooking)?
             <CustomBookingForm access_token={access_token} cityList = {cityList}
-            triggerDisplayOptionsByCatId={triggerDisplayOptionsByCatId}/>:
-            <Product access_token={access_token} 
+            triggerDisplayOptionsByCatId={triggerDisplayOptionsByCatId}/>
+            : <Product access_token={access_token} 
              triggerDisplayTripsByProductId={triggerDisplayTripsByProductId} />
          }
           </Layout>
-          
-          {/* <ChatButton toggleChat={toggleChat} />
-                    {isChatOpen && <ChatWindow onClose={toggleChat} /> */}
-                   {
+             {
                     <WhatsAppWidget
       phoneNumber="+919836266731" // Your international phone number
       companyName="Mitram Support"
@@ -272,9 +270,6 @@ const openBookingForm = (tourDetails) =>{
           </div>
         
        </div>
-      
-    
-     </NavProvider>
     </div>
       )
 }

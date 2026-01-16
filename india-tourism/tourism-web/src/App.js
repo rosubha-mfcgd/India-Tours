@@ -7,7 +7,7 @@ import LoginSignup from  './components/loginsignup/loginsignup.jsx'
 import sendotp from './components/loginsignup/sendotp.jsx'
 import Welcome from './components/tourpages/welcome.jsx'
 import TripList from './components/tourpages/tripList.jsx'
-
+ import { NavProvider } from './components/navigationContext/navigationContext';
 const App = () => {
   const [todos, setTodos] = useState([]);
       
@@ -16,7 +16,7 @@ const App = () => {
   
   return (
      
-   
+   <NavProvider>
       <Routes>
       <Route path='signup' Component={LoginSignup}></Route>
       <Route path='sendotp' Component={sendotp}></Route>
@@ -24,7 +24,7 @@ const App = () => {
       <Route path='/' Component={Welcome}></Route>
       <Route path='/searchtrip' Component={TripList}></Route>
     </Routes>
-      
+   </NavProvider>   
    
   );
 };
