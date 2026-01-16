@@ -10,14 +10,15 @@ import { getTripList,getTourManagers,getImageById } from "../admin/admin";
     Typography,
     CardMedia,
     CardContent,
-    IconButton
+    IconButton,CircularProgress
   } from "@mui/material";
   
  import MenuIcon from '@mui/icons-material/Menu'; // Or any other icon
 
-  import SideBarFilter from '../navigationTabs/sideBarFilter.jsx';
-  import SideBarNotification from '../navigationTabs/sideBarNotification.jsx';
-  import { NavContext } from '../navigationContext/navigationContext.jsx';
+  import SideBarFilter from '../navigationTabs/sideBarFilter';
+  import SideBarNotification from '../navigationTabs/sideBarNotification';
+  import { NavContext } from '../navigationContext/navigationContext';
+  
 //Populate the list of planned trips
 const TripList = ({access_token,categoryId,cityList,showDetails}) =>{
     
@@ -32,7 +33,7 @@ const TripList = ({access_token,categoryId,cityList,showDetails}) =>{
     const [images,setImages] = useState([]);
    const [anchorEl, setAnchorEl] = useState(null);
    const {triggerSorting,sortTrip} = useContext(NavContext);
-    const { notification} = useContext(NavContext);
+    const { notification,loading, setLoading} = useContext(NavContext);
    
    const open = Boolean(anchorEl);
 
@@ -105,7 +106,6 @@ const TripList = ({access_token,categoryId,cityList,showDetails}) =>{
                         if(!tourManagers)
                         {
                              tourOps = await getTourManagers();
-                        }
                             if(tourOps)
                             {
                                 console.log('tourOps...',tourOps);
@@ -120,7 +120,8 @@ const TripList = ({access_token,categoryId,cityList,showDetails}) =>{
                                 }
                             );
 
-                        }else{
+                        }
+                    }else{
                             console.log('Could not find tour managers');
                         }
                       
@@ -140,14 +141,15 @@ const TripList = ({access_token,categoryId,cityList,showDetails}) =>{
                                        images[plannedTour._id] = imageData;
                                     }
                             }
-
-                              console.log('plannedTours...',plannedTours);
+                             console.log('plannedTours...',plannedTours);
                               setTours(plannedTours);
                               setAlltours(plannedTours);
+                              setLoading(false);
                           }
                         }
                 if(tours.length===0)
                 {
+                    setLoading(true);
                     getTripListByCategoryId(categoryId);
                 }
    },[]);
@@ -214,7 +216,20 @@ const TripList = ({access_token,categoryId,cityList,showDetails}) =>{
              <div className="navbar-grid">
         <nav className="navbar">
             <Grid container spacing={10} justify="center" width="70%">
-             {tours && tours.length>0 ?
+             {
+             loading?
+                (<Box
+                   sx={{
+                     display: 'flex',
+                     justifyContent: 'center',
+                     alignItems: 'center',
+                     minHeight: '100vh', // Optional: Centers vertically within the viewport
+                   }}
+                 >
+                   <CircularProgress/>
+                  </Box>) :
+             !loading && 
+             tours && tours.length>0 ?
 
                 tours.map((tour) => (
                     

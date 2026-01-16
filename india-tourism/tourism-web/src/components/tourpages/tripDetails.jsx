@@ -21,10 +21,11 @@ import {
     Card,
     Grid,
     Typography,
+    CircularProgress,
     CardMedia,
     CardContent
   } from "@mui/material";
-//Shows the complete details of the trip
+  //Shows the complete details of the trip
   const TripDetails = ({tourDetails,triggerDisplayOptionsByCatId,openBookingForm,cityList,access_token}) =>{
 
   const navigate = useNavigate();
@@ -64,7 +65,7 @@ import {
         }
         const detailFlds = getFieldsForTripDetailsScreen();
         console.log('tourDetails...',tourDetails);
-        const { notification} = useContext(NavContext);
+        const { notification,loading, setLoading} = useContext(NavContext);
       
         useEffect(()=>{
            async function getTourImage() {
@@ -72,9 +73,11 @@ import {
             if(imageData)
             {
               setImage(imageData);
+              setLoading(false);
             }
           }
           if(!image){
+            setLoading(true);
               getTourImage();
           }
         },[]);
@@ -92,7 +95,22 @@ import {
       <div className="grid-item">
         <Grid item xs = {10} sm={4}></Grid>
       </div>
-        {image ?
+        {loading ?
+          <div>
+                        <Box
+                           sx={{
+                             display: 'flex',
+                             justifyContent: 'center',
+                             alignItems: 'center',
+                             minHeight: '100vh', // Optional: Centers vertically within the viewport
+                           }}
+                         >
+                           <CircularProgress/>
+                          </Box>
+                          </div>:
+        
+        
+        image ?
             <div className="grid-item">
             <Grid item xs = {10} sm={4}>
               
