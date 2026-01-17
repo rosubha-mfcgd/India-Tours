@@ -101,19 +101,19 @@ const BookingForm = ({access_token,tourDetails,triggerDisplayBookings}) =>{
         let existingBookings = await getBookingsByBookingId(data);
         if(existingBookings &&  !existingBookings.errormessage)
         {
-          console.log("existingBookings....",existingBookings)
-          console.log("primarybookings length....",existingBookings.primarybookings.length)
-          console.log("dependantbookings length....",existingBookings.dependantbookings.length)
-          setCurrentBooking(existingBookings);
-         let existingBookingsCount = existingBookings.primarybookings.length+
-                  existingBookings.dependantbookings.length;
-         let totalTourists = noOfTourist+existingBookingsCount;
-         setNoOfTourist(totalTourists);
+              console.log("existingBookings....",existingBookings)
+              console.log("primarybookings length....",existingBookings.primarybookings.length)
+              console.log("dependantbookings length....",existingBookings.dependantbookings.length)
+              setCurrentBooking(existingBookings);
+            let existingBookingsCount = existingBookings.primarybookings.length+
+                      existingBookings.dependantbookings.length;
+            let totalTourists = noOfTourist+existingBookingsCount;
+            setNoOfTourist(totalTourists);
          }
          else{
-          setErrorMessage('Booking id '+bookingid+' was not found in our system');
-          setDisplayErrorDialog(true);
-          setDialogOpen(true);
+              setErrorMessage('Booking id '+bookingid+' was not found in our system');
+              setDisplayErrorDialog(true);
+              setDialogOpen(true);
          }
       }
     }
@@ -181,7 +181,7 @@ const BookingForm = ({access_token,tourDetails,triggerDisplayBookings}) =>{
     }
 
   
-
+//Submit the booking
     const submitBookings = async() =>{
         let noOfTourists = document.getElementById('numberOfTourist').value;
          for(let count = 1;count<=noOfTourists;count++)
@@ -192,7 +192,7 @@ const BookingForm = ({access_token,tourDetails,triggerDisplayBookings}) =>{
             updateBooking('age',count,'age'); 
             updateBooking('specialRequest',count,'specialRequest');
           }
-        triggerDisplayBookings(bookingData,
+          triggerDisplayBookings(bookingData,
                         tourDetails);
     }
  
@@ -294,6 +294,7 @@ const BookingForm = ({access_token,tourDetails,triggerDisplayBookings}) =>{
                             Please enter the booking ID of the trip you want to attend?
                             </Typography>
                         </TableCell>
+                         <TableCell sx={{border:"none"}}>
                          <CssTextField id="bookingid" 
                           sx={{ color: '#FFFFFF' }}
                           label="Booking id (Optional)" 
@@ -304,6 +305,7 @@ const BookingForm = ({access_token,tourDetails,triggerDisplayBookings}) =>{
                              },
                             }}
                          />
+                         </TableCell>
                       </TableRow>
                     </TableBody>
                 </Table>
@@ -312,7 +314,7 @@ const BookingForm = ({access_token,tourDetails,triggerDisplayBookings}) =>{
         }
      {
         openBookingForm ?
-        <div style={{border: "2px solid black;" }}>
+        <div>
           <Typography variant="body2" style={{ color: '#FFFFFF' }}>{bookingPageMessage}</Typography>
          <Paper>
           {
@@ -323,7 +325,7 @@ const BookingForm = ({access_token,tourDetails,triggerDisplayBookings}) =>{
                 style={{
                     width: "fit-content",
                     margin: "auto",
-                   border: "2px solid black;"
+                   border: "2px solid black"
                 }}>
                 
                 <h2

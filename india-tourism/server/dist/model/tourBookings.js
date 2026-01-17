@@ -7,6 +7,15 @@ const tourBookingSchema = new mongoose_1.Schema({
         type: String,
         required: true
     },
+    tourId: {
+        type: Number,
+        ref: "Tour",
+        required: true,
+    },
+    persons: {
+        type: Number,
+        required: true,
+    },
     startDate: {
         type: Date,
         required: true
@@ -27,6 +36,28 @@ const tourBookingSchema = new mongoose_1.Schema({
         type: String,
         required: true
     },
+    amountPaid: {
+        type: Number,
+        required: true,
+    },
+    currency: {
+        type: String,
+        default: "INR",
+    },
+    payment: {
+        paymentId: String,
+        status: String,
+        cardLast4: String,
+        method: {
+            type: String,
+            default: "card",
+        },
+    },
+    status: {
+        type: String,
+        enum: ["CONFIRMED", "FAILED"],
+        default: "CONFIRMED",
+    },
     package_cost: {
         type: Number,
         required: true
@@ -43,4 +74,5 @@ const tourBookingSchema = new mongoose_1.Schema({
         type: []
     }
 });
-exports.TourBookingModel = (0, mongoose_1.model)('TourBookings', tourBookingSchema);
+//export const TourBookingModel = model<ITourBookings>('TourBookings',tourBookingSchema);
+exports.TourBookingModel = (0, mongoose_1.model)('Bookings', tourBookingSchema);

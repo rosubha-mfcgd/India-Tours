@@ -4,13 +4,14 @@ const UserBookingService = require('../service/UserBookingService');
 require("../logNginx");
 const performBookings = async(req,res,retries = 3, delay = 1000) =>{
 
-    const {tourManagerId,locationName,startDate,endDate,domesticOrInternational,
+    const {tourManagerId,tourid,locationName,startDate,endDate,domesticOrInternational,
         package_cost,primarybookings,dependantbookings} = req.body;
-
+      console.log('req body....',req.body)
         try{
                 let tourBookingService =  new TourBookingService();
                 
-            let bookings = await tourBookingService.createBookings(tourManagerId,locationName,
+            let bookings = await tourBookingService.createBookings(tourManagerId,tourid,
+              locationName,
                 startDate,endDate,domesticOrInternational,
                 package_cost,primarybookings,dependantbookings);
                 if(bookings){

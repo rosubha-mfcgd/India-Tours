@@ -102,6 +102,7 @@ const submitBooking = async()=>{
                 endDate:tourDetailsParam.endDate,
                 domesticOrInternational:tourDetailsParam.domesticOrInternational,
                 package_cost:(tourDetailsParam.package_cost)*(bookings.length),
+                tourid: tourDetailsParam.tourid,
                 primarybookings:primary_booking,
                 dependantbookings:dependantbookings,
             }
@@ -117,6 +118,7 @@ const submitBooking = async()=>{
                 endDate:tourDetailsParam.endDate,
                 domesticOrInternational:tourDetailsParam.domesticOrInternational,
                 package_cost:(tourDetailsParam.package_cost)*(bookings.length),
+                tourid: tourDetailsParam.tourid,
                 primarybookings:primary_booking,
                 dependantbookings:dependantbookings,
                 bookingId:tourDetailsParam.bookingid

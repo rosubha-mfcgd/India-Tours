@@ -1,7 +1,5 @@
-import React, { useEffect,useState,useContext } from "react";  
+import React, { useState,useContext } from "react";  
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
- import CircularProgress from '@mui/material/CircularProgress';
-
 import NavBar from '../navigationTabs/navBar';
 import Product from '../navigationTabs/products';
 import DisplayOptions from '../navigationTabs/showOptions'
@@ -81,17 +79,18 @@ const Welcome =()=>{
      }
     const triggerDisplayBookings = async(data,tourDetailInfo) =>{
       
-      console.log('Here...');
-      console.log('data is...',data);
+       console.log('data is...',data);
        console.log('tourDetailInfo is...',tourDetailInfo);
+       
       if(data){
         setShowTrips(false);
         setShowTripDetails(false);
         setBookTrip(false);
         setShowCategories(false);
-        setPreviewbooking(true);
-        setBookings(data);
         setTourDetailsParam(tourDetailInfo);
+        setBookings(data);
+        setPreviewbooking(true);
+                
       }else{
         setPreviewbooking(false);
       }
@@ -155,6 +154,7 @@ const openBookingForm = (tourDetails) =>{
                  location = tourDetails.stateName;
               }
             console.log('location....',location)
+            console.log('tourid....',tourDetails._id);
             console.log('tourManager name....',tourManager.tourManagerName)
             console.log('tripLength....',tourDetails.tripLength)
             console.log('start date....',tourDetails.startDate)
@@ -166,6 +166,7 @@ const openBookingForm = (tourDetails) =>{
         {
    
             let tourDtls = {"locationName":location,
+                "tourid": tourDetails._id,
                 "tourManagerName":tourManager.tourManagerName,
                 "tourManagerId":tourManager.tourManagerId,
                 "triplength":tourDetails.tripLength,

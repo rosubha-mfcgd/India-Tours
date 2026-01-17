@@ -218,7 +218,9 @@ const TripList = ({access_token,categoryId,cityList,showDetails}) =>{
             <Grid container spacing={10} justify="center" width="70%">
              {
              loading?
-                (<Box
+                (
+                <div>
+                <Box
                    sx={{
                      display: 'flex',
                      justifyContent: 'center',
@@ -227,7 +229,8 @@ const TripList = ({access_token,categoryId,cityList,showDetails}) =>{
                    }}
                  >
                    <CircularProgress/>
-                  </Box>) :
+                  </Box>
+                  </div>) :
              !loading && 
              tours && tours.length>0 ?
 

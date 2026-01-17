@@ -16,6 +16,7 @@ class UserService {
     constructor() {
         this.errorMsg = "Message not found";
     }
+    //Performs user signup by email and mobile
     signupUser(email, mobile, name, signUpOTP) {
         return __awaiter(this, void 0, void 0, function* () {
             try {
@@ -40,6 +41,7 @@ class UserService {
             }
         });
     }
+    //For each user login, update the login otp
     updateLoginOTP(email, mobile, loginOTP) {
         return __awaiter(this, void 0, void 0, function* () {
             try {
@@ -62,6 +64,7 @@ class UserService {
             return constants.NO;
         });
     }
+    //Performs update for user details  
     updateUserDetails(email, mobile, prefs, address, city, zipcode) {
         return __awaiter(this, void 0, void 0, function* () {
             const userRepo = new UserRepository();
@@ -99,6 +102,7 @@ class UserService {
             return null;
         });
     }
+    //Performs User login
     loginUser(email, mobile, loginOTP) {
         return __awaiter(this, void 0, void 0, function* () {
             try {
@@ -139,6 +143,7 @@ class UserService {
             }
         });
     }
+    //search user by email + mobile, only email or mobile
     findUser(email, mobile) {
         return __awaiter(this, void 0, void 0, function* () {
             try {
@@ -167,6 +172,7 @@ class UserService {
             }
         });
     }
+    //Method for OTP validation
     validateOTP(email, mobile, otp) {
         return __awaiter(this, void 0, void 0, function* () {
             try {
@@ -211,6 +217,7 @@ class UserService {
             }
         });
     }
+    //This method fetches the points against the user profile
     getPoints(email, mobile) {
         return __awaiter(this, void 0, void 0, function* () {
             let points = 0;
@@ -232,12 +239,13 @@ class UserService {
             return points;
         });
     }
+    //Fetch the list of registered tour operators
     getRegisteredTourOperators() {
         return __awaiter(this, void 0, void 0, function* () {
             let operators = [];
             try {
                 const tourOperatorRepository = new TourOperatorRepository();
-                operators = yield tourOperatorRepository.findOne({ "roleID": 2 });
+                operators = yield tourOperatorRepository.find({ "roleID": { $in: [1, 2] } });
                 if (operators) {
                     console.log('found user profile for operator...');
                     return operators;

@@ -8,21 +8,36 @@ constructor(){
       this.errorMsg = "Message not found";
     } 
 
-      async createBookings(tourManagerId,locationName,startDate,endDate,domesticOrInternational,
+      async createBookings(tourManagerId,tourid,locationName,startDate,endDate,domesticOrInternational,
         package_cost,primarybookings,dependantbookings)
         {
             let bookings = [];
             let bookingId = '';
             try{
+                    // const tourRepository =  new TourRepository();
+                    // const tours = tourRepository.find({
+                    //     "tourOperator": Number(tourManagerId),
+                    //     "startDate": new Date(startDate).toISOString(),
+                    //     "endDate": new Date(endDate).toISOString(),
+                    //     })
+                    console.log('details...',tourManagerId,tourid,locationName,startDate,endDate,
+                        domesticOrInternational,
+        package_cost,primarybookings,dependantbookings);
+
+        let personCount = primarybookings.length+dependantbookings.length;
+        console.log('personCount....',personCount)
                     const bookingRepository = new BookingRepository();
-                   bookingId = apputil.generateBookingId();
+                    bookingId = apputil.generateBookingId();
                     let data = {"tourManagerId": tourManagerId,
-                                "locationName":locationName,
+                                "tourId":tourid,
+                                "locationName":locationName,                                
                                 "startDate":new Date(startDate), 
                                 "endDate":new Date(endDate),
                                 "domesticOrInternational":domesticOrInternational,
                                 "bookingId":bookingId,
                                 "package_cost":package_cost,
+                                "amountPaid": package_cost,
+                                "persons": personCount,
                                 "primarybookings":primarybookings,
                                 "dependantbookings":dependantbookings
                             };

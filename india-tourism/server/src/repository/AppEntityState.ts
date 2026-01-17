@@ -366,50 +366,93 @@ export interface ICategory extends Document{
   }
 
     export interface ITourBookings  extends Document{
-    _id: {
-			primaryKey: true,
-			type: Object,
-			required: true
-		},
-		tourManagerId: {
-			type: string,
-			required: true
-		},
-    bookingId: {
-      type: string,
-			required: true
+        _id: {
+          primaryKey: true,
+          type: Object,
+          required: true
+        },
+        tourManagerId: {
+          type: string,
+          required: true
+        },
+        tourId: {
+        type: Number,
+        ref: "Tour",
+        required: true,
+        },
+        bookingId: {
+          type: string,
+          required: true
+        },
+        startDate: {
+          type: Date,
+          required: true
+        },
+        endDate: {
+          type: Date,
+          required: true
+        },
+        persons: {
+      		type: Number,
+      		required: true,
+    	},
+       days: {
+        type: Number,
+        required: true,
+      },
+      nights: {
+        type: Number,
+        required: true,
+      },
+
+       amountPaid: {
+      type: Number,
+      required: true,
     },
-		startDate: {
-			type: Date,
-			required: true
-		},
-		endDate: {
-			type: Date,
-			required: true
-		},
-		locationName: {
-			type: string,
-			required: true
-		},
-		domesticOrInternational: {
-			type: string,
-			required: true
-		},
-		package_cost: {
-			type: number,
-			required: true
-		},
-		primarybookings: {
-			type: [],
-			required: true
-		},
-		dependantbookings: {
-			type: [],
-			required: true
-		},
-		reviews: {
-			type: []
-		}
+
+    currency: {
+      type: String,
+      default: "INR",
+    },
+
+    payment: {
+      paymentId: String,
+      status: String,
+      cardLast4: String,
+      method: {
+        type: String,
+        default: "card",
+      },
+    },
+
+    status: {
+      type: String,
+      enum: ["CONFIRMED", "FAILED"],
+      default: "CONFIRMED",
+    },
+    locationName: {
+          type: string,
+          required: true
+        },
+        domesticOrInternational: {
+          type: string,
+          required: true
+        },
+        package_cost: {
+          type: number,
+          required: true
+        },
+        primarybookings: {
+          type: [],
+          required: true
+        },
+        dependantbookings: {
+          type: [],
+          required: true
+        },
+        reviews: {
+          type: []
+        }
    }
 
    export interface IUserBookings  extends Document{

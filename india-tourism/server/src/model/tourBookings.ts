@@ -7,6 +7,15 @@ const tourBookingSchema = new Schema<ITourBookings>({
 			type: String,
 			required: true
 		},
+		tourId: {
+		type: Number,
+		ref: "Tour",
+		required: true,
+    	},
+		 persons: {
+      		type: Number,
+      		required: true,
+    	},
 		startDate: {
 			type: Date,
 			required: true
@@ -27,6 +36,31 @@ const tourBookingSchema = new Schema<ITourBookings>({
 			type: String,
 			required: true
 		},
+	amountPaid: {
+      type: Number,
+      required: true,
+    },
+
+    currency: {
+      type: String,
+      default: "INR",
+    },
+
+    payment: {
+      paymentId: String,
+      status: String,
+      cardLast4: String,
+      method: {
+        type: String,
+        default: "card",
+      },
+    },
+
+    status: {
+      type: String,
+      enum: ["CONFIRMED", "FAILED"],
+      default: "CONFIRMED",
+    },
 		package_cost: {
 			type: Number,
 			required: true
@@ -43,4 +77,5 @@ const tourBookingSchema = new Schema<ITourBookings>({
 			type: []
 		}});
 
-export const TourBookingModel = model<ITourBookings>('TourBookings',tourBookingSchema);
+//export const TourBookingModel = model<ITourBookings>('TourBookings',tourBookingSchema);
+export const TourBookingModel = model<ITourBookings>('Bookings',tourBookingSchema);

@@ -9,7 +9,7 @@ class UserService{
 constructor(){
       this.errorMsg = "Message not found";
     } 
-
+//Performs user signup by email and mobile
 async signupUser(email,mobile,name,signUpOTP)
 {
   try{
@@ -32,7 +32,7 @@ async signupUser(email,mobile,name,signUpOTP)
         logNginx(err.stack)
       }
 }
-
+//For each user login, update the login otp
 async updateLoginOTP(email,mobile,loginOTP)
 {
   try{
@@ -53,6 +53,7 @@ async updateLoginOTP(email,mobile,loginOTP)
       console.log('Login failed');
       return constants.NO;
 }
+//Performs update for user details  
 async updateUserDetails(email,mobile,prefs,address,city,zipcode)
 {
   const userRepo = new UserRepository();
@@ -101,7 +102,7 @@ catch(err){
   return null;
 }
 
-
+//Performs User login
 async loginUser(email,mobile,loginOTP)
 {
   try{
@@ -143,7 +144,7 @@ async loginUser(email,mobile,loginOTP)
       }
      
 }
-
+//search user by email + mobile, only email or mobile
 async findUser(email,mobile)
 {
   try{
@@ -176,7 +177,7 @@ async findUser(email,mobile)
 }
 }
 
-
+//Method for OTP validation
 async validateOTP(email,mobile,otp)
 {
   try{
@@ -225,7 +226,7 @@ catch(err){
        logNginx(err.stack)
       }
 }
-
+//This method fetches the points against the user profile
 async getPoints(email,mobile) 
 {
    let points = 0;
@@ -247,7 +248,7 @@ async getPoints(email,mobile)
           }
             return points;
   }
-
+//Fetch the list of registered tour operators
   async getRegisteredTourOperators() 
 {
    let operators = [];

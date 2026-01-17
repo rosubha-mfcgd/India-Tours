@@ -12,10 +12,11 @@ const TourBookingService = require('../service/TourBookingService');
 const UserBookingService = require('../service/UserBookingService');
 require("../logNginx");
 const performBookings = (req_1, res_1, ...args_1) => __awaiter(void 0, [req_1, res_1, ...args_1], void 0, function* (req, res, retries = 3, delay = 1000) {
-    const { tourManagerId, locationName, startDate, endDate, domesticOrInternational, package_cost, primarybookings, dependantbookings } = req.body;
+    const { tourManagerId, tourid, locationName, startDate, endDate, domesticOrInternational, package_cost, primarybookings, dependantbookings } = req.body;
+    console.log('req body....', req.body);
     try {
         let tourBookingService = new TourBookingService();
-        let bookings = yield tourBookingService.createBookings(tourManagerId, locationName, startDate, endDate, domesticOrInternational, package_cost, primarybookings, dependantbookings);
+        let bookings = yield tourBookingService.createBookings(tourManagerId, tourid, locationName, startDate, endDate, domesticOrInternational, package_cost, primarybookings, dependantbookings);
         if (bookings) {
             console.log('bookings...', bookings);
             res.status(200).send({ "bookingid": bookings });

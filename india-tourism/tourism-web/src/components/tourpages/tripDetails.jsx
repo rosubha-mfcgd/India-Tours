@@ -2,8 +2,8 @@ import React, { useEffect,useState,useContext } from "react";
 import  { useNavigate } from "react-router-dom"; 
 import '../../styles/TripDetails.css';
 import '../../styles/loginsignup.css';
-import SideBarNotification from '../navigationTabs/sideBarNotification.jsx';
-import { NavContext } from '../navigationContext/navigationContext.jsx';
+import SideBarNotification from '../navigationTabs/sideBarNotification';
+import { NavContext } from '../navigationContext/navigationContext';
 import { getImageById } from "../admin/admin";
 import {
     TextField,
@@ -144,63 +144,100 @@ import {
                         <TableRow>
                     <TableCell>
                         <Typography variant="body2" style={{ color: '#FFFFFF' }}>
-                        LocationName : <strong>{tourDetails.locationName}</strong>    
+                        LocationName   
                         </Typography>
                     </TableCell>
-                    </TableRow>
-                   
-                    <TableRow>
+                     <TableCell>
+                        <Typography variant="body2" style={{ color: '#FFFFFF' }}>
+                       Trip Length 
+                        </Typography>  
+                    </TableCell>
+                    
+                     <TableCell>
+                        <Typography variant="body2" style={{ color: '#FFFFFF' }}>
+                       Trip Type
+                        </Typography>  
+                    </TableCell>
+
                     <TableCell>
                         <Typography variant="body2" style={{ color: '#FFFFFF' }}>
-                       Trip Length : <strong> {tourDetails.triplength}  </strong>
+                       Start Date
+                        </Typography>  
+                    </TableCell>
+                    <TableCell>
+                        <Typography variant="body2" style={{ color: '#FFFFFF' }}>
+                       End Date
                         </Typography>  
                     </TableCell>
 
                     </TableRow>
-                     <TableRow>
+                    <TableRow>
+                      <TableCell>
+                          <Typography variant="body2" style={{ color: '#FFFFFF' }}>
+                          <strong>{tourDetails.locationName}</strong>    
+                          </Typography>
+                      </TableCell>
+
+                        <TableCell>
+                          <Typography variant="body2" style={{ color: '#FFFFFF' }}>
+                          <strong>{tourDetails.triplength}</strong>    
+                          </Typography>
+                      </TableCell>
+
+                      <TableCell>
+                        <Typography variant="body2" style={{ color: '#FFFFFF' }}>
+                        <strong> {tourDetails.domesticOrInternational}  </strong>
+                        </Typography>  
+                    </TableCell>
+                      <TableCell>
+                        <Typography variant="body2" style={{ color: '#FFFFFF' }}>
+                        <strong> {changeDateToWords(new Date(tourDetails.startDate))}</strong>  
+                        </Typography>  
+                    </TableCell>
                     <TableCell>
                         <Typography variant="body2" style={{ color: '#FFFFFF' }}>
-                       Trip Type : <strong> {tourDetails.domesticOrInternational}  </strong>
+                        <strong> {changeDateToWords(new Date(tourDetails.endDate))}</strong>  
                         </Typography>  
                     </TableCell>
+                    </TableRow>
+                                  
                     
-                    </TableRow>
-                   
-                      <TableRow>
-                      <TableCell>
-                        <Typography variant="body2" style={{ color: '#FFFFFF' }}>
-                       Start Date : <strong> {changeDateToWords(new Date(tourDetails.startDate))}</strong>  
-                        </Typography>  
-                    </TableCell>
-                    </TableRow>
-                    <TableRow>
-                      <TableCell>
-                        <Typography variant="body2" style={{ color: '#FFFFFF' }}>
-                       End Date : <strong>{changeDateToWords(new Date(tourDetails.endDate))}</strong>    
-                        </Typography>
-                    </TableCell>
-                      </TableRow>
                       <TableRow>
                       <TableCell>
                          <Typography variant="body2" style={{ color: '#FFFFFF' }}>
-                      Package Cost/person: <strong>{tourDetails.currency} {tourDetails.package_cost}</strong> 
+                      Package Cost/person
                         </Typography>   
                     </TableCell>
-                    </TableRow>
-                    <TableRow>
-                      <TableCell>
+                    <TableCell>
                          <Typography variant="body2" style={{ color: '#FFFFFF' }}>
-                      Max Tourist: <strong> {tourDetails.max_tourist}</strong>    
+                      Max Tourist
+                        </Typography>
+                    </TableCell>
+                     <TableCell>
+                         <Typography variant="body2" style={{ color: '#FFFFFF' }}>
+                        Seats left    
                         </Typography>
                     </TableCell>
                     </TableRow>
                     <TableRow>
                       <TableCell>
                          <Typography variant="body2" style={{ color: '#FFFFFF' }}>
-                        Seats left: <strong>{tourDetails.seats_left}</strong>    
+                       <strong>{tourDetails.currency} {tourDetails.package_cost}</strong> 
+                        </Typography>
+                    </TableCell>
+                     <TableCell>
+                         <Typography variant="body2" style={{ color: '#FFFFFF' }}>
+                       <strong>{tourDetails.max_tourist}</strong> 
+                        </Typography>
+                    </TableCell>
+                     
+                       <TableCell>
+                         <Typography variant="body2" style={{ color: '#FFFFFF' }}>
+                          <strong>{tourDetails.seats_left}</strong>    
                         </Typography>
                     </TableCell>
                     </TableRow>
+                   
                     <TableRow>
                      <TableCell>
                         <Typography variant="body2" style={{ color: '#FFFFFF' }}>
@@ -218,8 +255,6 @@ import {
                   }}>
                     
        
-          
-          
         <div className="button-container">
          <div className='submit-container'>
                     <button type="submit" onClick={()=>{
