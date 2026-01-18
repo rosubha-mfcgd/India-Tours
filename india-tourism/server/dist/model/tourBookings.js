@@ -3,9 +3,10 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.TourBookingModel = void 0;
 const mongoose_1 = require("mongoose");
 const tourBookingSchema = new mongoose_1.Schema({
-    tourManagerId: {
-        type: String,
-        required: true
+    tourOperatorId: {
+        type: Number,
+        ref: "User",
+        required: true,
     },
     tourId: {
         type: Number,

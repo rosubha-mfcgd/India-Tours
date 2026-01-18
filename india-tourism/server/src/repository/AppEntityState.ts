@@ -371,10 +371,11 @@ export interface ICategory extends Document{
           type: Object,
           required: true
         },
-        tourManagerId: {
-          type: string,
-          required: true
-        },
+       tourOperatorId: {
+        type: Number,
+      	ref: "User",
+      	required: true,
+   		 },
         tourId: {
         type: Number,
         ref: "Tour",

@@ -1,5 +1,5 @@
 const mongoose = require("mongoose");
-const BookingSchema = new mongoose.Schema(
+const bookingSchema = new mongoose.Schema(
   {
     // ---------------- Numeric booking ID
     _id: { type: Number, unique: true, index: true },
@@ -9,7 +9,11 @@ const BookingSchema = new mongoose.Schema(
       ref: "Tour",
       required: true,
     },
-
+    tourOperatorId: {
+        type: Number,
+      ref: "User",
+      required: true,
+    },
     persons: {
       type: Number,
       required: true,
@@ -63,3 +67,5 @@ const BookingSchema = new mongoose.Schema(
   },
   { timestamps: true }
 );
+
+module.exports = mongoose.model("Booking", bookingSchema);

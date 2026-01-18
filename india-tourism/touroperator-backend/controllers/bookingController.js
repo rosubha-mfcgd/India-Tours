@@ -10,7 +10,11 @@ exports.getBookings = async (req, res) => {
 
     let filter = {};
     if (tourId) filter.tourId = tourId;
-
+    // derive tourOperatorId from logged-in user
+    const userId = req.user._id;
+    console.log('userId...',userId);
+    if(userId) filter.tourOperatorId = userId;
+    console.log('filter...',filter);
     const bookings = await Booking.find(filter)
       .populate("tourId", "description") // populate tour info if needed
       .sort({ createdAt: -1 });

@@ -3,10 +3,11 @@ import {ITourBookings} from '../repository/AppEntityState';
 
 const tourBookingSchema = new Schema<ITourBookings>({
      
-		tourManagerId: {
-			type: String,
-			required: true
-		},
+		tourOperatorId: {
+        type: Number,
+      	ref: "User",
+      	required: true,
+   		 },
 		tourId: {
 		type: Number,
 		ref: "Tour",

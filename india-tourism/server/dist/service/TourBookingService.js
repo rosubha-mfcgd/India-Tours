@@ -28,10 +28,9 @@ class TourBookingService {
                 //     })
                 console.log('details...', tourManagerId, tourid, locationName, startDate, endDate, domesticOrInternational, package_cost, primarybookings, dependantbookings);
                 let personCount = primarybookings.length + dependantbookings.length;
-                console.log('personCount....', personCount);
                 const bookingRepository = new BookingRepository();
                 bookingId = apputil.generateBookingId();
-                let data = { "tourManagerId": tourManagerId,
+                let data = { "tourOperatorId": Number(tourManagerId),
                     "tourId": tourid,
                     "locationName": locationName,
                     "startDate": new Date(startDate),

@@ -35,6 +35,7 @@ export default function Dashboard() {
         setTours(allTours);
 
         // 2️⃣ Fetch all bookings
+        
         const bookingsRes = await getBookings();
         const allBookings = bookingsRes.data || [];
         setBookings(allBookings);
