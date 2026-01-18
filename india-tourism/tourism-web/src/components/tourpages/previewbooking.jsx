@@ -6,8 +6,8 @@ import '../../styles/bookingForm.css';
 import { useEffect, useState, useContext } from "react";
 import { performTripBooking,updateBookingsByBookingId } from "../admin/admin";
 import success_animation from '../Assets/images/success_animation.gif';
-import SideBarNotification from '../navigationTabs/sideBarNotification.jsx';
-import { NavContext } from '../navigationContext/navigationContext.jsx';
+import SideBarNotification from '../navigationTabs/sideBarNotification';
+import { NavContext } from '../navigationContext/navigationContext';
 import {
     TextField,
     Button,
@@ -83,7 +83,7 @@ const submitBooking = async()=>{
     let depcount = 0;
     for(let booking of bookings)
     {
-         if(primary_booking.length===0)
+         if(booking.ageGroup === 'Minor')
          {
             primary_booking[primarycount] = booking;
             primarycount++;
@@ -268,14 +268,28 @@ const submitBooking = async()=>{
                                                       
                                                   <InputLabel 
                                                   style={{ color: '#080000ff' }}
-                                                  variant="outlined" fullWidth>Age</InputLabel>
-                                                 <Input id="age" name="age" defaultValue = {booking.age} 
+                                                  variant="outlined" fullWidth>Age Group</InputLabel>
+                                                 <Input id="ageGroup" name="ageGroup" 
+                                                 defaultValue = {booking.ageGroup} 
                                                  disabled={disable}  inputProps={{
                                                                        maxLength: 2,
                                                                    }}
-                                                 onChange={(event)=>updateBooking("age",sum,event)}/>  
+                                                 onChange={(event)=>updateBooking("ageGroup",sum,event)}/>  
                                                 </FormControl>
-                                                  <FormControl style={{ marginLeft: 5 }}> 
+
+                                                 <FormControl style={{ marginLeft: 5 }}> 
+                                                      
+                                                  <InputLabel 
+                                                  style={{ color: '#080000ff' }}
+                                                  variant="outlined" fullWidth>Gender</InputLabel>
+                                                 <Input id="gender" name="gender" 
+                                                 defaultValue = {booking.gender} 
+                                                 disabled={disable}  inputProps={{
+                                                                       maxLength: 2,
+                                                                   }}
+                                                 onChange={(event)=>updateBooking("gender",sum,event)}/>  
+                                                </FormControl>
+                                                  {/* <FormControl style={{ marginLeft: 5 }}> 
                                                      
                                                   <InputLabel 
                                                   style={{ color: '#080000ff' }}
@@ -285,7 +299,7 @@ const submitBooking = async()=>{
                                                   }}
                                                 defaultValue = {booking.specialRequest} disabled={disable} 
                                                 onChange={(event)=>updateBooking("specialRequest",sum,event)}/>  
-                                                </FormControl>
+                                                </FormControl> */}
                                               </div>
                            
                             )

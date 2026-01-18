@@ -40,7 +40,7 @@ const Welcome =()=>{
      const[bookings,setBookings] = useState('');
      const[tourDetailsParam,setTourDetailsParam] = useState('');
      const [isChatOpen, setIsChatOpen] = useState(false);
-      const {loading} = useContext(NavContext);
+    
      
     console.log('showTrips....',showTrips);
     console.log('showTripDetails....',showTripDetails);
@@ -165,7 +165,8 @@ const openBookingForm = (tourDetails) =>{
         if(tourDetails)
         {
    
-            let tourDtls = {"locationName":location,
+            let tourDtls = {
+                "locationName":location,
                 "tourid": tourDetails._id,
                 "tourManagerName":tourManager.tourManagerName,
                 "tourManagerId":tourManager.tourManagerId,

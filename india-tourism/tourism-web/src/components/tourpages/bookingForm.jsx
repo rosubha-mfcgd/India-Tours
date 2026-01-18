@@ -32,6 +32,7 @@ import {
     FormControl,  
     Input,
     Switch,
+    Select,
     InputLabel,
     TextareaAutosize,
     Dialog,
@@ -41,7 +42,7 @@ import {
     DialogActions
   } from "@mui/material";
 
-
+import MenuItem from '@mui/material/MenuItem';
 const BookingForm = ({access_token,tourDetails,triggerDisplayBookings}) =>{
     console.log('tourdetails.....',tourDetails);
     const [startBooking,setStartBooking] = useState(false);
@@ -136,7 +137,7 @@ const BookingForm = ({access_token,tourDetails,triggerDisplayBookings}) =>{
 
                   result.push(data);
               }
-          }
+            }
         else{
             let count = result.length;
             for(let primarybooking of currentBooking.primarybookings)
@@ -166,12 +167,13 @@ const BookingForm = ({access_token,tourDetails,triggerDisplayBookings}) =>{
           setBookingData(data);
         }
     }
-    
+    //Update the booking payload with fields for each tourist
     const updateBooking = async(name,index,id) =>{
       
       if(document.getElementsByName(id)[index-1])
       {
         let fieldVal = document.getElementsByName(id)[index-1].value;
+        console.log('field value...',fieldVal)
         if(fieldVal.trim().length> 0)
         {
             bookingData[index-1][name]= fieldVal;
@@ -189,11 +191,29 @@ const BookingForm = ({access_token,tourDetails,triggerDisplayBookings}) =>{
             updateBooking('name',count,'name');
             updateBooking('mobile',count,'mobile');
             updateBooking('email',count,'email');
-            updateBooking('age',count,'age'); 
-            updateBooking('specialRequest',count,'specialRequest');
+            updateBooking('ageGroup',count,'ageGroup'); 
+            updateBooking('gender',count,'gender'); 
+            //updateBooking('specialRequest',count,'specialRequest');
           }
           triggerDisplayBookings(bookingData,
                         tourDetails);
+    }
+    //remove tourist entry from grid
+    const removeTourist = async(key)=>{
+      for(let count = 1;count<=noOfTourist;count++)
+          {
+            console.log('key...',key);
+            if(count === key)
+            {
+              updateBooking('name',count,'name');
+              updateBooking('mobile',count,'mobile');
+              updateBooking('email',count,'email');
+              updateBooking('ageGroup',count,'ageGroup'); 
+              updateBooking('gender',count,'gender');
+              //updateBooking('specialRequest',count,'specialRequest');
+            }
+          }
+       setNoOfTourist(noOfTourist-1);
     }
  
     useEffect(()=>{
@@ -235,7 +255,7 @@ const BookingForm = ({access_token,tourDetails,triggerDisplayBookings}) =>{
            </Box>:<div></div>
               }
 {displayErrorDialog?
-                     <Dialog
+        <Dialog
         open={dialogOpen}
         onClose={handleClickOpenOrClose}
         aria-labelledby="dialog-title"
@@ -268,13 +288,13 @@ const BookingForm = ({access_token,tourDetails,triggerDisplayBookings}) =>{
                       <TableRow >
                         <TableCell sx={{border:"none"}}>
                            <Typography variant="body2" style={{ color: '#FFFFFF' }}>
-                            How many people will be travelling ?
+                            Enter no. of tourists
                             </Typography>
                         </TableCell>
                         <TableCell sx={{border:"none"}}>
                           <CssTextField id="numberOfTourist" 
                           sx={{ color: '#FFFFFF' }}
-                          label="Enter number of travellers" 
+                          label="Enter number of tourists" 
                           defaultValue={noOfTourist}
                           slotProps={{
                            htmlInput: {
@@ -315,7 +335,7 @@ const BookingForm = ({access_token,tourDetails,triggerDisplayBookings}) =>{
      {
         openBookingForm ?
         <div>
-          <Typography variant="body2" style={{ color: '#FFFFFF' }}>{bookingPageMessage}</Typography>
+          {/* <Typography variant="body2" style={{ color: '#FFFFFF' }}>{bookingPageMessage}</Typography> */}
          <Paper>
           {
           touristCount && touristCount.length >0 ?
@@ -336,7 +356,7 @@ const BookingForm = ({access_token,tourDetails,triggerDisplayBookings}) =>{
              <Typography variant="body2" style={{ color: '#160101ff' }}> 
               <strong>Tourist #{tourist.key}</strong>
               <img src={close_button} alt="" height="30" width="30" className='img-style' 
-
+                onClick={()=>removeTourist(tourist.key)}
              />
                </Typography>
 
@@ -348,9 +368,10 @@ const BookingForm = ({access_token,tourDetails,triggerDisplayBookings}) =>{
                 style={{ color: '#080000ff' }}
                 fullWidth>Name</InputLabel>
                 <Input id="name" name="name" 
-                defaultValue={tourist.value.name}   inputProps={{
-         maxLength: 20,
-     }}/>
+                defaultValue={tourist.value.name}  
+                inputProps={{
+                    maxLength: 20,
+                }}/>
                  </FormControl>
                   <FormControl style={{ marginLeft: 5 }}>
                     
@@ -374,17 +395,38 @@ const BookingForm = ({access_token,tourDetails,triggerDisplayBookings}) =>{
          maxLength: 10,
      }}/>
                     </FormControl>
-                    <FormControl style={{ marginLeft: 5 }}> 
-                      
-                  <InputLabel 
-                  style={{ color: '#080000ff' }} 
-                  variant="outlined" fullWidth>Age</InputLabel>
-                 <Input id="age" name="age" 
-                 defaultValue={tourist.value.age}  inputProps={{
-         maxLength: 2,
-     }}/>  
-                </FormControl>
-                  <FormControl style={{ marginLeft: 5 }}> 
+      <FormControl style={{ marginLeft: 5 }}> 
+           <InputLabel 
+                style={{ color: '#0c0000ff' }} 
+                variant="outlined" fullWidth>Age Group</InputLabel>               
+        <Select
+          labelId="select-label"
+          id="ageGroup" name="ageGroup"
+          label="ageGroup"
+           defaultValue={"Adult"}
+           >
+          <MenuItem value={"Minor"}>Minor</MenuItem>
+          <MenuItem value={"Adult"}>Adult</MenuItem>
+          <MenuItem value={"SeniorCitizen"}>Senior Citizen</MenuItem>
+        </Select>
+      </FormControl>
+
+      <FormControl style={{ marginLeft: 5 }}> 
+            <InputLabel 
+                style={{ color: '#0c0000ff' }} 
+                variant="outlined" fullWidth>Gender</InputLabel>              
+        <Select
+          labelId="select-label"
+          id="gender" name="gender"
+          label="gender"
+           defaultValue={"Select"}
+           >
+          <MenuItem value={"Select"}>Select</MenuItem>
+          <MenuItem value={"Male"}>Male</MenuItem>
+          <MenuItem value={"Female"}>Female</MenuItem>
+        </Select>
+      </FormControl>
+                  {/* <FormControl style={{ marginLeft: 5 }}> 
                      
                   <InputLabel 
                   style={{ color: '#080000ff' }} 
@@ -394,7 +436,7 @@ const BookingForm = ({access_token,tourDetails,triggerDisplayBookings}) =>{
          maxLength: 100,
      }}
                  />  
-                </FormControl>
+                </FormControl> */}
                 
               </div>
             )):<div></div>
