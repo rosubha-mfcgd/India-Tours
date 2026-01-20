@@ -31,6 +31,7 @@ constructor(){
                 let personCount = primarybookings.length+dependantbookings.length;
        
                 const bookingRepository = new BookingRepository();
+                const tourRepository = new TourRepository();
                 bookingId = apputil.generateBookingId();
                     let data = {"tourOperatorId": Number(tourManagerId),
                                 "tourId":tourid,
@@ -47,11 +48,16 @@ constructor(){
                             };
                     session.startTransaction();
                     bookings = await bookingRepository.create(data);
+
                     console.log('User successfully booked with object id ',bookings);
                     if(bookings){
                         console.log('bookings...',bookings);
                         bookingId = bookings.bookingId;
-                        
+                        const tour = tourRepository.findById(tourid);
+                        if(tour)
+                        {
+                            await tourRepository.update(tourid,{"seats_left":(tour.seats_left-personCount)});  
+                        }
                     }
                      // 4. Commit the transaction if all operations succeed
                     await session.commitTransaction();
