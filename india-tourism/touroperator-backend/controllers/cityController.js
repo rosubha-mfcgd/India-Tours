@@ -43,6 +43,7 @@ exports.addCity = async (req, res) => {
 exports.getCitiesByState = async (req, res) => {
     try {
         const { stateId } = req.params;
+        console.log('state ID is...',stateId)
         if (!stateId) return res.status(400).json({ error: 'State ID required' });
         console.log(' getCitiesByState ', stateId);
         const numericStateId = Number(stateId); // convert param to number

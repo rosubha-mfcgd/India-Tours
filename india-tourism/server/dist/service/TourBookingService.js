@@ -8,7 +8,9 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
+const { BaseRepository } = require('../../dist/repository/BaseRepository');
 const { BookingRepository } = require('../../dist/repository/BookingRepository');
+const { TourRepository } = require('../../dist/repository/TourRepository');
 require("../logNginx");
 const apputil = require('../utils/appUtility');
 class TourBookingService {
@@ -19,6 +21,7 @@ class TourBookingService {
         return __awaiter(this, void 0, void 0, function* () {
             let bookings = [];
             let bookingId = '';
+            const session = BaseRepository.createSession();
             try {
                 // const tourRepository =  new TourRepository();
                 // const tours = tourRepository.find({
@@ -43,16 +46,26 @@ class TourBookingService {
                     "primarybookings": primarybookings,
                     "dependantbookings": dependantbookings
                 };
+                session.startTransaction();
                 bookings = yield bookingRepository.create(data);
                 console.log('User successfully booked with object id ', bookings);
                 if (bookings) {
                     console.log('bookings...', bookings);
                     bookingId = bookings.bookingId;
                 }
+                // 4. Commit the transaction if all operations succeed
+                yield session.commitTransaction();
             }
             catch (err) {
+                // 5. Abort the transaction if any error occurs
+                yield session.abortTransaction();
                 console.log(err.stack);
                 logNginx(err.stack);
+            }
+            finally {
+                // 6. End the session
+                session.endSession();
+                console.log('Session ended.');
             }
             return bookingId;
         });

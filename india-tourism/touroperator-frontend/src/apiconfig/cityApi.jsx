@@ -11,7 +11,7 @@ export const getCities = () => axiosClient.get('/cities');
  * Get city by ID
  * @param {string} id - City ID
  */
-export const getCitiesByState = (stateId) => axiosClient.get(`/cities/${stateId}`);
+export const getCitiesByState = (stateId) => axiosClient.get(`/cities/state/${stateId}`);
 
 /**
  * Create a new city

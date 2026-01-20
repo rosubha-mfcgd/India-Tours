@@ -29,15 +29,17 @@ export default function TourOperatorModal({ open, onClose, onSuccess }) {
 
  const handleChange = (e) => {
   const { name, value, type, checked } = e.target;
-  const phoneIndex = e.target.dataset.phoneIndex;
-
-  if (phoneIndex !== undefined) {
+ // const phoneIndex = e.target.dataset.phoneIndex;
+  const phoneIndex = value
+  console.log('phone Index...',phoneIndex)
+  if (phoneIndex !== undefined && name === 'number') {
     const index = parseInt(phoneIndex, 10);
     setForm((prev) => {
       const updatedPhones = [...prev.phones];
       updatedPhones[index] = {
         ...updatedPhones[index],
         [name]: type === "checkbox" ? checked : value,
+        [name]: value = value
       };
 
       // Ensure only one primary
@@ -49,12 +51,12 @@ export default function TourOperatorModal({ open, onClose, onSuccess }) {
 
       return { ...prev, phones: updatedPhones };
     });
-  } else {
+  } else if(name === "type") {
     setForm((prev) => ({
       ...prev,
       [name]: type === "checkbox" ? checked : value,
     }));
-  }
+   }
 };
 
 
@@ -155,7 +157,7 @@ export default function TourOperatorModal({ open, onClose, onSuccess }) {
                 label="Type"
                 name="type"
                 value={phone.type}
-                data-phone-index={index}
+                data-phone-type={index}
                 onChange={handleChange}
                 sx={{ width: 120 }}
               >

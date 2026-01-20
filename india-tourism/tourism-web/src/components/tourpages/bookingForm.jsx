@@ -2,14 +2,14 @@ import '../../styles/Navbar.css';
 import '../../styles/Cards.css';
 import '../../styles/sidebar.css';
 import '../../styles/bookingForm.css';
-import CustomButton from '../Utilities/CustomButtons.jsx'
+import CustomButton from '../Utilities/CustomButtons'
 import { useEffect, useState, useContext} from "react";
 import { styled } from '@mui/material/styles';
 import {getBookingsByBookingId} from "../admin/admin";
-import SideBarNotification from '../navigationTabs/sideBarNotification.jsx';
+import SideBarNotification from '../navigationTabs/sideBarNotification';
 import close_button from '../Assets/images/close-button.png';
 import failure_animation from '../Assets/images/failure_animation.gif';
-import { NavContext } from '../navigationContext/navigationContext.jsx';
+import { NavContext } from '../navigationContext/navigationContext';
 import {
     TextField,
     Button,

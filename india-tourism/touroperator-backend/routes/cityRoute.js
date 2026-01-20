@@ -10,5 +10,5 @@ router.put('/:id', authenticate, allowRoles([1,2]), cityController.updateCity); 
 router.delete('/:id', authenticate, allowRoles([1,2]), cityController.deleteCity); // Delete city
 router.get('/', authenticate,allowRoles([1,2,3]), cityController.getAllCities);    // Get all cities
 router.get('/:id', authenticate,allowRoles([1,2,3]), cityController.getCityById);  // Get city by ID
-router.get('/:stateId', authenticate,allowRoles([1,2,3]), cityController.getCitiesByState);  // Get cities by state ID
+router.get('/state/:stateId', authenticate,allowRoles([1,2,3]), cityController.getCitiesByState);  // Get cities by state ID
 module.exports = router;

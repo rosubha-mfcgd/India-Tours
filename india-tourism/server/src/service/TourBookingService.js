@@ -1,4 +1,7 @@
+const { BaseRepository } = require('../../dist/repository/BaseRepository');
 const { BookingRepository } = require('../../dist/repository/BookingRepository');
+const { TourRepository } = require('../../dist/repository/TourRepository');
+
 require("../logNginx");
 const apputil = require('../utils/appUtility');
 class TourBookingService{
@@ -13,6 +16,7 @@ constructor(){
         {
             let bookings = [];
             let bookingId = '';
+              const session = BaseRepository.createSession();
             try{
                     // const tourRepository =  new TourRepository();
                     // const tours = tourRepository.find({
@@ -20,14 +24,14 @@ constructor(){
                     //     "startDate": new Date(startDate).toISOString(),
                     //     "endDate": new Date(endDate).toISOString(),
                     //     })
-                    console.log('details...',tourManagerId,tourid,locationName,startDate,endDate,
+                   console.log('details...',tourManagerId,tourid,locationName,startDate,endDate,
                         domesticOrInternational,
-        package_cost,primarybookings,dependantbookings);
+                package_cost,primarybookings,dependantbookings);
 
-        let personCount = primarybookings.length+dependantbookings.length;
+                let personCount = primarybookings.length+dependantbookings.length;
        
-        const bookingRepository = new BookingRepository();
-                    bookingId = apputil.generateBookingId();
+                const bookingRepository = new BookingRepository();
+                bookingId = apputil.generateBookingId();
                     let data = {"tourOperatorId": Number(tourManagerId),
                                 "tourId":tourid,
                                 "locationName":locationName,                                
@@ -41,6 +45,7 @@ constructor(){
                                 "primarybookings":primarybookings,
                                 "dependantbookings":dependantbookings
                             };
+                    session.startTransaction();
                     bookings = await bookingRepository.create(data);
                     console.log('User successfully booked with object id ',bookings);
                     if(bookings){
@@ -48,11 +53,19 @@ constructor(){
                         bookingId = bookings.bookingId;
                         
                     }
+                     // 4. Commit the transaction if all operations succeed
+                    await session.commitTransaction();
       
         }catch(err){
+            // 5. Abort the transaction if any error occurs
+        await session.abortTransaction();
          console.log(err.stack);
         logNginx(err.stack);
         
+      }finally{
+        // 6. End the session
+             session.endSession();
+            console.log('Session ended.');
       }
     return bookingId;
    }

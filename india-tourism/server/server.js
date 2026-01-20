@@ -99,15 +99,15 @@ const conn = mongoose.connection;
 
 conn.on('error', console.error.bind(console, 'connection error:'));
 conn.once('open', function () {
-  console.log('Connected to MongoDB successfully!');
-  const db = conn.db;
+console.log('Connected to MongoDB successfully!');
+const db = conn.db;
 
   // Create a new GridFSBucket instance
   bucket = new GridFSBucket(db, {
     bucketName: 'tourImages',
   });
-});
 
+});
 
 app.post("/api/signup", async(req,res) =>{
 

@@ -4,10 +4,13 @@ import '../../styles/Cards.css';
 import '../../styles/sidebar.css';
 import '../../styles/bookingForm.css';
 import { useEffect, useState, useContext } from "react";
+import { loadStripe } from '@stripe/stripe-js';
+import { Elements, CardElement, useStripe, useElements } from '@stripe/react-stripe-js';
 import { performTripBooking,updateBookingsByBookingId } from "../admin/admin";
 import success_animation from '../Assets/images/success_animation.gif';
 import SideBarNotification from '../navigationTabs/sideBarNotification';
 import { NavContext } from '../navigationContext/navigationContext';
+import PaymentModal from "./payment";
 import {
     TextField,
     Button,
@@ -48,6 +51,11 @@ const PreviewForm = ({access_token,bookings,tourDetailsParam}) =>{
     const[bookingId, setBookingId] = useState('');
     const[bookingUpdateId, setBookingUpdateId] = useState('');
       const { notification} = useContext(NavContext);
+
+      const[modalContent,setModalContent] = useState({ title: '', message: '' })
+      const[isModalOpen,setIsModalOpen] = useState(false)
+
+      //Used to close dialog box
     const handleClickOpenOrClose = () => {
         
         setDialogOpen(!dialogOpen);
@@ -135,6 +143,16 @@ const submitBooking = async()=>{
     }
        
 }
+
+const handlePayment = (title, message) => {
+    handleClickOpenOrClose();
+    setModalContent({ title, message });
+    setIsModalOpen(true);
+  };
+
+  const handleCloseModal = () => {
+    setIsModalOpen(false);
+  };
   useEffect (() =>{
     if(bookingId != '')
     {
@@ -148,7 +166,10 @@ const submitBooking = async()=>{
 
 
     return(<div className = "center-container">
-            <div style={{border: "2px solid black;" }}>
+
+        
+      
+            <div style={{border: "2px solid black" }}>
                  <Box  component="form" >
                     {dialogOpen?
                      <Dialog
@@ -175,7 +196,7 @@ const submitBooking = async()=>{
         </DialogContent>
         <DialogActions>
           <Button onClick={handleClickOpenOrClose}>Cancel</Button>
-          <Button onClick={handleClickOpenOrClose} autoFocus>
+          <Button onClick={()=>handlePayment('SUCCESS','SUCCESS')} >
             Proceed to Payment
           </Button>
           {dialogOpen?
@@ -216,7 +237,7 @@ const submitBooking = async()=>{
                                                 style={{
                                                     width: "fit-content",
                                                     margin: "auto",
-                                                   border: "2px solid black;"
+                                                   border: "2px solid black"
                                                 }}>
                                                 
                                                 <h2
@@ -312,8 +333,7 @@ const submitBooking = async()=>{
                     <button type="submit" 
                         class="button"
                         >Go Back</button>
-
-                            <button type="submit" 
+           <button type="submit" 
                        class="button" onClick={submitBooking}>Confirm Booking</button>
                        
         </div>
@@ -324,6 +344,12 @@ const submitBooking = async()=>{
                   </div> 
                   :<div></div>
                    }
+                     <PaymentModal
+        isOpen={isModalOpen}
+        onClose={handleCloseModal}
+        title={modalContent.title}
+        message={modalContent.message}
+      />
       </div>
     </div>)
 }

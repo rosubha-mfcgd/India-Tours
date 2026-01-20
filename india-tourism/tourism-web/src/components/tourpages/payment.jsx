@@ -1,8 +1,11 @@
 import React from "react";
+import ReactDOM from 'react-dom';
 import '../../styles/Navbar.css';
 import '../../styles/Cards.css';
 import '../../styles/sidebar.css';
 import '../../styles/bookingForm.css';
+import { loadStripe } from '@stripe/stripe-js';
+import { Elements, CardElement, useStripe, useElements } from '@stripe/react-stripe-js';
 import { useEffect, useState, useContext } from "react";
 import { performTripBooking,updateBookingsByBookingId } from "../admin/admin";
 import success_animation from '../Assets/images/success_animation.gif';
@@ -39,17 +42,23 @@ import {
     DialogActions
   } from "@mui/material";
 
-  const paymentModal = ({ isOpen, onClose, title, message }) => {
+  
+  const PaymentModal = ({ isOpen, onClose, title, message }) => {
   if (!isOpen) return null;
 
-  return ReactDOM.createPortal(
+  const stripePromise = loadStripe(process.env.REACT_APP_STRIPE_PUBLISH_KEY);
+   const stripe = useStripe();
+  const elements = useElements();
+  const [error, setError] = useState(null);
+
+  return (ReactDOM.createPortal(
     <div style={{
       position: 'fixed',
       top: 0,
       left: 0,
       right: 0,
       bottom: 0,
-      backgroundColor: 'rgba(0, 0, 0, 0.7)',
+      backgroundColor: 'rgba(247, 241, 241, 0.7)',
       display: 'flex',
       alignItems: 'center',
       justifyContent: 'center',
@@ -68,7 +77,7 @@ import {
       </div>
     </div>,
     document.getElementById('modal-root') // This element must exist in your index.html
-  );
+  ));
 };
 
-export default paymentModal;
+export default PaymentModal;
