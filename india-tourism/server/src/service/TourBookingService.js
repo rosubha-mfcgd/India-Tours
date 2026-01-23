@@ -1,7 +1,6 @@
-const { BaseRepository } = require('../../dist/repository/BaseRepository');
 const { BookingRepository } = require('../../dist/repository/BookingRepository');
 const { TourRepository } = require('../../dist/repository/TourRepository');
-
+const {mongoose} = require("mongoose")
 require("../logNginx");
 const apputil = require('../utils/appUtility');
 class TourBookingService{
@@ -16,14 +15,10 @@ constructor(){
         {
             let bookings = [];
             let bookingId = '';
-              const session = BaseRepository.createSession();
+              const session = await mongoose.startSession();
             try{
-                    // const tourRepository =  new TourRepository();
-                    // const tours = tourRepository.find({
-                    //     "tourOperator": Number(tourManagerId),
-                    //     "startDate": new Date(startDate).toISOString(),
-                    //     "endDate": new Date(endDate).toISOString(),
-                    //     })
+                    await session.withTransaction(async () => {
+                    console.log('session...',session)
                    console.log('details...',tourManagerId,tourid,locationName,startDate,endDate,
                         domesticOrInternational,
                 package_cost,primarybookings,dependantbookings);
@@ -46,29 +41,39 @@ constructor(){
                                 "primarybookings":primarybookings,
                                 "dependantbookings":dependantbookings
                             };
-                    session.startTransaction();
+                    
+                    console.log('transaction created....',data);
                     bookings = await bookingRepository.create(data);
 
                     console.log('User successfully booked with object id ',bookings);
                     if(bookings){
                         console.log('bookings...',bookings);
                         bookingId = bookings.bookingId;
-                        const tour = tourRepository.findById(tourid);
+                        const tour = await tourRepository.findOne({"_id":tourid});
                         if(tour)
                         {
-                            await tourRepository.update(tourid,{"seats_left":(tour.seats_left-personCount)});  
+                            console.log('tour found....',tour)
+                          let resultTour =  await tourRepository.update(tourid,
+                            {"seatsLeft":(Number(tour.seatsLeft)-Number(personCount)).toString()});  
+                          if(resultTour)
+                          {
+                             let updateTour = await tourRepository.findOne({"_id":tourid});
+                             if(updateTour)
+                             {
+                                console.log('updated seats...',updateTour.seatsLeft);
+                             }
+                          }
+                        
                         }
                     }
-                     // 4. Commit the transaction if all operations succeed
-                    await session.commitTransaction();
-      
+                    
+      });
+      console.log('Booking process completed successfully.');
         }catch(err){
+              console.log(err.stack);
+             logNginx(err.stack);
             // 5. Abort the transaction if any error occurs
-        await session.abortTransaction();
-         console.log(err.stack);
-        logNginx(err.stack);
-        
-      }finally{
+           }finally{
         // 6. End the session
              session.endSession();
             console.log('Session ended.');

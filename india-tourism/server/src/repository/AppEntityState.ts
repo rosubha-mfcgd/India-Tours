@@ -35,7 +35,7 @@ export interface ICustomer extends Document{
 
 export interface ITourDetails extends Document{
    _id:{
-    type: Number|ObjectId,
+    type: Number,
       required: true,
       trim: true,
    },

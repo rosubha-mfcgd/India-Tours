@@ -4,7 +4,7 @@ import '../../styles/Cards.css';
 import '../../styles/sidebar.css';
 import '../../styles/bookingForm.css';
 import { useEffect, useState, useContext } from "react";
-import { loadStripe } from '@stripe/stripe-js';
+
 import { Elements, CardElement, useStripe, useElements } from '@stripe/react-stripe-js';
 import { performTripBooking,updateBookingsByBookingId } from "../admin/admin";
 import success_animation from '../Assets/images/success_animation.gif';
@@ -41,8 +41,7 @@ import {
     DialogContentText,
     DialogActions
   } from "@mui/material";
-
-
+import { loadStripe } from '@stripe/stripe-js';
 
 const PreviewForm = ({access_token,bookings,tourDetailsParam}) =>{
 
@@ -50,12 +49,22 @@ const PreviewForm = ({access_token,bookings,tourDetailsParam}) =>{
     const [dialogOpen, setDialogOpen] = useState(false);
     const[bookingId, setBookingId] = useState('');
     const[bookingUpdateId, setBookingUpdateId] = useState('');
+
+    const [csrfToken, setCsrfToken] = useState('');
+
       const { notification} = useContext(NavContext);
 
       const[modalContent,setModalContent] = useState({ title: '', message: '' })
       const[isModalOpen,setIsModalOpen] = useState(false)
 
-      //Used to close dialog box
+        const stripePromise = loadStripe(process.env.REACT_APP_STRIPE_PUBLISH_KEY);
+
+          const options = {
+     mode: 'payment', // or 'setup'
+  amount: 100,
+  currency: 'usd',
+  };
+     //Used to close dialog box
     const handleClickOpenOrClose = () => {
         
         setDialogOpen(!dialogOpen);
@@ -73,7 +82,6 @@ const PreviewForm = ({access_token,bookings,tourDetailsParam}) =>{
 
 function increment () {
      sum += 1;
-   //setTouristkey(sum);
     return sum;
 }
  const updateBooking = async(name,index,event) =>{
@@ -83,6 +91,7 @@ function increment () {
 const triggerEditable = () =>{
     setDisable(!disable);
 }
+//Submit bookings
 const submitBooking = async()=>{
 
     let primary_booking = [];
@@ -164,8 +173,11 @@ const handlePayment = (title, message) => {
     }
   },[bookingId,bookingUpdateId])
 
+ if (!stripePromise) return null;
 
-    return(<div className = "center-container">
+    return(
+    
+    <div className = "center-container">
 
         
       
@@ -344,12 +356,16 @@ const handlePayment = (title, message) => {
                   </div> 
                   :<div></div>
                    }
-                     <PaymentModal
+        {stripePromise ?
+          <Elements stripe={stripePromise} options={options}>
+          <PaymentModal
         isOpen={isModalOpen}
         onClose={handleCloseModal}
         title={modalContent.title}
-        message={modalContent.message}
-      />
+        message={modalContent.message} 
+        />
+      </Elements>:<div/>
+      }
       </div>
     </div>)
 }

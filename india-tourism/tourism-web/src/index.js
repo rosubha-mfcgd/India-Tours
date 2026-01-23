@@ -11,8 +11,10 @@ const root = ReactDOM.createRoot(document.getElementById('root'));
 const CLIENT_ID= process.env.REACT_APP_CLIENT_ID;
 root.render(                      
   <React.StrictMode>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta httpEquiv="Content-Security-Policy" content="script-src 'unsafe-inline' 'unsafe-eval'   
-   https://apis.google.com https://www.gstatic.com https://accounts.google.com/gsi/client;"/>
+   http://localhost:8081 https://apis.google.com https://www.gstatic.com https://accounts.google.com/gsi/client https://js.stripe.com;"/>
+
     <BrowserRouter>
     <GoogleOAuthProvider clientId={CLIENT_ID}>
     <App />

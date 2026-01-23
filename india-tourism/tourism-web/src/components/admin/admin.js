@@ -547,6 +547,38 @@ export const getImageById = async(data,bucketname) =>{
      return res_data;
 }
 
+export const createIntent = async(csrfToken) =>{
+    let res_data = "failed to process image";
+    try{
+        let access_token = await getApiAccessToken();
+
+      if(access_token){
+         console.log('access_token found for user Auth...',access_token.data)
+        const response = await axios.post(process.env.REACT_APP_SERVER_URI+'create-intent',
+           
+           {
+            headers: {
+                "Content-type": "application/json; charset=UTF-8",
+                "Authorization":"Bearer "+access_token.data.access_token,
+                "X-CSRF-Token": csrfToken, // Include token here
+
+            }}           
+          );
+      if(response)
+        {
+            console.log('response from payment intent...',response)
+            const { clientSecret } = await response.json();
+            res_data = clientSecret;
+         } 
+    }
+   }catch(err){
+         console.log(err.stack)
+         console.error('Error from payment intent:::', err);
+        // throw err;
+    }
+    return res_data;
+}
+
 
 
 export const keycloakConfig = {

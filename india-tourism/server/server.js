@@ -439,6 +439,11 @@ app.get("/api/getImageFromDB/:fileId/:bucketname",checkAuthenticated, async(req,
 
 })
 
+app.post('/create-intent', async (req, res) => {
+
+ 
+});
+
 
 
 // Define routes and middleware

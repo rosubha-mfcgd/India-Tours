@@ -10,7 +10,7 @@ const {getCategories,getProducts,getToursByCategoryId,
     updateFavoriteCategory,getTourItenerariesForTrip} = require("../controller/tripDetails");
 const {getRegisteredTourManagers, getCities} = require("../controller/tourManagers");
 const {performBookings, performBookingsByMobile,performUserBookings,
-    getBookingsByBookingId,updateBookingsByBookingId} = require("../controller/tourBookings");
+    getBookingsByBookingId,updateBookingsByBookingId,createPaymentIntent} = require("../controller/tourBookings");
 const {getSearchOptions,getPreferences} = require("../controller/searchOptions");
 const { sendConfirmation } = require('../controller/sendCommunication');
 const {resendOTP,getKeycloakAuthToken} = require('../controller/loginuser');
@@ -52,4 +52,5 @@ router.get("/preferences",checkAuthenticated,checkUserAuthenticated, getPreferen
 router.post("/authToken",checkAuthenticated,getKeycloakAuthToken);
 router.post("/performUserBookings",checkAuthenticated,performUserBookings);
 router.post("/processImage",checkAuthenticated,processImage);
+router.post("/create-intent",checkAuthenticated,createPaymentIntent);
 module.exports = router

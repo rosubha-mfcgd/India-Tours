@@ -11,6 +11,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 const { BaseRepository } = require('../../dist/repository/BaseRepository');
 const { BookingRepository } = require('../../dist/repository/BookingRepository');
 const { TourRepository } = require('../../dist/repository/TourRepository');
+const { mongoose } = require("mongoose");
 require("../logNginx");
 const apputil = require('../utils/appUtility');
 class TourBookingService {
@@ -21,46 +22,53 @@ class TourBookingService {
         return __awaiter(this, void 0, void 0, function* () {
             let bookings = [];
             let bookingId = '';
-            const session = BaseRepository.createSession();
+            const session = yield mongoose.startSession();
             try {
-                // const tourRepository =  new TourRepository();
-                // const tours = tourRepository.find({
-                //     "tourOperator": Number(tourManagerId),
-                //     "startDate": new Date(startDate).toISOString(),
-                //     "endDate": new Date(endDate).toISOString(),
-                //     })
-                console.log('details...', tourManagerId, tourid, locationName, startDate, endDate, domesticOrInternational, package_cost, primarybookings, dependantbookings);
-                let personCount = primarybookings.length + dependantbookings.length;
-                const bookingRepository = new BookingRepository();
-                bookingId = apputil.generateBookingId();
-                let data = { "tourOperatorId": Number(tourManagerId),
-                    "tourId": tourid,
-                    "locationName": locationName,
-                    "startDate": new Date(startDate),
-                    "endDate": new Date(endDate),
-                    "domesticOrInternational": domesticOrInternational,
-                    "bookingId": bookingId,
-                    "package_cost": package_cost,
-                    "amountPaid": package_cost,
-                    "persons": personCount,
-                    "primarybookings": primarybookings,
-                    "dependantbookings": dependantbookings
-                };
-                session.startTransaction();
-                bookings = yield bookingRepository.create(data);
-                console.log('User successfully booked with object id ', bookings);
-                if (bookings) {
-                    console.log('bookings...', bookings);
-                    bookingId = bookings.bookingId;
-                }
-                // 4. Commit the transaction if all operations succeed
-                yield session.commitTransaction();
+                yield session.withTransaction(() => __awaiter(this, void 0, void 0, function* () {
+                    console.log('session...', session);
+                    console.log('details...', tourManagerId, tourid, locationName, startDate, endDate, domesticOrInternational, package_cost, primarybookings, dependantbookings);
+                    let personCount = primarybookings.length + dependantbookings.length;
+                    const bookingRepository = new BookingRepository();
+                    const tourRepository = new TourRepository();
+                    bookingId = apputil.generateBookingId();
+                    let data = { "tourOperatorId": Number(tourManagerId),
+                        "tourId": tourid,
+                        "locationName": locationName,
+                        "startDate": new Date(startDate),
+                        "endDate": new Date(endDate),
+                        "domesticOrInternational": domesticOrInternational,
+                        "bookingId": bookingId,
+                        "package_cost": package_cost,
+                        "amountPaid": package_cost,
+                        "persons": personCount,
+                        "primarybookings": primarybookings,
+                        "dependantbookings": dependantbookings
+                    };
+                    console.log('transaction created....', data);
+                    bookings = yield bookingRepository.create(data);
+                    console.log('User successfully booked with object id ', bookings);
+                    if (bookings) {
+                        console.log('bookings...', bookings);
+                        bookingId = bookings.bookingId;
+                        const tour = yield tourRepository.findOne({ "_id": tourid });
+                        if (tour) {
+                            console.log('tour found....', tour);
+                            let resultTour = yield tourRepository.update(tourid, { "seatsLeft": (Number(tour.seatsLeft) - Number(personCount)).toString() });
+                            if (resultTour) {
+                                let updateTour = yield tourRepository.findOne({ "_id": tourid });
+                                if (updateTour) {
+                                    console.log('updated seats...', updateTour.seatsLeft);
+                                }
+                            }
+                        }
+                    }
+                }));
+                console.log('Booking process completed successfully.');
             }
             catch (err) {
-                // 5. Abort the transaction if any error occurs
-                yield session.abortTransaction();
                 console.log(err.stack);
                 logNginx(err.stack);
+                // 5. Abort the transaction if any error occurs
             }
             finally {
                 // 6. End the session

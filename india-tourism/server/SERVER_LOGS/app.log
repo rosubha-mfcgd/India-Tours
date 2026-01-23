@@ -1,166 +1,95 @@
 
-Mon Dec 22 2025 21:55:21 GMT-0500 (Eastern Standard Time): TokenExpiredError: jwt expired
-    at C:\Users\royco\India-tourism-App\India-Tours\india-tourism\server\node_modules\jsonwebtoken\verify.js:190:21
-    at getSecret (C:\Users\royco\India-tourism-App\India-Tours\india-tourism\server\node_modules\jsonwebtoken\verify.js:97:14)
-    at module.exports [as verify] (C:\Users\royco\India-tourism-App\India-Tours\india-tourism\server\node_modules\jsonwebtoken\verify.js:101:10)
-    at verifyJsonWebTokenSignature (C:\Users\royco\India-tourism-App\India-Tours\india-tourism\server\dist\middlewares\userAuth.js:107:18)
-    at validateToken (C:\Users\royco\India-tourism-App\India-Tours\india-tourism\server\dist\middlewares\userAuth.js:78:5)
-    at C:\Users\royco\India-tourism-App\India-Tours\india-tourism\server\dist\middlewares\userAuth.js:72:9
-    at Generator.next (<anonymous>)
-    at C:\Users\royco\India-tourism-App\India-Tours\india-tourism\server\dist\middlewares\userAuth.js:8:71
-    at new Promise (<anonymous>)
-    at __awaiter (C:\Users\royco\India-tourism-App\India-Tours\india-tourism\server\dist\middlewares\userAuth.js:4:12)
-Mon Dec 22 2025 21:55:37 GMT-0500 (Eastern Standard Time): TokenExpiredError: jwt expired
-    at C:\Users\royco\India-tourism-App\India-Tours\india-tourism\server\node_modules\jsonwebtoken\verify.js:190:21
-    at getSecret (C:\Users\royco\India-tourism-App\India-Tours\india-tourism\server\node_modules\jsonwebtoken\verify.js:97:14)
-    at module.exports [as verify] (C:\Users\royco\India-tourism-App\India-Tours\india-tourism\server\node_modules\jsonwebtoken\verify.js:101:10)
-    at verifyJsonWebTokenSignature (C:\Users\royco\India-tourism-App\India-Tours\india-tourism\server\dist\middlewares\userAuth.js:107:18)
-    at validateToken (C:\Users\royco\India-tourism-App\India-Tours\india-tourism\server\dist\middlewares\userAuth.js:78:5)
-    at C:\Users\royco\India-tourism-App\India-Tours\india-tourism\server\dist\middlewares\userAuth.js:72:9
-    at Generator.next (<anonymous>)
-    at fulfilled (C:\Users\royco\India-tourism-App\India-Tours\india-tourism\server\dist\middlewares\userAuth.js:5:58)
-    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
-Mon Dec 22 2025 22:09:40 GMT-0500 (Eastern Standard Time): ReferenceError: userRepo is not defined
-    at UserService.<anonymous> (C:\Users\royco\India-tourism-App\India-Tours\india-tourism\server\dist\service\UserService.js:82:21)
-    at Generator.next (<anonymous>)
-    at C:\Users\royco\India-tourism-App\India-Tours\india-tourism\server\dist\service\UserService.js:8:71
-    at new Promise (<anonymous>)
-    at __awaiter (C:\Users\royco\India-tourism-App\India-Tours\india-tourism\server\dist\service\UserService.js:4:12)
-    at UserService.updateUserDetails (C:\Users\royco\India-tourism-App\India-Tours\india-tourism\server\dist\service\UserService.js:65:16)
-    at C:\Users\royco\India-tourism-App\India-Tours\india-tourism\server\dist\controller\userprofile.js:53:46
-    at Generator.next (<anonymous>)
-    at C:\Users\royco\India-tourism-App\India-Tours\india-tourism\server\dist\controller\userprofile.js:8:71
-    at new Promise (<anonymous>)
-Mon Dec 22 2025 22:40:15 GMT-0500 (Eastern Standard Time): TokenExpiredError: jwt expired
-    at C:\Users\royco\India-tourism-App\India-Tours\india-tourism\server\node_modules\jsonwebtoken\verify.js:190:21
-    at getSecret (C:\Users\royco\India-tourism-App\India-Tours\india-tourism\server\node_modules\jsonwebtoken\verify.js:97:14)
-    at module.exports [as verify] (C:\Users\royco\India-tourism-App\India-Tours\india-tourism\server\node_modules\jsonwebtoken\verify.js:101:10)
-    at verifyJsonWebTokenSignature (C:\Users\royco\India-tourism-App\India-Tours\india-tourism\server\dist\middlewares\userAuth.js:107:18)
-    at validateToken (C:\Users\royco\India-tourism-App\India-Tours\india-tourism\server\dist\middlewares\userAuth.js:78:5)
-    at C:\Users\royco\India-tourism-App\India-Tours\india-tourism\server\dist\middlewares\userAuth.js:72:9
-    at Generator.next (<anonymous>)
-    at C:\Users\royco\India-tourism-App\India-Tours\india-tourism\server\dist\middlewares\userAuth.js:8:71
-    at new Promise (<anonymous>)
-    at __awaiter (C:\Users\royco\India-tourism-App\India-Tours\india-tourism\server\dist\middlewares\userAuth.js:4:12)
-Mon Dec 22 2025 22:40:15 GMT-0500 (Eastern Standard Time): TokenExpiredError: jwt expired
-    at C:\Users\royco\India-tourism-App\India-Tours\india-tourism\server\node_modules\jsonwebtoken\verify.js:190:21
-    at getSecret (C:\Users\royco\India-tourism-App\India-Tours\india-tourism\server\node_modules\jsonwebtoken\verify.js:97:14)
-    at module.exports [as verify] (C:\Users\royco\India-tourism-App\India-Tours\india-tourism\server\node_modules\jsonwebtoken\verify.js:101:10)
-    at verifyJsonWebTokenSignature (C:\Users\royco\India-tourism-App\India-Tours\india-tourism\server\dist\middlewares\userAuth.js:107:18)
-    at validateToken (C:\Users\royco\India-tourism-App\India-Tours\india-tourism\server\dist\middlewares\userAuth.js:78:5)
-    at C:\Users\royco\India-tourism-App\India-Tours\india-tourism\server\dist\middlewares\userAuth.js:72:9
-    at Generator.next (<anonymous>)
-    at C:\Users\royco\India-tourism-App\India-Tours\india-tourism\server\dist\middlewares\userAuth.js:8:71
-    at new Promise (<anonymous>)
-    at __awaiter (C:\Users\royco\India-tourism-App\India-Tours\india-tourism\server\dist\middlewares\userAuth.js:4:12)
-Tue Jan 06 2026 22:59:52 GMT-0500 (Eastern Standard Time): TokenExpiredError: jwt expired
-    at C:\Users\royco\India-tourism-App\India-Tours\india-tourism\server\node_modules\jsonwebtoken\verify.js:190:21
+Wed Jan 21 2026 19:58:40 GMT-0500 (Eastern Standard Time): TypeError: session.startTransaction is not a function
+    at TourBookingService.createBookings (C:\Users\royco\India-tourism-App\India-Tours\india-tourism\server\src\service\TourBookingService.js:49:29)
+    at performBookings (C:\Users\royco\India-tourism-App\India-Tours\india-tourism\server\src\controller\tourBookings.js:13:53)
+    at Layer.handleRequest (C:\Users\royco\India-tourism-App\India-Tours\india-tourism\server\node_modules\router\lib\layer.js:152:17)
+    at next (C:\Users\royco\India-tourism-App\India-Tours\india-tourism\server\node_modules\router\lib\route.js:157:13)
+    at C:\Users\royco\India-tourism-App\India-Tours\india-tourism\server\src\middlewares\auth.js:40:13
+    at C:\Users\royco\India-tourism-App\India-Tours\india-tourism\server\src\middlewares\auth.js:63:16
+    at C:\Users\royco\India-tourism-App\India-Tours\india-tourism\server\node_modules\jsonwebtoken\verify.js:261:12
     at getSecret (C:\Users\royco\India-tourism-App\India-Tours\india-tourism\server\node_modules\jsonwebtoken\verify.js:97:14)
     at module.exports [as verify] (C:\Users\royco\India-tourism-App\India-Tours\india-tourism\server\node_modules\jsonwebtoken\verify.js:101:10)
     at verifyJsonWebTokenSignature (C:\Users\royco\India-tourism-App\India-Tours\india-tourism\server\src\middlewares\auth.js:62:18)
-    at validateToken (C:\Users\royco\India-tourism-App\India-Tours\india-tourism\server\src\middlewares\auth.js:30:5)
-    at checkAuthenticated (C:\Users\royco\India-tourism-App\India-Tours\india-tourism\server\src\middlewares\auth.js:23:9)
+Wed Jan 21 2026 19:58:40 GMT-0500 (Eastern Standard Time): TypeError: session.endSession is not a function
+    at TourBookingService.createBookings (C:\Users\royco\India-tourism-App\India-Tours\india-tourism\server\src\service\TourBookingService.js:85:22)
+    at performBookings (C:\Users\royco\India-tourism-App\India-Tours\india-tourism\server\src\controller\tourBookings.js:13:53)
     at Layer.handleRequest (C:\Users\royco\India-tourism-App\India-Tours\india-tourism\server\node_modules\router\lib\layer.js:152:17)
     at next (C:\Users\royco\India-tourism-App\India-Tours\india-tourism\server\node_modules\router\lib\route.js:157:13)
-    at Route.dispatch (C:\Users\royco\India-tourism-App\India-Tours\india-tourism\server\node_modules\router\lib\route.js:117:3)
-    at handle (C:\Users\royco\India-tourism-App\India-Tours\india-tourism\server\node_modules\router\index.js:435:11)
-Wed Jan 07 2026 23:44:12 GMT-0500 (Eastern Standard Time): TokenExpiredError: jwt expired
-    at C:\Users\royco\India-tourism-App\India-Tours\india-tourism\server\node_modules\jsonwebtoken\verify.js:190:21
+    at C:\Users\royco\India-tourism-App\India-Tours\india-tourism\server\src\middlewares\auth.js:40:13
+    at C:\Users\royco\India-tourism-App\India-Tours\india-tourism\server\src\middlewares\auth.js:63:16
+    at C:\Users\royco\India-tourism-App\India-Tours\india-tourism\server\node_modules\jsonwebtoken\verify.js:261:12
     at getSecret (C:\Users\royco\India-tourism-App\India-Tours\india-tourism\server\node_modules\jsonwebtoken\verify.js:97:14)
     at module.exports [as verify] (C:\Users\royco\India-tourism-App\India-Tours\india-tourism\server\node_modules\jsonwebtoken\verify.js:101:10)
     at verifyJsonWebTokenSignature (C:\Users\royco\India-tourism-App\India-Tours\india-tourism\server\src\middlewares\auth.js:62:18)
-    at validateToken (C:\Users\royco\India-tourism-App\India-Tours\india-tourism\server\src\middlewares\auth.js:30:5)
-    at checkAuthenticated (C:\Users\royco\India-tourism-App\India-Tours\india-tourism\server\src\middlewares\auth.js:23:9)
+Wed Jan 21 2026 20:05:54 GMT-0500 (Eastern Standard Time): TypeError: session.startTransaction is not a function
+    at TourBookingService.createBookings (C:\Users\royco\India-tourism-App\India-Tours\india-tourism\server\src\service\TourBookingService.js:50:29)
+    at performBookings (C:\Users\royco\India-tourism-App\India-Tours\india-tourism\server\src\controller\tourBookings.js:13:53)
     at Layer.handleRequest (C:\Users\royco\India-tourism-App\India-Tours\india-tourism\server\node_modules\router\lib\layer.js:152:17)
     at next (C:\Users\royco\India-tourism-App\India-Tours\india-tourism\server\node_modules\router\lib\route.js:157:13)
-    at Route.dispatch (C:\Users\royco\India-tourism-App\India-Tours\india-tourism\server\node_modules\router\lib\route.js:117:3)
-    at handle (C:\Users\royco\India-tourism-App\India-Tours\india-tourism\server\node_modules\router\index.js:435:11)
-Thu Jan 08 2026 20:21:48 GMT-0500 (Eastern Standard Time): TokenExpiredError: jwt expired
-    at C:\Users\royco\India-tourism-App\India-Tours\india-tourism\server\node_modules\jsonwebtoken\verify.js:190:21
+    at C:\Users\royco\India-tourism-App\India-Tours\india-tourism\server\src\middlewares\auth.js:40:13
+    at C:\Users\royco\India-tourism-App\India-Tours\india-tourism\server\src\middlewares\auth.js:63:16
+    at C:\Users\royco\India-tourism-App\India-Tours\india-tourism\server\node_modules\jsonwebtoken\verify.js:261:12
     at getSecret (C:\Users\royco\India-tourism-App\India-Tours\india-tourism\server\node_modules\jsonwebtoken\verify.js:97:14)
     at module.exports [as verify] (C:\Users\royco\India-tourism-App\India-Tours\india-tourism\server\node_modules\jsonwebtoken\verify.js:101:10)
     at verifyJsonWebTokenSignature (C:\Users\royco\India-tourism-App\India-Tours\india-tourism\server\src\middlewares\auth.js:62:18)
-    at validateToken (C:\Users\royco\India-tourism-App\India-Tours\india-tourism\server\src\middlewares\auth.js:30:5)
-    at checkAuthenticated (C:\Users\royco\India-tourism-App\India-Tours\india-tourism\server\src\middlewares\auth.js:23:9)
+Wed Jan 21 2026 20:05:54 GMT-0500 (Eastern Standard Time): TypeError: session.endSession is not a function
+    at TourBookingService.createBookings (C:\Users\royco\India-tourism-App\India-Tours\india-tourism\server\src\service\TourBookingService.js:86:22)
+    at performBookings (C:\Users\royco\India-tourism-App\India-Tours\india-tourism\server\src\controller\tourBookings.js:13:53)
     at Layer.handleRequest (C:\Users\royco\India-tourism-App\India-Tours\india-tourism\server\node_modules\router\lib\layer.js:152:17)
     at next (C:\Users\royco\India-tourism-App\India-Tours\india-tourism\server\node_modules\router\lib\route.js:157:13)
-    at Route.dispatch (C:\Users\royco\India-tourism-App\India-Tours\india-tourism\server\node_modules\router\lib\route.js:117:3)
-    at handle (C:\Users\royco\India-tourism-App\India-Tours\india-tourism\server\node_modules\router\index.js:435:11)
-Sun Jan 11 2026 14:31:29 GMT-0500 (Eastern Standard Time): ReferenceError: cities is not defined
-Sun Jan 11 2026 14:33:01 GMT-0500 (Eastern Standard Time): ReferenceError: cities is not defined
-Sun Jan 11 2026 14:34:09 GMT-0500 (Eastern Standard Time): ReferenceError: cities is not defined
-Sun Jan 11 2026 14:37:42 GMT-0500 (Eastern Standard Time): ReferenceError: cities is not defined
-Sun Jan 11 2026 14:41:52 GMT-0500 (Eastern Standard Time): ReferenceError: cities is not defined
-Sun Jan 11 2026 14:49:16 GMT-0500 (Eastern Standard Time): ReferenceError: cities is not defined
-Sun Jan 11 2026 14:55:59 GMT-0500 (Eastern Standard Time): ReferenceError: cities is not defined
-Sun Jan 11 2026 14:59:11 GMT-0500 (Eastern Standard Time): ReferenceError: cities is not defined
-Sun Jan 11 2026 15:00:59 GMT-0500 (Eastern Standard Time): TypeError: Cannot read properties of undefined (reading 'statename')
-    at TourDetailService.getToursByCategoryId (C:\Users\royco\India-tourism-App\India-Tours\india-tourism\server\src\service\TourDetailService.js:150:68)
+    at C:\Users\royco\India-tourism-App\India-Tours\india-tourism\server\src\middlewares\auth.js:40:13
+    at C:\Users\royco\India-tourism-App\India-Tours\india-tourism\server\src\middlewares\auth.js:63:16
+    at C:\Users\royco\India-tourism-App\India-Tours\india-tourism\server\node_modules\jsonwebtoken\verify.js:261:12
+    at getSecret (C:\Users\royco\India-tourism-App\India-Tours\india-tourism\server\node_modules\jsonwebtoken\verify.js:97:14)
+    at module.exports [as verify] (C:\Users\royco\India-tourism-App\India-Tours\india-tourism\server\node_modules\jsonwebtoken\verify.js:101:10)
+    at verifyJsonWebTokenSignature (C:\Users\royco\India-tourism-App\India-Tours\india-tourism\server\src\middlewares\auth.js:62:18)
+Wed Jan 21 2026 20:15:15 GMT-0500 (Eastern Standard Time): TypeError: session.withTransaction is not a function
+    at TourBookingService.createBookings (C:\Users\royco\India-tourism-App\India-Tours\india-tourism\server\src\service\TourBookingService.js:21:35)
+    at performBookings (C:\Users\royco\India-tourism-App\India-Tours\india-tourism\server\src\controller\tourBookings.js:13:53)
+    at Layer.handleRequest (C:\Users\royco\India-tourism-App\India-Tours\india-tourism\server\node_modules\router\lib\layer.js:152:17)
+    at next (C:\Users\royco\India-tourism-App\India-Tours\india-tourism\server\node_modules\router\lib\route.js:157:13)
+    at C:\Users\royco\India-tourism-App\India-Tours\india-tourism\server\src\middlewares\auth.js:40:13
+    at C:\Users\royco\India-tourism-App\India-Tours\india-tourism\server\src\middlewares\auth.js:63:16
+    at C:\Users\royco\India-tourism-App\India-Tours\india-tourism\server\node_modules\jsonwebtoken\verify.js:261:12
+    at getSecret (C:\Users\royco\India-tourism-App\India-Tours\india-tourism\server\node_modules\jsonwebtoken\verify.js:97:14)
+    at module.exports [as verify] (C:\Users\royco\India-tourism-App\India-Tours\india-tourism\server\node_modules\jsonwebtoken\verify.js:101:10)
+    at verifyJsonWebTokenSignature (C:\Users\royco\India-tourism-App\India-Tours\india-tourism\server\src\middlewares\auth.js:62:18)
+Wed Jan 21 2026 20:15:15 GMT-0500 (Eastern Standard Time): TypeError: session.endSession is not a function
+    at TourBookingService.createBookings (C:\Users\royco\India-tourism-App\India-Tours\india-tourism\server\src\service\TourBookingService.js:81:22)
+    at performBookings (C:\Users\royco\India-tourism-App\India-Tours\india-tourism\server\src\controller\tourBookings.js:13:53)
+    at Layer.handleRequest (C:\Users\royco\India-tourism-App\India-Tours\india-tourism\server\node_modules\router\lib\layer.js:152:17)
+    at next (C:\Users\royco\India-tourism-App\India-Tours\india-tourism\server\node_modules\router\lib\route.js:157:13)
+    at C:\Users\royco\India-tourism-App\India-Tours\india-tourism\server\src\middlewares\auth.js:40:13
+    at C:\Users\royco\India-tourism-App\India-Tours\india-tourism\server\src\middlewares\auth.js:63:16
+    at C:\Users\royco\India-tourism-App\India-Tours\india-tourism\server\node_modules\jsonwebtoken\verify.js:261:12
+    at getSecret (C:\Users\royco\India-tourism-App\India-Tours\india-tourism\server\node_modules\jsonwebtoken\verify.js:97:14)
+    at module.exports [as verify] (C:\Users\royco\India-tourism-App\India-Tours\india-tourism\server\node_modules\jsonwebtoken\verify.js:101:10)
+    at verifyJsonWebTokenSignature (C:\Users\royco\India-tourism-App\India-Tours\india-tourism\server\src\middlewares\auth.js:62:18)
+Wed Jan 21 2026 20:25:08 GMT-0500 (Eastern Standard Time): MongoTransactionError: Transaction already in progress
+    at ClientSession.startTransaction (C:\Users\royco\India-tourism-App\India-Tours\india-tourism\server\node_modules\mongodb\lib\sessions.js:235:19)
+    at C:\Users\royco\India-tourism-App\India-Tours\india-tourism\server\src\service\TourBookingService.js:45:29
+    at ClientSession.withTransaction (C:\Users\royco\India-tourism-App\India-Tours\india-tourism\server\node_modules\mongodb\lib\sessions.js:507:37)
+    at TourBookingService.createBookings (C:\Users\royco\India-tourism-App\India-Tours\india-tourism\server\src\service\TourBookingService.js:21:35)
     at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
-    at async getToursByCategoryId (C:\Users\royco\India-tourism-App\India-Tours\india-tourism\server\src\controller\tripDetails.js:94:25)
-Sun Jan 11 2026 15:00:59 GMT-0500 (Eastern Standard Time): TypeError: Cannot read properties of undefined (reading 'statename')
-    at TourDetailService.getToursByCategoryId (C:\Users\royco\India-tourism-App\India-Tours\india-tourism\server\src\service\TourDetailService.js:150:68)
+    at async performBookings (C:\Users\royco\India-tourism-App\India-Tours\india-tourism\server\src\controller\tourBookings.js:13:28)
+Wed Jan 21 2026 20:25:08 GMT-0500 (Eastern Standard Time): MongoTransactionError: Cannot call abortTransaction twice
+    at ClientSession.abortTransaction (C:\Users\royco\India-tourism-App\India-Tours\india-tourism\server\node_modules\mongodb\lib\sessions.js:380:19)
+    at TourBookingService.createBookings (C:\Users\royco\India-tourism-App\India-Tours\india-tourism\server\src\service\TourBookingService.js:75:23)
     at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
-    at async getToursByCategoryId (C:\Users\royco\India-tourism-App\India-Tours\india-tourism\server\src\controller\tripDetails.js:94:25)
-Sun Jan 11 2026 15:08:05 GMT-0500 (Eastern Standard Time): TypeError: Cannot read properties of undefined (reading 'name')
-    at TourDetailService.getToursByCategoryId (C:\Users\royco\India-tourism-App\India-Tours\india-tourism\server\src\service\TourDetailService.js:150:71)
+    at async performBookings (C:\Users\royco\India-tourism-App\India-Tours\india-tourism\server\src\controller\tourBookings.js:13:28)
+Wed Jan 21 2026 20:27:43 GMT-0500 (Eastern Standard Time): CastError: Cast to ObjectId failed for value "5" (type number) at path "_id" for model "Tours"
+    at SchemaObjectId.cast (C:\Users\royco\India-tourism-App\India-Tours\india-tourism\server\node_modules\mongoose\lib\schema\objectId.js:251:11)
+    at SchemaType.applySetters (C:\Users\royco\India-tourism-App\India-Tours\india-tourism\server\node_modules\mongoose\lib\schemaType.js:1255:12)
+    at SchemaType.castForQuery (C:\Users\royco\India-tourism-App\India-Tours\india-tourism\server\node_modules\mongoose\lib\schemaType.js:1673:17)
+    at cast (C:\Users\royco\India-tourism-App\India-Tours\india-tourism\server\node_modules\mongoose\lib\cast.js:390:32)
+    at Query.cast (C:\Users\royco\India-tourism-App\India-Tours\india-tourism\server\node_modules\mongoose\lib\query.js:4907:12)
+    at Query._castConditions (C:\Users\royco\India-tourism-App\India-Tours\india-tourism\server\node_modules\mongoose\lib\query.js:2325:10)
+    at model.Query._updateThunk (C:\Users\royco\India-tourism-App\India-Tours\india-tourism\server\node_modules\mongoose\lib\query.js:3880:8)
+    at model.Query._updateOne (C:\Users\royco\India-tourism-App\India-Tours\india-tourism\server\node_modules\mongoose\lib\query.js:3984:23)
+    at model.Query.exec (C:\Users\royco\India-tourism-App\India-Tours\india-tourism\server\node_modules\mongoose\lib\query.js:4456:80)
     at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
-    at async getToursByCategoryId (C:\Users\royco\India-tourism-App\India-Tours\india-tourism\server\src\controller\tripDetails.js:94:25)
-Sun Jan 11 2026 15:08:06 GMT-0500 (Eastern Standard Time): TypeError: Cannot read properties of undefined (reading 'name')
-    at TourDetailService.getToursByCategoryId (C:\Users\royco\India-tourism-App\India-Tours\india-tourism\server\src\service\TourDetailService.js:150:71)
+Wed Jan 21 2026 20:27:43 GMT-0500 (Eastern Standard Time): MongoTransactionError: Cannot call abortTransaction twice
+    at ClientSession.abortTransaction (C:\Users\royco\India-tourism-App\India-Tours\india-tourism\server\node_modules\mongodb\lib\sessions.js:380:19)
+    at TourBookingService.createBookings (C:\Users\royco\India-tourism-App\India-Tours\india-tourism\server\src\service\TourBookingService.js:75:23)
     at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
-    at async getToursByCategoryId (C:\Users\royco\India-tourism-App\India-Tours\india-tourism\server\src\controller\tripDetails.js:94:25)
-Sun Jan 11 2026 18:55:42 GMT-0500 (Eastern Standard Time): AxiosError: Request failed with status code 404
-    at settle (C:\Users\royco\India-tourism-App\India-Tours\india-tourism\server\node_modules\axios\dist\node\axios.cjs:2031:12)
-    at IncomingMessage.handleStreamEnd (C:\Users\royco\India-tourism-App\India-Tours\india-tourism\server\node_modules\axios\dist\node\axios.cjs:3148:11)
-    at IncomingMessage.emit (node:events:530:35)
-    at endReadableNT (node:internal/streams/readable:1698:12)
-    at process.processTicksAndRejections (node:internal/process/task_queues:90:21)
-    at Axios.request (C:\Users\royco\India-tourism-App\India-Tours\india-tourism\server\node_modules\axios\dist\node\axios.cjs:4258:41)
-    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
-    at async getKeycloakAuthToken (C:\Users\royco\India-tourism-App\India-Tours\india-tourism\server\src\controller\loginuser.js:119:3)
-Sun Jan 11 2026 18:55:46 GMT-0500 (Eastern Standard Time): AxiosError: Request failed with status code 404
-    at settle (C:\Users\royco\India-tourism-App\India-Tours\india-tourism\server\node_modules\axios\dist\node\axios.cjs:2031:12)
-    at IncomingMessage.handleStreamEnd (C:\Users\royco\India-tourism-App\India-Tours\india-tourism\server\node_modules\axios\dist\node\axios.cjs:3148:11)
-    at IncomingMessage.emit (node:events:530:35)
-    at endReadableNT (node:internal/streams/readable:1698:12)
-    at process.processTicksAndRejections (node:internal/process/task_queues:90:21)
-    at Axios.request (C:\Users\royco\India-tourism-App\India-Tours\india-tourism\server\node_modules\axios\dist\node\axios.cjs:4258:41)
-    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
-    at async getKeycloakAuthToken (C:\Users\royco\India-tourism-App\India-Tours\india-tourism\server\src\controller\loginuser.js:119:3)
-Sun Jan 11 2026 18:55:55 GMT-0500 (Eastern Standard Time): AxiosError: Request failed with status code 404
-    at settle (C:\Users\royco\India-tourism-App\India-Tours\india-tourism\server\node_modules\axios\dist\node\axios.cjs:2031:12)
-    at IncomingMessage.handleStreamEnd (C:\Users\royco\India-tourism-App\India-Tours\india-tourism\server\node_modules\axios\dist\node\axios.cjs:3148:11)
-    at IncomingMessage.emit (node:events:530:35)
-    at endReadableNT (node:internal/streams/readable:1698:12)
-    at process.processTicksAndRejections (node:internal/process/task_queues:90:21)
-    at Axios.request (C:\Users\royco\India-tourism-App\India-Tours\india-tourism\server\node_modules\axios\dist\node\axios.cjs:4258:41)
-    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
-    at async getKeycloakAuthToken (C:\Users\royco\India-tourism-App\India-Tours\india-tourism\server\src\controller\loginuser.js:119:3)
-Sun Jan 11 2026 18:55:55 GMT-0500 (Eastern Standard Time): AxiosError: Request failed with status code 404
-    at settle (C:\Users\royco\India-tourism-App\India-Tours\india-tourism\server\node_modules\axios\dist\node\axios.cjs:2031:12)
-    at IncomingMessage.handleStreamEnd (C:\Users\royco\India-tourism-App\India-Tours\india-tourism\server\node_modules\axios\dist\node\axios.cjs:3148:11)
-    at IncomingMessage.emit (node:events:530:35)
-    at endReadableNT (node:internal/streams/readable:1698:12)
-    at process.processTicksAndRejections (node:internal/process/task_queues:90:21)
-    at Axios.request (C:\Users\royco\India-tourism-App\India-Tours\india-tourism\server\node_modules\axios\dist\node\axios.cjs:4258:41)
-    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
-    at async getKeycloakAuthToken (C:\Users\royco\India-tourism-App\India-Tours\india-tourism\server\src\controller\loginuser.js:119:3)
-Sun Jan 11 2026 18:56:06 GMT-0500 (Eastern Standard Time): AxiosError: Request failed with status code 404
-    at settle (C:\Users\royco\India-tourism-App\India-Tours\india-tourism\server\node_modules\axios\dist\node\axios.cjs:2031:12)
-    at IncomingMessage.handleStreamEnd (C:\Users\royco\India-tourism-App\India-Tours\india-tourism\server\node_modules\axios\dist\node\axios.cjs:3148:11)
-    at IncomingMessage.emit (node:events:530:35)
-    at endReadableNT (node:internal/streams/readable:1698:12)
-    at process.processTicksAndRejections (node:internal/process/task_queues:90:21)
-    at Axios.request (C:\Users\royco\India-tourism-App\India-Tours\india-tourism\server\node_modules\axios\dist\node\axios.cjs:4258:41)
-    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
-    at async getKeycloakAuthToken (C:\Users\royco\India-tourism-App\India-Tours\india-tourism\server\src\controller\loginuser.js:119:3)
-Sun Jan 11 2026 18:56:07 GMT-0500 (Eastern Standard Time): AxiosError: Request failed with status code 404
-    at settle (C:\Users\royco\India-tourism-App\India-Tours\india-tourism\server\node_modules\axios\dist\node\axios.cjs:2031:12)
-    at IncomingMessage.handleStreamEnd (C:\Users\royco\India-tourism-App\India-Tours\india-tourism\server\node_modules\axios\dist\node\axios.cjs:3148:11)
-    at IncomingMessage.emit (node:events:530:35)
-    at endReadableNT (node:internal/streams/readable:1698:12)
-    at process.processTicksAndRejections (node:internal/process/task_queues:90:21)
-    at Axios.request (C:\Users\royco\India-tourism-App\India-Tours\india-tourism\server\node_modules\axios\dist\node\axios.cjs:4258:41)
-    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
-    at async getKeycloakAuthToken (C:\Users\royco\India-tourism-App\India-Tours\india-tourism\server\src\controller\loginuser.js:119:3)
+    at async performBookings (C:\Users\royco\India-tourism-App\India-Tours\india-tourism\server\src\controller\tourBookings.js:13:28)

@@ -1,6 +1,6 @@
 import { Document, Model } from 'mongoose';
 import { IRepository } from './IRepository';
-import mongoose from 'mongoose'
+
 export abstract class BaseRepository<T extends Document> implements IRepository<T>
 {
     private _model: Model<T>;
@@ -9,14 +9,7 @@ export abstract class BaseRepository<T extends Document> implements IRepository<
     this._model = model;
   }
 
-  static async createSession()
-  {
-    return await mongoose.startSession();
-   
-  }
-
-
-    async create(item:Partial<T>): Promise<T|null> {
+   async create(item:Partial<T>): Promise<T|null> {
        let user = null;
         try{
        return await this._model.create(item);

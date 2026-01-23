@@ -3,9 +3,9 @@ import { ITourDetails } from '../repository/AppEntityState';
 
 const toursSchema = new Schema<ITourDetails>({
   _id:{
-      type: Schema.Types.ObjectId,
-        required: true,
-        trim: true,
+      type: Number,
+            required: true,
+            trim: true,
      },
     image: {
           fileId: Schema.Types.ObjectId,
