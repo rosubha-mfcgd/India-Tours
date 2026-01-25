@@ -547,6 +547,26 @@ export const getImageById = async(data,bucketname) =>{
      return res_data;
 }
 
+export const getRecommendedTours = async() =>{
+     let res_data = "failed to fetch recommend tours";
+     let access_token = await getApiAccessToken();
+        if(access_token)  {
+            const headers = {
+            "Content-type": "application/json; charset=UTF-8",
+            "Authorization":"Bearer "+access_token.data.access_token
+            };
+            let response = await axios.get(
+                process.env.REACT_APP_SERVER_URI + "getRecommendedTours",
+                {headers});
+        if(response)
+     {
+        console.log('response....',response.data);
+        res_data = response.data;
+     }
+    }
+     return res_data;
+}
+
 export const createIntent = async(csrfToken) =>{
     let res_data = "failed to process image";
     try{

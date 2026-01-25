@@ -8,7 +8,6 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
-const { BaseRepository } = require('../../dist/repository/BaseRepository');
 const { BookingRepository } = require('../../dist/repository/BookingRepository');
 const { TourRepository } = require('../../dist/repository/TourRepository');
 const { mongoose } = require("mongoose");

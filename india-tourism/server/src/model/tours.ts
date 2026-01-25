@@ -92,6 +92,9 @@ const toursSchema = new Schema<ITourDetails>({
         description: {
           type : String
         },
+      recommend: {
+        type : String
+      },
         itinerary:{
           type : String
         }

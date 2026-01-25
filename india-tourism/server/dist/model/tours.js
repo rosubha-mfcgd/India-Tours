@@ -92,6 +92,9 @@ const toursSchema = new mongoose_1.Schema({
     description: {
         type: String
     },
+    recommend: {
+        type: String
+    },
     itinerary: {
         type: String
     }

@@ -1,12 +1,12 @@
 const {CategoryRepository} = require ('../../dist/repository/CategoryRepository');
 const { TourRepository } = require('../../dist/repository/TourRepository');
 const { TourItineraryRepository } = require('../../dist/repository/TourItineraryRepository');
-const { TourManagerRepository } = require('../../dist/repository/TourManagerRepository');
+const { TourOperatorRepository } = require('../../dist/repository/TourOperatorRepository');
 const {ProductRepository} = require ('../../dist/repository/ProductRepository');
 const {CityRepository} = require ('../../dist/repository/CityRepository');
 const {StateRepository} = require ('../../dist/repository/StateRepository');
-const { BookingRepository } = require('../../dist/repository/BookingRepository');
-const {cityCache,stateCache} = require('../utils/cacheMap');
+
+const {cityCache,stateCache, tourOperatorCache} = require('../utils/cacheMap');
 require("../logNginx");
 
 class TourDetailService{
@@ -27,6 +27,14 @@ this.getAllStates().then(states=>{
         stateCache.set(state._id, state);
       }
       console.log('state list...',stateCache)
+});
+
+this.getTourManagers().then(tourmanagers=>{
+   for(let tourmanager of tourmanagers)
+      {
+        tourOperatorCache.set(tourmanager._id, tourmanager);
+      }
+      console.log('tour operators list...',tourOperatorCache)
 });
 }
 
@@ -159,6 +167,38 @@ async getCategories(productID)
   return plannedTours;
   }
 
+
+    async getRecommendedTours()
+{
+  let plannedTours = [];
+  try{
+   const tourRepository = new TourRepository();
+   
+      plannedTours = await tourRepository.aggregatePlannedTours(
+        [{"recommend":"Y"},
+        {"startDate":{$gt: new Date()}}]);
+      
+      if(plannedTours && plannedTours.length >0){
+        // console.log('plannedTours...',plannedTours);
+          for(let plannedTour of plannedTours)
+      {
+        plannedTour["cityName"] = (cityCache.get(plannedTour.city)).name;
+        plannedTour["stateName"] = (stateCache.get(plannedTour.state)).name;
+      }
+           
+      }
+     
+    }
+    catch(err){
+        logNginx(err.stack);
+        }
+  return plannedTours;
+  }
+
+
+
+
+
   async getTourItenriesForTrip(locationName,categoryId,tourManagerId,
     startDate,endDate)
   {
@@ -197,13 +237,13 @@ async getCategories(productID)
   return itinerary;
   }
   
-async getTourManagers()
+static async getTourManagers()
 {
   let tourOperators = [];
   try{
-   const tourMgrRepository = new TourManagerRepository();
+   const tourOperatorRepository = new TourOperatorRepository();
    
-      tourOperators = await tourMgrRepository.find({});
+      tourOperators = await tourOperatorRepository.find({});
       
       if(tourOperators && tourOperators.length >0){
          console.log('tourOperators...',tourOperators);

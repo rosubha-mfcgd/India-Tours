@@ -334,9 +334,21 @@ const BookingForm = ({access_token,tourDetails,triggerDisplayBookings}) =>{
         }
      {
         openBookingForm ?
-        <div>
+        <div  display="flex"
+      justifyContent="center"
+      alignItems="center"
+      height={200} // Example height for visualization
+      width="80%">
           {/* <Typography variant="body2" style={{ color: '#FFFFFF' }}>{bookingPageMessage}</Typography> */}
-         <Paper>
+         <Paper sx={{ padding: 2, // theme.spacing(2)
+          textAlign: 'center', // Centers the text itself horizontally
+          display: 'flex',
+          flexDirection: 'column', // Ensures children stack vertically
+          justifyContent: 'center', // Centers children vertically
+          alignItems: 'center', // Centers children horizontally
+          height: '100%',
+          width: '80%', // Example width for demonstration 
+          }}>
           {
           touristCount && touristCount.length >0 ?
             touristCount.map((tourist)=>(
@@ -345,8 +357,7 @@ const BookingForm = ({access_token,tourDetails,triggerDisplayBookings}) =>{
                 style={{
                     width: "fit-content",
                     margin: "auto",
-                   border: "2px solid black"
-                }}>
+                     }}>
                 
                 <h2
                     style={{

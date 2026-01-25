@@ -24,27 +24,31 @@ import {
     CircularProgress
   } from "@mui/material";
    import Collapse from '@mui/material/Collapse';
-import { getCategories,updateAsFavorite,getImageById } from "../admin/admin";
+import { getCategories,updateAsFavorite,getImageById,getRecommendedTours} 
+from "../admin/admin";
 import { NavContext } from '../navigationContext/navigationContext';
 import SideBarNotification from './sideBarNotification'
 import FavoriteIcon from '@mui/icons-material/Favorite';
 
 const NavBar = ({access_token,triggerDisplayOptionsByCatId,
-    productID}) =>{
+    productID,showDetails}) =>{
 
     
     const navigate = useNavigate();
      const location = useLocation();
     const { notification,loading, setLoading} = useContext(NavContext);
     const [images, setImages] = useState([]);
+    const [tourimages, setTourimages] = useState([]);
      const [items, setItems] = useState([]);
-  
+     const[recommendedtours,setRecommendedtours] = useState([])
      
     const [sections, setSections] = useState([])
       const [personalTripItems, setPersonalTripItems] = useState([])
     const [personalTripsections, setPersonalTripsections] = useState([])
+    const [recommendedTripSections, setRecommendedTripSections] = useState([])
      const [packageTripSectionOpen, setPackageTripSectionOpen] = useState(true);
      const [personalTripSectionOpen, setpersonalTripSectionOpen] = useState(true);
+
       const [personalTripOpen, setPersonalTripOpen] = useState(true);
  
   const handleToggle = () => {
@@ -89,6 +93,8 @@ const NavBar = ({access_token,triggerDisplayOptionsByCatId,
        }
 
        const getCategoryImageFromFileId = async(imageid,bucketname) =>{
+
+        console.log('image id is.... ',imageid)
                    if(imageid != null){
                     
                        let imageData = await getImageById(imageid,bucketname);
@@ -99,6 +105,14 @@ const NavBar = ({access_token,triggerDisplayOptionsByCatId,
                        }
                    }
            }
+
+            function changeDateToWords(dateObject)
+                {
+                    const date = new Date(dateObject);
+                    console.log('date....',date)
+                    console.log('formatted date...', date.toLocaleDateString('en-GB')); // Or 'en-GB' for a different locale
+                    return date.toLocaleDateString('en-GB');
+                }
        
           useEffect(()=>{
             let mounted = true;
@@ -106,16 +120,17 @@ const NavBar = ({access_token,triggerDisplayOptionsByCatId,
             const timer = setTimeout(() =>{
                 
                     const getTripCategories = async (productID) =>{
-                     
+                     //Fetch the list of categories
                     let categories = await getCategories(productID);
-                    
-                    if(categories )
+                    //Fetch the list of recommended tours
+                    let recommendedTours = await getRecommendedTours();
+                    //if categories and recommended tour list populated
+                    if(categories && recommendedTours)
                     {
-                        console.log('category received')
-                      
-                        console.log('categories...',categories);
+                       console.log('categories and recommendedTours...',categories,recommendedTours);
                        let operatedTourCategories = [];
                        let personalTripCategories = [];
+                       //iterate on list of categories and prepare the category section
                        for(let category of categories)
                        {
                             if(category && category.name !== 'Office Trips' && 
@@ -127,23 +142,40 @@ const NavBar = ({access_token,triggerDisplayOptionsByCatId,
 							{
                               personalTripCategories.push(category);
                             }
-                            
+                            //populate the category images
                             let imageData = await 
                               getCategoryImageFromFileId(category.image,'categoryImages');
                            if(imageData)
                            {
-                             // images[category._id] = imageData;
-                            //  setImages(img=>[...img,imageData]);
                             images[category._id] = imageData;
                            }
                        }
-                        setItems(operatedTourCategories);
+                       setRecommendedtours(recommendedTours);
+                       //iterate on list of recommended tours and prepare the recommended tour section
+                       for(let recommendedtour of recommendedTours)
+                       {
+                        console.log('recommendedtour image fileId....',recommendedtour.image.fileId)
+                        //prepare the recommended trip image   
+                        let imageData = await 
+                           getCategoryImageFromFileId(recommendedtour.image.fileId,'tourImages');
+                              
+                           if(imageData)
+                           {
+                            console.log('recommended tour id....',recommendedtour._id)
+                            tourimages[recommendedtour._id] = imageData;
+                           }
+                       }
+                       setItems(operatedTourCategories);
                         setPersonalTripItems(personalTripCategories);
                         setSections(prev =>[...prev,{title:"Package Tours", data:items}])
-                        setPersonalTripsections(prev =>[...prev,{title:"Family/Personal Tours", data:personalTripItems}])
-                       setLoading(false)
+                        setPersonalTripsections(prev =>[...prev,{title:"Family/Personal Tours", 
+                            data:personalTripItems}])
+                            setRecommendedTripSections(prev =>[...prev,{title:"Recommended Tours", 
+                            data:recommendedtours}])
+                       setLoading(false);
                     }
                     
+                   
                    
                 };
 
@@ -180,7 +212,102 @@ const NavBar = ({access_token,triggerDisplayOptionsByCatId,
                 <CircularProgress/>
                 </Box>)
                 :
-                (  <div>
+                (
+                <div>
+
+            <div className="navbar">
+           
+            <Collapse in={packageTripSectionOpen} timeout="auto" unmountOnExit>
+             <div className="navbar-sectioned-list-container">
+                
+                {
+                recommendedTripSections && recommendedTripSections.length>0 ?
+                    recommendedTripSections.map((recommendedTripSection) =>(
+                    <div key={recommendedTripSection.title} className="navbar-section-group">
+                        
+                             <header className="app-header">
+                                <div className="header-content">
+                           <h1>{recommendedTripSection.title}</h1>
+                           </div>
+                           </header>
+                            
+                         <Grid container spacing={0.5} justify="center" width="70%" >
+                       
+
+             {
+             recommendedtours && recommendedtours.length>0  ?
+              
+
+                recommendedtours.map((item) => (
+                    
+               <div>
+                 
+                <Grid item xs = {12} sm={4} key={item._id}  >
+
+                    <Card className="navbar-card" sx={{ marginBottom: 2 }}
+                     >
+                    
+                    <CardMedia component= "img"  height="100"
+                    image = {tourimages[item._id]} 
+                    alt={item.description} 
+                    onClick={()=>showDetails(item,item.tourOperator)} 
+                    style={{ cursor: 'pointer' }} 
+                     />
+                                     
+                    <CardContent>
+                        <Typography gutterBottom variant="body1" component="div" 
+                        sx={{whiteSpace: 'pre-wrap'}}>
+                {item.name}
+              </Typography>
+              <Typography variant="body2" color="text.secondary" sx={{whiteSpace: 'pre-wrap'}}>
+                {item.cityName}, {item.stateName}
+              </Typography>
+
+              <Typography variant="body2" color="text.secondary">
+                {changeDateToWords(item.startDate)} - {changeDateToWords(item.endDate)}
+              </Typography>
+
+              <Typography variant="body2" color="text.secondary">
+                {item.tourOperator.firstName} - {item.tourOperator.lastName}
+              </Typography>
+
+              {(item.favorite === 'Y') ?
+                <FavoriteIcon sx={{ color: '#f04646ff' }} onClick = {(event) => updateFavorites(
+                    item._id,'N',event)} style={{ cursor: 'pointer' }}/>:
+                <FavoriteIcon onClick = {(event) => updateFavorites(
+                    item._id,'Y',event)} style={{ cursor: 'pointer' }}/>
+              }
+              
+              </CardContent>
+              <button type="submit" class="button"  onClick={()=>showDetails(item,item.tourOperator)} 
+                    style={{ cursor: 'pointer',backgroundColor: '#8a77f8ff',color:'#0c0c0fff'}}>
+                        Click to View</button>
+                    </Card>
+                    
+                </Grid>
+                
+                </div>
+                )
+                ):<div> <Typography variant="body2" color="text.secondary" sx={{whiteSpace: 'pre-wrap'}}>
+                    Cannot load recommended tours sections</Typography></div>
+                
+             }
+
+             </Grid>
+              
+            </div>
+                )):
+                <div>
+                    <Typography variant="body2" color="text.secondary" sx={{whiteSpace: 'pre-wrap'}}>
+                        Cannot load recommended tours sections
+                 </Typography>
+                 </div>
+            }
+          
+           
+             </div>
+            </Collapse>
+            </div>
         <div className="navbar">
            
             <Collapse in={packageTripSectionOpen} timeout="auto" unmountOnExit>
@@ -195,9 +322,6 @@ const NavBar = ({access_token,triggerDisplayOptionsByCatId,
                              <header className="app-header">
                                 <div className="header-content">
                            <h1>{section.title}</h1>
-                            {/* <Button variant="contained" onClick={handleToggle} sx={{ mb: 2 }}>
-                             {packageTripSectionOpen ? 'Hide Details' : 'Show Details'}
-                             </Button> */}
                            </div>
                            </header>
                             

@@ -124,6 +124,9 @@ export interface ITourDetails extends Document{
     description: {
       type : String
     },
+     recommend: {
+      type : String
+    },
     itinerary:{
       type : String
     }

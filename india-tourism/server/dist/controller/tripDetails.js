@@ -9,7 +9,9 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 const TourDetailService = require('../service/TourDetailService');
+const { tourOperatorCache } = require('../utils/cacheMap');
 require("../logNginx");
+//Get list of categories
 const getCategories = (req_1, res_1, ...args_1) => __awaiter(void 0, [req_1, res_1, ...args_1], void 0, function* (req, res, retries = 3, delay = 1000) {
     try {
         let parameters = req.query;
@@ -28,6 +30,7 @@ const getCategories = (req_1, res_1, ...args_1) => __awaiter(void 0, [req_1, res
         res.status(400).send({ "errormessage": "could not load categories" });
     }
 });
+//Get list of products
 const getProducts = (req_1, res_1, ...args_1) => __awaiter(void 0, [req_1, res_1, ...args_1], void 0, function* (req, res, retries = 3, delay = 1000) {
     try {
         let products = yield new TourDetailService().getProducts();
@@ -70,6 +73,32 @@ const updateFavoriteCategory = (req_1, res_1, ...args_1) => __awaiter(void 0, [r
         res.status(400).send({ "errormessage": "could not update categories" });
     }
 });
+//Get recommended tours
+const getRecommendedTours = (req_1, res_1, ...args_1) => __awaiter(void 0, [req_1, res_1, ...args_1], void 0, function* (req, res, retries = 3, delay = 1000) {
+    try {
+        let plannedTours = yield new TourDetailService().getRecommendedTours();
+        if (plannedTours) {
+            console.log('result..', plannedTours);
+            for (let plannedTour of plannedTours) {
+                let tourmanagerid = plannedTour.tourOperator;
+                const tourManager = tourOperatorCache.get(tourmanagerid);
+                if (tourManager) {
+                    plannedTour.tourOperator = tourManager;
+                    plannedTour.tourOperator.tourManagerName = tourManager.firstName + '-' + tourManager.lastName;
+                }
+            }
+            res.status(200).send(plannedTours);
+        }
+    }
+    catch (err) {
+        if (retries > 0) {
+            yield new Promise(resolve => setTimeout(resolve, delay));
+            return getRecommendedTours(req, res, retries - 1, delay);
+        }
+        res.status(400).send({ "errormessage": "could not load any planned Tours by any operator" });
+    }
+});
+//Get tours by category id - 1-Hill station, 2- Sea beach
 const getToursByCategoryId = (req_1, res_1, ...args_1) => __awaiter(void 0, [req_1, res_1, ...args_1], void 0, function* (req, res, retries = 3, delay = 1000) {
     try {
         const parameters = req.query;
@@ -112,15 +141,14 @@ const getTourItenerariesForTrip = (req_1, res_1, ...args_1) => __awaiter(void 0,
         res.status(400).send({ "errormessage": "could not load any planned Tours by any operator" });
     }
 });
+//Get list of tour operators
 const getTourManagers = (req_1, res_1, ...args_1) => __awaiter(void 0, [req_1, res_1, ...args_1], void 0, function* (req, res, retries = 3, delay = 1000) {
     try {
         //   const parameters = req.query;
-        const categoryId = parameters.categoryId;
-        console.log('category id is....', categoryId);
-        let plannedTours = yield new TourDetailService().getToursByCategoryId(categoryId);
-        if (plannedTours) {
-            console.log('result..', plannedTours);
-            res.status(200).send(plannedTours);
+        const tourManagers = [...tourOperatorCache.values()];
+        if (tourManagers) {
+            console.log('result..', tourManagers);
+            res.status(200).send(tourManagers);
         }
     }
     catch (err) {
@@ -128,8 +156,27 @@ const getTourManagers = (req_1, res_1, ...args_1) => __awaiter(void 0, [req_1, r
             yield new Promise(resolve => setTimeout(resolve, delay));
             return getTourManagers(req, res, retries - 1, delay);
         }
-        res.status(400).send({ "errormessage": "could not load any planned Tours by any operator" });
+        res.status(500).send({ "errormessage": "could not load any planned operators" });
+    }
+});
+const getTourManagerById = (req_1, res_1, ...args_1) => __awaiter(void 0, [req_1, res_1, ...args_1], void 0, function* (req, res, retries = 3, delay = 1000) {
+    const { tourManagerId } = req.body;
+    try {
+        const { tourManagerId } = req.body;
+        //   const parameters = req.query;
+        const tourManager = tourOperatorCache.get(tourManagerId);
+        if (tourManager) {
+            console.log('result..', tourManager);
+            res.status(200).send(tourManager);
+        }
+    }
+    catch (err) {
+        if (retries > 0) {
+            yield new Promise(resolve => setTimeout(resolve, delay));
+            return getTourManagerById(req, res, retries - 1, delay);
+        }
+        res.status(500).send({ "errormessage": "could not find planned operator for operator id ", tourManagerId });
     }
 });
 module.exports = { getCategories, getToursByCategoryId, updateFavoriteCategory,
-    getProducts, getTourManagers, getTourItenerariesForTrip };
+    getProducts, getTourManagers, getTourItenerariesForTrip, getRecommendedTours };

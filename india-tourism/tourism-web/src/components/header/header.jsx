@@ -2,7 +2,6 @@ import React, { useState, useRef , useEffect, useContext} from 'react';
 import ReactDOM from 'react-dom/client';
  import CircularProgress from '@mui/material/CircularProgress';
 import '../../styles/loginsignup.css';
-import NavBar from '../navigationTabs/navBar.jsx';
 import { format } from 'date-fns';
 import email_icon from '../Assets/input/email.png';
 import password_icon from '../Assets/input/password.png';

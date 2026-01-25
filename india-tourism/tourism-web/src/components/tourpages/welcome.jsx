@@ -8,8 +8,6 @@ import Layout from '../Layout/layout';
 import UserProfile from '../userprofile/userprofile';
 
 import '../../styles/loginsignup.css';
- import { NavContext } from '../navigationContext/navigationContext';
-
  import {useLocation } from 'react-router-dom';
 import TripList from "./tripList";
 import TripDetails from "./tripDetails";
@@ -32,7 +30,7 @@ const Welcome =()=>{
      const [previewbooking,setPreviewbooking] = useState(false);
      const [searchOptions,setSearchOptions] = useState(false);
     const [userBooking,setUserBooking] = useState(false);
-     const [cityList,setCityList] = useState('');
+     const [cityList,setCityList] = useState([]);
      const[tripListParam,setTripListParam] = useState('');
      const[productID,setProductID] = useState('');
      const[categoryID,setCategoryID] = useState('');
@@ -101,11 +99,11 @@ const Welcome =()=>{
 
         if(productId)
         {
-          if(cityList === ''){
-          let cities = await getCities();
-          if(cities){
-            setCityList(cities);
-          }
+          if(cityList.length === 0){
+              let cities = await getCities();
+              if(cities){
+                setCityList(cities);
+              }
         }
           setProductID(productId);
           setShowCategories(true);
@@ -153,9 +151,15 @@ const openBookingForm = (tourDetails) =>{
               {
                  location = tourDetails.stateName;
               }
+              let tourManagerName = tourManager.tourManagerName;
+              if(!tourManager.tourManagerName)
+              {
+                tourManagerName = tourDetails.tourOperator.firstName+"-"+
+                  tourDetails.tourOperator.lastName;
+              }
             console.log('location....',location)
             console.log('tourid....',tourDetails._id);
-            console.log('tourManager name....',tourManager.tourManagerName)
+            console.log('tourManager name....',tourManagerName)
             console.log('tripLength....',tourDetails.tripLength)
             console.log('start date....',tourDetails.startDate)
             console.log('end date....',tourDetails.endDate)
@@ -168,7 +172,7 @@ const openBookingForm = (tourDetails) =>{
             let tourDtls = {
                 "locationName":location,
                 "tourid": tourDetails._id,
-                "tourManagerName":tourManager.tourManagerName,
+                "tourManagerName":tourManagerName,
                 "tourManagerId":tourManager.tourManagerId,
                 "triplength":tourDetails.tripLength,
                 "image":tourDetails.image,
@@ -245,6 +249,7 @@ const openBookingForm = (tourDetails) =>{
            triggerDisplayBookings={triggerDisplayBookings}/>
              :(showCategories) ?
              <NavBar access_token={access_token} 
+             showDetails={showDetails}
              triggerDisplayOptionsByCatId={triggerDisplayOptionsByCatId} 
              productID={productID} cityList={cityList}/>
              :(searchOptions)?

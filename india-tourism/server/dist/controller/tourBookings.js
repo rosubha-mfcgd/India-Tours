@@ -141,5 +141,21 @@ const performUserBookings = (req_1, res_1, ...args_1) => __awaiter(void 0, [req_
         res.status(400).send({ "errormessage": "could not create a booking" });
     }
 });
+const createPaymentIntent = (req_1, res_1, ...args_1) => __awaiter(void 0, [req_1, res_1, ...args_1], void 0, function* (req, res, retries = 3, delay = 1000) {
+    console.log("req body...", req.body);
+    const csrfToken = req.header("X-CSRF-Token");
+    if (!csrfToken) {
+        res.status(400).send("csrf Token not found");
+    }
+    else {
+        const paymentIntent = yield stripe.paymentIntents.create({
+            amount: 1000,
+            currency: 'usd',
+            // In 2026, automatic methods are the standard
+            automatic_payment_methods: { enabled: true },
+        });
+        res.json({ clientSecret: paymentIntent.client_secret });
+    }
+});
 module.exports = { performBookings, performBookingsByMobile, getBookingsByBookingId,
-    updateBookingsByBookingId, performUserBookings };
+    updateBookingsByBookingId, performUserBookings, createPaymentIntent };

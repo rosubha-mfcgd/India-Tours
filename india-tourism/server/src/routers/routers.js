@@ -7,7 +7,7 @@ const {checkAuthenticated} = require("../middlewares/auth");
 const {signupvalidate,validateOTP} = require("../controller/validations");
 const {getPoints} = require("../controller/userprofile");
 const {getCategories,getProducts,getToursByCategoryId,
-    updateFavoriteCategory,getTourItenerariesForTrip} = require("../controller/tripDetails");
+    updateFavoriteCategory,getTourItenerariesForTrip,getRecommendedTours} = require("../controller/tripDetails");
 const {getRegisteredTourManagers, getCities} = require("../controller/tourManagers");
 const {performBookings, performBookingsByMobile,performUserBookings,
     getBookingsByBookingId,updateBookingsByBookingId,createPaymentIntent} = require("../controller/tourBookings");
@@ -34,7 +34,7 @@ router.get("/getProducts",checkAuthenticated,getProducts);
 router.get("/getCities",checkAuthenticated,getCities);
 
 router.get("/getToursByCategoryId",checkAuthenticated,getToursByCategoryId);
-
+router.get("/getRecommendedTours",checkAuthenticated,getRecommendedTours);
 router.get("/getTourOperators",checkAuthenticated,getRegisteredTourManagers);
 
 router.post("/updateFavoriteCategory",checkAuthenticated,updateFavoriteCategory);

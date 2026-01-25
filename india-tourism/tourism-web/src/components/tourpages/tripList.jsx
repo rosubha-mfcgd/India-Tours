@@ -31,6 +31,7 @@ const TripList = ({access_token,categoryId,cityList,showDetails}) =>{
     //const[mount,setMount] = useState(false);
     const[isOpen,setOpen] = useState(false);
     const [images,setImages] = useState([]);
+   
    const [anchorEl, setAnchorEl] = useState(null);
    const {triggerSorting,sortTrip} = useContext(NavContext);
     const { notification,loading, setLoading} = useContext(NavContext);

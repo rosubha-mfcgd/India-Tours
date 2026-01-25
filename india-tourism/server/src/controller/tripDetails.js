@@ -1,7 +1,8 @@
 const TourDetailService = require('../service/TourDetailService');
+const {tourOperatorCache} = require('../utils/cacheMap');
 require("../logNginx");
 
-
+//Get list of categories
 const getCategories = async(req,res,retries = 3, delay = 1000) =>{
    
     try{
@@ -27,7 +28,7 @@ const getCategories = async(req,res,retries = 3, delay = 1000) =>{
                 {"errormessage":"could not load categories"});
     }
 }
-
+//Get list of products
 const getProducts = async(req,res,retries = 3, delay = 1000) =>{
    
     try{
@@ -83,7 +84,39 @@ const updateFavoriteCategory = async(req,res,retries = 3, delay = 1000) =>{
                 {"errormessage":"could not update categories"});
     }
 }
+//Get recommended tours
+const getRecommendedTours = async(req,res,retries = 3, delay = 1000) =>{
+    try{
+     let plannedTours = await new TourDetailService().getRecommendedTours();
+     
+     if(plannedTours)
+        {
+          console.log('result..',plannedTours);
+          for(let plannedTour of plannedTours)
+          {
+            let tourmanagerid = plannedTour.tourOperator;
+            const tourManager = tourOperatorCache.get(tourmanagerid);
+            if(tourManager)
+            {
+                plannedTour.tourOperator = tourManager;
+               plannedTour.tourOperator.tourManagerName = tourManager.firstName+'-'+tourManager.lastName;
+            }
+          }
+          res.status(200).send(
+                plannedTours);
+    }
+    }catch(err){
+          if(retries>0)
+            {
+                 await new Promise(resolve => setTimeout(resolve, delay));
+                return getRecommendedTours(req,res,retries-1,delay);
+            }
+        res.status(400).send(
+                {"errormessage":"could not load any planned Tours by any operator"});
+    }
+}
 
+//Get tours by category id - 1-Hill station, 2- Sea beach
 const getToursByCategoryId = async(req,res,retries = 3, delay = 1000) =>{
    
     try{
@@ -142,21 +175,17 @@ const getTourItenerariesForTrip = async(req,res,retries = 3, delay = 1000) =>{
                 {"errormessage":"could not load any planned Tours by any operator"});
     }
 }
-
+//Get list of tour operators
 const getTourManagers = async(req,res,retries = 3, delay = 1000) =>{
    
     try{
      //   const parameters = req.query;
-       
-        const categoryId = parameters.categoryId; 
-         console.log('category id is....',categoryId)
-     let plannedTours = await new TourDetailService().getToursByCategoryId(categoryId);
-     
-     if(plannedTours)
+       const tourManagers = [...tourOperatorCache.values()];
+      if(tourManagers)
         {
-          console.log('result..',plannedTours);
+          console.log('result..',tourManagers);
           res.status(200).send(
-                plannedTours);
+                tourManagers);
      
     }
     }catch(err){
@@ -165,9 +194,34 @@ const getTourManagers = async(req,res,retries = 3, delay = 1000) =>{
                  await new Promise(resolve => setTimeout(resolve, delay));
                 return getTourManagers(req,res,retries-1,delay);
             }
-        res.status(400).send(
-                {"errormessage":"could not load any planned Tours by any operator"});
+        res.status(500).send(
+                {"errormessage":"could not load any planned operators"});
+    }
+}
+
+const getTourManagerById = async(req,res,retries = 3, delay = 1000) =>{
+   const {tourManagerId} = req.body;
+    try{
+        const {tourManagerId} = req.body;
+
+     //   const parameters = req.query;
+       const tourManager = tourOperatorCache.get(tourManagerId);
+      if(tourManager)
+        {
+          console.log('result..',tourManager);
+          res.status(200).send(
+                tourManager);
+     
+    }
+    }catch(err){
+        if(retries>0)
+            {
+                 await new Promise(resolve => setTimeout(resolve, delay));
+                return getTourManagerById(req,res,retries-1,delay);
+            }
+        res.status(500).send(
+                {"errormessage":"could not find planned operator for operator id ",tourManagerId});
     }
 }
 module.exports = {getCategories,getToursByCategoryId,updateFavoriteCategory,
-    getProducts,getTourManagers,getTourItenerariesForTrip}
+    getProducts,getTourManagers,getTourItenerariesForTrip,getRecommendedTours}
