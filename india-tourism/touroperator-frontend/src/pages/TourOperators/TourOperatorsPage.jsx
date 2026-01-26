@@ -13,7 +13,8 @@ export default function TourOperatorsPage() {
     getTourOperators()
       .then((res) => {
         console.log('operators...',res.data)
-        setCount(res.data.length)})
+        setCount(res.data.length)
+      })
       .catch(console.error);
   };
 
