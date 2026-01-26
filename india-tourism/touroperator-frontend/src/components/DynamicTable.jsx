@@ -158,8 +158,13 @@ export default function DynamicTable({ resource }) {
   }
 
   const visibleColumns = Object.keys(data[0]).filter(
-    (key) => !EXCLUDED_FIELDS.includes(key)
+    (key) => {  
+      const value = data[0][key];
+      return typeof value !== 'object' && typeof value !== 'function'  && !EXCLUDED_FIELDS.includes(key)
+    }
   );
+
+ console.log("visibleColumns...",visibleColumns)
 
   return (
     <>

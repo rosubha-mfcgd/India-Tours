@@ -11,7 +11,9 @@ export default function TourOperatorsPage() {
 
   const fetchCount = () => {
     getTourOperators()
-      .then((res) => setCount(res.data.length))
+      .then((res) => {
+        console.log('operators...',res.data)
+        setCount(res.data.length)})
       .catch(console.error);
   };
 

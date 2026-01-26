@@ -27,38 +27,59 @@ export default function TourOperatorModal({ open, onClose, onSuccess }) {
     ],
   });
 
- const handleChange = (e) => {
+  const handleChange = (e) => {
   const { name, value, type, checked } = e.target;
- // const phoneIndex = e.target.dataset.phoneIndex;
-  const phoneIndex = value
+  //const phoneIndex = e.target.dataset.phoneIndex;
+  const phoneIndex = value;
   console.log('phone Index...',phoneIndex)
+  console.log('name...',name)
+ 
+     setForm((prev) => ({
+      ...prev,
+     [name]: type === "checkbox" ? checked : value,
+     }));
+  }
+
+ const handlePhoneChange = (e,index) => {
+  const { name, value, type, checked } = e.target;
+  const phoneIndex = index;
+
+  console.log('phone Index...',phoneIndex)
+  console.log('name...value...',name,value)
   if (phoneIndex !== undefined && name === 'number') {
-    const index = parseInt(phoneIndex, 10);
+    console.log('here 1...',name)
+    //const index = parseInt(phoneIndex, 10);
     setForm((prev) => {
-      const updatedPhones = [...prev.phones];
-      updatedPhones[index] = {
-        ...updatedPhones[index],
-        [name]: type === "checkbox" ? checked : value,
-        [name]: value = value
-      };
-
-      // Ensure only one primary
-      if (name === "isPrimary" && checked) {
-        updatedPhones.forEach((p, i) => {
-          if (i !== index) p.isPrimary = false;
-        });
-      }
-
+      let updatedPhones = [...prev.phones];
+      console.log('update Phones....',updatedPhones)
+       updatedPhones[index].number = value;
       return { ...prev, phones: updatedPhones };
     });
   } else if(name === "type") {
-    setForm((prev) => ({
-      ...prev,
-      [name]: type === "checkbox" ? checked : value,
-    }));
+   // console.log('here 2...',name)
+    setForm((prev) => {
+      let updatedPhones = [...prev.phones];
+      updatedPhones[index].type = value;
+      return { ...prev, phones: updatedPhones };
+    });
+   } else if(name === "isPrimary")
+   {
+    // Ensure only one primary
+       if (checked) {
+         
+         for(let i=0;i<updatedPhones.length;i++)
+         {
+            if(i != index)
+            {
+              updatedPhones[i].isPrimary = false;
+            }else{
+                updatedPhones[index].isPrimary = true;
+            }
+         }
+       }
+       return { ...prev, phones: updatedPhones };
    }
-};
-
+}
 
   const addPhone = () => {
     if (form.phones.length >= 3) return; // max 3 phones
@@ -149,16 +170,16 @@ export default function TourOperatorModal({ open, onClose, onSuccess }) {
               type="tel"                  // <-- change here
               value={phone.number}
               data-phone-index={index}
-              onChange={handleChange}
+              onChange={(e)=>handlePhoneChange(e,index)}
               fullWidth
             />
               <TextField
                 select
                 label="Type"
                 name="type"
-                value={phone.type}
+                value={phone.type||""}
                 data-phone-type={index}
-                onChange={handleChange}
+                onChange={(e)=>handlePhoneChange(e,index)}
                 sx={{ width: 120 }}
               >
                 <MenuItem value="mobile">Mobile</MenuItem>
@@ -173,7 +194,7 @@ export default function TourOperatorModal({ open, onClose, onSuccess }) {
                     name="isPrimary"
                     checked={phone.isPrimary}
                     data-phone-index={index}
-                    onChange={handleChange}
+                    onChange={(e)=>handlePhoneChange(e,index)}
                   />
                 }
                 label="Primary"
