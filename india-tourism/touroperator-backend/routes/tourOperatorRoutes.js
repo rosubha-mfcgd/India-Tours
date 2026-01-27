@@ -13,8 +13,8 @@ router.post(
 // Get all tour operators
 router.get(
   "/",
-  authenticate,
-  authorizeRole(1), // ADMIN
+  // authenticate,
+  // authorizeRole(1), // ADMIN
   getAllTourOperators
 );
 // Get all tour operators by id

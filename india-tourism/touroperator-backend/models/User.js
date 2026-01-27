@@ -16,7 +16,8 @@ const userSchema = new mongoose.Schema(
     password: { type: String, required: true },
     email: { type: String },
     phones: {
-      type: [phoneSchema],
+      type: [],
+      ref: "Phone",
       default: [],
     },
     roleID: { type: Number, required: true },

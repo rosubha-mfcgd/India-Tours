@@ -9,6 +9,7 @@ import {getBookingsByBookingId} from "../admin/admin";
 import SideBarNotification from '../navigationTabs/sideBarNotification';
 import close_button from '../Assets/images/close-button.png';
 import failure_animation from '../Assets/images/failure_animation.gif';
+import {validateBookingData} from "../admin/utility";
 import { NavContext } from '../navigationContext/navigationContext';
 import {
     TextField,
@@ -55,8 +56,8 @@ const BookingForm = ({access_token,tourDetails,triggerDisplayBookings}) =>{
      const[currentBooking,setCurrentBooking] = useState('');
      const[displayErrorDialog,setDisplayErrorDialog] = useState(false);
      const[errorMessage,setErrorMessage] = useState('');
-         const [dialogOpen, setDialogOpen] = useState(false);
-         const[showBookingBtn,setShowBookingBtn] = useState(true);
+      const [dialogOpen, setDialogOpen] = useState(false);
+     const[showBookingBtn,setShowBookingBtn] = useState(true);
   const { notification} = useContext(NavContext);
     const CssTextField = styled(TextField)({
       '& label': {
@@ -182,6 +183,18 @@ const BookingForm = ({access_token,tourDetails,triggerDisplayBookings}) =>{
       }
     }
 
+    const validateFields= async() =>{
+       let errMsg = null;
+       
+                 console.log('booking to be validated....',bookingData)
+              errMsg =  await validateBookingData(bookingData);
+              if(errMsg)
+                {
+                  return errMsg;
+                }else{
+                  return null;
+                }            
+    }
   
 //Submit the booking
     const submitBookings = async() =>{
@@ -195,8 +208,18 @@ const BookingForm = ({access_token,tourDetails,triggerDisplayBookings}) =>{
             updateBooking('gender',count,'gender'); 
             //updateBooking('specialRequest',count,'specialRequest');
           }
-          triggerDisplayBookings(bookingData,
+          //validate booking fields before submission 
+         let errMsg =  await validateFields();
+          if(errMsg)
+          {
+            setErrorMessage(errMsg);
+            setDisplayErrorDialog(true)
+            setDialogOpen(true);
+            
+          }else{
+            triggerDisplayBookings(bookingData,
                         tourDetails);
+          }
     }
     //remove tourist entry from grid
     const removeTourist = async(key)=>{
@@ -337,7 +360,7 @@ const BookingForm = ({access_token,tourDetails,triggerDisplayBookings}) =>{
         <div  display="flex"
       justifyContent="center"
       alignItems="center"
-      height={200} // Example height for visualization
+      // Example height for visualization
       width="80%">
           {/* <Typography variant="body2" style={{ color: '#FFFFFF' }}>{bookingPageMessage}</Typography> */}
          <Paper sx={{ padding: 2, // theme.spacing(2)

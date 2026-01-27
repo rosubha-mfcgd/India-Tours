@@ -8,8 +8,10 @@ import { useEffect, useState, useContext } from "react";
 import { Elements, CardElement, useStripe, useElements } from '@stripe/react-stripe-js';
 import { performTripBooking,updateBookingsByBookingId } from "../admin/admin";
 import success_animation from '../Assets/images/success_animation.gif';
+import failure_animation from '../Assets/images/failure_animation.gif';
 import SideBarNotification from '../navigationTabs/sideBarNotification';
 import { NavContext } from '../navigationContext/navigationContext';
+import {validateBookingData} from "../admin/utility";
 import PaymentModal from "./payment";
 import {
     TextField,
@@ -47,9 +49,10 @@ const PreviewForm = ({access_token,bookings,tourDetailsParam}) =>{
 
     const[disable,setDisable] = useState(true);
     const [dialogOpen, setDialogOpen] = useState(false);
+     const[displayErrorDialog,setDisplayErrorDialog] = useState(false);
     const[bookingId, setBookingId] = useState('');
     const[bookingUpdateId, setBookingUpdateId] = useState('');
-
+     const[errorMessage,setErrorMessage] = useState('');
     const [csrfToken, setCsrfToken] = useState('');
 
       const { notification} = useContext(NavContext);
@@ -91,66 +94,90 @@ function increment () {
 const triggerEditable = () =>{
     setDisable(!disable);
 }
+
+const validateFields= async() =>{
+       let errMsg = null;
+       
+                 console.log('booking to be validated....',bookings)
+              errMsg =  await validateBookingData(bookings);
+              if(errMsg)
+                {
+                  return errMsg;
+                }else{
+                  return null;
+                }            
+    }
 //Submit bookings
 const submitBooking = async()=>{
+
+
 
     let primary_booking = [];
     let dependantbookings = [];
     let primarycount = 0;
     let depcount = 0;
-    for(let booking of bookings)
-    {
-         if(booking.ageGroup === 'Minor')
-         {
-            primary_booking[primarycount] = booking;
-            primarycount++;
-         }else
-        {
-            dependantbookings[depcount] = booking;
-            depcount++;
-        }
-        
-    }
-    if(!tourDetailsParam.bookingid)
-    {
-         let data = {tourManagerId:tourDetailsParam.tourManagerId,
-                locationName:tourDetailsParam.locationName,
-                startDate:tourDetailsParam.startDate,
-                endDate:tourDetailsParam.endDate,
-                domesticOrInternational:tourDetailsParam.domesticOrInternational,
-                package_cost:(tourDetailsParam.package_cost)*(bookings.length),
-                tourid: tourDetailsParam.tourid,
-                primarybookings:primary_booking,
-                dependantbookings:dependantbookings,
-            }
-       let result = await performTripBooking(data);
-       if(result){
-          console.log('result...',result);
-          setBookingId(result.bookingid);
-       }
-    }else{
-          let data = {tourManagerId:tourDetailsParam.tourManagerId,
-                locationName:tourDetailsParam.locationName,
-                startDate:tourDetailsParam.startDate,
-                endDate:tourDetailsParam.endDate,
-                domesticOrInternational:tourDetailsParam.domesticOrInternational,
-                package_cost:(tourDetailsParam.package_cost)*(bookings.length),
-                tourid: tourDetailsParam.tourid,
-                primarybookings:primary_booking,
-                dependantbookings:dependantbookings,
-                bookingId:tourDetailsParam.bookingid
-            }
-            console.log('request data....',data);
-       let result = await updateBookingsByBookingId(data);
-       if(result)
-        {
-          console.log('result...',result);
-        //  setBookingId(result.bookingId);
-          setBookingUpdateId(result.bookingId);
-       }
+     let errMsg =  await validateFields();
+          if(errMsg)
+          {
+            setErrorMessage(errMsg);
+            setDisplayErrorDialog(true)
+            setDialogOpen(true);
+            
+          }else{
+           
+              for(let booking of bookings)
+              {
+                  if(booking.ageGroup === 'Minor')
+                  {
+                      primary_booking[primarycount] = booking;
+                      primarycount++;
+                  }else
+                  {
+                      dependantbookings[depcount] = booking;
+                      depcount++;
+                  }
+                  
+              }
+              if(!tourDetailsParam.bookingid)
+              {
+                  let data = {tourManagerId:tourDetailsParam.tourManagerId,
+                          locationName:tourDetailsParam.locationName,
+                          startDate:tourDetailsParam.startDate,
+                          endDate:tourDetailsParam.endDate,
+                          domesticOrInternational:tourDetailsParam.domesticOrInternational,
+                          package_cost:(tourDetailsParam.package_cost)*(bookings.length),
+                          tourid: tourDetailsParam.tourid,
+                          primarybookings:primary_booking,
+                          dependantbookings:dependantbookings,
+                      }
+                let result = await performTripBooking(data);
+                if(result){
+                    console.log('result...',result);
+                    setBookingId(result.bookingid);
+                }
+              }else{
+                    let data = {tourManagerId:tourDetailsParam.tourManagerId,
+                          locationName:tourDetailsParam.locationName,
+                          startDate:tourDetailsParam.startDate,
+                          endDate:tourDetailsParam.endDate,
+                          domesticOrInternational:tourDetailsParam.domesticOrInternational,
+                          package_cost:(tourDetailsParam.package_cost)*(bookings.length),
+                          tourid: tourDetailsParam.tourid,
+                          primarybookings:primary_booking,
+                          dependantbookings:dependantbookings,
+                          bookingId:tourDetailsParam.bookingid
+                      }
+                      console.log('request data....',data);
+                let result = await updateBookingsByBookingId(data);
+                if(result)
+                  {
+                    console.log('result...',result);
+                  //  setBookingId(result.bookingId);
+                    setBookingUpdateId(result.bookingId);
+                }
 
-    }
-       
+              }
+  }  
 }
 
 const handlePayment = (title, message) => {
@@ -183,7 +210,7 @@ const handlePayment = (title, message) => {
       
             <div style={{border: "2px solid black" }}>
                  <Box  component="form" >
-                    {dialogOpen?
+                    {dialogOpen && !errorMessage?
                      <Dialog
         open={dialogOpen}
         onClose={handleClickOpenOrClose}
@@ -215,6 +242,33 @@ const handlePayment = (title, message) => {
           <img src={success_animation} alt="" width="40" height="40"/>:<div></div>}
         </DialogActions>
       </Dialog>:<div></div>}
+
+      {displayErrorDialog && errorMessage?
+            <Dialog
+            open={dialogOpen}
+            onClose={handleClickOpenOrClose}
+            aria-labelledby="dialog-title"
+            aria-describedby="dialog-description"
+          >
+            <DialogTitle id="dialog-title">Error</DialogTitle>
+            <DialogContent>
+              
+              <DialogContentText id="dialog-description">
+              
+              {errorMessage}
+              </DialogContentText>
+            </DialogContent>
+            <DialogActions>
+              <Button onClick={handleClickOpenOrClose}>Cancel</Button>
+              <Button onClick={handleClickOpenOrClose} autoFocus>
+              OK
+              </Button>
+              {dialogOpen?
+              <img src={failure_animation} alt="" width="40" height="40"/>:
+              <div></div>}
+            </DialogActions>
+          </Dialog>:<div></div>
+      }
                               <TableContainer>
                                 <Table>
                                     <TableBody>

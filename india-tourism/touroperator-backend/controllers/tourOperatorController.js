@@ -39,12 +39,14 @@ exports.createTourOperator = async (req, res) => {
       phones = [], // optional
     } = req.body;
 
+
     if (!firstName || !lastName || !password) {
       return res.status(400).json({
         message: "First name, last name, and password are required",
       });
     }
 
+    console.log('req body....',req.body)
     const ROLE_TOUR_OPERATOR = 2;
 
     /* ---------------- Generate numeric user _id ---------------- */
@@ -86,7 +88,7 @@ exports.createTourOperator = async (req, res) => {
 
       if (phone.isPrimary) primaryPhoneCount++;
 
-      const phoneId = await getNextSequence("phone");
+      const phoneId =  await getNextSequence("phone");
 
       preparedPhones.push({
         _id: phoneId,
@@ -127,6 +129,7 @@ exports.createTourOperator = async (req, res) => {
       },
     });
   } catch (err) {
+    console.log(err.stack)
     console.error("Create Tour Operator Error:", err);
     res.status(500).json({ message: err.message });
   }
@@ -155,6 +158,9 @@ exports.getAllTourOperators = async (req, res) => {
       email: user.email,
       phones: user.phones || [], // NEW: include phones
       role: ROLE_MAP[user.roleID] || "Unknown",
+      primaryContact: user.phones.filter(item => item.isPrimary === true).map(item =>item.number).join(""),
+      primaryContactType:user.phones.filter(item => item.isPrimary === true).map(item =>item.type).join(""),
+      secondaryContact: user.phones.filter(item => item.isPrimary === false).map(item =>item.number).join(","),
       createdAt: user.createdAt,
       updatedAt: user.updatedAt,
     }));
