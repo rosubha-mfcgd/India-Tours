@@ -361,9 +361,14 @@ const BookingForm = ({access_token,tourDetails,triggerDisplayBookings}) =>{
       justifyContent="center"
       alignItems="center"
       // Example height for visualization
-      width="80%">
+      width="100%">
           {/* <Typography variant="body2" style={{ color: '#FFFFFF' }}>{bookingPageMessage}</Typography> */}
-         <Paper sx={{ padding: 2, // theme.spacing(2)
+         <Paper sx={{ 
+          backgroundImage: "url('/background/booking.png')",
+          backgroundRepeat: 'no-repeat',
+        backgroundSize: 'cover', // Optional: adjusts the image size to cover the entire Paper
+        height: '400px', // Set a specific height
+          padding: 2, // theme.spacing(2)
           textAlign: 'center', // Centers the text itself horizontally
           display: 'flex',
           flexDirection: 'column', // Ensures children stack vertically
@@ -396,6 +401,11 @@ const BookingForm = ({access_token,tourDetails,triggerDisplayBookings}) =>{
 
               
                 </h2>
+                 <TableContainer>
+                                                <Table>
+                                                    <TableBody>
+                                                      <TableRow>
+                                                        <TableCell>
                 <FormControl>
              
                 <InputLabel variant="outlined" 
@@ -407,6 +417,8 @@ const BookingForm = ({access_token,tourDetails,triggerDisplayBookings}) =>{
                     maxLength: 20,
                 }}/>
                  </FormControl>
+                 </TableCell>
+                 <TableCell>
                   <FormControl style={{ marginLeft: 5 }}>
                     
                 <InputLabel 
@@ -418,7 +430,10 @@ const BookingForm = ({access_token,tourDetails,triggerDisplayBookings}) =>{
      }}
                 />
                 </FormControl>
-                     
+                     </TableCell>
+                     </TableRow>
+                     <TableRow> 
+                       <TableCell>
                    <FormControl style={{ marginLeft: 5 }}>
                    
                 <InputLabel 
@@ -429,6 +444,9 @@ const BookingForm = ({access_token,tourDetails,triggerDisplayBookings}) =>{
          maxLength: 10,
      }}/>
                     </FormControl>
+                    </TableCell>
+                     
+                        <TableCell>
       <FormControl style={{ marginLeft: 5 }}> 
            <InputLabel 
                 style={{ color: '#0c0000ff' }} 
@@ -444,12 +462,18 @@ const BookingForm = ({access_token,tourDetails,triggerDisplayBookings}) =>{
           <MenuItem value={"SeniorCitizen"}>Senior Citizen</MenuItem>
         </Select>
       </FormControl>
-
-      <FormControl style={{ marginLeft: 5 }}> 
+     </TableCell>
+     </TableRow>
+     <TableRow>
+     <TableCell align="center">
+      <FormControl> 
             <InputLabel 
                 style={{ color: '#0c0000ff' }} 
                 variant="outlined" fullWidth>Gender</InputLabel>              
-        <Select
+        <Select  styles={{
+      container: (base) => ({ ...base, width: "100%" }),
+      control: (base) => ({ ...base, width: "100%" }),
+        }}
           labelId="select-label"
           id="gender" name="gender"
           label="gender"
@@ -460,20 +484,13 @@ const BookingForm = ({access_token,tourDetails,triggerDisplayBookings}) =>{
           <MenuItem value={"Female"}>Female</MenuItem>
         </Select>
       </FormControl>
-                  {/* <FormControl style={{ marginLeft: 5 }}> 
-                     
-                  <InputLabel 
-                  style={{ color: '#080000ff' }} 
-                  variant="outlined" fullWidth>Any Special request?</InputLabel>
-                 <Input id="specialRequest" name="specialRequest" 
-                  defaultValue={tourist.value.specialRequest}  inputProps={{
-         maxLength: 100,
-     }}
-                 />  
-                </FormControl> */}
-                
-              </div>
-            )):<div></div>
+      </TableCell>
+      </TableRow>
+      </TableBody>
+      </Table>
+      </TableContainer>
+      </div>
+       )):<div></div>
           }</Paper></div>:<div></div>
         }
         { startBooking && touristCount && touristCount.length >0? 

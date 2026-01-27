@@ -322,8 +322,8 @@ const handlePayment = (title, message) => {
                                                 disabled={disable} 
                                                 onChange={(event)=>updateBooking("name",sum,event)}
                                                inputProps={{
-         maxLength: 10,
-     }}
+                                                  maxLength: 10,
+                                                }}
                                                 />
                                                  </FormControl>
                                                   <FormControl style={{ marginLeft: 5 }}>
@@ -333,9 +333,10 @@ const handlePayment = (title, message) => {
                                                 variant="outlined" fullWidth>Email</InputLabel>
                                                 <Input id="email" name="email" 
                                                 defaultValue = {booking.email} 
+                                                value={booking.email}
                                                 inputProps={{
-         maxLength: 50,
-     }}
+                                                        maxLength: 50,
+                                                    }}
                                                 disabled={disable} 
                                                 onChange={(event)=>updateBooking("email",sum,event)}/>
                                                 </FormControl>
@@ -346,9 +347,11 @@ const handlePayment = (title, message) => {
                                                 style={{ color: '#0c0000ff' }}
                                                 variant="outlined" fullWidth>Mobile</InputLabel>
                                                 <Input id="mobile" name="mobile" defaultValue = {booking.mobile} 
-                                                disabled={disable} inputProps={{
-         maxLength: 10,
-     }}
+                                                 value={booking.mobile}
+                                                disabled={disable} 
+                                                inputProps={{
+                                                    maxLength: 10,
+                                                    }}
                                                 onChange={(event)=>updateBooking("mobile",sum,event)}/>
                                                     </FormControl>
                                                     <FormControl style={{ marginLeft: 5 }}> 
@@ -358,6 +361,7 @@ const handlePayment = (title, message) => {
                                                   variant="outlined" fullWidth>Age Group</InputLabel>
                                                  <Input id="ageGroup" name="ageGroup" 
                                                  defaultValue = {booking.ageGroup} 
+                                                 value={booking.ageGroup}
                                                  disabled={disable}  inputProps={{
                                                                        maxLength: 2,
                                                                    }}
@@ -371,22 +375,14 @@ const handlePayment = (title, message) => {
                                                   variant="outlined" fullWidth>Gender</InputLabel>
                                                  <Input id="gender" name="gender" 
                                                  defaultValue = {booking.gender} 
-                                                 disabled={disable}  inputProps={{
+                                                 value={booking.gender}
+                                                 disabled={disable}  
+                                                 inputProps={{
                                                                        maxLength: 2,
                                                                    }}
                                                  onChange={(event)=>updateBooking("gender",sum,event)}/>  
                                                 </FormControl>
-                                                  {/* <FormControl style={{ marginLeft: 5 }}> 
-                                                     
-                                                  <InputLabel 
-                                                  style={{ color: '#080000ff' }}
-                                                  variant="outlined" fullWidth>Any Special request?</InputLabel>
-                                                 <Input id="specialRequest" name="specialRequest"  inputProps={{
-                                                      maxLength: 100,
-                                                  }}
-                                                defaultValue = {booking.specialRequest} disabled={disable} 
-                                                onChange={(event)=>updateBooking("specialRequest",sum,event)}/>  
-                                                </FormControl> */}
+                                                 
                                               </div>
                            
                             )
