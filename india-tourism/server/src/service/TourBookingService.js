@@ -15,6 +15,10 @@ constructor(){
         {
             let bookings = [];
             let bookingId = '';
+            if(!tourManagerId || !tourid)
+                {
+                  return null;
+                }
               const session = await mongoose.startSession();
             try{
                     await session.withTransaction(async () => {
@@ -24,7 +28,7 @@ constructor(){
                 package_cost,primarybookings,dependantbookings);
 
                 let personCount = primarybookings.length+dependantbookings.length;
-       
+                
                 const bookingRepository = new BookingRepository();
                 const tourRepository = new TourRepository();
                 bookingId = apputil.generateBookingId();
@@ -45,8 +49,9 @@ constructor(){
                     console.log('transaction created....',data);
                     bookings = await bookingRepository.create(data);
 
-                    console.log('User successfully booked with object id ',bookings);
+                   
                     if(bookings){
+                       console.log('User successfully booked with object id ',bookings);
                         console.log('bookings...',bookings);
                         bookingId = bookings.bookingId;
                         const tour = await tourRepository.findOne({"_id":tourid});

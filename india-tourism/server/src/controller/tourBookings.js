@@ -18,7 +18,8 @@ const performBookings = async(req,res,retries = 3, delay = 1000) =>{
                   console.log('bookings...',bookings);
                 res.status(200).send({"bookingid":bookings});
                 }else{
-                    throw new Error("could not create a booking on attempt #:-",retries);
+                   res.status(400).send(
+                {"errormessage":"could not create a booking"});
                 }
        }catch(err){
          if(retries>0)
@@ -149,7 +150,7 @@ const performBookings = async(req,res,retries = 3, delay = 1000) =>{
         try{
            if(touristData && touristData.length ===0)
            {
-            res.status(200).send({"errorDetails":"No toursits found"});
+            res.status(200).send({"errorDetails":"No tourists found"});
            }else
             {
                 let userBookingService =  new UserBookingService();

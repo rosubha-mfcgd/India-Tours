@@ -24,6 +24,7 @@ import {
     TableRow,
     Paper,
     Modal,
+    OutlinedInput,
     Box,
     Snackbar,
     Card,
@@ -109,9 +110,6 @@ const validateFields= async() =>{
     }
 //Submit bookings
 const submitBooking = async()=>{
-
-
-
     let primary_booking = [];
     let dependantbookings = [];
     let primarycount = 0;
@@ -295,7 +293,19 @@ const handlePayment = (title, message) => {
                                         </Table>
                                         </TableContainer>
                                          </Box>
-                            <Paper>
+                            <Paper sx={{ 
+          backgroundImage: "url('/background/booking.png')",
+          backgroundRepeat: 'no-repeat',
+        backgroundSize: 'cover', // Optional: adjusts the image size to cover the entire Paper
+        padding: 2, // theme.spacing(2)
+          textAlign: 'center', // Centers the text itself horizontally
+          display: 'flex',
+          flexDirection: 'column', // Ensures children stack vertically
+          justifyContent: 'center', // Centers children vertically
+          alignItems: 'center', // Centers children horizontally
+          height: '100%',
+          width: '100%', // Example width for demonstration 
+          }}>
                    {bookings && bookings.length>0 ?
                         bookings.map((booking)=>(
                            
@@ -313,62 +323,100 @@ const handlePayment = (title, message) => {
                                                 >
                                             Tourist #{increment()}
                                                 </h2>
-                                                <FormControl>
+                                                <TableContainer>
+                                                <Table>
+                                                    <TableBody>
+                                                      <TableRow>
+                                                        <TableCell>
+                                                <FormControl variant="outlined" fullWidth>
                                              
                                                 <InputLabel variant="outlined" 
                                                 style={{ color: '#080000ff' }}
                                                 fullWidth>Name</InputLabel>
-                                                <Input id="name" name="name" defaultValue = {booking.name} 
+                                                <OutlinedInput id="name" name="name" defaultValue = {booking.name} 
                                                 disabled={disable} 
                                                 onChange={(event)=>updateBooking("name",sum,event)}
                                                inputProps={{
                                                   maxLength: 10,
                                                 }}
+                                                 sx={{
+                                                    backgroundColor: 'rgba(109, 101, 101, 0.53)' ,
+                                                  borderRadius: 50, // Fully rounded (pill shape)
+                                                  width: '500px',
+                                                  }}
                                                 />
                                                  </FormControl>
-                                                  <FormControl style={{ marginLeft: 5 }}>
+                                                 </TableCell>
+                                                 </TableRow>
+                                                 <TableRow>
+                                                  <TableCell>
+                                                  <FormControl variant="outlined" fullWidth>
                                                     
                                                 <InputLabel 
                                                 style={{ color: '#0c0000ff' }}
                                                 variant="outlined" fullWidth>Email</InputLabel>
-                                                <Input id="email" name="email" 
+                                                <OutlinedInput id="email" name="email" 
                                                 defaultValue = {booking.email} 
                                                 value={booking.email}
                                                 inputProps={{
                                                         maxLength: 50,
-                                                    }}
+                                                    }} 
+                                                     sx={{
+                                                    backgroundColor: 'rgba(109, 101, 101, 0.53)' ,
+                                                  borderRadius: 50, // Fully rounded (pill shape)
+                                                  width: '500px',
+                                                  }}
                                                 disabled={disable} 
                                                 onChange={(event)=>updateBooking("email",sum,event)}/>
                                                 </FormControl>
-                                                     
-                                                   <FormControl style={{ marginLeft: 5 }}>
+                                                </TableCell>
+                                                   </TableRow> 
+                                                    <TableRow>
+                                                  <TableCell> 
+                                                   <FormControl variant="outlined" fullWidth>
                                                    
                                                 <InputLabel 
                                                 style={{ color: '#0c0000ff' }}
                                                 variant="outlined" fullWidth>Mobile</InputLabel>
-                                                <Input id="mobile" name="mobile" defaultValue = {booking.mobile} 
+                                                <OutlinedInput id="mobile" name="mobile" defaultValue = {booking.mobile} 
                                                  value={booking.mobile}
                                                 disabled={disable} 
                                                 inputProps={{
                                                     maxLength: 10,
                                                     }}
+                                                     sx={{
+                                                    backgroundColor: 'rgba(109, 101, 101, 0.53)' ,
+                                                  borderRadius: 50, // Fully rounded (pill shape)
+                                                  width: '500px',
+                                                  }}
                                                 onChange={(event)=>updateBooking("mobile",sum,event)}/>
                                                     </FormControl>
-                                                    <FormControl style={{ marginLeft: 5 }}> 
+                                                    </TableCell>
+                                                    </TableRow>
+                                                    <TableRow>
+                                                  <TableCell>
+                                                    <FormControl variant="outlined" fullWidth> 
                                                       
                                                   <InputLabel 
                                                   style={{ color: '#080000ff' }}
                                                   variant="outlined" fullWidth>Age Group</InputLabel>
-                                                 <Input id="ageGroup" name="ageGroup" 
+                                                 <OutlinedInput id="ageGroup" name="ageGroup" 
                                                  defaultValue = {booking.ageGroup} 
                                                  value={booking.ageGroup}
-                                                 disabled={disable}  inputProps={{
-                                                                       maxLength: 2,
-                                                                   }}
+                                                 disabled={disable}  
+                                                 inputProps={{maxLength: 20}}
+                                                sx={{
+                                                    backgroundColor: 'rgba(109, 101, 101, 0.53)' ,
+                                                  borderRadius: 50, // Fully rounded (pill shape)
+                                                  width: '500px',
+                                                  }}
                                                  onChange={(event)=>updateBooking("ageGroup",sum,event)}/>  
                                                 </FormControl>
-
-                                                 <FormControl style={{ marginLeft: 5 }}> 
+                                                </TableCell>
+                                                </TableRow>
+                                                 <TableRow>
+                                                  <TableCell>
+                                                 <FormControl variant="outlined" fullWidth> 
                                                       
                                                   <InputLabel 
                                                   style={{ color: '#080000ff' }}
@@ -377,12 +425,19 @@ const handlePayment = (title, message) => {
                                                  defaultValue = {booking.gender} 
                                                  value={booking.gender}
                                                  disabled={disable}  
-                                                 inputProps={{
-                                                                       maxLength: 2,
-                                                                   }}
+                                                 inputProps={{maxLength: 10}}
+                                                  sx={{
+                                                    backgroundColor: 'rgba(109, 101, 101, 0.53)' ,
+                                                  borderRadius: 50, // Fully rounded (pill shape)
+                                                  width: '500px',
+                                                  }}
                                                  onChange={(event)=>updateBooking("gender",sum,event)}/>  
                                                 </FormControl>
-                                                 
+                                                 </TableCell>
+                                                </TableRow>
+                                                </TableBody>
+                                                </Table>
+                                                </TableContainer>
                                               </div>
                            
                             )

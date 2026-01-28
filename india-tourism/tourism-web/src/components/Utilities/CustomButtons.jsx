@@ -46,7 +46,7 @@ const styles = StyleSheet.create({
             source={plus} id="add" onClick= {(event)=> addTourist(event)}/>
          
       </View>
-          <View>
+          {/* <View>
            
       <Image
             style={{
@@ -61,7 +61,7 @@ const styles = StyleSheet.create({
           />
           
           
-      </View>
+      </View> */}
      </SafeAreaView>
   </SafeAreaProvider>
   );
