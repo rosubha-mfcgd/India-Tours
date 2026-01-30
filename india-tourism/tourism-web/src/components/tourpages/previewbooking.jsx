@@ -54,8 +54,9 @@ const PreviewForm = ({access_token,bookings,tourDetailsParam}) =>{
     const[bookingId, setBookingId] = useState('');
     const[bookingUpdateId, setBookingUpdateId] = useState('');
      const[errorMessage,setErrorMessage] = useState('');
-    const [csrfToken, setCsrfToken] = useState('');
-
+   
+      const[totalpackageCost,setTotalpackagecost] = useState(null);
+      
       const { notification} = useContext(NavContext);
 
       const[modalContent,setModalContent] = useState({ title: '', message: '' })
@@ -136,6 +137,7 @@ const submitBooking = async()=>{
                   }
                   
               }
+              setTotalpackagecost((tourDetailsParam.package_cost)*(bookings.length));
               if(!tourDetailsParam.bookingid)
               {
                   let data = {tourManagerId:tourDetailsParam.tourManagerId,
@@ -461,13 +463,14 @@ const handlePayment = (title, message) => {
                   </div> 
                   :<div></div>
                    }
-        {stripePromise ?
+        {stripePromise && totalpackageCost ?
           <Elements stripe={stripePromise} options={options}>
           <PaymentModal
         isOpen={isModalOpen}
         onClose={handleCloseModal}
         title={modalContent.title}
         message={modalContent.message} 
+        totalpackagecost={totalpackageCost}
         />
       </Elements>:<div/>
       }

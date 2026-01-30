@@ -567,28 +567,28 @@ export const getRecommendedTours = async() =>{
      return res_data;
 }
 
-export const createIntent = async(csrfToken) =>{
-    let res_data = "failed to process image";
+export const createIntent = async(data) =>{
+    let res_data = "failed to fetch client secret";
     try{
         let access_token = await getApiAccessToken();
 
       if(access_token){
          console.log('access_token found for user Auth...',access_token.data)
-        const response = await axios.post(process.env.REACT_APP_SERVER_URI+'create-intent',
-           
-           {
+         console.log('here i am calling create-payment-intent....');
+        const response = await axios.post(process.env.REACT_APP_SERVER_URI+'create-payment-intent',
+          data, 
+       {    
             headers: {
                 "Content-type": "application/json; charset=UTF-8",
                 "Authorization":"Bearer "+access_token.data.access_token,
-                "X-CSRF-Token": csrfToken, // Include token here
-
-            }}           
-          );
+                 }}
+          );     
+          
       if(response)
         {
             console.log('response from payment intent...',response)
-            const { clientSecret } = await response.json();
-            res_data = clientSecret;
+            res_data = await response.data;
+           
          } 
     }
    }catch(err){

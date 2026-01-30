@@ -23,7 +23,8 @@ Enter the following command and press Enter to start the LocalStack container:
 
 docker run --rm -it -p 4566:4566 localstack/localstack
 
-1. Wait for Download and Startup: The first time you run this command, it may take a few minutes to download the Docker image. Once downloaded, LocalStack will start within the container. 
+1. Wait for Download and Startup: The first time you run this command, it may take a few minutes to download the Docker image. Once downloaded, LocalStack 
+will start within the container. 
 2. Verify Installation: Once the logs show that LocalStack is running, you can verify it by configuring your AWS CLI to use LocalStack. 
 
 

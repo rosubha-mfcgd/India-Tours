@@ -38,6 +38,7 @@ const API_CLIENT_SECRET = process.env.API_CLIENT_SECRET;
 const GRANT_TYPE = process.env.GRANT_TYPE;
 const API_AUTH_TOKEN_URL = process.env.API_AUTH_TOKEN_URL;
 const GOOGLE_GEMINI_API_KEY = process.env.GOOGLE_GEMINI_API_KEY;
+ 
 const GOOGLE_OAUTH_SCOPES = [
 
   "https%3A//www.googleapis.com/auth/userinfo.email",
@@ -87,6 +88,7 @@ app.use(passport.initialize());
 //Route for handling user registration and login
 const userRouter = require("./src/routers/routers");
 const { checkAuthenticated } = require('./src/middlewares/auth.js');
+const stripe = require('stripe')(process.env.STRIPE_PAYMENT_SECRET_KEY);
 //code for using implemented routes
 app.use("/api", userRouter);
 
@@ -439,9 +441,45 @@ app.get("/api/getImageFromDB/:fileId/:bucketname",checkAuthenticated, async(req,
 
 })
 
-app.post('/create-intent', async (req, res) => {
+app.post('/api/create-payment-intent', async (req, res) => {
+  try{
+  const {amount,currency} = req.body;
+  let destinationAccountId = '104901503247';
+  console.log('req body....',req.body);
+    //  const paymentIntent = await stripe.paymentIntents.create({
+    //     //amount: amount,
+    //     amount: 100,
+    //     currency: currency,
+    //     payment_method_types: ['card'],
+    //      automatic_payment_methods: {
+    //     enabled: true,
+    //   },
+    //    transfer_data: {
+    //     destination: destinationAccountId, 
+    //   },
+    //    // Optionally, collect an application fee for your platform
+    //   application_fee_amount: 100,
+    //  });
 
- 
+     const paymentIntent = await stripe.paymentIntents.create({
+        amount: amount,
+       currency: currency,
+      automatic_payment_methods: {
+        enabled: true,
+      }      
+     });
+      // Send the client secret to the client
+    res.json({
+      clientSecret: paymentIntent.client_secret
+    });
+  }catch(err){
+   logNginx("error in create payment api....",err);
+   console.log(err.stack)
+   console.log(err.message)
+    res.status(500).json({
+      error: err.message
+    });
+  }
 });
 
 

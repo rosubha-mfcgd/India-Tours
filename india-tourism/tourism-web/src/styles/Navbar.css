@@ -2,10 +2,14 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
-    background-color: #F5F5F5;
-    color: #fff;
+    background-color: #F8F9FA;
+    color: #F8F9FA;
     width: 100%;
   }
+  
+  .navbar-layout {
+    background-color: #333333;
+    }
   
   .navbar-left .logo {
     font-size: 1.5rem;
@@ -59,6 +63,7 @@
      overflow: 'auto';
      border: '1px solid #ccc';
      max-width: 100%;
+     background-color: #E5E7EB;
     
   }
 

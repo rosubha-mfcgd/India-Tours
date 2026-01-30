@@ -365,10 +365,9 @@ const BookingForm = ({access_token,tourDetails,triggerDisplayBookings}) =>{
       width="100%">
           {/* <Typography variant="body2" style={{ color: '#FFFFFF' }}>{bookingPageMessage}</Typography> */}
          <Paper sx={{ 
-          backgroundImage: "url('/background/booking.png')",
+         backgroundColor:'#F8F9FA',
           backgroundRepeat: 'no-repeat',
-        backgroundSize: 'cover', // Optional: adjusts the image size to cover the entire Paper
-        padding: 2, // theme.spacing(2)
+          padding: 2, // theme.spacing(2)
           textAlign: 'center', // Centers the text itself horizontally
           display: 'flex',
           flexDirection: 'column', // Ensures children stack vertically

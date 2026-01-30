@@ -38,7 +38,7 @@
     "passport-google-oauth20": "^2.0.0",
     "passport-saml": "^3.2.4",
     "simple-oauth2": "^5.1.0",
-    "stripe": "^20.2.0",
+    "stripe": "^20.3.0",
     "ws": "^8.18.3"
   },
   "devDependencies": {
