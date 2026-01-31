@@ -6,6 +6,7 @@ import '../../styles/sidebar.css';
 import '../../styles/bookingForm.css';
 import { useEffect, useState, useContext } from "react";
 import PaymentSuccessModal from "../modal/paymentSuccessModal";
+import PaymentQRCodeGenerator from "../modal/generateQRcodeForUPI"
 import { Elements, PaymentElement, useStripe, useElements } from '@stripe/react-stripe-js';
 import { getApiAccessToken,createIntent } from "../admin/admin";
 import success_animation from '../Assets/images/success_animation.gif';
@@ -63,6 +64,12 @@ import {
   const [errorMessage, setErrorMessage] = useState(null);
   const [clientSecret, setClientSecret] = useState(null);
   const [isModalOpen,setIsModalOpen] = useState(false);
+   const [qrCodeModalOpen,setQrCodeModalOpen] = useState(false);
+
+   const closeCardPayment =()=>{
+     isOpen = false;
+   }
+
    useEffect(()=>{
     let mounted = true;
 
@@ -95,6 +102,15 @@ import {
 
     const handleSubmit = async (event) => {
     event.preventDefault();
+    const submitterName = event.nativeEvent.submitter.name; 
+
+    if (submitterName === 'tryothermethod') {
+    
+      setQrCodeModalOpen(true);
+     
+    }
+    else if(submitterName === 'cardsubmit'){
+
 
    if (!stripe || !elements || !clientSecret) {
       return;
@@ -121,12 +137,12 @@ import {
         setErrorMessage(error.message);
        setIsModalOpen(false); // Ensure modal is closed on error
     }else {
-    // This point is reached when a synchronous payment succeeds (no redirect required).
-    // You can now open your success modal.
-    setErrorMessage(null);
-    setIsModalOpen(true);
+          // This point is reached when a synchronous payment succeeds (no redirect required).
+          // You can now open your success modal.
+          setErrorMessage(null);
+          setIsModalOpen(true);
+      }
   }
-  
 }
 
     if (!isOpen) return null;
@@ -143,6 +159,8 @@ import {
       display: 'flex',
       alignItems: 'center',
       justifyContent: 'center',
+      height: '100%',
+      overflowY: 'scroll',
       zIndex: 1000 // Ensure it's on top of other content
     }}>
       <div className="form-container">
@@ -153,17 +171,29 @@ import {
       {/* The button container for alignment */}
        <div className="button-container">
          <div className='submit-container'>
-       <button type="submit" disabled={!stripe}>Make Payment</button>  
+       <button type="submit" disabled={!stripe} name="cardsubmit" class="button"
+       value="cardsubmit" >Make Payment</button>  
+       </div>
+        <div className='submit-container'>
+       <button type="submit" disabled={!stripe} name="tryothermethod" class="button"
+       value="tryothermethod">Try other method</button>  
        </div>
        </div>  
        {/*Uncomment for live testing */}
-        {/* {errorMessage && <div>{errorMessage}</div>} */}
+        {errorMessage && <div>{errorMessage}</div>} 
 
   {/*Uncomment for live testing */}
-    {errorMessage && 
+    {isModalOpen && 
    
     <PaymentSuccessModal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)} />
     }
+
+    {qrCodeModalOpen && 
+   
+      <PaymentQRCodeGenerator isOpen={qrCodeModalOpen} onClose={() => setQrCodeModalOpen(false)} 
+      amount={totalpackagecost} closeCardPayment={closeCardPayment} />
+    }
+
        </form>
       </div> 
        </div>

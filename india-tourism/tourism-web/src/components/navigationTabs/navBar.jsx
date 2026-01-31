@@ -4,7 +4,18 @@ import '../../styles/Cards.css';
 import '../../styles/sidebar.css';
 import { useEffect, useState, useContext } from "react";
 import {
+    TextField,
+    Button,
+    Table,
+    TableBody,
+    TableCell,
+    TableContainer,
+    TableHead,
+    TableRow,
+    Paper,
+    Modal,
     Box,
+    Snackbar,
     Card,
     Grid,
     Typography,
