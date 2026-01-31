@@ -13,6 +13,7 @@ import SideBarNotification from '../navigationTabs/sideBarNotification';
 import { NavContext } from '../navigationContext/navigationContext';
 import {validateBookingData} from "../admin/utility";
 import PaymentModal from "./payment";
+import PaymentQRCodeGenerator from "../modal/generateQRcodeForUPI";
 import {
     TextField,
     Button,
@@ -54,7 +55,8 @@ const PreviewForm = ({access_token,bookings,tourDetailsParam}) =>{
     const[bookingId, setBookingId] = useState('');
     const[bookingUpdateId, setBookingUpdateId] = useState('');
      const[errorMessage,setErrorMessage] = useState('');
-   
+    const [qrCodeModalOpen,setQrCodeModalOpen] = useState(false);
+
       const[totalpackageCost,setTotalpackagecost] = useState(null);
       
       const { notification} = useContext(NavContext);
@@ -93,6 +95,7 @@ function increment () {
         bookings[index-1][name]= event.target.value;
         console.log('bookingdata....',bookings);
     }
+
 const triggerEditable = () =>{
     setDisable(!disable);
 }
@@ -189,6 +192,18 @@ const handlePayment = (title, message) => {
   const handleCloseModal = () => {
     setIsModalOpen(false);
   };
+
+  const switchToQRcodeModal = () =>{
+    setQrCodeModalOpen(true)
+    setIsModalOpen(false)
+  }
+
+  const switchToCardPaymentModal = () =>{
+      setQrCodeModalOpen(false)
+    setIsModalOpen(true)
+  }
+
+
   useEffect (() =>{
     if(bookingId != '')
     {
@@ -463,7 +478,7 @@ const handlePayment = (title, message) => {
                   </div> 
                   :<div></div>
                    }
-        {stripePromise && totalpackageCost ?
+        {stripePromise && totalpackageCost  ?
           <Elements stripe={stripePromise} options={options}>
           <PaymentModal
         isOpen={isModalOpen}
@@ -471,9 +486,18 @@ const handlePayment = (title, message) => {
         title={modalContent.title}
         message={modalContent.message} 
         totalpackagecost={totalpackageCost}
+        onswitch = {switchToQRcodeModal}
         />
       </Elements>:<div/>
       }
+        {qrCodeModalOpen && !isModalOpen ?
+   
+      <PaymentQRCodeGenerator isOpen={qrCodeModalOpen} onClose={() => setQrCodeModalOpen(false)} 
+      amount={totalpackageCost} 
+      onswitch={switchToCardPaymentModal}
+      />:<div/>
+        }
+    
       </div>
     </div>)
 }

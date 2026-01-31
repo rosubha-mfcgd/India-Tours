@@ -44,7 +44,7 @@ import {
   } from "@mui/material";
 
   
-  const PaymentModal = ({ isOpen, onClose, title, message,totalpackagecost }) => {
+  const PaymentModal = ({ isOpen, onClose, title, message,totalpackagecost,onswitch }) => {
     // Define appearance options for the PaymentElement
   const appearance = {
     theme: 'stripe', // 'stripe' (default), 'flat', or 'none'
@@ -64,8 +64,7 @@ import {
   const [errorMessage, setErrorMessage] = useState(null);
   const [clientSecret, setClientSecret] = useState(null);
   const [isModalOpen,setIsModalOpen] = useState(false);
-   const [qrCodeModalOpen,setQrCodeModalOpen] = useState(false);
-
+  
    const closeCardPayment =()=>{
      isOpen = false;
    }
@@ -106,7 +105,7 @@ import {
 
     if (submitterName === 'tryothermethod') {
     
-      setQrCodeModalOpen(true);
+      onswitch();
      
     }
     else if(submitterName === 'cardsubmit'){
@@ -178,6 +177,9 @@ import {
        <button type="submit" disabled={!stripe} name="tryothermethod" class="button"
        value="tryothermethod">Try other method</button>  
        </div>
+        <div className='submit-container'>
+       <button  disabled={!stripe} name="close" class="button" onClick={onClose}>Close</button>  
+       </div>
        </div>  
        {/*Uncomment for live testing */}
         {errorMessage && <div>{errorMessage}</div>} 
@@ -188,11 +190,7 @@ import {
     <PaymentSuccessModal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)} />
     }
 
-    {qrCodeModalOpen && 
-   
-      <PaymentQRCodeGenerator isOpen={qrCodeModalOpen} onClose={() => setQrCodeModalOpen(false)} 
-      amount={totalpackagecost} closeCardPayment={closeCardPayment} />
-    }
+  
 
        </form>
       </div> 

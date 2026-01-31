@@ -24,7 +24,7 @@ import {
     CircularProgress
   } from "@mui/material";
 
-const PaymentQRCodeGenerator = ({ isOpen, onClose, amount, closeCardPayment }) => {
+const PaymentQRCodeGenerator = ({ isOpen, onClose, amount, onswitch }) => {
   
   const [qrCode, setQrCode] = useState('');
     // Define payment details
@@ -51,8 +51,7 @@ const PaymentQRCodeGenerator = ({ isOpen, onClose, amount, closeCardPayment }) =
     if(!qrCode)
     {
         generateQRCode();
-        closeCardPayment();
-    }
+     }
   });
 
   if (!qrCode) {
@@ -60,7 +59,21 @@ const PaymentQRCodeGenerator = ({ isOpen, onClose, amount, closeCardPayment }) =
   }
   if (!isOpen) return null;
   return (
-   
+    <div style={{
+      position: 'fixed',
+      top: 0,
+      left: 0,
+      right: 0,
+      bottom: 0,
+      backgroundColor: 'rgba(247, 240, 240, 0.7)',
+      display: 'flex',
+      alignItems: 'center',
+      justifyContent: 'center',
+      height: '100%',
+      overflowY: 'scroll',
+      zIndex: 1000 // Ensure it's on top of other content
+    }}>
+   <div className="modal">
       <div className="modal-content">
         <h2>Scan to Pay via UPI</h2>
         <p>Thank you for your purchase.</p>
@@ -81,10 +94,16 @@ const PaymentQRCodeGenerator = ({ isOpen, onClose, amount, closeCardPayment }) =
                          <div className="button-container">
                          <div className='submit-container'>
         <button onClick={onClose} class="button">Close</button>
+        
+        </div>
+         <div className='submit-container'>
+        <button onClick={onswitch} class="button">Try other method</button>
+        
         </div>
         </div>
       </div>
-    
+    </div>
+    </div>
   );
 };
 
