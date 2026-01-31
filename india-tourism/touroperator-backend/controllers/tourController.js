@@ -303,13 +303,14 @@ exports.getTourById = async (req, res) => {
     }
 };
 
+
 /**
  * Update specific tour fields
  */
 exports.updateTour = async (req, res) => {
   try {
     const tourId = req.params.id;
-    console.log("Updating tourId:", tourId);
+    console.log("Updating tourId:", tourId,req.body["recommend"]);
     if (!tourId) 
       return res.status(400).json({ error: "Invalid tour ID" });
 
@@ -317,7 +318,7 @@ exports.updateTour = async (req, res) => {
     const allowedFields = [
       "description", "state", "city", "category", "packageCost", "currency", "tourType",
       "startDate", "endDate", "days", "nights", "tripLength",
-      "maxTourist", "seatsLeft", "ticketCost"
+      "maxTourist", "seatsLeft", "ticketCost","recommend"
     ];
 
     const updates = {};
@@ -361,14 +362,13 @@ exports.updateTour = async (req, res) => {
           error: "maxTourist cannot be less than the number of already booked seats" 
         });
       }
-
       // Adjust seatsLeft automatically based on new maxTourist
       updates.seatsLeft = updates.maxTourist - bookedSeats;
     }
 
     // ----------------- Update tour
     tour = await Tour.findByIdAndUpdate(tourId, updates, { new: true, runValidators: true });
-
+    console.log("Tour updated...")
     res.json({ message: "Tour updated successfully", data: tour });
 
   } catch (err) {

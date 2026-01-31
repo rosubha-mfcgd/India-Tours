@@ -92,4 +92,16 @@ http://localhost:8080/realms/mitram-dev/protocol/openid-connect/token
 
 keycloak secret - yNPZfWcvwJ5jVGjysyVzGjsiqc4b10Jc
 
-AWS 
+
+https://docs.stripe.com/stripe-cli/install?install-method=docker
+
+stripe login --interactive
+
+stripe login --api-key {STRIPE_SECRET_KEY}
+
+
+Stripe local CLI -
+
+stripe listen --forward-to localhost:8090/api/stripe-webhook
+stripe trigger payment_intent.succeeded
+

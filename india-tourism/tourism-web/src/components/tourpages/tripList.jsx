@@ -79,7 +79,7 @@ const TripList = ({access_token,categoryId,cityList,showDetails}) =>{
         }
         return "";
     }
-   
+   //Fetch image by fileid returned from Mongo DB
     const getImageFromFileId = async(data,bucketname) =>{
             if(data != null){
               

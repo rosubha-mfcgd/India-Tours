@@ -440,7 +440,7 @@ app.get("/api/getImageFromDB/:fileId/:bucketname",checkAuthenticated, async(req,
       });
 
 })
-
+//Initiates Payment process
 app.post('/api/create-payment-intent', async (req, res) => {
   try{
   const {amount,currency} = req.body;
@@ -483,6 +483,35 @@ app.post('/api/create-payment-intent', async (req, res) => {
 });
 
 
+//Webhook that confirms stripe payment complete
+
+app.post('/api/stripe-webhook', express.raw({type: 'application/json'}), (req, res) => {
+  
+
+   const sig = req.headers['stripe-signature'];
+  let event;
+  const endpointSecret = process.env.STRIPE_PAYMENT_WEBHOOK_SIGNING_SECRET; // Get this from your Stripe Dashboard
+
+  try {
+    event = stripe.webhooks.constructEvent(req.body, sig, endpointSecret);
+  } catch (err) {
+    // Invalid signature
+    return res.status(400).send(`Webhook Error: ${err.message}`);
+  }
+
+   // Handle the event
+  if (event.type === 'payment_intent.succeeded') {
+    const paymentIntent = event.data.object;
+    // CRITICAL: Update your database to mark the order as paid
+    console.log(`PaymentIntent for ${paymentIntent.amount} was successful!`);
+    // Example: updateOrderInDB(paymentIntent.id, 'paid');
+  } else {
+    console.log(`Unhandled event type ${event.type}`);
+  }
+
+  // Return a 200 response to acknowledge receipt of the event
+  res.status(200).json({ received: true });
+})
 
 // Define routes and middleware
 app.listen(PORT, () => {

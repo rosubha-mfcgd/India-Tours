@@ -373,7 +373,6 @@ const handlePayment = (title, message) => {
                                                 style={{ color: '#0c0000ff' }}
                                                 variant="outlined" fullWidth>Email</InputLabel>
                                                 <OutlinedInput id="email" name="email" 
-                                                defaultValue = {booking.email} 
                                                 value={booking.email}
                                                 inputProps={{
                                                         maxLength: 50,
@@ -395,8 +394,8 @@ const handlePayment = (title, message) => {
                                                 <InputLabel 
                                                 style={{ color: '#0c0000ff' }}
                                                 variant="outlined" fullWidth>Mobile</InputLabel>
-                                                <OutlinedInput id="mobile" name="mobile" defaultValue = {booking.mobile} 
-                                                 value={booking.mobile}
+                                                <OutlinedInput id="mobile" name="mobile" 
+                                                value={booking.mobile}
                                                 disabled={disable} 
                                                 inputProps={{
                                                     maxLength: 10,
@@ -418,8 +417,7 @@ const handlePayment = (title, message) => {
                                                   style={{ color: '#080000ff' }}
                                                   variant="outlined" fullWidth>Age Group</InputLabel>
                                                  <OutlinedInput id="ageGroup" name="ageGroup" 
-                                                 defaultValue = {booking.ageGroup} 
-                                                 value={booking.ageGroup}
+                                                  value={booking.ageGroup}
                                                  disabled={disable}  
                                                  inputProps={{maxLength: 20}}
                                                 sx={{
@@ -439,7 +437,6 @@ const handlePayment = (title, message) => {
                                                   style={{ color: '#080000ff' }}
                                                   variant="outlined" fullWidth>Gender</InputLabel>
                                                  <Input id="gender" name="gender" 
-                                                 defaultValue = {booking.gender} 
                                                  value={booking.gender}
                                                  disabled={disable}  
                                                  inputProps={{maxLength: 10}}

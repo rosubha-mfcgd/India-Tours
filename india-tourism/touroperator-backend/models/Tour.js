@@ -18,7 +18,7 @@ const tourSchema = new mongoose.Schema(
     tourType: { type: String, enum: ["Domestic", "International"], required: true },
     ticketCost: { type: Number, required: true },
     currency: { type: String, default: "INR" },
-
+     recommend: { type : String },
     city: { type: Number, ref: "City", required: true },    // changed
     state: { type: Number, ref: "State", required: true },   // changed
     category: { type: Number, ref: "Category", required: true },// changed

@@ -98,7 +98,7 @@ import {
         clearTimeout(timer); // Clean up the timer
     };
     },[]);
-
+   //Submits the payment  data to server backend
     const handleSubmit = async (event) => {
     event.preventDefault();
     const submitterName = event.nativeEvent.submitter.name; 

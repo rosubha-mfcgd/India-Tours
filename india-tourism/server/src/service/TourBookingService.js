@@ -48,9 +48,7 @@ constructor(){
                     
                     console.log('transaction created....',data);
                     bookings = await bookingRepository.create(data);
-
-                   
-                    if(bookings){
+                   if(bookings){
                        console.log('User successfully booked with object id ',bookings);
                         console.log('bookings...',bookings);
                         bookingId = bookings.bookingId;

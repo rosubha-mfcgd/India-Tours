@@ -1,62 +1,46 @@
-import React, { useState, useEffect } from 'react';
+import  { useState, useEffect } from 'react';
 // Import the UPI QR library
-import { UPIQR } from '@adityavijay21/upiqr';
+import QRCode from 'react-qr-code';
 
 
 import {
-    TextField,
-    Button,
-    Table,
-    TableBody,
-    TableCell,
-    TableContainer,
-    TableHead,
-    TableRow,
-    Paper,
-    Modal,
-    Box,
-    Snackbar,
-    Card,
+     Card,
     Grid,
     Typography,
     CardMedia,
-    CardContent,
-    CircularProgress
+    CardContent
   } from "@mui/material";
 
 const PaymentQRCodeGenerator = ({ isOpen, onClose, amount, onswitch }) => {
   
-  const [qrCode, setQrCode] = useState('');
+  //const [qrCode, setQrCode] = useState('');
+  let upiId = 'shop@ybl';
+  let name = 'Tourism Payment';
     // Define payment details
-  const upiDetails = {
-    upiId: 'shop@ybl', // Your UPI ID
-    name: 'My Awesome Shop', // Your name or business name
-    amount: amount, // Optional: fixed amount
-    transactionNote: 'Payment for tour booking', // Optional: note
-  };
+  const upiDetails = `upi://pay?pa=${upiId}&pn=${encodeURIComponent(name)}&am=${amount}&cu=INR`;
+  
+  // useEffect(()=>{
+  //   async function generateQRCode()
+  //   {
+  //       try{
+  //           // Generate the QR code as a data URL (PNG)
+  //       const { qr } = await new UPIQR()
+  //         .set(upiDetails)
+  //         .generate();
+  //       setQrCode(qr);
+  //       }catch(err){
+  //           console.log("Error using QR code :-",err);
+  //       }
+  //   }
+  //   if(!qrCode)
+  //   {
+  //       generateQRCode();
+  //    }
+  // });
 
-  useEffect(()=>{
-    async function generateQRCode()
-    {
-        try{
-            // Generate the QR code as a data URL (PNG)
-        const { qr } = await new UPIQR()
-          .set(upiDetails)
-          .generate();
-        setQrCode(qr);
-        }catch(err){
-            console.log("Error using QR code :-",err);
-        }
-    }
-    if(!qrCode)
-    {
-        generateQRCode();
-     }
-  });
-
-  if (!qrCode) {
-    return <div>Loading QR Code...</div>;
-  }
+  // if (!qrCode) {
+  //   return <div>Loading QR Code...</div>;
+  // }
   if (!isOpen) return null;
   return (
     <div style={{
@@ -69,6 +53,7 @@ const PaymentQRCodeGenerator = ({ isOpen, onClose, amount, onswitch }) => {
       display: 'flex',
       alignItems: 'center',
       justifyContent: 'center',
+      padding: '16px',
       height: '100%',
       overflowY: 'scroll',
       zIndex: 1000 // Ensure it's on top of other content
@@ -80,9 +65,10 @@ const PaymentQRCodeGenerator = ({ isOpen, onClose, amount, onswitch }) => {
           <Card className="card"
                      >
                     
-                    <CardMedia component= "img"  height="100"
+                    {/* <CardMedia component= "img"  height="100"
                     image = {qrCode} alt="shop@ybl" 
-                    />
+                    /> */}
+                     <QRCode value={upiDetails} size={256} />
                                      
                     <CardContent>
                         <Typography variant="body2" color="text.secondary" 

@@ -11,13 +11,14 @@ import {
   FormControl,
   InputLabel,
   Select,
+  Checkbox,
   MenuItem,
 } from "@mui/material";
 import EditIcon from "@mui/icons-material/Edit";
 import DeleteIcon from "@mui/icons-material/Delete";
 
 import TourModal from "./TourModal";
-import { getTours, deleteTour } from "../../apiconfig/tourApi";
+import { getTours, deleteTour,updateTour } from "../../apiconfig/tourApi";
 import { getImage } from "../../apiconfig/imageDetailsApi";
 import { getStates } from "../../apiconfig/stateApi";
 import { getCities } from "../../apiconfig/cityApi";
@@ -42,6 +43,8 @@ export default function TourDashboard() {
   const [tourToDelete, setTourToDelete] = useState(null);
   const [deleteModalOpen, setDeleteModalOpen] = useState(false);
   const [deletedTourDesc, setDeletedTourDesc] = useState("");
+    //Set checkbox to promote your trip
+  const [checked, setChecked] = useState([]);
 
   // ---------------- Filters data
   const [states, setStates] = useState([]);
@@ -53,6 +56,30 @@ export default function TourDashboard() {
   const [selectedState, setSelectedState] = useState("");
   const [selectedCity, setSelectedCity] = useState("");
   const [selectedCategory, setSelectedCategory] = useState("");
+
+
+  const handleChange = async(event,tourid) => {
+    
+    let isChecked = event.target.checked;
+
+    console.log("event.target.checked....",isChecked)
+      setChecked(prev =>
+      prev.includes(tourid)
+        ? prev.filter(i => i !== tourid) // Uncheck: remove from array
+        : [...prev, tourid]             // Check: add to array
+    );
+    let data = {"recommend":isChecked ?"Y":"N"}
+    console.log("data....",data)
+   
+      let tour_update = await updateTour(tourid, data);
+      if(tour_update)
+      {
+        console.log('update tours...',tour_update.data)
+        
+        console.log("Tour recommended....",checked)
+      }
+    
+  };
 
   // ---------------- Fetch filters
   const fetchFilters = async () => {
@@ -82,7 +109,9 @@ const fetchTours = async () => {
     console.log("Sending params:", params);
     
     const res = await getTours(params);
+    if(res){
     setTours(res.data || []);
+   }
   } catch (err) {
     console.error("Failed to fetch tours", err);
   }
@@ -103,6 +132,7 @@ const fetchTours = async () => {
   // ---------------- Effects
   // Initial load: filters
   useEffect(() => {
+    
     fetchFilters();
   }, []);
 
@@ -116,6 +146,18 @@ const fetchTours = async () => {
     tours.forEach(fetchImageBlob);
     return () => Object.values(imageMap).forEach(URL.revokeObjectURL);
   }, [tours]);
+
+ // Populate recommended trip checkbox
+  useEffect(() => {
+    tours.forEach((tour)=>{
+        setChecked(prev =>
+           tour.recommend && tour.recommend == 'Y'? [...prev,tour._id]: 
+            prev.filter(i => i !== tour._id)
+        );
+     
+    });
+    }, [tours]);
+
 
   // ---------------- Filter cities by selected state
   useEffect(() => {
@@ -225,6 +267,8 @@ const fetchTours = async () => {
       </Stack>
 
       {/* Tour List */}
+      {tours && tours.length >0 ?
+
       <Stack spacing={2}>
         {tours.map((tour) => (
           <Card key={tour._id} sx={{ display: "flex" }}>
@@ -269,8 +313,18 @@ const fetchTours = async () => {
                 Max Tourist: {tour.maxTourist} | Seats Left: {tour.seatsLeft}
               </Typography>
               <Typography variant="body2">
-                Dates: {new Date(tour.startDate).toLocaleDateString()} – {new Date(tour.endDate).toLocaleDateString()}
+                Dates: {new Date(tour.startDate).toLocaleDateString()} - {new Date(tour.endDate).toLocaleDateString()}
               </Typography>
+
+               <Typography variant="body2">
+               Promote your trip 
+             
+                <Checkbox
+              checked={checked.includes(tour._id)}
+              onChange={(event)=>handleChange(event,tour._id)}
+              inputProps={{ 'aria-label': 'controlled' }}
+            />
+    </Typography>
             </CardContent>
 
             {imageMap[tour._id] && (
@@ -283,8 +337,8 @@ const fetchTours = async () => {
             )}
           </Card>
         ))}
-      </Stack>
-
+      </Stack>:<div/>
+}
       {/* Modals */}
       {openModal && (
         <TourModal
