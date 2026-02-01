@@ -79,7 +79,7 @@ const performBookings = async(req,res,retries = 3, delay = 1000) =>{
             
                 if(bookings)
                 {
-                  let responseData = {};
+                  let responseData = null;
                   let result = [];
                   for(let primarybooking of bookings.primarybookings)
                   {
