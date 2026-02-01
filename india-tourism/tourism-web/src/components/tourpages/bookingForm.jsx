@@ -45,7 +45,7 @@ import {
   } from "@mui/material";
 
 import MenuItem from '@mui/material/MenuItem';
-const BookingForm = ({access_token,tourDetails,triggerDisplayBookings}) =>{
+const BookingForm = ({access_token,tourDetails,triggerDisplayBookings,triggerEditBookingForm}) =>{
     console.log('tourdetails.....',tourDetails);
     const [startBooking,setStartBooking] = useState(false);
     const [touristCount, setTouristCount] = useState(0);
@@ -120,7 +120,7 @@ const BookingForm = ({access_token,tourDetails,triggerDisplayBookings}) =>{
          }
       }
     }
-
+//Create form for each tourist
     const createForms = async(noOfTourists) =>
     {
           let result = [];
@@ -140,23 +140,23 @@ const BookingForm = ({access_token,tourDetails,triggerDisplayBookings}) =>{
                   result.push(data);
               }
             }
-        else{
-            let count = result.length;
-            for(let primarybooking of currentBooking.primarybookings)
-            {
-               let data = {"key":(count+1),"value":primarybooking}
+            else{
+                let count = result.length;
+                for(let primarybooking of currentBooking.primarybookings)
+                {
+                  let data = {"key":(count+1),"value":primarybooking}
 
-                  result.push(data);
-                  count++;
-            }
-            for(let dependantbooking of currentBooking.dependantbookings)
-            {
-               let data = {"key":(count+1),"value":dependantbooking}
+                      result.push(data);
+                      count++;
+                }
+                for(let dependantbooking of currentBooking.dependantbookings)
+                {
+                  let data = {"key":(count+1),"value":dependantbooking}
 
-                  result.push(data);
-                  count++;
-            }
-            setCurrentBooking('');
+                      result.push(data);
+                      count++;
+                }
+                setCurrentBooking('');
           }
           console.log('result...',result);
           setTouristCount(result);
@@ -183,7 +183,7 @@ const BookingForm = ({access_token,tourDetails,triggerDisplayBookings}) =>{
         }
       }
     }
-
+    //Validate the booking data
     const validateFields= async() =>{
        let errMsg = null;
        
@@ -211,6 +211,7 @@ const BookingForm = ({access_token,tourDetails,triggerDisplayBookings}) =>{
           }
           //validate booking fields before submission 
          let errMsg =  await validateFields();
+         //Display error message if there is any missing or error fields
           if(errMsg)
           {
             setErrorMessage(errMsg);
@@ -241,43 +242,27 @@ const BookingForm = ({access_token,tourDetails,triggerDisplayBookings}) =>{
     }
  
     useEffect(()=>{
-      if(document.getElementById('numberOfTourist')){
+      if(document.getElementById('numberOfTourist'))
+        {
           let noofTourists = document.getElementById('numberOfTourist').value;
           createForms(noofTourists);
        
       }
     },[noOfTourist]);
 
+    useEffect(()=>{
+         setBookingPageMessage(process.env.REACT_APP_BOOKING_PAGE_MESSAGE);
+        setStartBooking(true);
+        setShowBookingBtn(false);
+        createForms(0);
+    },[]);
     
     return(
-        
+        <div className='navbar-grid'>
             <div className = "center-container">
               
                     <div className="original-content">
-                      {showBookingBtn ? 
-                       <Box
-      component="form"
-      sx={{
-        '& .MuiTextField-root': { m: 1, width: '25ch' },
-        display: 'flex',
-        flexDirection: 'column',
-        alignItems: 'center',
-        padding: 2,
-        border: '1px solid #ccc',
-        borderRadius: 2,
-        maxWidth: 400,
-        margin: 'auto',
-        bgcolor: 'hsla(0, 73%, 50%, 1.00)',
-        cursor: 'pointer',
-         animation: 'blink-animation 5s linear infinite;'
-      }}
-      noValidate 
-      autoComplete="off" onClick={initBooking}>
-         <Typography variant="body2" style={{ color: 'rgba(17, 17, 17, 1)' }}>
-                  Click me to book your trip to {tourDetails.locationName} with {tourDetails.tourManagerName}    
-        </Typography> 
-           </Box>:<div></div>
-              }
+                    
 {displayErrorDialog?
         <Dialog
         open={dialogOpen}
@@ -332,25 +317,7 @@ const BookingForm = ({access_token,tourDetails,triggerDisplayBookings}) =>{
                            />
                           </TableCell>     
                         </TableRow>
-                         <TableRow>
-                         <TableCell sx={{border:"none"}}>
-                           <Typography variant="body2" style={{ color: '#FFFFFF' }}>
-                            Please enter the booking ID of the trip you want to attend?
-                            </Typography>
-                        </TableCell>
-                         <TableCell sx={{border:"none"}}>
-                         <CssTextField id="bookingid" 
-                          sx={{ color: '#FFFFFF' }}
-                          label="Booking id (Optional)" 
-                           defaultValue={bookingid} 
-                           onBlur={showCurrentBookings}  slotProps={{
-                           htmlInput: {
-                            maxLength: 8, // Set the maximum length to 8 characters
-                             },
-                            }}
-                         />
-                         </TableCell>
-                      </TableRow>
+                         
                     </TableBody>
                 </Table>
             </TableContainer>
@@ -365,7 +332,7 @@ const BookingForm = ({access_token,tourDetails,triggerDisplayBookings}) =>{
       width="100%">
           {/* <Typography variant="body2" style={{ color: '#FFFFFF' }}>{bookingPageMessage}</Typography> */}
          <Paper sx={{ 
-         backgroundColor:'#F8F9FA',
+         backgroundColor:'#97a7b6',
           backgroundRepeat: 'no-repeat',
           padding: 2, // theme.spacing(2)
           textAlign: 'center', // Centers the text itself horizontally
@@ -472,7 +439,7 @@ const BookingForm = ({access_token,tourDetails,triggerDisplayBookings}) =>{
           labelId="select-label"
           id="ageGroup" name="ageGroup"
           label="ageGroup"
-           defaultValue={"Adult"} sx={{ borderRadius: 'inherit',
+           value={"Adult"} sx={{ borderRadius: 'inherit',
             backgroundColor: 'rgba(109, 101, 101, 0.53)' 
             }} 
            >
@@ -511,26 +478,17 @@ const BookingForm = ({access_token,tourDetails,triggerDisplayBookings}) =>{
         }
         { startBooking && touristCount && touristCount.length >0? 
        
-         <div className = "center-container" style={{
-                    width: "fit-content",
-                    margin: "auto",
-                  }}>
-                    
-       
-          
-          
         <div className="button-container">
          <div className='submit-container'>
                     <button type="submit" 
                         class="button"
                         >Go Back</button>
 
-                            <button type="submit" 
+                    <button type="submit" 
                        class="button" onClick={submitBookings}>Submit your Booking</button>
-                       
         </div>
       </div>
-        </div>:<div></div>
+       :<div></div>
     }
          </div>
          {notification ?
@@ -540,7 +498,7 @@ const BookingForm = ({access_token,tourDetails,triggerDisplayBookings}) =>{
                      :<div></div>
                       }
          </div> 
-          
+         </div> 
     );
   }
 export default BookingForm

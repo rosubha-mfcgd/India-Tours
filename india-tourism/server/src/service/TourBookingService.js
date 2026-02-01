@@ -131,22 +131,7 @@ constructor(){
             console.log("domesticOrInternational...",domesticOrInternational);
             console.log("tourManagerId...",tourManagerId);
 
-            let existingBooking = await bookingRepository.findOne({"tourManagerId": tourManagerId,
-                "locationName":locationName,
-                 $expr: {
-                     $eq: [
-                  { $dateTrunc: { date: "$startDate", unit: "day" } },
-                  { $dateTrunc: { date: new Date(startDate), unit: "day" } }, 
-               
-              ],
-                    $eq: [
-                  { $dateTrunc: { date: "$endDate", unit: "day" } },
-                  { $dateTrunc: { date: new Date(endDate), unit: "day" } }, 
-               
-              ]},
-               "domesticOrInternational":domesticOrInternational,
-                "bookingId":bookingid
-            });
+            let existingBooking = await bookingRepository.findOne({"bookingId":bookingid});
             if(!existingBooking)
             {
                 console.log('Booking is not found for booking id:-',bookingid);

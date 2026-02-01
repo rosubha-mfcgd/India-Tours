@@ -69,7 +69,7 @@ const PreviewForm = ({access_token,bookings,tourDetailsParam}) =>{
           const options = {
      mode: 'payment', // or 'setup'
   amount: 100,
-  currency: 'usd',
+  currency: 'inr',
   };
      //Used to close dialog box
     const handleClickOpenOrClose = () => {
@@ -129,7 +129,8 @@ const submitBooking = async()=>{
            
               for(let booking of bookings)
               {
-                  if(booking.ageGroup === 'Minor')
+          //Add as primary booking if tourist is Adult or Senior citizen
+                  if(booking.ageGroup !== 'Minor')
                   {
                       primary_booking[primarycount] = booking;
                       primarycount++;

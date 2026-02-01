@@ -14,6 +14,7 @@ import TripDetails from "./tripDetails";
 import BookingForm from "./bookingForm";
 import PreviewForm from "./previewbooking";
 import CustomBookingForm from "./custombookingForm"; 
+import EditBookingForm from "./editbookingForm";
 import { getCities } from "../admin/admin";
 import { WhatsAppWidget } from 'react-whatsapp-widget';
 import 'react-whatsapp-widget/dist/index.css'; // Import the default styles
@@ -26,6 +27,7 @@ const Welcome =()=>{
      const [showTrips,setShowTrips] = useState(false);
      const [showTripDetails,setShowTripDetails] = useState(false);
      const [bookTrip,setBookTrip] = useState(false);
+      const [editTrip,setEditTrip] = useState(false);
      const [showCategories,setShowCategories] = useState(false);
      const [previewbooking,setPreviewbooking] = useState(false);
      const [searchOptions,setSearchOptions] = useState(false);
@@ -120,7 +122,7 @@ const Welcome =()=>{
           console.log('Tasks not defined yet');
        }
    }
-
+//
 const openBookingForm = (tourDetails) =>{
   console.log('tourDetails...',tourDetails);
     if(tourDetails)
@@ -133,6 +135,21 @@ const openBookingForm = (tourDetails) =>{
       setBookTrip(false);
     }
 }
+//
+const triggerEditBookingForm = async(tourDetailInfo) =>{
+      if(tourDetailInfo){
+        setShowTrips(false);
+        setShowTripDetails(false);
+        setBookTrip(false);
+        setShowCategories(false);
+        setTourDetailsParam(tourDetailInfo);
+        
+       setEditTrip(true);
+                
+      }else{
+        setPreviewbooking(false);
+      }
+    }
       //This method populates the information in trip detail screen
        const showDetails = async (tourDetails,tourManager) =>{
         if(tourDetails){
@@ -242,7 +259,8 @@ const openBookingForm = (tourDetails) =>{
               tourDetails={tripDetailsParam} 
               cityList = {cityList}
               triggerDisplayOptionsByCatId={triggerDisplayOptionsByCatId} 
-              openBookingForm={openBookingForm}/> 
+              openBookingForm={openBookingForm} 
+              triggerEditBookingForm={triggerEditBookingForm}/> 
             :(bookTrip)?
             <BookingForm access_token={access_token} tourDetails={tripDetailsParam} 
            triggerDisplayOptionsByCatId={triggerDisplayOptionsByCatId} 
@@ -258,6 +276,9 @@ const openBookingForm = (tourDetails) =>{
             :(previewbooking)?
             <PreviewForm access_token={access_token} bookings={bookings} 
             tourDetailsParam = {tourDetailsParam}/>
+            :(editTrip)?
+            <EditBookingForm access_token={access_token} 
+            tourDetails = {tourDetailsParam} />
             : (userBooking)?
             <CustomBookingForm access_token={access_token} cityList = {cityList}
             triggerDisplayOptionsByCatId={triggerDisplayOptionsByCatId}/>

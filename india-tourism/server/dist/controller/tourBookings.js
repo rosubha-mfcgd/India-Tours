@@ -64,7 +64,18 @@ const getBookingsByBookingId = (req_1, res_1, ...args_1) => __awaiter(void 0, [r
         let tourBookingService = new TourBookingService();
         let bookings = yield tourBookingService.getBookingsByBookingId(tourManagerId, locationName, startDate, endDate, domesticOrInternational, bookingId);
         if (bookings) {
-            res.status(200).send(bookings);
+            let responseData = {};
+            let result = [];
+            for (let primarybooking of bookings.primarybookings) {
+                responseData = Object.assign(Object.assign({}, responseData), { "name": primarybooking.name, "mobile": primarybooking.mobile, "email": primarybooking.email, "ageGroup": primarybooking.ageGroup, "gender": primarybooking.gender });
+            }
+            result.push[responseData];
+            for (let dependantbooking of bookings.dependantbookings) {
+                responseData = Object.assign(Object.assign({}, responseData), { "name": dependantbooking.name, "mobile": dependantbooking.mobile, "email": dependantbooking.email, "ageGroup": dependantbooking.ageGroup, "gender": dependantbooking.gender });
+            }
+            result.push[responseData];
+            console.log('result.....', result);
+            res.status(200).send(result);
         }
         else {
             res.status(200).send({

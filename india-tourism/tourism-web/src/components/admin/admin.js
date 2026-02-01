@@ -373,7 +373,7 @@ return res_data;
 }
 
 
-
+//Get completed bookings by booking id
 export const getBookingsByBookingId = async(data) =>{
   let res_data = "failed to fetch bookings by booking id";
      try{

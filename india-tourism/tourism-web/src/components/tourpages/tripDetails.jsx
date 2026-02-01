@@ -26,7 +26,8 @@ import {
     CardContent
   } from "@mui/material";
   //Shows the complete details of the trip
-  const TripDetails = ({tourDetails,triggerDisplayOptionsByCatId,openBookingForm,cityList,access_token}) =>{
+  const TripDetails = ({tourDetails,triggerDisplayOptionsByCatId,openBookingForm,
+    cityList,access_token,triggerEditBookingForm}) =>{
 
   const navigate = useNavigate();
 
@@ -262,11 +263,14 @@ import {
                         class="button"
                         >Go Back</button>
 
-                            <button type="submit" onClick={()=>{
+                      <button type="submit" onClick={()=>{
                         openBookingForm(tourDetails)}}
                        class="button" 
                         >Book My Trip</button>
 
+                         <button type="submit" 
+                       class="button" 
+                       onClick={()=>triggerEditBookingForm(tourDetails)}>Edit your Booking</button>
               </div>
 
          </div>

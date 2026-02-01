@@ -79,7 +79,36 @@ const performBookings = async(req,res,retries = 3, delay = 1000) =>{
             
                 if(bookings)
                 {
-                    res.status(200).send(bookings);
+                  let responseData = {};
+                  let result = [];
+                  for(let primarybooking of bookings.primarybookings)
+                  {
+                    
+                      responseData = {...responseData,"name":primarybooking.name,"mobile":primarybooking.mobile,
+                        "email": primarybooking.email, "ageGroup": primarybooking.ageGroup, 
+                        "gender": primarybooking.gender
+                      };
+                                        
+                  }
+                  if(responseData)
+                  {
+                   result.push(responseData);
+                  }
+                  for(let dependantbooking of bookings.dependantbookings)
+                  {
+                    
+                      responseData = {...responseData,"name":dependantbooking.name,"mobile":dependantbooking.mobile,
+                        "email": dependantbooking.email, "ageGroup": dependantbooking.ageGroup, 
+                        "gender": dependantbooking.gender
+                      };
+                                        
+                  }
+                  if(responseData)
+                  {
+                   result.push(responseData);
+                  }
+                 console.log('result.....',result)
+                    res.status(200).send(result);
                 }else{
                     res.status(200).send(
                 {
