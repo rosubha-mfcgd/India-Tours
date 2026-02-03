@@ -1,4 +1,4 @@
-import React, { useState,useContext } from "react";  
+import React, { useState,useContext, useEffect } from "react";  
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import NavBar from '../navigationTabs/navBar';
 import Product from '../navigationTabs/products';
@@ -101,12 +101,7 @@ const Welcome =()=>{
 
         if(productId)
         {
-          if(cityList.length === 0){
-              let cities = await getCities();
-              if(cities){
-                setCityList(cities);
-              }
-        }
+         
           setProductID(productId);
           setShowCategories(true);
         }else{
@@ -219,6 +214,30 @@ const triggerEditBookingForm = async(tourDetailInfo) =>{
       }
      }
       
+     useEffect (()=>{
+       let mounted = true;
+
+            const timer = setTimeout(() =>{
+                
+        const getCityList = async () =>{
+         if(cityList.length === 0){
+              let cities = await getCities();
+              if(cities){
+                console.log('cities...',cities);
+                setCityList(cities);
+              }
+        }
+     }
+     if(mounted && cityList && cityList.length===0)
+     {
+        getCityList();
+     }
+      return () => {
+        mounted = false; // Set flag to false on cleanup
+        clearTimeout(timer); // Clean up the timer
+    };
+    },[cityList]);
+  });
 
       const toggleChat = () => {
         setIsChatOpen(!isChatOpen);

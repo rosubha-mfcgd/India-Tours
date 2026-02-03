@@ -154,14 +154,15 @@ const TripList = ({access_token,categoryId,cityList,showDetails}) =>{
                     getTripListByCategoryId(categoryId);
                 }
    },[]);
+   //Perform filtering based on trip length, price of tour package, and trip type
          useEffect(()=>{
             const selectedTours = [];
-                // console.log('alltours in useEffect...',alltours)
+                 console.log('alltours in useEffect...',alltours)
                 
                
-                    if(tours.length === 0)
+                    if(alltours.length > 0)
                     {
-                         
+                         console.log('selectedValue....',selectedValue)
                         if(selectedValue === 'International' || selectedValue === 'Domestic'){
                       
                         for(let tour of alltours)
@@ -169,6 +170,7 @@ const TripList = ({access_token,categoryId,cityList,showDetails}) =>{
                             let tripLength = (new Date(tour.endDate).getTime() - 
                             new Date(tour.startDate).getTime())/(24*3600*1000);
                                 console.log('tripLength....',tripLength);
+                                console.log('tour....',tour)
                             if(tour.tourType === selectedValue  && 
                                 Number(tour.packageCost)<=(Number(priceValue)) && 
                             Number(tripLength)<=Number(triplengthValue) && (
@@ -182,17 +184,17 @@ const TripList = ({access_token,categoryId,cityList,showDetails}) =>{
                             }
                            
                         }
-                        
-                        }else if(selectedValue === 'B'){
+                        }
+                        else if(selectedValue === 'B'){
                             console.log('selectedTours....',selectedTours)
+                            console.log('priceValue....',priceValue)
+                            console.log('priceValue....',priceValue)
                              for(let tour of alltours)
                             {
                                  let tripLength = (new Date(tour.endDate).getTime() - 
                             new Date(tour.startDate).getTime())/(24*3600*1000);
                                 if(Number(tour.packageCost)<=(Number(priceValue)) && 
-                            Number(tripLength)<=Number(triplengthValue) && (tourManagerMap.get(tour.tourManagerId) && 
-                            (tourManagerMap.get(tour.tourManagerId)).citycode == cityvalue)||
-                        (tourManagerMap.get(tour.tourManagerId).citycode == '0'))
+                            Number(tripLength)<=Number(triplengthValue))
                         {
                                   selectedTours.push(tour);
                         }

@@ -69,7 +69,7 @@ const PreviewForm = ({access_token,bookings,tourDetailsParam}) =>{
           const options = {
      mode: 'payment', // or 'setup'
   amount: 100,
-  currency: 'inr',
+  currency: 'usd',
   };
      //Used to close dialog box
     const handleClickOpenOrClose = () => {

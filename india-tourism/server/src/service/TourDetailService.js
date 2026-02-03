@@ -57,7 +57,7 @@ static async getAllCities()
   }
   return [];
 }
-
+//Get list of all states
 static async getAllStates()
 {
   let states = [];
@@ -74,7 +74,7 @@ static async getAllStates()
   return [];
 }
 
-
+//Get list of trip categories - Hill Station, Sea beach ETC.
 async getCategories(productID)
 {
   let categories = [];
@@ -95,7 +95,7 @@ async getCategories(productID)
       }
   return categories;
   } 
-
+//Get list of products
   async getProducts()
 {
   let products = [];
@@ -114,7 +114,7 @@ async getCategories(productID)
        }
   return products;
   } 
-
+//Update category as favorite/not favorite so that the specific category shows up as first
   async updateCategoryAsFavorite (categoryId,status) {
     let categories = '';
     let result = '';
@@ -139,7 +139,7 @@ async getCategories(productID)
     }
     return result;
   }
-
+//Get list of tours based on category ID
   async getToursByCategoryId(categoryId)
 {
   let plannedTours = [];
@@ -167,8 +167,8 @@ async getCategories(productID)
   return plannedTours;
   }
 
-
-    async getRecommendedTours()
+//Get list of recommended tours
+async getRecommendedTours()
 {
   let plannedTours = [];
   try{
@@ -198,7 +198,7 @@ async getCategories(productID)
 
 
 
-
+//Get tour iternaries for  a specific trip
   async getTourItenriesForTrip(locationName,categoryId,tourManagerId,
     startDate,endDate)
   {
@@ -236,7 +236,7 @@ async getCategories(productID)
       }
   return itinerary;
   }
-  
+  //search the list of tour operators
 static async getTourManagers()
 {
   let tourOperators = [];
@@ -258,7 +258,7 @@ static async getTourManagers()
   return tourOperators;
   } 
 
-
+//Search the list of cities
   async getCities()
 {
   let cities = [];

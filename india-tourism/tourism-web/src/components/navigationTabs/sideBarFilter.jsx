@@ -1,10 +1,11 @@
 import React, {useEffect, useState } from "react";
-import styled from "styled-components";
+
 import Radio from '@mui/material/Radio';
 import RadioGroup from '@mui/material/RadioGroup';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import FormControl from '@mui/material/FormControl';
 import FormLabel from '@mui/material/FormLabel';
+import { getCities } from "../admin/admin";
 import { Link } from "react-router-dom";
 import * as FaIcons from "react-icons/fa";
 import * as AiIcons from "react-icons/ai";
@@ -36,7 +37,7 @@ import {
 import {ListItem, ListItemButton, ListItemText} 
    from '@mui/material';
   import ChevronRightIcon from '@mui/icons-material/ChevronRight';
-
+import StyledDrawer from "../Utilities/styledDrawer";
 import '../../styles/sidebarForSorting.css';
  const SideBarFilter=({selectedValue,setSelectedValue,priceValue, 
   setPriceValue,
@@ -46,9 +47,11 @@ import '../../styles/sidebarForSorting.css';
     
      // Handle changes to the slider's value
   const handlePriceSliderChange = (event) => {
+    console.log('price filter...',event.target.value)
     setPriceValue(event.target.value);
   };
   const handleTripLengthSliderChange = (event) => {
+    console.log('trip length filter...',event.target.value)
     setTriplengthValue(event.target.value);
   };
   const handleCityValueChange = (event) => {
@@ -59,12 +62,7 @@ import '../../styles/sidebarForSorting.css';
  const handleDrawerClose = () => {
             setOpen(false);
         };
-    const StyledDrawer = styled(Drawer)(({ theme }) => ({
-  '& .MuiDrawer-paper': {
-    backgroundColor: "#01130ad5" // Set your desired background color here
-     },
-    }));
-
+    
 const handleChange = (event) => {
       setSelectedValue(event.target.value);
    }; 
@@ -101,39 +99,14 @@ const handleChange = (event) => {
                         <Typography variant="body2" color="common.white">Filter </Typography>
                     </Box>
                     <List>
-                      <ListItem>
-                         
-                        <FormControl fullWidth>
-                           <Typography variant="body2" color="common.black">
-                               Tour Operator Location
-                            </Typography>
-
-  <NativeSelect
-    defaultValue={cityvalue}
-    inputProps={{
-      name: 'cities',
-      id: 'uncontrolled-native',
-    }} onChange={handleCityValueChange}
-   >
-{
- cityList && cityList.length>0?
-cityList.map((city) =>(
-
-<option value={city.citycode}>{city.cityname}</option>
-
-))
-:<option  aria-label="None"  value="0">All</option>
-}
-</NativeSelect>
-</FormControl>
-                      </ListItem>
+                      
                         {
                         ['Price', 'TripLength','DomesticOrInternational'] .
                          map((text, index) => ( (
-                            <ListItem>
+                            <ListItem key={index}>
                               {
                                text == 'Price'?
-                              <div>
+                              <div key = {'Price'+index}>
                             <Typography variant="body2" color="common.black">
                                 {text} - {priceValue}
                             </Typography>
@@ -152,7 +125,7 @@ cityList.map((city) =>(
                         </datalist>
                                 </div>:
                                 text == 'TripLength'?
-                              <div>
+                              <div key = {'TripLength'+index}>
                             <Typography variant="body2" color="common.black">
                                 {text} - {triplengthValue}
                             </Typography>
@@ -171,7 +144,7 @@ cityList.map((city) =>(
                         </datalist>
                                 </div>:
                             text === 'DomesticOrInternational'?
-                                <div>
+                                <div key={'DomesticOrInternational'+index}>
                             <FormControl component="fieldset">
                                 <FormLabel component="legend">
                                <Typography variant="body2" color="common.black">Type of Tour?

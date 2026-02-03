@@ -312,10 +312,10 @@ const EditBookingForm = ({access_token,tourDetails}) =>{
           }}>
           {
           bookingData && bookingData.length >0 ?
-            bookingData.map((data)=>(
+           (
               <DynamicTable columns={columns} data={bookingData}/>  
              
-       )):<div></div>
+       ):<div/>
           }</Paper></div>:<div></div>
         }
         { startBooking && touristCount && touristCount.length >0? 
