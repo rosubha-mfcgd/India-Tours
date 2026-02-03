@@ -2,7 +2,7 @@ import  { useState, useEffect } from 'react';
 // Import the UPI QR library
 import QRCode from 'react-qr-code';
 import '../../styles/bookingForm.css';
-
+ import { NavContext } from '../navigationContext/navigationContext';
 import {
      Card,
     Grid,
@@ -13,34 +13,8 @@ import {
 
 const CreateBooking = ({ isOpen, onClose, amount, onswitch }) => {
   
-  //const [qrCode, setQrCode] = useState('');
-  let upiId = 'shop@ybl';
-  let name = 'Tourism Payment';
-    // Define payment details
-  const upiDetails = `upi://pay?pa=${upiId}&pn=${encodeURIComponent(name)}&am=${amount}&cu=INR`;
-  
-  // useEffect(()=>{
-  //   async function generateQRCode()
-  //   {
-  //       try{
-  //           // Generate the QR code as a data URL (PNG)
-  //       const { qr } = await new UPIQR()
-  //         .set(upiDetails)
-  //         .generate();
-  //       setQrCode(qr);
-  //       }catch(err){
-  //           console.log("Error using QR code :-",err);
-  //       }
-  //   }
-  //   if(!qrCode)
-  //   {
-  //       generateQRCode();
-  //    }
-  // });
+ const {prepareBookingData} = useContext(NavContext);
 
-  // if (!qrCode) {
-  //   return <div>Loading QR Code...</div>;
-  // }
   if (!isOpen) return null;
   return (
     <div className="bookingDivContainer-modal">

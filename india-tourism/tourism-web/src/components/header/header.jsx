@@ -19,10 +19,6 @@ import {
      Link,
      CssBaseline,
   } from "@mui/material";
-import IconButton from '@mui/material/IconButton';
-import Menu from '@mui/material/Menu';
-import MenuItem from '@mui/material/MenuItem';
-import MenuIcon from '@mui/icons-material/Menu'; // Or any other icon
 import { NavContext } from '../navigationContext/navigationContext.jsx';
 
 

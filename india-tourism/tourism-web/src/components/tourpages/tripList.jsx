@@ -157,9 +157,9 @@ const TripList = ({access_token,categoryId,cityList,showDetails}) =>{
    //Perform filtering based on trip length, price of tour package, and trip type
          useEffect(()=>{
             const selectedTours = [];
-                 console.log('alltours in useEffect...',alltours)
+                // console.log('alltours in useEffect...',alltours)
                 
-               
+               console.log('Filter effect start...')
                     if(alltours.length > 0)
                     {
                          console.log('selectedValue....',selectedValue)
@@ -188,16 +188,17 @@ const TripList = ({access_token,categoryId,cityList,showDetails}) =>{
                         else if(selectedValue === 'B'){
                             console.log('selectedTours....',selectedTours)
                             console.log('priceValue....',priceValue)
-                            console.log('priceValue....',priceValue)
+                            console.log('triplengthValue....',triplengthValue)
                              for(let tour of alltours)
                             {
+                                //Find trip length calculation 
                                  let tripLength = (new Date(tour.endDate).getTime() - 
                             new Date(tour.startDate).getTime())/(24*3600*1000);
                                 if(Number(tour.packageCost)<=(Number(priceValue)) && 
                             Number(tripLength)<=Number(triplengthValue))
-                        {
+                            {
                                   selectedTours.push(tour);
-                        }
+                             }
                         }
                         }
                          
