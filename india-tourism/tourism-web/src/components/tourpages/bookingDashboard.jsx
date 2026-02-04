@@ -1,6 +1,7 @@
 import '../../styles/Navbar.css';
 import '../../styles/Cards.css';
 import '../../styles/sidebar.css';
+import '../../styles/bookingdashboard.css';
 import '../../styles/bookingForm.css';
 import CustomButton from '../Utilities/CustomButtons'
 import { useEffect, useState, useContext} from "react";
@@ -11,7 +12,6 @@ import close_button from '../Assets/images/close-button.png';
 import failure_animation from '../Assets/images/failure_animation.gif';
 import {validateBookingData} from "../admin/utility";
 import CreateBooking from "../modal/createBooking"
-import { NavContext } from '../navigationContext/navigationContext';
 import {
     TextField,
     Button,
@@ -48,7 +48,7 @@ import {
 import MenuItem from '@mui/material/MenuItem';
 import DynamicTable from '../Utilities/DynamicTable';
  import { NavContext } from '../navigationContext/navigationContext';
-const CreateBookingDashboard = ({access_token,tourDetails,triggerDisplayBookings,
+const BookingDashboard = ({access_token,tourDetails,triggerDisplayBookings,
     triggerEditBookingForm}) =>{
 
  const [openBookingForm, setOpenBookingForm] = useState(true);       
@@ -71,18 +71,7 @@ const CreateBookingDashboard = ({access_token,tourDetails,triggerDisplayBookings
       // Example height for visualization
       width="100%">
           {/* <Typography variant="body2" style={{ color: '#FFFFFF' }}>{bookingPageMessage}</Typography> */}
-         <Paper sx={{ 
-         backgroundColor:'#F8F9FA',
-          backgroundRepeat: 'no-repeat',
-          padding: 2, // theme.spacing(2)
-          textAlign: 'center', // Centers the text itself horizontally
-          display: 'flex',
-          flexDirection: 'column', // Ensures children stack vertically
-          justifyContent: 'center', // Centers children vertically
-          alignItems: 'center', // Centers children horizontally
-          height: '100%',
-          width: '100%', // Example width for demonstration 
-          }}>
+         <Paper className='bookingDashboard-Paper'>
           {
           bookingData && bookingData.length >0 ?
            (
@@ -92,10 +81,14 @@ const CreateBookingDashboard = ({access_token,tourDetails,triggerDisplayBookings
           }</Paper></div> 
 {
     openBookingForm ? 
-    <CreateBooking isOpen={openBookingForm} onClose={() => setOpenBookingForm(false)}/>:<div/>
+
+   
+    <CreateBooking isOpen={openBookingForm} onClose={() => setOpenBookingForm(false)}/>
+        
+        :<div/>
 }
                     </div>
                     </div>
                     </div>
   )}
-export default CreateBookingDashboard
+export default BookingDashboard

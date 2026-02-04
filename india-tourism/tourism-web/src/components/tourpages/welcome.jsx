@@ -6,12 +6,11 @@ import DisplayOptions from '../navigationTabs/showOptions'
 import Header from '../header/header';
 import Layout from '../Layout/layout';
 import UserProfile from '../userprofile/userprofile';
-
+import BookingDashboard from "./bookingDashboard";
 import '../../styles/loginsignup.css';
  import {useLocation } from 'react-router-dom';
 import TripList from "./tripList";
 import TripDetails from "./tripDetails";
-import BookingForm from "./bookingForm";
 import PreviewForm from "./previewbooking";
 import CustomBookingForm from "./custombookingForm"; 
 import EditBookingForm from "./editbookingForm";
@@ -52,7 +51,7 @@ const Welcome =()=>{
       console.log('categoryId....',categoryId)
       setShowTripDetails(false);
 
-        if(categoryId && categoryId != 9 && categoryId != 10)
+        if(categoryId && categoryId !== 9 && categoryId !== 10)
         {
           console.log('here in categoryId 1...')
           setTripListParam(categoryId);
@@ -281,7 +280,7 @@ const triggerEditBookingForm = async(tourDetailInfo) =>{
               openBookingForm={openBookingForm} 
               triggerEditBookingForm={triggerEditBookingForm}/> 
             :(bookTrip)?
-            <BookingForm access_token={access_token} tourDetails={tripDetailsParam} 
+            <BookingDashboard access_token={access_token} tourDetails={tripDetailsParam} 
            triggerDisplayOptionsByCatId={triggerDisplayOptionsByCatId} 
            triggerDisplayBookings={triggerDisplayBookings}/>
              :(showCategories) ?

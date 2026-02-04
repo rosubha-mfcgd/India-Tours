@@ -17,7 +17,7 @@
      position: 'fixed';
       top: 0;
       left: 0;
-      right: 0;
+      right: -20;
       bottom: 0;
       background-color: 'rgba(247, 240, 240, 0.7)';
       display: 'flex';
@@ -26,8 +26,32 @@
       padding: '16px';
       height: '100%';
       overflow-Y: 'scroll';
+     
       z-Index: 1000; 
   }
+  .modal-content {
+  /* This sets the width to 30% of the viewport width */
+  width: 30vw;
+  /* Add other necessary styles like background-color, padding, etc. */
+  background-color: white;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  /* Centers the modal if combined with a centering container */
+}
+
+/* Optional: Styles for the modal background/overlay */
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: right;
+  align-items: right;
+}
   .addremove-buttonText {
     color: white;
     font-size: 16;
@@ -48,6 +72,13 @@
   justify-content: center; /* Centers horizontally */
   align-items: center;    /* Centers vertically */
   height: 40vh; /* Ensures the container takes up the full viewport height */
+}
+
+.button-container-2 {
+  display: flex;
+  justify-content: center; /* Centers horizontally */
+  align-items: center;    /* Centers vertically */
+  height: 20vh; /* Ensures the container takes up the full viewport height */
 }
 
 .blinking-button {
