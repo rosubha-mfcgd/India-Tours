@@ -48,7 +48,7 @@ const CreateBooking = ({ isOpen, onClose }) => {
     ageGroup: '',
     gender: ''
   });
- 
+ const touristNo = bookingData.length+1;
  //Update the booking payload with fields for each tourist
     const updateBooking = async(event) =>{
       
@@ -58,9 +58,24 @@ const CreateBooking = ({ isOpen, onClose }) => {
         ...prevData,
         [name]: type === 'checkbox' ? checked : value,
       }));
-
-      console.log('tourist data....',touristData)
+      if(touristData)
+      {
+        console.log('tourist data....',touristData)
+        
+      }
     }
+
+const addTourist = async() =>{
+    console.log('tourist data in addtourist...',touristData)
+    if(touristData && touristData.length>0)
+    {
+        prepareBookingData(touristData);
+        if(bookingData && bookingData.length>0)
+        {
+            console.log('bookingdata...',bookingData)
+        }
+    }
+}
 
   if (!isOpen) return null;
   return (
@@ -75,7 +90,7 @@ const CreateBooking = ({ isOpen, onClose }) => {
                         <TableCell>
                             <Typography variant="body2" color="text.secondary" 
                         sx={{whiteSpace: 'pre-wrap'}}>
-                        Add Tourist Details
+                        Add Details for Tourist# {touristNo}
                         </Typography>
                         </TableCell>
                         </TableRow>
@@ -187,7 +202,7 @@ const CreateBooking = ({ isOpen, onClose }) => {
                   </TableContainer>
                   <div className="button-container-2">
           <div className='submit-container'>
-        <button onClick={onClose} class="button">Add Tourist</button>
+        <button onClick={addTourist} class="button">Add Tourist</button>
         </div>
         <div className='submit-container'>
         <button onClick={onClose} class="button">Close</button>
