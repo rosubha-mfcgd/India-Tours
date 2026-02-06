@@ -116,7 +116,7 @@ const Welcome =()=>{
           console.log('Tasks not defined yet');
        }
    }
-//
+//Open the trip booking form
 const openBookingForm = (tourDetails) =>{
   console.log('tourDetails...',tourDetails);
     if(tourDetails)
@@ -176,7 +176,7 @@ const triggerEditBookingForm = async(tourDetailInfo) =>{
             console.log('end date....',tourDetails.endDate)
             console.log('image....',tourDetails.image)
             console.log('domesticOrInternational....',tourDetails.domesticOrinternational)
-            console.log('categoryId....',tourDetails.categoryId)
+            console.log('categoryId....',tourDetails.category)
         if(tourDetails)
         {
    
@@ -198,7 +198,7 @@ const triggerEditBookingForm = async(tourDetailInfo) =>{
                 "seats_left":tourDetails.seatsLeft,
                 "ticket_cost":tourDetails.ticketCost,
                 "itinerary": tourDetails.itinerary,
-                "categoryId":tourDetails.categoryId,
+                "categoryId":tourDetails.category,
                 "domesticOrInternational":tourDetails.tourType
             };
 
@@ -282,7 +282,8 @@ const triggerEditBookingForm = async(tourDetailInfo) =>{
             :(bookTrip)?
             <BookingDashboard access_token={access_token} tourDetails={tripDetailsParam} 
            triggerDisplayOptionsByCatId={triggerDisplayOptionsByCatId} 
-           triggerDisplayBookings={triggerDisplayBookings}/>
+           triggerDisplayBookings={triggerDisplayBookings}
+           />
              :(showCategories) ?
              <NavBar access_token={access_token} 
              showDetails={showDetails}

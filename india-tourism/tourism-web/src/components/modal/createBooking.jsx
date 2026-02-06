@@ -1,8 +1,10 @@
 // Import the UPI QR library
 import QRCode from 'react-qr-code';
 import '../../styles/bookingForm.css';
- import { NavContext } from '../navigationContext/navigationContext';
- import { useEffect, useState, useContext} from "react";
+import { useEffect, useState, useContext} from "react";
+import {validateBookingData} from "../admin/utility";
+import failure_animation from '../Assets/images/failure_animation.gif';
+import { styled } from '@mui/material/styles';
 import {
     TextField,
     Button,
@@ -38,9 +40,9 @@ import {
   } from "@mui/material";
 
   
-const CreateBooking = ({ isOpen, onClose }) => {
+const CreateBooking = ({ isOpen, onClose,prepareBookingData,bookingData }) => {
   
- const {prepareBookingData,bookingData} = useContext(NavContext);
+ //const {prepareBookingData,bookingData} = useContext(NavContext);
  const [touristData, setTouristData] = useState({
     name: '',
     email: '',
@@ -48,12 +50,15 @@ const CreateBooking = ({ isOpen, onClose }) => {
     ageGroup: '',
     gender: ''
   });
+   const[displayErrorDialog,setDisplayErrorDialog] = useState(false);
+     const[errorMessage,setErrorMessage] = useState('');
+      const [dialogOpen, setDialogOpen] = useState(false);
  const touristNo = bookingData.length+1;
  //Update the booking payload with fields for each tourist
     const updateBooking = async(event) =>{
       
     const { name, value, type, checked } = event.target;
-        console.log('Here....');
+        
       setTouristData(prevData=>({
         ...prevData,
         [name]: type === 'checkbox' ? checked : value,
@@ -65,17 +70,58 @@ const CreateBooking = ({ isOpen, onClose }) => {
       }
     }
 
+    //Opens or close the dialog box for error message validations
+   const handleClickOpenOrClose = () => {
+        
+        setDialogOpen(!dialogOpen);
+        if(!dialogOpen)
+        {
+           // setBookingId('');
+            //setBookingUpdateId('');
+            //setDisable(true)
+             setDisplayErrorDialog(false);
+         // setDialogOpen(false);
+        }
+    };
+
+     //Validate the booking data
+    const validateFields= async() =>{
+       let errMsg = null;
+       
+                 console.log('booking to be validated....',touristData)
+              errMsg =  await validateBookingData(touristData);
+              if(errMsg)
+                {
+                  return errMsg;
+                }else{
+                  return null;
+                }            
+    }
+
 const addTourist = async() =>{
     console.log('tourist data in addtourist...',touristData)
-    if(touristData && touristData.length>0)
+    if(touristData)
     {
+         let errMsg =  await validateFields();
+         if(errMsg)
+          {
+            setErrorMessage(errMsg);
+            setDisplayErrorDialog(true)
+            setDialogOpen(true);
+            
+          }
         prepareBookingData(touristData);
-        if(bookingData && bookingData.length>0)
+        if(touristData && touristData.length>0)
         {
-            console.log('bookingdata...',bookingData)
+            
+            console.log('bookingdata...',touristData);
+            
         }
     }
 }
+useEffect(()=>{
+setTouristData({ name: '', email: '', mobile: '', ageGroup: '',gender: ''})
+},[touristNo])
 
   if (!isOpen) return null;
   return (
@@ -83,7 +129,33 @@ const addTourist = async() =>{
    <div  className="modal-overlay">
       <div className="modal-content">
         <div>
+            {displayErrorDialog?
+        <Dialog
+        open={dialogOpen}
+        onClose={handleClickOpenOrClose}
+        aria-labelledby="dialog-title"
+        aria-describedby="dialog-description"
+      >
+        <DialogTitle id="dialog-title">Error Message</DialogTitle>
+        <DialogContent>
+           
+          <DialogContentText id="dialog-description">
+          
+          {errorMessage}
+          </DialogContentText>
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={handleClickOpenOrClose}>Cancel</Button>
+          <Button onClick={handleClickOpenOrClose} autoFocus>
+           OK
+          </Button>
+          {dialogOpen?
+          <img src={failure_animation} alt="" width="40" height="40"/>:
+          <div></div>}
+        </DialogActions>
+      </Dialog>:<div></div>}
              <TableContainer sx={{boxShadow: 'none'}}>
+                
                 <Table>
                   <TableBody>
                      <TableRow>

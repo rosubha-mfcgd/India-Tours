@@ -70,12 +70,12 @@ import {
       
         useEffect(()=>{
            async function getTourImage() {
-            let imageData = await getImageFromFileId(tourDetails.image.fileId,'tourImages');
-            if(imageData)
-            {
-              setImage(imageData);
-              setLoading(false);
-            }
+                let imageData = await getImageFromFileId(tourDetails.image.fileId,'tourImages');
+                if(imageData)
+                {
+                  setImage(imageData);
+                  setLoading(false);
+                }
           }
           if(!image){
             setLoading(true);
