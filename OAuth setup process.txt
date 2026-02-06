@@ -88,6 +88,10 @@ docker run -it --name keycloak3 --entrypoint /bin/bash <image_name>
 docker start -ai keycloak2
 
 
+docker run -d --name mitram-redis -p 6379:6379 redis:latest
+docker exec -it mitram-redis redis-cli
+
+
 http://localhost:8080/realms/mitram-dev/protocol/openid-connect/token
 
 keycloak secret - yNPZfWcvwJ5jVGjysyVzGjsiqc4b10Jc

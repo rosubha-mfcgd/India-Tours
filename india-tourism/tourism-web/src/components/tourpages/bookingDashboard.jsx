@@ -140,7 +140,7 @@ const BookingDashboard = ({access_token,tourDetails,triggerDisplayBookings,
           {
           bookingData && bookingData.length >0 ?
            (
-              <DynamicTable columns={columns} data={bookingData}/>  
+              <DynamicTable columns={columns} data={bookingData} setData={setBookingData}/>  
              
        ):<div/>
           }</Paper></div> 

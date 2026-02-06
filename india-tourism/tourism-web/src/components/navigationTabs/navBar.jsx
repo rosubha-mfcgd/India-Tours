@@ -2,6 +2,7 @@ import { NavLink , useLocation,useNavigate } from "react-router-dom";
 import '../../styles/Navbar.css';
 import '../../styles/Cards.css';
 import '../../styles/sidebar.css';
+import { ArrowLeft } from 'react-bootstrap-icons';
 import { useEffect, useState, useContext } from "react";
 import {
     TextField,
@@ -15,7 +16,9 @@ import {
     Paper,
     Modal,
     Box,
+    IconButton,
     Snackbar,
+    Fab,
     Card,
     Grid,
     Typography,
@@ -29,6 +32,9 @@ from "../admin/admin";
 import { NavContext } from '../navigationContext/navigationContext';
 import SideBarNotification from './sideBarNotification'
 import FavoriteIcon from '@mui/icons-material/Favorite';
+
+import ArrowBackIcon from '@mui/icons-material/ArrowBack';
+import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
 
 const NavBar = ({access_token,triggerDisplayOptionsByCatId,
     productID,showDetails}) =>{
@@ -105,7 +111,7 @@ const NavBar = ({access_token,triggerDisplayOptionsByCatId,
                        }
                    }
            }
-
+            //Change the date to words
             function changeDateToWords(dateObject)
                 {
                     const date = new Date(dateObject);
@@ -113,6 +119,10 @@ const NavBar = ({access_token,triggerDisplayOptionsByCatId,
                     console.log('formatted date...', date.toLocaleDateString('en-GB')); // Or 'en-GB' for a different locale
                     return date.toLocaleDateString('en-GB');
                 }
+
+                 const handleGoBack = () => {
+                        console.log('Go back...')
+                    };
        
           useEffect(()=>{
             let mounted = true;
@@ -216,7 +226,21 @@ const NavBar = ({access_token,triggerDisplayOptionsByCatId,
                 <div>
 
             <div className="navbar">
-           
+                 
+                    <IconButton onClick={handleGoBack}  sx={{
+          backgroundColor: 'primary.main', // styles the button background
+          '&:hover': {
+            backgroundColor: 'primary.dark', // styles the hover background
+          },
+          // Target the icon part using its class name MuiSvgIcon-root
+          '& .MuiSvgIcon-root': {
+            color: 'white', // styles the icon color
+            fontSize: '2rem', // styles the icon size
+          },
+        }}>
+                        <ArrowBackIcon/>
+                    </IconButton> 
+                    
             <Collapse in={packageTripSectionOpen} timeout="auto" unmountOnExit>
              <div className="navbar-sectioned-list-container">
                 
@@ -231,7 +255,7 @@ const NavBar = ({access_token,triggerDisplayOptionsByCatId,
                            </div>
                            </header>
                             
-                         <Grid container spacing={0.5} justify="center" width="70%" >
+                         <Grid container spacing={0.5} justify="center" width="100%" >
                        
 
              {
@@ -242,7 +266,7 @@ const NavBar = ({access_token,triggerDisplayOptionsByCatId,
                     
                <div>
                  
-                <Grid item xs = {12} sm={4} key={item._id}  >
+                <Grid item xs = {12} sm={3} key={item._id}  >
 
                     <Card className="navbar-card" sx={{ marginBottom: 2 }}
                      >
@@ -307,6 +331,23 @@ const NavBar = ({access_token,triggerDisplayOptionsByCatId,
            
              </div>
             </Collapse>
+                    <IconButton 
+                     aria-label="forward"
+        sx={{
+          backgroundColor: 'primary.main', // styles the button background
+          '&:hover': {
+            backgroundColor: 'primary.dark', // styles the hover background
+          },
+          // Target the icon part using its class name MuiSvgIcon-root
+          '& .MuiSvgIcon-root': {
+            color: 'white', // styles the icon color
+            fontSize: '2rem', // styles the icon size
+          },
+        }}
+                    
+                    onClick={handleGoBack}>
+                        <ArrowForwardIcon/>
+                    </IconButton>   
             </div>
         <div className="navbar">
            
@@ -409,7 +450,7 @@ const NavBar = ({access_token,triggerDisplayOptionsByCatId,
                             {/* <Button variant="contained" onClick={handleFamilyTripToggle} sx={{ mb: 2 }}>
                              {personalTripSectionOpen ? 'Hide Details' : 'Show Details'}
                              </Button> */}
-                            <Grid container spacing={0.5} justify="center" width="70%" >
+                            <Grid container spacing={0.5} justify="center" width="100%" >
                              
                                   {
              personalTripItems && personalTripItems.length>0 ?
@@ -417,7 +458,7 @@ const NavBar = ({access_token,triggerDisplayOptionsByCatId,
 
                 personalTripItems.map((personalTripItem) => (
                         <div>
-                            <Grid item xs = {12} sm={4} key={personalTripItem._id}  >
+                            <Grid item xs = {12} sm={3} key={personalTripItem._id}  >
 
                     <Card className="navbar-card" sx={{ marginBottom: 2 }}
                      >

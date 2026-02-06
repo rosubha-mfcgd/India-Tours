@@ -1,0 +1,27 @@
+.floating-btn {
+  /* Positioning */
+  position: fixed;
+  bottom: 20px; /* Adjust as needed */
+  right: 20px; /* Adjust as needed */
+
+  /* Appearance */
+  width: 60px;
+  height: 60px;
+  border-radius: 50%; /* Makes it circular */
+  background-color: #007bff; /* Example color */
+  color: white;
+  border: none;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  z-index: 1000; /* Ensure it is above other content */
+
+  /* Optional: Hover effect */
+  transition: background-color 0.3s;
+}
+
+.floating-btn:hover {
+  background-color: #0056b3;
+}

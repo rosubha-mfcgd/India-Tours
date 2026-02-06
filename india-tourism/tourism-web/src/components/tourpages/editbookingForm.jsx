@@ -116,7 +116,8 @@ const EditBookingForm = ({access_token,tourDetails}) =>{
           { field: 'mobile', headerName: 'Mobile' },
           { field: 'email', headerName: 'Email' },
           { field: 'ageGroup', headerName: 'AgeGroup' },
-          { field: 'gender', headerName: 'Gender' }
+          { field: 'gender', headerName: 'Gender' },
+          
   ];
 
 
@@ -313,7 +314,7 @@ const EditBookingForm = ({access_token,tourDetails}) =>{
           {
           bookingData && bookingData.length >0 ?
            (
-              <DynamicTable columns={columns} data={bookingData}/>  
+              <DynamicTable columns={columns} data={bookingData} setData={setBookingData}/>  
              
        ):<div/>
           }</Paper></div>:<div></div>
