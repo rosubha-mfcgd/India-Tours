@@ -33,7 +33,8 @@ export default function LocationsPage() {
   // Fetch cities for the selected state
   useEffect(() => {
     if (selectedState) {
-      getCitiesByState(selectedState)
+      
+         getCitiesByState(selectedState)
         .then(res => setLocations(res.data || []))
         .catch(err => console.error('Failed to fetch cities for state:', err));
     } else {
@@ -56,16 +57,34 @@ export default function LocationsPage() {
     const validLocations = newLocations.filter(l => l.trim() !== '');
 
     try {
-      for (const locName of validLocations) {
-        await createCity({ name: locName.trim(), state: selectedState });
-      }
-      alert('Locations saved successfully');
-      setNewLocations(['']);
-      // Refresh list after saving
-      const res = await getCitiesByState(selectedState);
-      setLocations(res.data || []);
-    } catch (err) {
+     
+      let data = {cities:validLocations, state: selectedState};
+       console.log('here in handleSaveLocations and data...',selectedState,data);
+      createCity(data).then(
+        updatedCity =>{
+      
+        console.log('updatedCity....',updatedCity);
+         setNewLocations(['']);
+          //  console.log('data....',data);
+               // Refresh list after saving
+      getCitiesByState(selectedState).then(
+          updatedCityList=>{
+            console.log('updatedCityList data....',updatedCityList.data)
+              setLocations(updatedCityList.data || []);
+                alert('Locations saved successfully');
+          }).catch((error)=>{
+            console.log('Failed to save locations...',error);
+          alert('Error saving locations');
+        })
+      }).catch((error)=>{
+
+          setNewLocations(['']);
+           console.log('Failed to save locations:',error.stack);
+           alert('Error saving locations');
+      });
+      } catch (err) {
       console.error('Failed to save locations:', err);
+      console.log(err.stack);
       alert('Error saving locations');
     }
   };

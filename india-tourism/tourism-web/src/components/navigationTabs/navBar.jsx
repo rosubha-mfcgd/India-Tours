@@ -262,7 +262,6 @@ const NavBar = ({access_token,triggerDisplayOptionsByCatId,
                             flexWrap: 'nowrap', // Prevent cards from wrapping to the next line
                             gap: 2, // Add spacing between cards (MUI v5 Stack/Box gap prop)
                             p: 2,
-                            border: '1px solid #ccc',
                             justify: 'center',
                             width: '100%'
                             }}>

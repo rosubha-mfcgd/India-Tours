@@ -17,7 +17,7 @@ export const getCitiesByState = (stateId) => axiosClient.get(`/cities/state/${st
  * Create a new city
  * @param {object} data - { name, stateId }
  */
-export const createCity = (data) => axiosClient.post('/cities', data);
+export const createCity = (data) =>  axiosClient.post('/cities', data);
 
 /**
  * Update a city

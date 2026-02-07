@@ -5,32 +5,49 @@ const getNextSequence = require("../utility/getNextSequence");
  */
 exports.addCity = async (req, res) => {
   try {
-    const { name, state } = req.body;
-
-    if (!name || !name.trim()) {
-      return res.status(400).json({ error: "City name is required" });
+    const { cities, state } = req.body;
+     const resultItems = [];
+    if (!cities || cities.length === 0) {
+      return res.status(400).json({ error: "City list is required" });
     }
 
     if (!state || isNaN(Number(state))) {
       return res.status(400).json({ error: "Valid stateId is required" });
     }
-
+    console.log('cities....',cities);
+    
+    for(let newcity of cities)
+    {
+        let name = newcity.trim();
+        console.log('new city....',name);
     // Generate numeric _id for City
     const numericId = await getNextSequence("city");
+   
+    if(numericId)
+    {
     console.log(' Generated city numericId ', numericId );
+
     const city = new City({
       _id: numericId,
-      name: name.trim(),
+      name: name,
       state: Number(state)
     });
 
-    await city.save();
-
-    res.status(201).json({
-      cityId: city._id,       // numeric city ID
-      name: city.name,
-      state: city.state
+    await city.save().then(savedCity =>{
+        console.log('city saved successfully:', savedCity);
+       resultItems.push( {
+      cityId: savedCity._id,       // numeric city ID
+      name: savedCity.name,
+      state: savedCity.state
     });
+    }).catch(error=>{
+         console.error('Error saving city:', error);
+    })
+    }
+}
+  res.status(201).json({resultItems});
+
+   
   } catch (err) {
     res.status(400).json({ error: err.message });
   }
