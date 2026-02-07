@@ -227,7 +227,7 @@ const NavBar = ({access_token,triggerDisplayOptionsByCatId,
 
             <div className="navbar">
                  
-                    <IconButton onClick={handleGoBack}  sx={{
+                    {/* <IconButton onClick={handleGoBack}  sx={{
           backgroundColor: 'primary.main', // styles the button background
           '&:hover': {
             backgroundColor: 'primary.dark', // styles the hover background
@@ -239,7 +239,7 @@ const NavBar = ({access_token,triggerDisplayOptionsByCatId,
           },
         }}>
                         <ArrowBackIcon/>
-                    </IconButton> 
+                    </IconButton>  */}
                     
             <Collapse in={packageTripSectionOpen} timeout="auto" unmountOnExit>
              <div className="navbar-sectioned-list-container">
@@ -255,7 +255,17 @@ const NavBar = ({access_token,triggerDisplayOptionsByCatId,
                            </div>
                            </header>
                             
-                         <Grid container spacing={0.5} justify="center" width="100%" >
+                         <Grid container spacing={0.5}  
+                         sx={{
+                            display: 'flex',
+                            overflowX: 'auto', // Enable horizontal scrolling
+                            flexWrap: 'nowrap', // Prevent cards from wrapping to the next line
+                            gap: 2, // Add spacing between cards (MUI v5 Stack/Box gap prop)
+                            p: 2,
+                            border: '1px solid #ccc',
+                            justify: 'center',
+                            width: '100%'
+                            }}>
                        
 
              {
@@ -331,7 +341,7 @@ const NavBar = ({access_token,triggerDisplayOptionsByCatId,
            
              </div>
             </Collapse>
-                    <IconButton 
+                    {/* <IconButton 
                      aria-label="forward"
         sx={{
           backgroundColor: 'primary.main', // styles the button background
@@ -347,7 +357,7 @@ const NavBar = ({access_token,triggerDisplayOptionsByCatId,
                     
                     onClick={handleGoBack}>
                         <ArrowForwardIcon/>
-                    </IconButton>   
+                    </IconButton>    */}
             </div>
         <div className="navbar">
            
