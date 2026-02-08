@@ -63,8 +63,8 @@ const { notification,loading, setLoading} = useContext(NavContext);
  const [openBookingForm, setOpenBookingForm] = useState(true);   
  const[displayErrorDialog,setDisplayErrorDialog] = useState(false);
   const[totalpackageCost,setTotalpackagecost] = useState(null);
-   const[bookingId, setBookingId] = useState('');
- const[errorMessage,setErrorMessage] = useState('');    
+   const[bookingId, setBookingId] = useState(null);
+ const[errorMessage,setErrorMessage] = useState(null);    
  const [dialogOpen, setDialogOpen] = useState(false);
 
  const[bookingData,setBookingData] = useState([]);
@@ -178,6 +178,8 @@ const { notification,loading, setLoading} = useContext(NavContext);
                         console.log('result...',result);
                         setBookingId(result.bookingid);
                         setLoading(false);
+                        setDialogOpen(true);
+                        setErrorMessage(null);
                     }
                   }       
     }
@@ -276,7 +278,7 @@ const { notification,loading, setLoading} = useContext(NavContext);
       }
     
       {
-                          dialogOpen && !errorMessage?
+                          dialogOpen && !displayErrorDialog && bookingId?
                            <Dialog
               open={dialogOpen}
               onClose={handleClickOpenOrClose}
@@ -286,11 +288,11 @@ const { notification,loading, setLoading} = useContext(NavContext);
               <DialogTitle id="dialog-title">{tourDetails.tourManagerName} Confirmation</DialogTitle>
               <DialogContent>
                     {
-                    !bookingId?
+                    bookingId?
                 <DialogContentText id="dialog-description">
                 
                  Bingo !! Your booking has been allocated with bookingId {bookingId}. 
-                 Ensure to complete payment by next 48 hours else this booking will be deactivated
+                 Proceed to complete your payment
                 </DialogContentText>:
                 <DialogContentText id="dialog-description">
                    Your trip booking failed. Try again.
