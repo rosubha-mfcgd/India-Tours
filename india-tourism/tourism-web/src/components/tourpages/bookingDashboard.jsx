@@ -9,9 +9,14 @@ import { styled } from '@mui/material/styles';
 import {getBookingsByBookingId} from "../admin/admin";
 import SideBarNotification from '../navigationTabs/sideBarNotification';
 import close_button from '../Assets/images/close-button.png';
+import { Elements, CardElement, useStripe, useElements } from '@stripe/react-stripe-js';
+import success_animation from '../Assets/images/success_animation.gif';
 import failure_animation from '../Assets/images/failure_animation.gif';
 import {validateBookingData} from "../admin/utility";
+import { performTripBooking } from "../admin/admin";
 import CreateBooking from "../modal/createBooking"
+import PaymentModal from "./payment";
+import PaymentQRCodeGenerator from "../modal/generateQRcodeForUPI";
 import {
     TextField,
     Button,
@@ -45,15 +50,19 @@ import {
     DialogActions
   } from "@mui/material";
 
-import MenuItem from '@mui/material/MenuItem';
+import { loadStripe } from '@stripe/stripe-js';
 import DynamicTable from '../Utilities/DynamicTable';
  import { NavContext } from '../navigationContext/navigationContext';
 const BookingDashboard = ({access_token,tourDetails,triggerDisplayBookings,
     triggerDisplayOptionsByCatId,
     triggerEditBookingForm}) =>{
 
+       const stripePromise = loadStripe(process.env.REACT_APP_STRIPE_PUBLISH_KEY);
+
  const [openBookingForm, setOpenBookingForm] = useState(true);   
  const[displayErrorDialog,setDisplayErrorDialog] = useState(false);
+  const[totalpackageCost,setTotalpackagecost] = useState(null);
+   const[bookingId, setBookingId] = useState('');
  const[errorMessage,setErrorMessage] = useState('');    
  const [dialogOpen, setDialogOpen] = useState(false);
  //const {bookingData} = useContext(NavContext);
@@ -69,6 +78,17 @@ const BookingDashboard = ({access_token,tourDetails,triggerDisplayBookings,
 
     }
  }
+
+  const[modalContent,setModalContent] = useState({ title: '', message: '' })
+  const[isModalOpen,setIsModalOpen] = useState(false)
+ const [qrCodeModalOpen,setQrCodeModalOpen] = useState(false);
+
+ 
+           const options = {
+      mode: 'payment', // or 'setup'
+   amount: 100,
+   currency: 'usd',
+   };
  
  const columns = [
           { field: 'name', headerName: 'Name' },
@@ -106,12 +126,55 @@ const BookingDashboard = ({access_token,tourDetails,triggerDisplayBookings,
             setDialogOpen(true);
             
           }else{
-            triggerDisplayBookings(bookingData,
-                        tourDetails);
+            // triggerDisplayBookings(bookingData,
+            //             tourDetails);
+            saveBooking(bookingData,tourDetails);
           }
     }
 
-    
+
+
+    //Submit bookings
+    const saveBooking = async(bookings,tourDetailsParam)=>{
+        let primary_booking = [];
+        let dependantbookings = [];
+        let primarycount = 0;
+        let depcount = 0;
+                  for(let booking of bookings)
+                  {
+              //Add as primary booking if tourist is Adult or Senior citizen
+                      if(booking.ageGroup !== 'Minor')
+                      {
+                          primary_booking[primarycount] = booking;
+                          primarycount++;
+                      }
+                      else
+                      {
+                          dependantbookings[depcount] = booking;
+                          depcount++;
+                      }
+                      
+                  }
+                  setTotalpackagecost((tourDetails.package_cost)*(bookings.length));
+                  if(!tourDetailsParam.bookingid)
+                  {
+                      let data = {tourManagerId:tourDetails.tourManagerId,
+                              locationName:tourDetails.locationName,
+                              startDate:tourDetails.startDate,
+                              endDate:tourDetails.endDate,
+                              domesticOrInternational:tourDetails.domesticOrInternational,
+                              package_cost:(tourDetails.package_cost)*(bookings.length),
+                              tourid: tourDetails.tourid,
+                              primarybookings:primary_booking,
+                              dependantbookings:dependantbookings,
+                          }
+                    let result = await performTripBooking(data);
+                    if(result){
+                        console.log('result...',result);
+                        setBookingId(result.bookingid);
+                    }
+                  }       
+    }
     //Opens or close the dialog box for error message validations
    const handleClickOpenOrClose = () => {
         
@@ -125,6 +188,27 @@ const BookingDashboard = ({access_token,tourDetails,triggerDisplayBookings,
          // setDialogOpen(false);
         }
     };
+
+
+    const handlePayment = (title, message) => {
+    handleClickOpenOrClose();
+    setModalContent({ title, message });
+    setIsModalOpen(true);
+  };
+
+  const handleCloseModal = () => {
+    setIsModalOpen(false);
+  };
+
+  const switchToQRcodeModal = () =>{
+    setQrCodeModalOpen(true)
+    setIsModalOpen(false)
+  }
+
+  const switchToCardPaymentModal = () =>{
+      setQrCodeModalOpen(false)
+    setIsModalOpen(true)
+  }
   return(
         <div className='navbar-grid'>
             <div className = "center-container">
@@ -144,7 +228,9 @@ const BookingDashboard = ({access_token,tourDetails,triggerDisplayBookings,
              
        ):<div/>
           }</Paper></div> 
-           {displayErrorDialog?
+         
+           {
+           displayErrorDialog?
         <Dialog
         open={dialogOpen}
         onClose={handleClickOpenOrClose}
@@ -169,6 +255,39 @@ const BookingDashboard = ({access_token,tourDetails,triggerDisplayBookings,
           <div></div>}
         </DialogActions>
       </Dialog>:<div></div>}
+      {
+                          dialogOpen && !errorMessage?
+                           <Dialog
+              open={dialogOpen}
+              onClose={handleClickOpenOrClose}
+              aria-labelledby="dialog-title"
+              aria-describedby="dialog-description"
+            >
+              <DialogTitle id="dialog-title">{tourDetails.tourManagerName} Confirmation</DialogTitle>
+              <DialogContent>
+                    {
+                    !bookingId?
+                <DialogContentText id="dialog-description">
+                
+                 Bingo !! Your booking has been allocated with bookingId {bookingId}. 
+                 Ensure to complete payment by next 48 hours else this booking will be deactivated
+                </DialogContentText>:
+                <DialogContentText id="dialog-description">
+                   Your trip booking failed. Try again.
+                </DialogContentText>
+                  }
+              </DialogContent>
+              <DialogActions>
+                <Button onClick={handleClickOpenOrClose}>Cancel</Button>
+                <Button onClick={()=>handlePayment('SUCCESS','SUCCESS')} >
+                  Proceed to Payment
+                </Button>
+                {dialogOpen?
+                <img src={success_animation} alt="" width="40" height="40"/>:<div></div>}
+              </DialogActions>
+            </Dialog>:<div></div>}
+      
+           
 {
     openBookingForm ? 
 
@@ -199,6 +318,27 @@ const BookingDashboard = ({access_token,tourDetails,triggerDisplayBookings,
         
         </div>:<div/>
     }
+
+
+     {stripePromise && totalpackageCost  ?
+          <Elements stripe={stripePromise} options={options}>
+          <PaymentModal
+        isOpen={isModalOpen}
+        onClose={handleCloseModal}
+        title={modalContent.title}
+        message={modalContent.message} 
+        totalpackagecost={totalpackageCost}
+        onswitch = {switchToQRcodeModal}
+        />
+      </Elements>:<div/>
+      }
+        {qrCodeModalOpen && !isModalOpen ?
+   
+      <PaymentQRCodeGenerator isOpen={qrCodeModalOpen} onClose={() => setQrCodeModalOpen(false)} 
+      amount={totalpackageCost} 
+      onswitch={switchToCardPaymentModal}
+      />:<div/>
+        }
 
                     </div>
                     </div>
