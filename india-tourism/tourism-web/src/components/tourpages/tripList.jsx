@@ -97,6 +97,29 @@ const TripList = ({access_token,categoryId,cityList,showDetails}) =>{
         return date.toLocaleDateString('en-GB');
     }
    
+    function getPrimaryContact(phones)
+    {
+        for(let phone of phones)
+        {
+            if(phone.isPrimary)
+            {
+                return phone.number;
+            }
+        }
+        return '';
+    }
+    function getSecondaryContact(phones)
+    {
+        let secondaryContact = '';
+        for(let phone of phones)
+        {
+            if(!phone.isPrimary)
+            {
+                secondaryContact+=phone.number;
+            }
+        }
+        return secondaryContact;
+    }
 
 
    useEffect(()=>{
@@ -115,8 +138,10 @@ const TripList = ({access_token,categoryId,cityList,showDetails}) =>{
                                     updateTourMgrMap(tourManager._id,
                                         {"tourManagerId":tourManager._id,
                                         "tourManagerName":tourManager.firstName+"-"+tourManager.lastName,
-                                         "email": tourManager.email,
-                                         "categoryId":categoryId
+                                         "contact": getPrimaryContact(tourManager),
+                                         "secondarycontact": getSecondaryContact(tourManager),
+                                        "email": tourManager.email,
+                                          "categoryId":categoryId
                                         });
                                 }
                             );
@@ -277,7 +302,8 @@ const TripList = ({access_token,categoryId,cityList,showDetails}) =>{
                  {tour.tourType === "Domestic"? "Domestic":"International"}
               </Typography>
               
-                 <button type="submit" class="button"  onClick={()=>showDetails(tour,getValuesFromTourManagerMap(tour.tourOperator))} 
+                 <button type="submit" class="button"  onClick={()=>showDetails(tour,
+                 getValuesFromTourManagerMap(tour.tourOperator))} 
                     style={{ cursor: 'pointer',backgroundColor: '#8a77f8ff',color:'#0c0c0fff'}}>
                        Details</button>
               </CardContent>

@@ -43,29 +43,30 @@ import {
     Select,
     InputLabel,
     TextareaAutosize,
+    CircularProgress,
     Dialog,
     DialogTitle,
     DialogContent,
     DialogContentText,
     DialogActions
   } from "@mui/material";
-
+import { NavContext } from '../navigationContext/navigationContext';
 import { loadStripe } from '@stripe/stripe-js';
 import DynamicTable from '../Utilities/DynamicTable';
- import { NavContext } from '../navigationContext/navigationContext';
+
 const BookingDashboard = ({access_token,tourDetails,triggerDisplayBookings,
     triggerDisplayOptionsByCatId,
     triggerEditBookingForm}) =>{
 
        const stripePromise = loadStripe(process.env.REACT_APP_STRIPE_PUBLISH_KEY);
-
+const { notification,loading, setLoading} = useContext(NavContext);
  const [openBookingForm, setOpenBookingForm] = useState(true);   
  const[displayErrorDialog,setDisplayErrorDialog] = useState(false);
   const[totalpackageCost,setTotalpackagecost] = useState(null);
    const[bookingId, setBookingId] = useState('');
  const[errorMessage,setErrorMessage] = useState('');    
  const [dialogOpen, setDialogOpen] = useState(false);
- //const {bookingData} = useContext(NavContext);
+
  const[bookingData,setBookingData] = useState([]);
 //This method is called from the booking modal for updating the booking details
   const prepareBookingData = (data) =>{
@@ -116,6 +117,7 @@ const BookingDashboard = ({access_token,tourDetails,triggerDisplayBookings,
   //Submit the booking
     const submitBookings = async() =>{
         
+      console.log('tour details....',tourDetails)
           //validate booking fields before submission 
          let errMsg =  await validateFields();
          //Display error message if there is any missing or error fields
@@ -128,14 +130,14 @@ const BookingDashboard = ({access_token,tourDetails,triggerDisplayBookings,
           }else{
             // triggerDisplayBookings(bookingData,
             //             tourDetails);
-            saveBooking(bookingData,tourDetails);
+            saveBooking(bookingData);
           }
     }
 
 
 
-    //Submit bookings
-    const saveBooking = async(bookings,tourDetailsParam)=>{
+    //Save bookings
+    const saveBooking = async(bookings)=>{
         let primary_booking = [];
         let dependantbookings = [];
         let primarycount = 0;
@@ -156,7 +158,7 @@ const BookingDashboard = ({access_token,tourDetails,triggerDisplayBookings,
                       
                   }
                   setTotalpackagecost((tourDetails.package_cost)*(bookings.length));
-                  if(!tourDetailsParam.bookingid)
+                  if(!bookingId)
                   {
                       let data = {tourManagerId:tourDetails.tourManagerId,
                               locationName:tourDetails.locationName,
@@ -168,10 +170,14 @@ const BookingDashboard = ({access_token,tourDetails,triggerDisplayBookings,
                               primarybookings:primary_booking,
                               dependantbookings:dependantbookings,
                           }
+
+                    setLoading(true);
+                    console.log('data....',data);
                     let result = await performTripBooking(data);
                     if(result){
                         console.log('result...',result);
                         setBookingId(result.bookingid);
+                        setLoading(false);
                     }
                   }       
     }
@@ -214,13 +220,25 @@ const BookingDashboard = ({access_token,tourDetails,triggerDisplayBookings,
             <div className = "center-container">
               
                     <div className="original-content">
-                       <div  display="flex" 
-      justifyContent="center"
-      alignItems="center"
-      // Example height for visualization
-      width="100%">
+                       <div  className='div-dashboard-container'>
           {/* <Typography variant="body2" style={{ color: '#FFFFFF' }}>{bookingPageMessage}</Typography> */}
          <Paper className='bookingDashboard-Paper'>
+            {
+      loading?
+                      (
+                      <div>
+                      <Box
+                         sx={{
+                           display: 'flex',
+                           justifyContent: 'center',
+                           alignItems: 'center',
+                           minHeight: '100vh', // Optional: Centers vertically within the viewport
+                         }}
+                       >
+                         <CircularProgress/>
+                        </Box>
+                        </div>) :<div/>
+      }
           {
           bookingData && bookingData.length >0 ?
            (
@@ -254,7 +272,9 @@ const BookingDashboard = ({access_token,tourDetails,triggerDisplayBookings,
           <img src={failure_animation} alt="" width="40" height="40"/>:
           <div></div>}
         </DialogActions>
-      </Dialog>:<div></div>}
+      </Dialog>:<div></div>
+      }
+    
       {
                           dialogOpen && !errorMessage?
                            <Dialog
@@ -340,8 +360,8 @@ const BookingDashboard = ({access_token,tourDetails,triggerDisplayBookings,
       />:<div/>
         }
 
-                    </div>
-                    </div>
-                    </div>
+        </div>
+          </div>
+             </div>
   )}
 export default BookingDashboard

@@ -148,7 +148,7 @@ const triggerEditBookingForm = async(tourDetailInfo) =>{
        const showDetails = async (tourDetails,tourManager) =>{
         if(tourDetails){
             //tourDetails =   prepareDetails(tourDetails);
-            
+            console.log('tourManager....',tourManager);
             let location = '';
             if(tourDetails.cityName && tourDetails.stateName)
               {
@@ -171,25 +171,28 @@ const triggerEditBookingForm = async(tourDetailInfo) =>{
             console.log('location....',location)
             console.log('tourid....',tourDetails._id);
             console.log('tourManager name....',tourManagerName)
+            console.log('tourManager Id....',tourManager._id)
             console.log('tripLength....',tourDetails.tripLength)
             console.log('start date....',tourDetails.startDate)
             console.log('end date....',tourDetails.endDate)
             console.log('image....',tourDetails.image)
-            console.log('domesticOrInternational....',tourDetails.domesticOrinternational)
+            console.log('domesticOrInternational....',tourDetails. tourType)
             console.log('categoryId....',tourDetails.category)
         if(tourDetails)
         {
-   
+           
+
             let tourDtls = {
                 "locationName":location,
                 "tourid": tourDetails._id,
                 "tourManagerName":tourManagerName,
-                "tourManagerId":tourManager.tourManagerId,
+                "tourManagerId": tourManager._id,
                 "triplength":tourDetails.tripLength,
                 "image":tourDetails.image,
                 "nights": tourDetails.nights,
                 "desc":tourDetails.description,
-                "contact":tourManager.contact,            
+                "contact": tourManager.contact,
+                "secondarycontact":tourManager.secondarycontact,
                 "startDate":tourDetails.startDate,
                 "endDate":tourDetails.endDate,
                 "currency":tourDetails.currency,

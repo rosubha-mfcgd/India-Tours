@@ -11,3 +11,10 @@ background-color:'#F8F9FA';
           width: '100%'; 
 
 }
+/* Container to center the form on the page */
+.div-dashboard-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+   width: '100%'; 
+}

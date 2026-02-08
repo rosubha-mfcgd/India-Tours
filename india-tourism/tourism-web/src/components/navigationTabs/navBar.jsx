@@ -275,7 +275,7 @@ const NavBar = ({access_token,triggerDisplayOptionsByCatId,
                     
                <div>
                  
-                <Grid item xs = {12} sm={3} key={item._id}  >
+                <Grid item xs = {12} sm={4} key={item._id}  >
 
                     <Card className="navbar-card" sx={{ marginBottom: 2 }}
                      >
@@ -386,7 +386,7 @@ const NavBar = ({access_token,triggerDisplayOptionsByCatId,
                     
                <div>
                  
-                <Grid item xs = {12} sm={4} key={item._id}  >
+                <Grid item xs = {12} sm={3} key={item._id}  >
 
                     <Card className="navbar-card" sx={{ marginBottom: 2 }}
                      >

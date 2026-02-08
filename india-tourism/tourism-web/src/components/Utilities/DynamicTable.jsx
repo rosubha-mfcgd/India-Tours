@@ -43,8 +43,19 @@ const DynamicTable = ({ columns, data, setData }) =>{
   const [editingItem, setEditingItem] = useState(null); // stores the item being edited
 
   // --- DELETE Function ---
-  const handleDelete = (id) => {
-    setData(data.filter(item => item.id !== id));
+  const handleDelete = (index) => {
+    let rowcount = 0;
+    const result = [];
+    for(let output of data)
+    {
+      if(index !== rowcount)
+      {
+        result.push(output);
+      }
+      rowcount++;
+    }
+    setData(result);
+   // setData(data.filter(item => item.id !== id));
   };
 
   // --- EDIT Function ---
@@ -82,7 +93,7 @@ const DynamicTable = ({ columns, data, setData }) =>{
                 </IconButton>
                 </TableCell>
                 <TableCell key={"delete-"+index}>
-                <IconButton onClick={() => handleDelete(row.id)} color="error">
+                <IconButton onClick={() => handleDelete(index)} color="error">
                   <DeleteIcon />
                 </IconButton>
 

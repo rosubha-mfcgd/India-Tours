@@ -315,7 +315,7 @@ return res_data;
 }
 
 export const performTripBooking = async(data) =>{
-  let res_data = "failed to fetch bookings";
+  let res_data = "failed to perform bookings";
      try{
         let access_token = await getApiAccessToken();
         if(access_token){

@@ -38,6 +38,7 @@ class TourDetailService {
             return [];
         });
     }
+    //Get list of all states
     static getAllStates() {
         return __awaiter(this, void 0, void 0, function* () {
             let states = [];
@@ -54,6 +55,7 @@ class TourDetailService {
             return [];
         });
     }
+    //Get list of trip categories - Hill Station, Sea beach ETC.
     getCategories(productID) {
         return __awaiter(this, void 0, void 0, function* () {
             let categories = [];
@@ -72,6 +74,7 @@ class TourDetailService {
             return categories;
         });
     }
+    //Get list of products
     getProducts() {
         return __awaiter(this, void 0, void 0, function* () {
             let products = [];
@@ -88,6 +91,7 @@ class TourDetailService {
             return products;
         });
     }
+    //Update category as favorite/not favorite so that the specific category shows up as first
     updateCategoryAsFavorite(categoryId, status) {
         return __awaiter(this, void 0, void 0, function* () {
             let categories = '';
@@ -111,6 +115,7 @@ class TourDetailService {
             return result;
         });
     }
+    //Get list of tours based on category ID
     getToursByCategoryId(categoryId) {
         return __awaiter(this, void 0, void 0, function* () {
             let plannedTours = [];
@@ -132,6 +137,7 @@ class TourDetailService {
             return plannedTours;
         });
     }
+    //Get list of recommended tours
     getRecommendedTours() {
         return __awaiter(this, void 0, void 0, function* () {
             let plannedTours = [];
@@ -153,6 +159,7 @@ class TourDetailService {
             return plannedTours;
         });
     }
+    //Get tour iternaries for  a specific trip
     getTourItenriesForTrip(locationName, categoryId, tourManagerId, startDate, endDate) {
         return __awaiter(this, void 0, void 0, function* () {
             let itinerary = '';
@@ -186,6 +193,7 @@ class TourDetailService {
             return itinerary;
         });
     }
+    //search the list of tour operators
     static getTourManagers() {
         return __awaiter(this, void 0, void 0, function* () {
             let tourOperators = [];
@@ -203,6 +211,7 @@ class TourDetailService {
             return tourOperators;
         });
     }
+    //Search the list of cities
     getCities() {
         return __awaiter(this, void 0, void 0, function* () {
             let cities = [];

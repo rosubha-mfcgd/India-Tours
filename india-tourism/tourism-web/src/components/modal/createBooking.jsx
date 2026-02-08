@@ -30,6 +30,7 @@ import {
     Switch,
     Select,
     InputLabel,
+    
     TextareaAutosize,
     Dialog,
     DialogTitle,
@@ -109,7 +110,7 @@ const addTourist = async() =>{
             setDisplayErrorDialog(true)
             setDialogOpen(true);
             
-          }
+          }else{
         prepareBookingData(touristData);
         if(touristData && touristData.length>0)
         {
@@ -117,6 +118,7 @@ const addTourist = async() =>{
             console.log('bookingdata...',touristData);
             
         }
+      }
     }
 }
 useEffect(()=>{
