@@ -80,6 +80,8 @@ const { notification,loading, setLoading} = useContext(NavContext);
     }
  }
 
+
+
   const[modalContent,setModalContent] = useState({ title: '', message: '' })
   const[isModalOpen,setIsModalOpen] = useState(false)
  const [qrCodeModalOpen,setQrCodeModalOpen] = useState(false);

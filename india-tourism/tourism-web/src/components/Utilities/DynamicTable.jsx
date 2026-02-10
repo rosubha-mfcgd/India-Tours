@@ -35,13 +35,14 @@ import React, { useState } from "react";
 
 import EditIcon from '@mui/icons-material/Edit';
 import DeleteIcon from '@mui/icons-material/Delete';
+import EditBooking from "../modal/editBooking";
 
 const DynamicTable = ({ columns, data, setData }) =>{
 
   // State for dialog management
   const [openDialog, setOpenDialog] = useState(false);
   const [editingItem, setEditingItem] = useState(null); // stores the item being edited
-
+  const [editIndex,setEditIndex] = useState(null);
   // --- DELETE Function ---
   const handleDelete = (index) => {
     let rowcount = 0;
@@ -58,12 +59,33 @@ const DynamicTable = ({ columns, data, setData }) =>{
    // setData(data.filter(item => item.id !== id));
   };
 
+
+   const updateBookingData = (updatedData) =>{
+    console.log('updated data in dynamice table...',updatedData)
+      setEditingItem(updatedData);
+      let result = [];
+      let index = 0;
+    for(let output of data)
+    {
+      if(index !== editIndex)
+      {
+        result.push(output);
+      }else{
+        result.push(updatedData);
+      }
+    }
+    setData(result);
+      setOpenDialog(false);
+  }
+
   // --- EDIT Function ---
-  const handleEdit = (item) => {
+  const handleEdit = (item,index) => {
     setEditingItem(item);
+    setEditIndex(index);
     setOpenDialog(true);
   };
       return(
+        <div>
         <TableContainer component={Paper}>
       <Table sx={{ minWidth: 650 }} aria-label="simple table">
         <TableHead>
@@ -88,7 +110,7 @@ const DynamicTable = ({ columns, data, setData }) =>{
                 
               ))}
               <TableCell key={"edit-"+index}>
-              <IconButton onClick={() => handleEdit(row)} color="primary">
+              <IconButton onClick={() => handleEdit(row,index)} color="primary">
                   <EditIcon />
                 </IconButton>
                 </TableCell>
@@ -103,6 +125,15 @@ const DynamicTable = ({ columns, data, setData }) =>{
         </TableBody>
       </Table>
     </TableContainer>
+          {
+            openDialog ? 
+            <EditBooking isOpen={openDialog} onClose={() => setOpenDialog(false)}
+    updateBookingData = {updateBookingData}  editingItem = {editingItem} 
+     />
+        
+        :<div/> 
+          }
+    </div>
       )
     }
 

@@ -5,7 +5,7 @@ import '../../styles/sidebar.css';
 import '../../styles/bookingForm.css';
 import { useEffect, useState, useContext } from "react";
 
-import { Elements, CardElement, useStripe, useElements } from '@stripe/react-stripe-js';
+import { Elements } from '@stripe/react-stripe-js';
 import { performTripBooking,updateBookingsByBookingId } from "../admin/admin";
 import success_animation from '../Assets/images/success_animation.gif';
 import failure_animation from '../Assets/images/failure_animation.gif';
@@ -226,7 +226,8 @@ const handlePayment = (title, message) => {
       
             <div style={{border: "2px solid black" }}>
                  <Box  component="form" >
-                    {dialogOpen && !errorMessage?
+                    {
+                    dialogOpen && !errorMessage?
                      <Dialog
         open={dialogOpen}
         onClose={handleClickOpenOrClose}
