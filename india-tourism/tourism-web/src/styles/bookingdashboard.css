@@ -18,3 +18,21 @@ background-color:'#F8F9FA';
   align-items: center;
    width: '100%'; 
 }
+
+.section-header-container {
+  margin-bottom: 2rem; /* Adds space below the header */
+  padding-top: 2rem;   /* Adds space above the header */
+  border-bottom: 1px solid #eee; /* Optional: a subtle line */
+}
+
+.section-title {
+  font-size: 2.5rem; /* Large, prominent title */
+  color: #ebe3e3;
+  margin: 0 0 0.5rem 0;
+}
+
+.section-subtitle {
+  font-size: 1.2rem;
+  color: #dfdada;
+  margin: 0;
+}

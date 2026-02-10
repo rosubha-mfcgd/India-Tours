@@ -222,7 +222,11 @@ const { notification,loading, setLoading} = useContext(NavContext);
   return(
         <div className='navbar-grid'>
             <div className = "center-container">
-              
+               <div className="section-header-container">
+      <h2 className="section-title">{tourDetails.tourManagerName}
+      <Typography>Book your trip to {tourDetails.locationName}</Typography>
+      </h2>
+    </div>
                     <div className="original-content">
                        <div  className='div-dashboard-container'>
           {/* <Typography variant="body2" style={{ color: '#FFFFFF' }}>{bookingPageMessage}</Typography> */}
