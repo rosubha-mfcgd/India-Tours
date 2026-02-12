@@ -348,7 +348,7 @@ const EditBookingForm = ({access_token,tourDetails}) =>{
                         <SideBarNotification/> 
                      </div> 
                      :<div></div>
-                      }
+          }
          </div> 
           
     );

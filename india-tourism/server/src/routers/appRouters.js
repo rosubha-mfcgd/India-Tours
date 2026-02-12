@@ -15,42 +15,42 @@ const {getSearchOptions,getPreferences} = require("../controller/searchOptions")
 const { sendConfirmation } = require('../controller/sendCommunication');
 const {resendOTP,getKeycloakAuthToken} = require('../controller/loginuser');
 const {findUser,updateProfile} = require('../controller/userprofile')
-const {checkUserAuthenticated} = require("../middlewares/userAuth")
+const {checkRequestAuthenticated} = require("../middlewares/userAuth")
 const {processImage} = require("../controller/imageProcessor");
 const router = express.Router();
 
 
 
-router.post("/dosignup",checkAuthenticated,signupvalidate,doSignup);
+router.post("/dosignup",checkRequestAuthenticated,signupvalidate,doSignup);
 
-router.post("/validateOTP",checkAuthenticated,validateOTP);
+router.post("/validateOTP",checkRequestAuthenticated,validateOTP);
 
-router.post("/getPoints",checkAuthenticated,getPoints);
+router.post("/getPoints",checkRequestAuthenticated,getPoints);
 
-router.get("/getCategories",checkAuthenticated,getCategories);
+router.get("/getCategories",checkRequestAuthenticated,getCategories);
 
-router.get("/getProducts",checkAuthenticated,getProducts);
+router.get("/getProducts",checkRequestAuthenticated,getProducts);
 
-router.get("/getCities",checkAuthenticated,getCities);
+router.get("/getCities",checkRequestAuthenticated,getCities);
 
-router.get("/getToursByCategoryId",checkAuthenticated,getToursByCategoryId);
-router.get("/getRecommendedTours",checkAuthenticated,getRecommendedTours);
-router.get("/getTourOperators",checkAuthenticated,getRegisteredTourManagers);
+router.get("/getToursByCategoryId",checkRequestAuthenticated,getToursByCategoryId);
+router.get("/getRecommendedTours",checkRequestAuthenticated,getRecommendedTours);
+router.get("/getTourOperators",checkRequestAuthenticated,getRegisteredTourManagers);
 
-router.post("/updateFavoriteCategory",checkAuthenticated,updateFavoriteCategory);
-router.post("/performBookings",checkAuthenticated,performBookings);
-router.post("/performBookingsByMobile",checkAuthenticated,performBookingsByMobile);
-router.post("/getBookingsByBookingId",checkAuthenticated,getBookingsByBookingId);
-router.post("/updateBookingsByBookingId",checkAuthenticated,updateBookingsByBookingId);
-router.post("/sendConfirmation",checkAuthenticated,sendConfirmation);
-router.get("/searchMyOptions",checkAuthenticated,getSearchOptions);
-router.post("/tourItenerariesForTrip",checkAuthenticated,getTourItenerariesForTrip);
-router.post("/resendOTP",checkAuthenticated,resendOTP);
-router.post("/findUser",checkAuthenticated,checkUserAuthenticated,findUser);
-router.post("/updateProfile",checkAuthenticated,updateProfile);
-router.get("/preferences",checkAuthenticated,checkUserAuthenticated, getPreferences);
-router.post("/authToken",checkAuthenticated,getKeycloakAuthToken);
-router.post("/performUserBookings",checkAuthenticated,performUserBookings);
-router.post("/processImage",checkAuthenticated,processImage);
-router.post("/create-intent",checkAuthenticated,createPaymentIntent);
+router.post("/updateFavoriteCategory",checkRequestAuthenticated,updateFavoriteCategory);
+router.post("/performBookings",checkRequestAuthenticated,performBookings);
+router.post("/performBookingsByMobile",checkRequestAuthenticated,performBookingsByMobile);
+router.post("/getBookingsByBookingId",checkRequestAuthenticated,getBookingsByBookingId);
+router.post("/updateBookingsByBookingId",checkRequestAuthenticated,updateBookingsByBookingId);
+router.post("/sendConfirmation",checkRequestAuthenticated,sendConfirmation);
+router.get("/searchMyOptions",checkRequestAuthenticated,getSearchOptions);
+router.post("/tourItenerariesForTrip",checkRequestAuthenticated,getTourItenerariesForTrip);
+router.post("/resendOTP",checkRequestAuthenticated,resendOTP);
+router.post("/findUser",checkRequestAuthenticated,checkRequestAuthenticated,findUser);
+router.post("/updateProfile",checkRequestAuthenticated,updateProfile);
+router.get("/preferences",checkRequestAuthenticated,checkRequestAuthenticated, getPreferences);
+router.post("/authToken",getKeycloakAuthToken);
+router.post("/performUserBookings",checkRequestAuthenticated,performUserBookings);
+router.post("/processImage",checkRequestAuthenticated,processImage);
+router.post("/create-intent",checkRequestAuthenticated,createPaymentIntent);
 module.exports = router

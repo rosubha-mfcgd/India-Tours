@@ -44,9 +44,11 @@ async function findjsonWebKeys() {
 }
   
  //Use the req.isAuthenticated() function to check if user is Authenticated
-async function checkUserAuthenticated (req, res, next)  {
+ //This uses keycloak auth mechanism
+async function checkRequestAuthenticated (req, res, next)  {
   
     console.log('req.path...',req.path);
+    console.log('checking keycloak token....')
     if(session && !session.jsonWebKeys)
     {
        let jsonWebKeys = await findjsonWebKeys();
@@ -59,7 +61,7 @@ async function checkUserAuthenticated (req, res, next)  {
        }
     }
     // Access 'Authorization' header
-        const authorizationHeader = req.get('User-Authorization');
+        const authorizationHeader = req.get('Authorization');
         const hostHeader = req.get('Host'); // Access 'Host' header
         console.log('Authorization:', authorizationHeader);
         console.log('Host:', hostHeader);
@@ -110,7 +112,7 @@ function verifyJsonWebTokenSignature(token, jsonWebKey, clbk) {
         return clbk(err, decodedToken)
     })
 }
-module.exports = {checkUserAuthenticated}
+module.exports = {checkRequestAuthenticated}
 
 
 

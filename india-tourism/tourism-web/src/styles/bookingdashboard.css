@@ -22,8 +22,7 @@ background-color:'#F8F9FA';
 .section-header-container {
   margin-bottom: 2rem; /* Adds space below the header */
   padding-top: 2rem;   /* Adds space above the header */
-  border-bottom: 1px solid #eee; /* Optional: a subtle line */
-}
+  }
 
 .section-title {
   font-size: 2.5rem; /* Large, prominent title */
@@ -36,3 +35,36 @@ background-color:'#F8F9FA';
   color: #dfdada;
   margin: 0;
 }
+
+.booking-header-container {
+  display: flex;
+  /* Optional: adds space between the divs */
+  gap: 20px; 
+}
+
+.right-button-container {
+  /* This ensures the container stretches the full width of its parent (e.g., the page/viewport) */
+  width: 100%;
+  display: flex;
+  /* Aligns the button(s) to the right end */
+  justify-content: center;
+  /* Optional: Adds some space around the button */
+  padding: 20px;
+}
+.right-button {
+  padding: 10px 20px;
+  background-color: #ff2600;
+  border-radius: 20px; 
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.left-section, .right-section {
+  /* Optional: makes both divs share the available space equally */
+  flex: 1; 
+  /* Add other styles for visualization */
+  padding: 20px;
+ }
+

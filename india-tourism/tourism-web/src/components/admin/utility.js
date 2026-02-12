@@ -58,6 +58,25 @@ export const validateBookingData =async (bookingData) =>{
         return errMsg;
   }
 
+export const validateInitBookingData =async (bookingData) =>{
+  let errMsg = null;
+  
+       try{
+            console.log('booking to be validated....',bookingData)
+          await validationSchema.validate(bookingData);
+        }
+        catch(error){
+          errMsg = error.message;
+       // console.error("Validation error:", error.message)
+         }
+    
+        return errMsg;
+  }
+
+
+
+
+
   export const calculateTotalPages = async(dataSize,itemPerPage) =>{
     return Math.ceil(dataSize / itemPerPage);
   }

@@ -6,7 +6,7 @@ import '../../styles/bookingForm.css';
 import CustomButton from '../Utilities/CustomButtons'
 import { useEffect, useState, useContext} from "react";
 import { styled } from '@mui/material/styles';
-import {getBookingsByBookingId} from "../admin/admin";
+import {createIntent} from "../admin/admin";
 import SideBarNotification from '../navigationTabs/sideBarNotification';
 import close_button from '../Assets/images/close-button.png';
 import { Elements, CardElement, useStripe, useElements } from '@stripe/react-stripe-js';
@@ -58,7 +58,11 @@ const BookingDashboard = ({access_token,tourDetails,triggerDisplayBookings,
     triggerDisplayOptionsByCatId,
     triggerEditBookingForm}) =>{
 
-       const stripePromise = loadStripe(process.env.REACT_APP_STRIPE_PUBLISH_KEY);
+    const stripePromise = loadStripe(process.env.REACT_APP_STRIPE_PUBLISH_KEY);
+    const options = {
+      amount: 100,
+      currency: 'inr',
+    };
 const { notification,loading, setLoading} = useContext(NavContext);
  const [openBookingForm, setOpenBookingForm] = useState(true);   
  const[displayErrorDialog,setDisplayErrorDialog] = useState(false);
@@ -66,7 +70,7 @@ const { notification,loading, setLoading} = useContext(NavContext);
    const[bookingId, setBookingId] = useState(null);
  const[errorMessage,setErrorMessage] = useState(null);    
  const [dialogOpen, setDialogOpen] = useState(false);
-
+const [clientSecret, setClientSecret] = useState(null);
  const[bookingData,setBookingData] = useState([]);
 //This method is called from the booking modal for updating the booking details
   const prepareBookingData = (data) =>{
@@ -87,11 +91,7 @@ const { notification,loading, setLoading} = useContext(NavContext);
  const [qrCodeModalOpen,setQrCodeModalOpen] = useState(false);
 
  
-           const options = {
-      mode: 'payment', // or 'setup'
-   amount: 100,
-   currency: 'usd',
-   };
+        
  
  const columns = [
           { field: 'name', headerName: 'Name' },
@@ -219,14 +219,60 @@ const { notification,loading, setLoading} = useContext(NavContext);
       setQrCodeModalOpen(false)
     setIsModalOpen(true)
   }
+
+    //Change the date to words
+            function changeDateToWords(dateObject)
+                {
+                    const date = new Date(dateObject);
+                    console.log('date....',date)
+                    console.log('formatted date...', date.toLocaleDateString('en-GB')); // Or 'en-GB' for a different locale
+                    return date.toLocaleDateString('en-GB');
+                }
+
+      useEffect(()=>{
+          let mounted = true;
+
+                  const timer = setTimeout(() =>{
+                  //get client secret from stripe for payment    
+                      const getClientSecret = async () =>{
+                        console.log('totalPackageCost....',totalpackageCost);
+                      let data =  {amount: Number(totalpackageCost), currency: 'inr'};
+                      const responsedata = await createIntent(data);
+                  
+                  if(responsedata){
+                    console.log('client secret received ....',responsedata.clientSecret)
+                    //set client secret in state variable
+                      setClientSecret(responsedata.clientSecret);
+                }
+                };
+                console.log('totalpackageCost.....',totalpackageCost)
+                if(!clientSecret && mounted && Number(totalpackageCost)>0)
+                {
+                  console.log('here i am');
+                  getClientSecret();
+                }
+
+  },100);
+   return () => {
+        mounted = false; // Set flag to false on cleanup
+        clearTimeout(timer); // Clean up the timer
+    };
+    },[totalpackageCost]);
   return(
         <div className='navbar-grid'>
             <div className = "center-container">
-               <div className="section-header-container">
+              <div className='booking-header-container'>
+               <div className="left-section">
       <h2 className="section-title">{tourDetails.tourManagerName}
-      <Typography>Book your trip to {tourDetails.locationName}</Typography>
+      <Typography>Book your trip to {tourDetails.locationName} from {changeDateToWords(tourDetails.startDate)} - {changeDateToWords(tourDetails.endDate)}</Typography>
       </h2>
-    </div>
+       </div>
+       <div className="right-section">
+        <button className="right-button" onClick={()=>setOpenBookingForm(true)}>
+          Add new Tourist
+        </button>
+      </div>
+   </div>
                     <div className="original-content">
                        <div  className='div-dashboard-container'>
           {/* <Typography variant="body2" style={{ color: '#FFFFFF' }}>{bookingPageMessage}</Typography> */}
@@ -335,11 +381,7 @@ const { notification,loading, setLoading} = useContext(NavContext);
                         triggerDisplayOptionsByCatId(tourDetails.categoryId)}}
                           class="button"
                         >Go Back</button>
-        <button onClick={()=>setOpenBookingForm(true)} class="button">Add Tourist</button>
-       
-                    
-
-                    <button type="submit" 
+            <button type="submit" 
                        class="button" onClick={submitBookings}>Submit your Booking</button>
                
         </div>
@@ -348,15 +390,16 @@ const { notification,loading, setLoading} = useContext(NavContext);
     }
 
 
-     {stripePromise && totalpackageCost  ?
-          <Elements stripe={stripePromise} options={options}>
+     {stripePromise && totalpackageCost && clientSecret  ?
+          <Elements stripe={stripePromise} 
+          options={{clientSecret:clientSecret}}>
           <PaymentModal
         isOpen={isModalOpen}
         onClose={handleCloseModal}
         title={modalContent.title}
         message={modalContent.message} 
         totalpackagecost={totalpackageCost}
-        onswitch = {switchToQRcodeModal}
+        onswitch = {switchToQRcodeModal} clientSecret={clientSecret}
         />
       </Elements>:<div/>
       }

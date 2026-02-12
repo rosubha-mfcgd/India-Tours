@@ -11,6 +11,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 const TourBookingService = require('../service/TourBookingService');
 const UserBookingService = require('../service/UserBookingService');
 require("../logNginx");
+//Creates a booking record for a list of tourists
 const performBookings = (req_1, res_1, ...args_1) => __awaiter(void 0, [req_1, res_1, ...args_1], void 0, function* (req, res, retries = 3, delay = 1000) {
     const { tourManagerId, tourid, locationName, startDate, endDate, domesticOrInternational, package_cost, primarybookings, dependantbookings } = req.body;
     console.log('req body....', req.body);
@@ -35,6 +36,7 @@ const performBookings = (req_1, res_1, ...args_1) => __awaiter(void 0, [req_1, r
         res.status(400).send({ "errormessage": "could not create a booking" });
     }
 });
+//Creates a booking record for a list of tourists from mobile app
 const performBookingsByMobile = (req_1, res_1, ...args_1) => __awaiter(void 0, [req_1, res_1, ...args_1], void 0, function* (req, res, retries = 3, delay = 1000) {
     const { tourManagerId, locationName, startDate, endDate, domesticOrInternational, package_cost, bookingData } = req.body;
     try {
@@ -97,6 +99,7 @@ const getBookingsByBookingId = (req_1, res_1, ...args_1) => __awaiter(void 0, [r
         res.status(400).send({ "errormessage": "could not find a booking by booking id " + bookingId });
     }
 });
+//Update bookings by booking id
 const updateBookingsByBookingId = (req_1, res_1, ...args_1) => __awaiter(void 0, [req_1, res_1, ...args_1], void 0, function* (req, res, retries = 3, delay = 1000) {
     const { tourManagerId, locationName, startDate, endDate, domesticOrInternational, bookingId, package_cost, primarybookings, dependantbookings } = req.body;
     try {

@@ -44,7 +44,9 @@ import {
   } from "@mui/material";
 
   
-  const PaymentModal = ({ isOpen, onClose, title, message,totalpackagecost,onswitch }) => {
+  const PaymentModal = ({ isOpen, onClose, title, message,totalpackagecost,onswitch,
+    clientSecret
+   }) => {
     // Define appearance options for the PaymentElement
   const appearance = {
     theme: 'stripe', // 'stripe' (default), 'flat', or 'none'
@@ -62,42 +64,14 @@ import {
    const stripe = useStripe();
   const elements = useElements();
   const [errorMessage, setErrorMessage] = useState(null);
-  const [clientSecret, setClientSecret] = useState(null);
+ // const [clientSecret, setClientSecret] = useState(null);
   const [isModalOpen,setIsModalOpen] = useState(false);
   
    const closeCardPayment =()=>{
      isOpen = false;
    }
 
-   useEffect(()=>{
-    let mounted = true;
-
-            const timer = setTimeout(() =>{
-            //get client secret from stripe for payment    
-         const getClientSecret = async () =>{
-          console.log('totalPackageCost....',totalpackagecost);
-        let data =  {amount: Number(totalpackagecost), currency: 'inr'};
-        const responsedata = await createIntent(data);
-    
-    if(responsedata){
-      console.log('client secret received ....',responsedata.clientSecret)
-       //set client secret in state variable
-        setClientSecret(responsedata.clientSecret);
-   }
-  };
-
-  if(!clientSecret && mounted)
-  {
-    console.log('here i am');
-     getClientSecret();
-  }
-
-  },100);
-   return () => {
-        mounted = false; // Set flag to false on cleanup
-        clearTimeout(timer); // Clean up the timer
-    };
-    },[]);
+   
    //Submits the payment  data to server backend
     const handleSubmit = async (event) => {
     event.preventDefault();

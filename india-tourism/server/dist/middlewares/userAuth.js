@@ -51,7 +51,7 @@ function findjsonWebKeys() {
     });
 }
 //Use the req.isAuthenticated() function to check if user is Authenticated
-function checkUserAuthenticated(req, res, next) {
+function checkRequestAuthenticated(req, res, next) {
     return __awaiter(this, void 0, void 0, function* () {
         console.log('req.path...', req.path);
         if (session && !session.jsonWebKeys) {
@@ -108,4 +108,4 @@ function verifyJsonWebTokenSignature(token, jsonWebKey, clbk) {
         return clbk(err, decodedToken);
     });
 }
-module.exports = { checkUserAuthenticated };
+module.exports = { checkRequestAuthenticated };

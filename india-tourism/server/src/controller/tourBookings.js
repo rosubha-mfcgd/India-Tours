@@ -2,6 +2,7 @@
 const TourBookingService = require('../service/TourBookingService');
 const UserBookingService = require('../service/UserBookingService');
 require("../logNginx");
+//Creates a booking record for a list of tourists
 const performBookings = async(req,res,retries = 3, delay = 1000) =>{
 
     const {tourManagerId,tourid,locationName,startDate,endDate,domesticOrInternational,
@@ -34,7 +35,7 @@ const performBookings = async(req,res,retries = 3, delay = 1000) =>{
        }
        
     }
-
+//Creates a booking record for a list of tourists from mobile app
     const performBookingsByMobile = async(req,res,retries = 3, delay = 1000) =>{
 
     const {tourManagerId,locationName,startDate,endDate,domesticOrInternational,
@@ -128,7 +129,7 @@ const performBookings = async(req,res,retries = 3, delay = 1000) =>{
        }
     }
     
-
+//Update bookings by booking id
      const updateBookingsByBookingId = async(req,res,retries = 3, delay = 1000) =>{
 
         const {tourManagerId,locationName,startDate,endDate,domesticOrInternational,

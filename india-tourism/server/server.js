@@ -89,6 +89,7 @@ app.use(passport.initialize());
 const appRouter = require("./src/routers/appRouters.js");
 const hotelInfoRouters = require("./src/routers/hotelInfoRouters.js");
 const { checkAuthenticated } = require('./src/middlewares/auth.js');
+const {checkRequestAuthenticated} = require("./src/middlewares/userAuth.js")
 const stripe = require('stripe')(process.env.STRIPE_PAYMENT_SECRET_KEY);
 //code for using implemented routes
 app.use("/api", appRouter);
@@ -217,7 +218,7 @@ passport.deserializeUser((user, done) => done(null, user));
 
 // --- this method performs the user login ---
 
-app.post("/api/loginUser", checkAuthenticated,async(req,res) =>{
+app.post("/api/loginUser", checkRequestAuthenticated,async(req,res) =>{
 
  const authorizeUrl = oAuth2Client.generateAuthUrl({
         access_type: 'offline', // Request a refresh token
@@ -302,35 +303,60 @@ try{
 
 //This function generates the oAuth token for API calls
 app.post("/api/token", async(req,res) =>{
+//Comment out the Auth token generation from AWS Cognito 
+  // const origin = req.headers.origin;
+  // console.log('origin....',origin)
+  //  const data = {
+  //     'client_id':API_CLIENT_ID,
+  //     'client_secret':API_CLIENT_SECRET,
+  //     'grant_type' : GRANT_TYPE
+  //     };
+  //  await axios.post(API_AUTH_TOKEN_URL,querystring.stringify(data),
+  // {
+  //   headers:{
+  //     'Content-Type': 'application/x-www-form-urlencoded',
+  //     'Access-Control-Allow-Origin': origin,
+  //     'Access-Control-Allow-Methods': 'GET, POST, OPTIONS, PUT, PATCH, DELETE',
+  //     'Access-Control-Allow-Headers': 'X-Requested-With,content-type',
+  //     'Access-Control-Allow-Credentials': true
 
-  const origin = req.headers.origin;
-  console.log('origin....',origin)
-   const data = {
-      'client_id':API_CLIENT_ID,
-      'client_secret':API_CLIENT_SECRET,
-      'grant_type' : GRANT_TYPE
-      };
-   await axios.post(API_AUTH_TOKEN_URL,querystring.stringify(data),
-  {
-    headers:{
-      'Content-Type': 'application/x-www-form-urlencoded',
-      'Access-Control-Allow-Origin': origin,
-      'Access-Control-Allow-Methods': 'GET, POST, OPTIONS, PUT, PATCH, DELETE',
-      'Access-Control-Allow-Headers': 'X-Requested-With,content-type',
-      'Access-Control-Allow-Credentials': true
-
-    }}).then(
-      response => {
-          res.status(200).send(response.data);
-      }
-    ).catch(error =>
+  //   }}).then(
+  //     response => {
+  //         res.status(200).send(response.data);
+  //     }
+  //   ).catch(error =>
+  //   {
+  //     logNginx("error in receiving token....",error);
+  //     res.status(401).send({"error":"Invalid token found"});
+  //   });
+//Implement the token generation from keycloak - free token generation
+  let data = {
+        client_id: process.env.AUTH_CLIENT_ID,
+        client_secret: process.env.AUTH_CLIENT_SECRET,
+        grant_type: process.env.GRANT_TYPE
+    }
+    
+  try{
+    console.log('generating keycloak token....');
+    await axios.post(process.env.AUTH_SERVER_URI,querystring.stringify(data),
     {
-      logNginx("error in receiving token....",error);
-      res.status(401).send({"error":"Invalid token found"});
-    });
+          headers:{
+            'Content-Type': 'application/x-www-form-urlencoded',
+            }}).then(
+            response => {
+                console.log('response data....',response.data)
+                res.status(200).send(response.data);
+            }
+          );
+  
+      }
+      catch(err)
+        {
+          logNginx(err.stack)
+        }
 });
 //This method finds the upcoming popular events using gemini AI
-app.post("/api/findUpcomingEvents",checkAuthenticated, async(req,res) =>{
+app.post("/api/findUpcomingEvents",checkRequestAuthenticated, async(req,res) =>{
 
     if (!GOOGLE_GEMINI_API_KEY) {
           console.log("API_KEY not found in .env file. Please ensure it's set.");
@@ -367,7 +393,7 @@ app.post("/api/findUpcomingEvents",checkAuthenticated, async(req,res) =>{
 })
 
 
-app.post('/api/handleToken',checkAuthenticated,async(req,res) =>{
+app.post('/api/handleToken',checkRequestAuthenticated,async(req,res) =>{
   let { email,mobile } = req.body;
    
     
@@ -398,7 +424,7 @@ else{
 })
 
 
-app.post('/api/validateTokenWithSession',checkAuthenticated,async(req,res) =>{
+app.post('/api/validateTokenWithSession',checkRequestAuthenticated,async(req,res) =>{
   let { access_token } = req.body;
   if(!access_token)
   {
@@ -414,7 +440,7 @@ else
   }
 })
 //This method pulls the image as base64 buffer from the SF bucket 
-app.get("/api/getImageFromDB/:fileId/:bucketname",checkAuthenticated, async(req,res)=>{
+app.get("/api/getImageFromDB/:fileId/:bucketname",checkRequestAuthenticated, async(req,res)=>{
    let { fileId,bucketname } = req.params;
   if(!fileId)
   {

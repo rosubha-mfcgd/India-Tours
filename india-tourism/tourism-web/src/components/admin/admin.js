@@ -454,7 +454,7 @@ catch(err){
 }
 }
 
-
+//Produces auth token to validate the request
 export const getAuthAccessToken = async() =>{
 
      let res_data = "";

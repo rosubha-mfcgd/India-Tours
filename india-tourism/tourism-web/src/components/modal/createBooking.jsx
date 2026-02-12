@@ -1,8 +1,8 @@
 // Import the UPI QR library
 import QRCode from 'react-qr-code';
 import '../../styles/bookingForm.css';
-import { useEffect, useState, useContext} from "react";
-import {validateBookingData} from "../admin/utility";
+import { useEffect, useState} from "react";
+import {validateInitBookingData} from "../admin/utility";
 import failure_animation from '../Assets/images/failure_animation.gif';
 import { styled } from '@mui/material/styles';
 import {
@@ -43,8 +43,7 @@ import {
   
 const CreateBooking = ({ isOpen, onClose,prepareBookingData,bookingData }) => {
   
- //const {prepareBookingData,bookingData} = useContext(NavContext);
- const [touristData, setTouristData] = useState({
+  const [touristData, setTouristData] = useState({
     name: '',
     email: '',
     mobile: '',
@@ -90,11 +89,12 @@ const CreateBooking = ({ isOpen, onClose,prepareBookingData,bookingData }) => {
        let errMsg = null;
        
                  console.log('booking to be validated....',touristData)
-              errMsg =  await validateBookingData(touristData);
+              errMsg =  await validateInitBookingData(touristData);
               if(errMsg)
                 {
                   return errMsg;
-                }else{
+                }
+                else{
                   return null;
                 }            
     }

@@ -62,18 +62,6 @@ const LoginSignup =() => {
   
         //SIGNUP A NEW USER
         const signup = async() =>{
-
-        // const googlesignup = useGoogleLogin ({
-        //     client_id:process.env.REACT_APP_CLIENT_ID,
-        //     onSuccess: async(codeResponse) => {
-                
-        //         setAction("Sign Up");
-        //         const req_data = {
-        //             name:name,
-        //             email:email,
-        //             mobile:mobile,
-        //             access_token:codeResponse.access_token
-        //         };
                 try{
                     setAction("Sign Up")
                      let codeResponse = await getAuthAccessToken();
@@ -118,19 +106,14 @@ const LoginSignup =() => {
             }finally {
                 setButtonclick(false); // Hide spinner after fetch (success or error)
              }
-        //     }, 
-            
-        //     onError: (error) => console.log('Login Failed:', error)
-        // });
-            
+                   
     }
-    
-        //LOGIN USER
+       //LOGIN USER
         const loginUsertoApp = async() =>{
         // const googleLogin =  useGoogleLogin({
         //     client_id:process.env.REACT_APP_CLIENT_ID,
         //     onSuccess: async(codeResponse) => {
-                console.log('Trying google auth...')
+                console.log('Trying keycloak auth...')
                 setAction("Send Otp");
                 // navigate('sendotp', { replace: true });
                // setAction("Login");
