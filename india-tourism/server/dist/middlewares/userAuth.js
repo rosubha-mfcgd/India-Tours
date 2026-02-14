@@ -51,9 +51,11 @@ function findjsonWebKeys() {
     });
 }
 //Use the req.isAuthenticated() function to check if user is Authenticated
+//This uses keycloak auth mechanism
 function checkRequestAuthenticated(req, res, next) {
     return __awaiter(this, void 0, void 0, function* () {
         console.log('req.path...', req.path);
+        console.log('checking keycloak token....');
         if (session && !session.jsonWebKeys) {
             let jsonWebKeys = yield findjsonWebKeys();
             if (jsonWebKeys) {
@@ -63,7 +65,7 @@ function checkRequestAuthenticated(req, res, next) {
             }
         }
         // Access 'Authorization' header
-        const authorizationHeader = req.get('User-Authorization');
+        const authorizationHeader = req.get('Authorization');
         const hostHeader = req.get('Host'); // Access 'Host' header
         console.log('Authorization:', authorizationHeader);
         console.log('Host:', hostHeader);

@@ -188,13 +188,29 @@ async getRecommendedTours()
            
       }
      
-    }
-    catch(err){
+    }catch(err){
         logNginx(err.stack);
         }
   return plannedTours;
   }
-
+//Get tour by tourid
+  async getTourByTourId(tourId)
+  {
+    let tour = null;
+  try{
+   const tourRepository = new TourRepository();
+   
+      tour = await tourRepository.findById(tourId);
+      if(tour)
+      {
+        return tour;
+      }
+    }catch(err){
+       console.log('Cannot find operator by tour id',tourId);
+        logNginx(err.stack);
+      }
+  return null;
+  }
 
 
 

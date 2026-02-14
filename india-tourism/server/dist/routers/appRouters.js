@@ -38,7 +38,7 @@ router.post("/resendOTP", checkRequestAuthenticated, resendOTP);
 router.post("/findUser", checkRequestAuthenticated, checkRequestAuthenticated, findUser);
 router.post("/updateProfile", checkRequestAuthenticated, updateProfile);
 router.get("/preferences", checkRequestAuthenticated, checkRequestAuthenticated, getPreferences);
-router.post("/authToken", checkRequestAuthenticated, getKeycloakAuthToken);
+router.post("/authToken", getKeycloakAuthToken);
 router.post("/performUserBookings", checkRequestAuthenticated, performUserBookings);
 router.post("/processImage", checkRequestAuthenticated, processImage);
 router.post("/create-intent", checkRequestAuthenticated, createPaymentIntent);

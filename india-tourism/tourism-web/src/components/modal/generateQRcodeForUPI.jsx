@@ -11,7 +11,7 @@ import {
     CardContent
   } from "@mui/material";
 
-const PaymentQRCodeGenerator = ({ isOpen, onClose, amount, onswitch }) => {
+const PaymentQRCodeGenerator = ({ isOpen, onClose, amount, onswitch,tourManagerName,location }) => {
   
   //const [qrCode, setQrCode] = useState('');
   let upiId = 'shop@ybl';
@@ -71,6 +71,10 @@ const PaymentQRCodeGenerator = ({ isOpen, onClose, amount, onswitch }) => {
                      <QRCode value={upiDetails} size={256} />
                                      
                     <CardContent>
+                      <Typography variant="body2" color="text.secondary" 
+                        sx={{whiteSpace: 'pre-wrap'}}>
+                                Pay Rs.{amount} to {tourManagerName} for your trip to {location}
+                        </Typography>
                         <Typography variant="body2" color="text.secondary" 
                         sx={{whiteSpace: 'pre-wrap'}}>
                         Scan the QR code to complete your payment
@@ -79,9 +83,9 @@ const PaymentQRCodeGenerator = ({ isOpen, onClose, amount, onswitch }) => {
                         </Card>
                          <div className="button-container">
                          <div className='submit-container'>
-        <button onClick={onClose} class="button">Close</button>
+            <button onClick={onClose} class="button">Close</button>
         
-        </div>
+          </div>
          <div className='submit-container'>
         <button onClick={onswitch} class="button">Try other method</button>
         

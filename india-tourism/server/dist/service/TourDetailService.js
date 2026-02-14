@@ -159,6 +159,24 @@ class TourDetailService {
             return plannedTours;
         });
     }
+    //Get tour by tourid
+    getTourByTourId(tourId) {
+        return __awaiter(this, void 0, void 0, function* () {
+            let tour = null;
+            try {
+                const tourRepository = new TourRepository();
+                tour = yield tourRepository.findById(tourId);
+                if (tour) {
+                    return tour;
+                }
+            }
+            catch (err) {
+                console.log('Cannot find operator by tour id', tourId);
+                logNginx(err.stack);
+            }
+            return null;
+        });
+    }
     //Get tour iternaries for  a specific trip
     getTourItenriesForTrip(locationName, categoryId, tourManagerId, startDate, endDate) {
         return __awaiter(this, void 0, void 0, function* () {

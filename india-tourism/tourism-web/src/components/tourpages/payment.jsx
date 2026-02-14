@@ -45,8 +45,7 @@ import {
 
   
   const PaymentModal = ({ isOpen, onClose, title, message,totalpackagecost,onswitch,
-    clientSecret
-   }) => {
+    clientSecret,tourManagerName,location}) => {
     // Define appearance options for the PaymentElement
   const appearance = {
     theme: 'stripe', // 'stripe' (default), 'flat', or 'none'
@@ -66,9 +65,11 @@ import {
   const [errorMessage, setErrorMessage] = useState(null);
  // const [clientSecret, setClientSecret] = useState(null);
   const [isModalOpen,setIsModalOpen] = useState(false);
-  
+  const[isPaymentWindowOpen, setIsPaymentWindowOpen] = useState(true)
    const closeCardPayment =()=>{
+    console.log('call reached me...')
      isOpen = false;
+     setIsPaymentWindowOpen(false);
    }
 
    
@@ -91,13 +92,13 @@ import {
      // Trigger form validation and wallet collection
     const { error: submitError } = await elements.submit();
     if (submitError) return;
-    
+    console.log('window location path....',window.location.origin);
     const {error} = await stripe.confirmPayment({
       elements,
       clientSecret,
       confirmParams: {
         // Return URL where the user is redirected after the payment
-        return_url: `${window.location.origin}/order-complete`,
+        return_url: window.location.origin,
       },
       // Set 'redirect' to 'if_required' to handle the result synchronously
     // in the same view if possible, or redirect if needed.
@@ -120,7 +121,9 @@ import {
 
     if (!isOpen) return null;
 
- return (ReactDOM.createPortal(
+ return (
+  isPaymentWindowOpen?
+  ReactDOM.createPortal(
   
     <div style={{
       position: 'fixed',
@@ -139,6 +142,11 @@ import {
       <div className="form-container">
       <form onSubmit={handleSubmit}>
      
+      <div>
+        <Typography variant="body2" color="text.secondary">
+          Pay Rs.{totalpackagecost} to {tourManagerName} for your trip to {location}
+        </Typography>
+      </div>
           
         <PaymentElement />
       {/* The button container for alignment */}
@@ -161,18 +169,17 @@ import {
   {/*Uncomment for live testing */}
     {isModalOpen && 
    
-    <PaymentSuccessModal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)} />
+        <PaymentSuccessModal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)}
+        closeCardPayment = {closeCardPayment}
+        />
     }
-
-  
-
-       </form>
+   </form>
       </div> 
        </div>
     
       ,
     document.getElementById('modal-root') // This element must exist in your index.html
-  ));
+  ):<div/>)
 };
 
 export default PaymentModal;

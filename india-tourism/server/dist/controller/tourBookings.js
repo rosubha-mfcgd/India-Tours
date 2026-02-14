@@ -10,20 +10,36 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 };
 const TourBookingService = require('../service/TourBookingService');
 const UserBookingService = require('../service/UserBookingService');
+const TourDetailService = require('../service/TourDetailService');
 require("../logNginx");
 //Creates a booking record for a list of tourists
 const performBookings = (req_1, res_1, ...args_1) => __awaiter(void 0, [req_1, res_1, ...args_1], void 0, function* (req, res, retries = 3, delay = 1000) {
     const { tourManagerId, tourid, locationName, startDate, endDate, domesticOrInternational, package_cost, primarybookings, dependantbookings } = req.body;
     console.log('req body....', req.body);
     try {
+        let tourOperatorId = null;
         let tourBookingService = new TourBookingService();
-        let bookings = yield tourBookingService.createBookings(tourManagerId, tourid, locationName, startDate, endDate, domesticOrInternational, package_cost, primarybookings, dependantbookings);
-        if (bookings) {
-            console.log('bookings...', bookings);
-            res.status(200).send({ "bookingid": bookings });
+        if (!tourManagerId) {
+            console.log('cannot find tourmanager id, searching by tourid...', tourid);
+            let tourDetailsDService = new TourDetailService();
+            let tourDetails = yield tourDetailsDService.getTourByTourId(tourid);
+            if (tourDetails) {
+                tourOperatorId = tourDetails.tourOperator;
+            }
+            console.log('tour Operator Id....', tourOperatorId);
+        }
+        if (tourManagerId || tourOperatorId) {
+            let bookings = yield tourBookingService.createBookings(tourManagerId ? tourManagerId : tourOperatorId, tourid, locationName, startDate, endDate, domesticOrInternational, package_cost, primarybookings, dependantbookings);
+            if (bookings) {
+                console.log('bookings...', bookings);
+                res.status(200).send({ "bookingid": bookings });
+            }
+            else {
+                res.status(400).send({ "errormessage": "could not create a booking" });
+            }
         }
         else {
-            res.status(400).send({ "errormessage": "could not create a booking" });
+            res.status(400).send({ "errormessage": "could not find touroperator" });
         }
     }
     catch (err) {

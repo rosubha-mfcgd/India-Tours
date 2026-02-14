@@ -59,19 +59,30 @@ const BookingDashboard = ({access_token,tourDetails,triggerDisplayBookings,
     triggerEditBookingForm}) =>{
 
     const stripePromise = loadStripe(process.env.REACT_APP_STRIPE_PUBLISH_KEY);
-    const options = {
-      amount: 100,
-      currency: 'inr',
-    };
+   
 const { notification,loading, setLoading} = useContext(NavContext);
  const [openBookingForm, setOpenBookingForm] = useState(true);   
  const[displayErrorDialog,setDisplayErrorDialog] = useState(false);
-  const[totalpackageCost,setTotalpackagecost] = useState(null);
+  const[totalpackageCost,setTotalpackageCost] = useState(null);
    const[bookingId, setBookingId] = useState(null);
  const[errorMessage,setErrorMessage] = useState(null);    
  const [dialogOpen, setDialogOpen] = useState(false);
 const [clientSecret, setClientSecret] = useState(null);
  const[bookingData,setBookingData] = useState([]);
+ const [advanceBooking,setAdvanceBooking] = useState(false);
+ const [fullBooking,setFullBooking] = useState(false);
+  const [advanceBookingDialog,setAdvanceBookingDialog] = useState(false);
+ const [fullBookingDialog,setFullBookingDialog] = useState(false);
+ const[modalContent,setModalContent] = useState({ title: '', message: '' })
+  const[isModalOpen,setIsModalOpen] = useState(false)
+ const [qrCodeModalOpen,setQrCodeModalOpen] = useState(false);
+const columns = [
+          { field: 'name', headerName: 'Name' },
+          { field: 'mobile', headerName: 'Mobile' },
+          { field: 'email', headerName: 'Email' },
+          { field: 'ageGroup', headerName: 'AgeGroup' },
+          { field: 'gender', headerName: 'Gender' }
+  ];
 //This method is called from the booking modal for updating the booking details
   const prepareBookingData = (data) =>{
     console.log('Here in prepareBookingData...',data)
@@ -83,25 +94,6 @@ const [clientSecret, setClientSecret] = useState(null);
 
     }
  }
-
-
-
-  const[modalContent,setModalContent] = useState({ title: '', message: '' })
-  const[isModalOpen,setIsModalOpen] = useState(false)
- const [qrCodeModalOpen,setQrCodeModalOpen] = useState(false);
-
- 
-        
- 
- const columns = [
-          { field: 'name', headerName: 'Name' },
-          { field: 'mobile', headerName: 'Mobile' },
-          { field: 'email', headerName: 'Email' },
-          { field: 'ageGroup', headerName: 'AgeGroup' },
-          { field: 'gender', headerName: 'Gender' }
-  ];
-
-
    //Validate the booking data
       const validateFields= async() =>{
          let errMsg = null;
@@ -117,7 +109,7 @@ const [clientSecret, setClientSecret] = useState(null);
       }
 
   //Submit the booking
-    const submitBookings = async() =>{
+    const submitBookings = async(paymentMode) =>{
         
       console.log('tour details....',tourDetails)
           //validate booking fields before submission 
@@ -132,14 +124,14 @@ const [clientSecret, setClientSecret] = useState(null);
           }else{
             // triggerDisplayBookings(bookingData,
             //             tourDetails);
-            saveBooking(bookingData);
+            saveBooking(bookingData,paymentMode);
           }
     }
 
 
 
     //Save bookings
-    const saveBooking = async(bookings)=>{
+    const saveBooking = async(bookings,paymentMode)=>{
         let primary_booking = [];
         let dependantbookings = [];
         let primarycount = 0;
@@ -159,7 +151,18 @@ const [clientSecret, setClientSecret] = useState(null);
                       }
                       
                   }
-                  setTotalpackagecost((tourDetails.package_cost)*(bookings.length));
+                 console.log('paymentMode in savebooking...',paymentMode)
+                 let totalpackageAmount = 0;
+                  if(paymentMode === 'ADV')
+                  {
+                     totalpackageAmount = (Number(tourDetails.package_cost)*(bookings.length))*0.40;
+                  }
+                  else if(paymentMode === 'FULL'){
+                     totalpackageAmount = (Number(tourDetails.package_cost)*(bookings.length));
+                  }
+                  console.log('Total package cost...',totalpackageAmount);
+                  setTotalpackageCost(totalpackageAmount);
+                       
                   if(!bookingId)
                   {
                       let data = {tourManagerId:tourDetails.tourManagerId,
@@ -167,7 +170,7 @@ const [clientSecret, setClientSecret] = useState(null);
                               startDate:tourDetails.startDate,
                               endDate:tourDetails.endDate,
                               domesticOrInternational:tourDetails.domesticOrInternational,
-                              package_cost:(tourDetails.package_cost)*(bookings.length),
+                              package_cost:totalpackageAmount,
                               tourid: tourDetails.tourid,
                               primarybookings:primary_booking,
                               dependantbookings:dependantbookings,
@@ -178,32 +181,68 @@ const [clientSecret, setClientSecret] = useState(null);
                     let result = await performTripBooking(data);
                     if(result){
                         console.log('result...',result);
-                        setBookingId(result.bookingid);
                         setLoading(false);
                         setDialogOpen(true);
                         setErrorMessage(null);
+                        setBookingId(result.bookingid);
                     }
                   }       
     }
     //Opens or close the dialog box for error message validations
    const handleClickOpenOrClose = () => {
-        
-        setDialogOpen(!dialogOpen);
+      setDialogOpen(!dialogOpen);
         if(!dialogOpen)
         {
-           // setBookingId('');
-            //setBookingUpdateId('');
-            //setDisable(true)
-             setDisplayErrorDialog(false);
-         // setDialogOpen(false);
+           setDisplayErrorDialog(false);
         }
     };
+//Opt for advance payment/full payment submission
+    const confirmSubmitMode = (paymentMode) =>{
+      console.log('payment mode....',paymentMode);
+      if( paymentMode === 'ADV')
+      {
+        setErrorMessage('You will be charged 40% of your booking fees online to book a spot in the tour group. You can pay the balance amaount later or directly to the operator');
+        setFullBookingDialog(false); 
+       handleClickOpenOrClose();
+        setAdvanceBookingDialog(true);
+      }
+      else if( paymentMode === 'FULL')
+      {
+        setErrorMessage('Pay the complete booking amount and confirm your spot');
+        setAdvanceBookingDialog(false);
+        handleClickOpenOrClose();
+        setFullBookingDialog(true)
+      }
+    }
+//Opt for advance payment mode or full payment mode
+    const confirmPaymentMode = (paymentMode) =>{
+      
 
+      if(paymentMode === 'ADV')
+      {
+        console.log('paymentmode....',paymentMode)
+          setAdvanceBooking(true)
+          setAdvanceBookingDialog(false)
+          
+            submitBookings(paymentMode);
+          
+      }
+      else if(paymentMode === 'FULL')
+      {
+        console.log('paymentmode....',paymentMode)
+        setFullBooking(true)
+        setFullBookingDialog(false)
+       
+         submitBookings(paymentMode);
+      }
+    }
 
     const handlePayment = (title, message) => {
-    handleClickOpenOrClose();
-    setModalContent({ title, message });
-    setIsModalOpen(true);
+        console.log('Payment started...')
+      handleClickOpenOrClose();
+      console.log('dialogOpen...',dialogOpen)
+      setModalContent({ title, message });
+      setIsModalOpen(true);
   };
 
   const handleCloseModal = () => {
@@ -245,10 +284,12 @@ const [clientSecret, setClientSecret] = useState(null);
                       setClientSecret(responsedata.clientSecret);
                 }
                 };
-                console.log('totalpackageCost.....',totalpackageCost)
+                
+                
                 if(!clientSecret && mounted && Number(totalpackageCost)>0)
                 {
-                  console.log('here i am');
+                    console.log('totalpackageCost.....',totalpackageCost)
+                  console.log('Fetching client secret for stripe payment');
                   getClientSecret();
                 }
 
@@ -257,7 +298,11 @@ const [clientSecret, setClientSecret] = useState(null);
         mounted = false; // Set flag to false on cleanup
         clearTimeout(timer); // Clean up the timer
     };
-    },[totalpackageCost]);
+    },[bookingId]);
+
+    
+
+
   return(
         <div className='navbar-grid'>
             <div className = "center-container">
@@ -293,7 +338,40 @@ const [clientSecret, setClientSecret] = useState(null);
                         </Box>
                         </div>) :<div/>
       }
-          {
+
+      {
+        (advanceBookingDialog || fullBookingDialog) ?
+        <Dialog
+        open={dialogOpen}
+        onClose={handleClickOpenOrClose}
+        aria-labelledby="dialog-title"
+        aria-describedby="dialog-description"
+      >
+        <DialogTitle id="dialog-title">Confirmation</DialogTitle>
+        <DialogContent>
+           
+          <DialogContentText id="dialog-description">
+          
+          {errorMessage}
+          </DialogContentText>
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={handleClickOpenOrClose}>Cancel</Button>
+          {advanceBookingDialog && !fullBookingDialog ? 
+          <Button onClick={()=>{confirmPaymentMode('ADV')}} autoFocus>
+           Confirm
+          </Button>:fullBookingDialog && !advanceBookingDialog?
+          <Button onClick={()=>{confirmPaymentMode('FULL')}} autoFocus>
+           Confirm
+          </Button>:<div/>
+          }
+          {dialogOpen?
+          <img src={success_animation} alt="" width="40" height="40"/>:
+          <div></div>}
+        </DialogActions>
+      </Dialog>:<div/>
+      }
+      {
           bookingData && bookingData.length >0 ?
            (
               <DynamicTable columns={columns} data={bookingData} setData={setBookingData}/>  
@@ -326,10 +404,9 @@ const [clientSecret, setClientSecret] = useState(null);
           <img src={failure_animation} alt="" width="40" height="40"/>:
           <div></div>}
         </DialogActions>
-      </Dialog>:<div></div>
+      </Dialog>:<div/>
       }
-    
-      {
+         {
                           dialogOpen && !displayErrorDialog && bookingId?
                            <Dialog
               open={dialogOpen}
@@ -359,7 +436,8 @@ const [clientSecret, setClientSecret] = useState(null);
                 {dialogOpen?
                 <img src={success_animation} alt="" width="40" height="40"/>:<div></div>}
               </DialogActions>
-            </Dialog>:<div></div>}
+            </Dialog>:<div></div>
+            }
       
            
 {
@@ -381,8 +459,12 @@ const [clientSecret, setClientSecret] = useState(null);
                         triggerDisplayOptionsByCatId(tourDetails.categoryId)}}
                           class="button"
                         >Go Back</button>
+
+                <button type="submit" 
+                       class="button" onClick={()=>{confirmSubmitMode('ADV')}}>Make Advance Payment</button>
+
             <button type="submit" 
-                       class="button" onClick={submitBookings}>Submit your Booking</button>
+                       class="button" onClick={()=>{confirmSubmitMode('FULL')}}>Confirm your booking</button>
                
         </div>
         
@@ -390,7 +472,7 @@ const [clientSecret, setClientSecret] = useState(null);
     }
 
 
-     {stripePromise && totalpackageCost && clientSecret  ?
+     {stripePromise && totalpackageCost>0 && clientSecret  ?
           <Elements stripe={stripePromise} 
           options={{clientSecret:clientSecret}}>
           <PaymentModal
@@ -399,14 +481,19 @@ const [clientSecret, setClientSecret] = useState(null);
         title={modalContent.title}
         message={modalContent.message} 
         totalpackagecost={totalpackageCost}
+        tourManagerName = {tourDetails.tourManagerName}
+        location={tourDetails.locationName}
         onswitch = {switchToQRcodeModal} clientSecret={clientSecret}
+
+
         />
       </Elements>:<div/>
       }
         {qrCodeModalOpen && !isModalOpen ?
    
       <PaymentQRCodeGenerator isOpen={qrCodeModalOpen} onClose={() => setQrCodeModalOpen(false)} 
-      amount={totalpackageCost} 
+      amount={totalpackageCost}  tourManagerName = {tourDetails.tourManagerName}
+        location={tourDetails.locationName}
       onswitch={switchToCardPaymentModal}
       />:<div/>
         }

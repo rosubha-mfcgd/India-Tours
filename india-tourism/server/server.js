@@ -304,32 +304,7 @@ try{
 //This function generates the oAuth token for API calls
 app.post("/api/token", async(req,res) =>{
 //Comment out the Auth token generation from AWS Cognito 
-  // const origin = req.headers.origin;
-  // console.log('origin....',origin)
-  //  const data = {
-  //     'client_id':API_CLIENT_ID,
-  //     'client_secret':API_CLIENT_SECRET,
-  //     'grant_type' : GRANT_TYPE
-  //     };
-  //  await axios.post(API_AUTH_TOKEN_URL,querystring.stringify(data),
-  // {
-  //   headers:{
-  //     'Content-Type': 'application/x-www-form-urlencoded',
-  //     'Access-Control-Allow-Origin': origin,
-  //     'Access-Control-Allow-Methods': 'GET, POST, OPTIONS, PUT, PATCH, DELETE',
-  //     'Access-Control-Allow-Headers': 'X-Requested-With,content-type',
-  //     'Access-Control-Allow-Credentials': true
-
-  //   }}).then(
-  //     response => {
-  //         res.status(200).send(response.data);
-  //     }
-  //   ).catch(error =>
-  //   {
-  //     logNginx("error in receiving token....",error);
-  //     res.status(401).send({"error":"Invalid token found"});
-  //   });
-//Implement the token generation from keycloak - free token generation
+  //Implement the token generation from keycloak - free token generation
   let data = {
         client_id: process.env.AUTH_CLIENT_ID,
         client_secret: process.env.AUTH_CLIENT_SECRET,
@@ -348,8 +323,7 @@ app.post("/api/token", async(req,res) =>{
                 res.status(200).send(response.data);
             }
           );
-  
-      }
+        }
       catch(err)
         {
           logNginx(err.stack)

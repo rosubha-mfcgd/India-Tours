@@ -99,6 +99,8 @@ const TripList = ({access_token,categoryId,cityList,showDetails}) =>{
    
     function getPrimaryContact(phones)
     {
+        if(phones && phones.length > 0)
+        {
         for(let phone of phones)
         {
             if(phone.isPrimary)
@@ -106,11 +108,14 @@ const TripList = ({access_token,categoryId,cityList,showDetails}) =>{
                 return phone.number;
             }
         }
+    }
         return '';
     }
     function getSecondaryContact(phones)
     {
         let secondaryContact = '';
+        if(phones && phones.length > 0)
+        {
         for(let phone of phones)
         {
             if(!phone.isPrimary)
@@ -118,6 +123,7 @@ const TripList = ({access_token,categoryId,cityList,showDetails}) =>{
                 secondaryContact+=phone.number;
             }
         }
+    }
         return secondaryContact;
     }
 
@@ -140,14 +146,14 @@ const TripList = ({access_token,categoryId,cityList,showDetails}) =>{
                                         "tourManagerName":tourManager.firstName+"-"+tourManager.lastName,
                                          "contact": getPrimaryContact(tourManager),
                                          "secondarycontact": getSecondaryContact(tourManager),
-                                        "email": tourManager.email,
+                                          "email": tourManager.email,
                                           "categoryId":categoryId
                                         });
-                                }
-                            );
-
-                        }
-                    }else{
+                                });
+                            }
+                    }
+                    else
+                        {
                             console.log('Could not find tour managers');
                         }
                       
@@ -233,11 +239,7 @@ const TripList = ({access_token,categoryId,cityList,showDetails}) =>{
                 
              },
              [selectedValue,priceValue,triplengthValue,cityvalue]); 
-             
-             
-            
-      
-    return(
+     return(
         
         <div sx={{ display: 'flex',justifyContent:'flex-end'}}>
            
@@ -341,7 +343,8 @@ const TripList = ({access_token,categoryId,cityList,showDetails}) =>{
                 priceValue={priceValue} setPriceValue={setPriceValue} 
                 cityList={cityList}
                 triplengthValue={triplengthValue} 
-                setTriplengthValue={setTriplengthValue} cityvalue={cityvalue} setCityvalue={setCityvalue}/>
+                setTriplengthValue={setTriplengthValue} cityvalue={cityvalue} 
+                setCityvalue={setCityvalue}/>
             </div>:<div></div>
            }
              </Grid>

@@ -1,6 +1,7 @@
 
 const TourBookingService = require('../service/TourBookingService');
 const UserBookingService = require('../service/UserBookingService');
+const TourDetailService = require('../service/TourDetailService');
 require("../logNginx");
 //Creates a booking record for a list of tourists
 const performBookings = async(req,res,retries = 3, delay = 1000) =>{
@@ -9,9 +10,22 @@ const performBookings = async(req,res,retries = 3, delay = 1000) =>{
         package_cost,primarybookings,dependantbookings} = req.body;
       console.log('req body....',req.body)
         try{
+              let tourOperatorId = null;
                 let tourBookingService =  new TourBookingService();
-                
-            let bookings = await tourBookingService.createBookings(tourManagerId,tourid,
+                if(!tourManagerId)
+                {
+                  console.log('cannot find tourmanager id, searching by tourid...',tourid)
+                    let tourDetailsDService = new TourDetailService();
+                    let tourDetails = await tourDetailsDService.getTourByTourId(tourid);
+                    if(tourDetails)
+                    {
+                      tourOperatorId = tourDetails.tourOperator;
+                    }
+                    console.log('tour Operator Id....',tourOperatorId)
+                }
+          if(tourManagerId||tourOperatorId){
+            let bookings = await tourBookingService.createBookings(tourManagerId?tourManagerId:tourOperatorId,
+              tourid,
               locationName,
                 startDate,endDate,domesticOrInternational,
                 package_cost,primarybookings,dependantbookings);
@@ -19,9 +33,11 @@ const performBookings = async(req,res,retries = 3, delay = 1000) =>{
                   console.log('bookings...',bookings);
                 res.status(200).send({"bookingid":bookings});
                 }else{
-                   res.status(400).send(
-                {"errormessage":"could not create a booking"});
+                   res.status(400).send({"errormessage":"could not create a booking"});
                 }
+              }else{
+                res.status(400).send({"errormessage":"could not find touroperator"});
+              }
        }catch(err){
          if(retries>0)
         {
