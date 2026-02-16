@@ -8,7 +8,7 @@ import { useEffect, useState, useContext } from "react";
 import PaymentSuccessModal from "../modal/paymentSuccessModal";
 import PaymentQRCodeGenerator from "../modal/generateQRcodeForUPI"
 import { Elements, PaymentElement, useStripe, useElements } from '@stripe/react-stripe-js';
-import { getApiAccessToken,createIntent } from "../admin/admin";
+import { confirmStripePayment,retrievePaymentIntent } from "../admin/admin";
 import success_animation from '../Assets/images/success_animation.gif';
 import SideBarNotification from '../navigationTabs/sideBarNotification';
 import { NavContext } from '../navigationContext/navigationContext';
@@ -44,8 +44,8 @@ import {
   } from "@mui/material";
 
   
-  const PaymentModal = ({ isOpen, onClose, title, message,totalpackagecost,onswitch,
-    clientSecret,tourManagerName,location}) => {
+  const PaymentModal = ({ isOpen, onClose, title, message,totalpackagecost,paymentmode,onswitch,
+    clientSecret,tourManagerName,location,bookingid,paymentIntentId}) => {
     // Define appearance options for the PaymentElement
   const appearance = {
     theme: 'stripe', // 'stripe' (default), 'flat', or 'none'
@@ -93,7 +93,7 @@ import {
     const { error: submitError } = await elements.submit();
     if (submitError) return;
     console.log('window location path....',window.location.origin);
-    const {error} = await stripe.confirmPayment({
+    const result = await stripe.confirmPayment({
       elements,
       clientSecret,
       confirmParams: {
@@ -104,19 +104,47 @@ import {
     // in the same view if possible, or redirect if needed.
     redirect: 'if_required'
     });
-
-    if(error){
+if(result)
+{
+    if(result.error){
          // This point will only be reached if an error (such as a card error)
     // occurs when confirming the payment.
-        setErrorMessage(error.message);
+        setErrorMessage(result.error.message);
        setIsModalOpen(false); // Ensure modal is closed on error
     }else {
           // This point is reached when a synchronous payment succeeds (no redirect required).
           // You can now open your success modal.
-          setErrorMessage(null);
-          setIsModalOpen(true);
+          // The payment has been processed. The PaymentIntent ID is available here.
+          console.log('payment intent id...',result.paymentIntent)
+          let paymentIntentId = result.paymentIntent.id;
+          console.log('Payment Intent ID:', paymentIntentId);
+          let data = {paymentIntentId:paymentIntentId};
+          let response = await retrievePaymentIntent(data);
+
+            if(response)
+              {
+                console.log('result fom payment intent retrieve....',response);
+                if(response.paymentstatus === 'succeeded'){
+                const amount = response.amount; // The total amount of the PaymentIntent
+                const last4carddigits = response.last4carddigits; 
+                const brand = response.brand;
+                console.log('amount,last4carddigits,brand....',amount,last4carddigits,brand)
+                let data = {bookingid:bookingid,last4carddigits:last4carddigits,paidamount:amount,
+                  paymentmode:paymentmode,paymentIntentId:paymentIntentId,brand:brand};
+                
+                  let result = await confirmStripePayment(data);
+                
+              if(result){
+                setErrorMessage(null);
+                setIsModalOpen(true);
+              }
+            }
+      }else {
+        console.log('error....',response.error)
       }
+    }
   }
+}
 }
 
     if (!isOpen) return null;
@@ -170,7 +198,7 @@ import {
     {isModalOpen && 
    
         <PaymentSuccessModal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)}
-        closeCardPayment = {closeCardPayment}
+        closeCardPayment = {closeCardPayment} 
         />
     }
    </form>

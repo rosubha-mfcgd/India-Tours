@@ -48,14 +48,8 @@ const tourBookingSchema = new Schema<ITourBookings>({
     },
 
     payment: {
-      paymentId: String,
-      status: String,
-      cardLast4: String,
-      method: {
-        type: String,
-        default: "card",
-      },
-    },
+		type: [],
+     },
 
     status: {
       type: String,

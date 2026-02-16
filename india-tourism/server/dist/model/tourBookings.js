@@ -46,13 +46,7 @@ const tourBookingSchema = new mongoose_1.Schema({
         default: "INR",
     },
     payment: {
-        paymentId: String,
-        status: String,
-        cardLast4: String,
-        method: {
-            type: String,
-            default: "card",
-        },
+        type: [],
     },
     status: {
         type: String,

@@ -24,6 +24,8 @@ export abstract class BaseRepository<T extends Document> implements IRepository<
        console.log('result count...',result.modifiedCount);
        return this._model;
     }
+
+   
    async delete(id: string): Promise<boolean> {
         const result = await this._model.deleteOne({ _id: id });
         return result.deletedCount > 0;

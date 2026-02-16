@@ -173,6 +173,38 @@ constructor(){
             }
             return result;
         }
+
+//Update bookings by booking id
+     async updateBookingDetailsByBookingId(existingbooking,
+      paymentId,brand,
+      cardlast4,paymentmode) {
+      let result = null;
+     const bookingRepository = new BookingRepository();
+      try{
+         let data = {
+          "paymentId":paymentId,
+          "cardLast4":cardlast4,
+          "status": paymentmode,
+           "method": {
+              "type": brand
+            }};
+            console.log('updated booking data....',data);
+         let updateResult = await bookingRepository.update(existingbooking._id,{$set:{"payment":
+            data}});
+         if(updateResult)
+          {
+             console.log('booking....',result);
+            result =  await bookingRepository.findOne({bookingId:existingbooking.bookingId})
+          }
+          
+      }
+      catch(err){
+                console.log(err.stack);
+                logNginx(err.stack); 
+            }
+            return result;
+     }
+
 }
 
 module.exports = TourBookingService

@@ -10,13 +10,14 @@ const {getCategories,getProducts,getToursByCategoryId,
     updateFavoriteCategory,getTourItenerariesForTrip,getRecommendedTours} = require("../controller/tripDetails");
 const {getRegisteredTourManagers, getCities} = require("../controller/tourManagers");
 const {performBookings, performBookingsByMobile,performUserBookings,
-    getBookingsByBookingId,updateBookingsByBookingId,createPaymentIntent} = require("../controller/tourBookings");
+    getBookingsByBookingId,updateBookingsByBookingId} = require("../controller/tourBookings");
 const {getSearchOptions,getPreferences} = require("../controller/searchOptions");
 const { sendConfirmation } = require('../controller/sendCommunication');
 const {resendOTP,getKeycloakAuthToken} = require('../controller/loginuser');
 const {findUser,updateProfile} = require('../controller/userprofile')
 const {checkRequestAuthenticated} = require("../middlewares/userAuth")
 const {processImage} = require("../controller/imageProcessor");
+const {confirmPackageTourCardPayment, createPaymentIntent,retrievePaymentIntent} = require("../controller/paymenthandler");
 const router = express.Router();
 
 
@@ -53,4 +54,8 @@ router.post("/authToken",getKeycloakAuthToken);
 router.post("/performUserBookings",checkRequestAuthenticated,performUserBookings);
 router.post("/processImage",checkRequestAuthenticated,processImage);
 router.post("/create-intent",checkRequestAuthenticated,createPaymentIntent);
+router.post("/confirm-packagetour-cardpayment-success",checkRequestAuthenticated,confirmPackageTourCardPayment);
+router.post("/retrievePaymentIntent",checkRequestAuthenticated,retrievePaymentIntent);
+
+
 module.exports = router

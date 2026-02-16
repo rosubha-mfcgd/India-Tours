@@ -160,5 +160,33 @@ class TourBookingService {
             return result;
         });
     }
+    //Update bookings by booking id
+    updateBookingDetailsByBookingId(existingbooking, paymentId, brand, cardlast4, paymentmode) {
+        return __awaiter(this, void 0, void 0, function* () {
+            let result = null;
+            const bookingRepository = new BookingRepository();
+            try {
+                let data = {
+                    "paymentId": paymentId,
+                    "cardLast4": cardlast4,
+                    "status": paymentmode,
+                    "method": {
+                        "type": brand
+                    }
+                };
+                console.log('updated booking data....', data);
+                let updateResult = yield bookingRepository.update(existingbooking._id, { $set: { "payment": data } });
+                if (updateResult) {
+                    console.log('booking....', result);
+                    result = yield bookingRepository.findOne({ bookingId: existingbooking.bookingId });
+                }
+            }
+            catch (err) {
+                console.log(err.stack);
+                logNginx(err.stack);
+            }
+            return result;
+        });
+    }
 }
 module.exports = TourBookingService;

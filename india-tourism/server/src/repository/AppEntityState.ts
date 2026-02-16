@@ -420,13 +420,7 @@ export interface ICategory extends Document{
     },
 
     payment: {
-      paymentId: String,
-      status: String,
-      cardLast4: String,
-      method: {
-        type: String,
-        default: "card",
-      },
+      type: [],
     },
 
     status: {

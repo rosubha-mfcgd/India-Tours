@@ -599,6 +599,74 @@ export const createIntent = async(data) =>{
     return res_data;
 }
 
+export const retrievePaymentIntent = async(data) =>{
+      let res_data = "failed to fetch client secret";
+    try{
+        let access_token = await getApiAccessToken();
+
+      if(access_token){
+         console.log('access_token found for user Auth...',access_token.data)
+         console.log('here i am calling create-payment-intent....');
+        const response = await axios.post(process.env.REACT_APP_SERVER_URI+'retrievePaymentIntent',
+          data, 
+       {    
+            headers: {
+                "Content-type": "application/json; charset=UTF-8",
+                "Authorization":"Bearer "+access_token.data.access_token,
+                 }}
+          );     
+          
+      if(response)
+        {
+            console.log('response from retrieve payment confirmation...',response)
+            res_data = await response.data;
+           
+         } 
+    }
+   }catch(err){
+         console.log(err.stack)
+         console.error('Error from payment intent:::', err);
+        // throw err;
+    }
+    return res_data;
+}
+
+
+
+export const confirmStripePayment = async(data)=>{
+       let res_data = "failed to fetch client secret";
+    try{
+        let access_token = await getApiAccessToken();
+
+      if(access_token){
+         console.log('access_token found for user Auth...',access_token.data)
+         console.log('here i am calling confirm-payment-intent....');
+        const response = await axios.post(process.env.REACT_APP_SERVER_URI+'confirm-packagetour-cardpayment-success',
+          data, 
+       {    
+            headers: {
+                "Content-type": "application/json; charset=UTF-8",
+                "Authorization":"Bearer "+access_token.data.access_token,
+                 }}
+          );     
+          
+      if(response)
+        {
+            console.log('response from payment confirmation...',response)
+            res_data = await response.data;
+           
+         } 
+    }
+   }catch(err){
+         console.log(err.stack)
+         console.error('Error from payment intent:::', err);
+        // throw err;
+    }
+    return res_data;
+}
+
+
+
 
 
 export const keycloakConfig = {

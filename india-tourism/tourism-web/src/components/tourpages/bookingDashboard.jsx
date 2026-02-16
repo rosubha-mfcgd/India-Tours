@@ -63,6 +63,7 @@ const BookingDashboard = ({access_token,tourDetails,triggerDisplayBookings,
 const { notification,loading, setLoading} = useContext(NavContext);
  const [openBookingForm, setOpenBookingForm] = useState(true);   
  const[displayErrorDialog,setDisplayErrorDialog] = useState(false);
+ const[paymentIntentId,setPaymentIntentId] = useState(null)
   const[totalpackageCost,setTotalpackageCost] = useState(null);
    const[bookingId, setBookingId] = useState(null);
  const[errorMessage,setErrorMessage] = useState(null);    
@@ -279,9 +280,11 @@ const columns = [
                       const responsedata = await createIntent(data);
                   
                   if(responsedata){
-                    console.log('client secret received ....',responsedata.clientSecret)
+                    console.log('client secret and payment id received ....',responsedata.clientSecret,
+                      responsedata.paymentIntent_id);
                     //set client secret in state variable
                       setClientSecret(responsedata.clientSecret);
+                      setPaymentIntentId(responsedata.paymentIntent_id);
                 }
                 };
                 
@@ -483,10 +486,12 @@ const columns = [
         totalpackagecost={totalpackageCost}
         tourManagerName = {tourDetails.tourManagerName}
         location={tourDetails.locationName}
-        onswitch = {switchToQRcodeModal} clientSecret={clientSecret}
-
-
-        />
+        paymentmode={advanceBooking?'ADV':'FULL'}
+        onswitch = {switchToQRcodeModal} 
+        bookingid={bookingId}
+        clientSecret={clientSecret}
+        paymentIntentId={paymentIntentId}
+       />
       </Elements>:<div/>
       }
         {qrCodeModalOpen && !isModalOpen ?

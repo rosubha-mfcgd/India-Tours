@@ -1,16 +1,12 @@
 
-Fri Feb 13 2026 21:36:40 GMT-0500 (Eastern Standard Time): TypeError: Assignment to constant variable.
-    at performBookings (C:\Users\royco\India-tourism-App\India-Tours\india-tourism\server\src\controller\tourBookings.js:21:37)
-    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
-Fri Feb 13 2026 22:19:06 GMT-0500 (Eastern Standard Time): TypeError: Assignment to constant variable.
-    at performBookings (C:\Users\royco\India-tourism-App\India-Tours\india-tourism\server\src\controller\tourBookings.js:21:37)
-    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
-Fri Feb 13 2026 22:19:14 GMT-0500 (Eastern Standard Time): TypeError: Assignment to constant variable.
-    at performBookings (C:\Users\royco\India-tourism-App\India-Tours\india-tourism\server\src\controller\tourBookings.js:21:37)
-    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
-Fri Feb 13 2026 22:19:19 GMT-0500 (Eastern Standard Time): TypeError: Assignment to constant variable.
-    at performBookings (C:\Users\royco\India-tourism-App\India-Tours\india-tourism\server\src\controller\tourBookings.js:21:37)
-    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
-Fri Feb 13 2026 22:21:34 GMT-0500 (Eastern Standard Time): TypeError: Assignment to constant variable.
-    at performBookings (C:\Users\royco\India-tourism-App\India-Tours\india-tourism\server\src\controller\tourBookings.js:21:37)
-    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+Mon Feb 16 2026 14:53:17 GMT-0500 (Eastern Standard Time): CastError: Cast to string failed for value "{ type: 'visa' }" (type Object) at path "payment.method"
+    at SchemaString.cast (C:\Users\royco\India-tourism-App\India-Tours\india-tourism\server\node_modules\mongoose\lib\schema\string.js:607:11)
+    at SchemaType.applySetters (C:\Users\royco\India-tourism-App\India-Tours\india-tourism\server\node_modules\mongoose\lib\schemaType.js:1255:12)
+    at SchemaString.castForQuery (C:\Users\royco\India-tourism-App\India-Tours\india-tourism\server\node_modules\mongoose\lib\schema\string.js:693:17)
+    at castUpdateVal (C:\Users\royco\India-tourism-App\India-Tours\india-tourism\server\node_modules\mongoose\lib\helpers\query\castUpdate.js:628:19)
+    at walkUpdatePath (C:\Users\royco\India-tourism-App\India-Tours\india-tourism\server\node_modules\mongoose\lib\helpers\query\castUpdate.js:333:22)
+    at walkUpdatePath (C:\Users\royco\India-tourism-App\India-Tours\india-tourism\server\node_modules\mongoose\lib\helpers\query\castUpdate.js:378:20)
+    at castUpdate (C:\Users\royco\India-tourism-App\India-Tours\india-tourism\server\node_modules\mongoose\lib\helpers\query\castUpdate.js:144:7)
+    at model.Query._castUpdate (C:\Users\royco\India-tourism-App\India-Tours\india-tourism\server\node_modules\mongoose\lib\query.js:4703:10)
+    at model.Query._updateThunk (C:\Users\royco\India-tourism-App\India-Tours\india-tourism\server\node_modules\mongoose\lib\query.js:3896:25)
+    at model.Query._updateOne (C:\Users\royco\India-tourism-App\India-Tours\india-tourism\server\node_modules\mongoose\lib\query.js:3984:23)
