@@ -6,11 +6,14 @@ const PaymentSuccessModal = ({ isOpen, onClose,closeCardPayment}) => {
   closeCardPayment();  
   onClose();
 
- }  
+ } 
+
+ useEffect(()=>{
+  
+ },[]);
+
+
   if (!isOpen) return null;
-
-
-
   return (
     <div className="modal-overlay">
       <div className="modal-content">

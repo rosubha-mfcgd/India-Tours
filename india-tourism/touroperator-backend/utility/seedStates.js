@@ -1,4 +1,5 @@
 const State = require("../models/State");
+const Country = require("../models/Country");
 const getNextSequence = require("../utility/getNextSequence");
 
 const seedStates = async () => {
@@ -41,22 +42,27 @@ const seedStates = async () => {
       "Andaman and Nicobar Islands",
       "Lakshadweep"
     ];
-
+ const countryId = await Country.findOne({name:"India"})
+ if(countryId){
     for (const stateName of states) {
       const exists = await State.findOne({ name: stateName });
 
       if (!exists) {
         // Generate numeric _id for the state
         const numericId = await getNextSequence("state");
-
+       
+        if(countryId){
         await State.create({
           _id: numericId,  // numeric _id
-          name: stateName
+          name: stateName,
+          countryid: countryId
         });
-
+      }
         console.log(`State "${stateName}" created with _id ${numericId}`);
       }
+    
     }
+  }
 
     console.log("All states seeded successfully.");
   } catch (err) {

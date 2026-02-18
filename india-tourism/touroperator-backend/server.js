@@ -16,6 +16,7 @@ const imageRoute = require('./routes/imageRoutes');
 const bookingRoute = require('./routes/bookingRoute');
 const seedRoles = require("./utility/seedRoles"); // import the function
 const seedStates = require("./utility/seedStates"); // import all Indian states
+const seedCountries = require("./utility/seedCountries"); // import all Countries
 
 const app = express();
 const PORT = process.env.PORT || 5000;
@@ -42,11 +43,14 @@ app.use('/api/booking', bookingRoute);
 // MongoDB connection
 mongoose.connect(process.env.MONGO_URI, { useNewUrlParser: true, useUnifiedTopology: true })
   .then(async () => {
+    //Seed countries after DB connection
+    await seedCountries();
     console.log("MongoDB connected");
     // Seed roles after DB connection
     await seedRoles();
     //Seed states after DB connection
     await seedStates();
+    
     app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
   })
   .catch(err => console.error(err));
