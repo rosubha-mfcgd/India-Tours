@@ -11,6 +11,10 @@ const stateSchema = new mongoose.Schema(
       required: true,
       unique: true,
       trim: true
+    },
+    countryid: {
+      type: Number, // numeric _id
+      required: true
     }
   },
   { timestamps: true }

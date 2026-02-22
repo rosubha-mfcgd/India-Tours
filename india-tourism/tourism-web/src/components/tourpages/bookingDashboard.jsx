@@ -17,6 +17,7 @@ import { performTripBooking } from "../admin/admin";
 import CreateBooking from "../modal/createBooking"
 import PaymentModal from "./payment";
 import PaymentQRCodeGenerator from "../modal/generateQRcodeForUPI";
+import AuthenticateTraveller from '../modal/autheticateTraveller';
 import {
     TextField,
     Button,
@@ -74,9 +75,13 @@ const [clientSecret, setClientSecret] = useState(null);
  const [fullBooking,setFullBooking] = useState(false);
   const [advanceBookingDialog,setAdvanceBookingDialog] = useState(false);
  const [fullBookingDialog,setFullBookingDialog] = useState(false);
+  const [travellerAuthenticated,setTravellerAuthenticated] = useState(false);
  const[modalContent,setModalContent] = useState({ title: '', message: '' })
   const[isModalOpen,setIsModalOpen] = useState(false)
  const [qrCodeModalOpen,setQrCodeModalOpen] = useState(false);
+
+
+
 const columns = [
           { field: 'name', headerName: 'Name' },
           { field: 'mobile', headerName: 'Mobile' },
@@ -199,6 +204,26 @@ const columns = [
     };
 //Opt for advance payment/full payment submission
     const confirmSubmitMode = (paymentMode) =>{
+      console.log('payment mode....',paymentMode);
+      if( paymentMode === 'ADV')
+      {
+        setErrorMessage('You will be charged 40% of your booking fees online to book a spot in the tour group. You can pay the balance amaount later or directly to the operator');
+        setFullBookingDialog(false); 
+       handleClickOpenOrClose();
+        setAdvanceBookingDialog(true);
+      }
+      else if( paymentMode === 'FULL')
+      {
+        setErrorMessage('Pay the complete booking amount and confirm your spot');
+        setAdvanceBookingDialog(false);
+        handleClickOpenOrClose();
+        setFullBookingDialog(true)
+      }
+    }
+
+
+    //Opt for advance payment/full payment submission
+    const openTravellerAuthenticationByAdharCard = (paymentMode) =>{
       console.log('payment mode....',paymentMode);
       if( paymentMode === 'ADV')
       {
@@ -453,9 +478,19 @@ const columns = [
         
         :<div/>
 }
+
+{
+    travellerAuthenticated &&  bookingData && bookingData.length >0 ? 
+  <AuthenticateTraveller isOpen={travellerAuthenticated} 
+  onClose={() => setTravellerAuthenticated(false)}
+    prepareBookingData = {prepareBookingData} bookingData={bookingData}
+    />
+  :<div/>
+}
+
  {
           bookingData && bookingData.length >0 ?
-<div className="button-container-2">
+        <div className="button-container-2">
 
           <div className='submit-container'>
             <button type="submit" onClick={()=>{
@@ -464,11 +499,16 @@ const columns = [
                         >Go Back</button>
 
                 <button type="submit" 
+                       class="button" onClick={()=>{setTravellerAuthenticated(true)}}>Validate</button>
+                {travellerAuthenticated ?
+                <div>
+                <button type="submit" 
                        class="button" onClick={()=>{confirmSubmitMode('ADV')}}>Make Advance Payment</button>
 
             <button type="submit" 
                        class="button" onClick={()=>{confirmSubmitMode('FULL')}}>Confirm your booking</button>
-               
+                </div>:<div/>
+                }  
         </div>
         
         </div>:<div/>

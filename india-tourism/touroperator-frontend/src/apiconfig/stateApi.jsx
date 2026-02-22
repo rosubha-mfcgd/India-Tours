@@ -6,6 +6,12 @@ import axiosClient from './axiosClient';
 export const getStates = () => axiosClient.get('/states');
 
 /**
+ * Get all states by country id
+ */
+
+export const getStatesByCountry = (id) => axiosClient.get(`/states/country/${id}`);
+
+/**
  * Get state by ID
  * @param {string} id - State ID
  */

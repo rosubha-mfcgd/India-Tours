@@ -11,12 +11,13 @@ const categoryRoutes = require("./routes/categoryRoutes");
 const tourOperatorRoutes = require("./routes/tourOperatorRoutes"); // import the user routes
 const cityRoute = require('./routes/cityRoute');
 const stateRoute = require('./routes/stateRoute');
+const countryRoute = require('./routes/countryRoute');
 const tourRoute = require('./routes/tourRoutes');
 const imageRoute = require('./routes/imageRoutes');
 const bookingRoute = require('./routes/bookingRoute');
 const seedRoles = require("./utility/seedRoles"); // import the function
 const seedStates = require("./utility/seedStates"); // import all Indian states
-const seedCountries = require("./utility/seedCountries"); // import all Countries
+const seedCountries = require("./utility/seedcountries"); // import all Countries
 
 const app = express();
 const PORT = process.env.PORT || 5000;
@@ -35,8 +36,10 @@ app.use("/api/admin/tour-operators", tourOperatorRoutes);
 
 
 // Tour Routes
+app.use('/api/countries', countryRoute);
 app.use('/api/cities', cityRoute);
 app.use('/api/states', stateRoute);
+app.use('/api/countries', stateRoute);
 app.use('/api/tourdetails', tourRoute);
 app.use('/api/imagedetails', imageRoute);
 app.use('/api/booking', bookingRoute);

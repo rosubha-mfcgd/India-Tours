@@ -14,24 +14,33 @@ import {
 } from '@mui/material';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import ExpandLessIcon from '@mui/icons-material/ExpandLess';
-import { getStates } from '../../apiconfig/stateApi';
+import {getCountries} from '../../apiconfig/countryApi';
+import { getStates,getStatesByCountry } from '../../apiconfig/stateApi';
 import { getCitiesByState, createCity } from '../../apiconfig/cityApi'; // use getCityByState
 
 export default function LocationsPage() {
   const [states, setStates] = useState([]);
+   const [countries, setCountries] = useState([]);
+   const [selectedCountry, setSelectedCountry] = useState('');
   const [selectedState, setSelectedState] = useState('');
   const [locations, setLocations] = useState([]);
   const [newLocations, setNewLocations] = useState(['']);
   const [openCollapse, setOpenCollapse] = useState(true);
 
   useEffect(() => {
-    getStates()
-      .then(res => setStates(res.data || []))
-      .catch(err => console.error('Failed to fetch states:', err));
+
+    getCountries().then(res => setCountries(res.data||[])).
+    catch(err => console.error('Failed to fetch states:', err));
+
+
+    // getStates()
+    //   .then(res => setStates(res.data || []))
+    //   .catch(err => console.error('Failed to fetch states:', err));
   }, []);
 
   // Fetch cities for the selected state
   useEffect(() => {
+    
     if (selectedState) {
       
          getCitiesByState(selectedState)
@@ -41,6 +50,18 @@ export default function LocationsPage() {
       setLocations([]);
     }
   }, [selectedState]);
+
+  useEffect(() => {
+    
+    if (selectedCountry) {
+      
+         getStatesByCountry(selectedCountry)
+        .then(res => setStates(res.data || []))
+        .catch(err => console.error('Failed to fetch states for state:', err));
+    } else {
+      setStates([]);
+    }
+  }, [selectedCountry]);
 
   const handleAddLocationField = () => {
     setNewLocations(prev => [...prev, '']);
@@ -92,6 +113,17 @@ export default function LocationsPage() {
   return (
     <Box sx={{ p: 4 }}>
       <Typography variant="h4" mb={2}>Manage Locations</Typography>
+
+ <Stack spacing={2} sx={{ mb: 2 }}>
+        <Select
+          value={selectedCountry}
+          onChange={e => setSelectedCountry(e.target.value)}
+          displayEmpty
+        >
+          <MenuItem value="">Select country</MenuItem>
+          {countries.map(c => <MenuItem key={c._id} value={c._id}>{c.name}</MenuItem>)}
+        </Select>
+      </Stack>
 
       <Stack spacing={2} sx={{ mb: 2 }}>
         <Select

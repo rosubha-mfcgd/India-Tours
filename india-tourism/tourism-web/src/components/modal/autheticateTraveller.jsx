@@ -1,0 +1,138 @@
+// Import the UPI QR library
+import QRCode from 'react-qr-code';
+import '../../styles/bookingForm.css';
+import { useEffect, useState} from "react";
+import { AnonAadhaarProvider } from "@anon-aadhaar/react";
+import {validateBookingData} from "../admin/utility";
+import failure_animation from '../Assets/images/failure_animation.gif';
+import { styled } from '@mui/material/styles';
+import {
+    TextField,
+    Button,
+    Table,
+    TableBody,
+    TableCell,
+    TableContainer,
+    TableHead,
+    TableRow,
+    Paper,
+    Modal,
+    Box,
+    Snackbar,
+    Card,
+    Grid,
+    OutlinedInput,
+    Typography,
+    CardMedia,
+    CardContent,
+    FormGroup,
+    FormControl,  
+    Input,
+    Switch,
+    Select,
+    InputLabel,
+    
+    TextareaAutosize,
+    Dialog,
+    DialogTitle,
+    DialogContent,
+    DialogContentText,
+    DialogActions,
+    MenuItem
+  } from "@mui/material";
+
+  
+const AuthenticateTraveller = ({ isOpen, onClose,updateBookingData,editingItem,index
+}) => {
+const [touristData, setTouristData] = useState({
+    name: editingItem.name,
+    email: editingItem.email,
+    mobile: editingItem.mobile,
+    ageGroup: editingItem.ageGroup,
+    gender:  editingItem.gender
+  });
+
+ 
+  
+const [selectedFile, setSelectedFile] = useState(null);
+  const [message, setMessage] = useState('');
+
+  // Handle file selection
+  const onFileChange = (event) => {
+    // Access the selected file(s) using event.target.files
+    setSelectedFile(event.target.files[0]);
+    setMessage('');
+  };
+
+  // Handle file upload to the server
+  const onFileUpload = async () => {
+    if (!selectedFile) {
+      setMessage('Please select a file first!');
+      return;
+    }
+
+    // Create a FormData object and append the file
+    const formData = new FormData();
+    formData.append(
+      'myFile', // Name of the field for the server to pick up
+      selectedFile,
+      selectedFile.name
+    );
+      try {
+      // Send the request to the backend server
+     // const response = await axios.post('YOUR_UPLOAD_ENDPOINT', formData);
+     const response = ""; 
+     setMessage(`File uploaded successfully: ${response.data.message}`);
+      // Clear the selected file state after successful upload
+      setSelectedFile(null); 
+    } catch (error) {
+      setMessage('File upload failed!');
+      console.error('Upload error:', error);
+    }
+  };
+
+    // Display file details or prompt user
+  const fileData = () => {
+    if (selectedFile) {
+      return (
+        <div>
+          <h2>File Details:</h2>
+          <ul>
+            <li>Name: {selectedFile.name}</li>
+            <li>Type: {selectedFile.type}</li>
+            <li>Last Modified: {selectedFile.lastModifiedDate.toLocaleDateString()}</li>
+          </ul>
+        </div>
+      );
+    } else {
+      return (
+        <div>
+          <p>Choose a file to see its details and upload.</p>
+        </div>
+      );
+    }
+  };
+if (!isOpen) return null;
+
+  return (
+     <AnonAadhaarProvider _artifactslinks={{
+    zkey_url: "/aadhar_validation/circuit_final.zkey",
+    vkey_url: "/aadhar_validation/vkey.json",
+    wasm_url: "/aadhar_validation/aadhaar-verifier.wasm",
+  }}>
+      <div>
+        <h1>React File Upload</h1>
+        <div>
+          <input type="file" onChange={onFileChange} />
+          <button onClick={onFileUpload}>
+            Upload Aadhar card
+          </button>
+        </div>
+        {fileData()}
+        {message && <p style={{ color: message.includes('failed') ? 'red' : 'green' }}>{message}</p>}
+      </div>
+    </AnonAadhaarProvider>
+)
+};
+
+export default AuthenticateTraveller;
