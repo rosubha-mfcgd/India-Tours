@@ -19,28 +19,11 @@ const PaymentQRCodeGenerator = ({ isOpen, onClose, amount, onswitch,tourManagerN
     // Define payment details
   const upiDetails = `upi://pay?pa=${upiId}&pn=${encodeURIComponent(name)}&am=${amount}&cu=INR`;
   
-  // useEffect(()=>{
-  //   async function generateQRCode()
-  //   {
-  //       try{
-  //           // Generate the QR code as a data URL (PNG)
-  //       const { qr } = await new UPIQR()
-  //         .set(upiDetails)
-  //         .generate();
-  //       setQrCode(qr);
-  //       }catch(err){
-  //           console.log("Error using QR code :-",err);
-  //       }
-  //   }
-  //   if(!qrCode)
-  //   {
-  //       generateQRCode();
-  //    }
-  // });
+  let merchantID = 'PGTESTPAYUAT';
+  let SALT_KEY = '099eb0cd-02cf-4e2a-8aca-3e6c6aff0399';
+  let salt_index = 1;
+  let sandbox_URL = 'https://api-preprod.phonepe.com/apis/pg-sandbox/pg/v1/pay';
 
-  // if (!qrCode) {
-  //   return <div>Loading QR Code...</div>;
-  // }
   if (!isOpen) return null;
   return (
     <div style={{

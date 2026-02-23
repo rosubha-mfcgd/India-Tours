@@ -1,0 +1,53 @@
+
+Sun Feb 22 2026 20:21:20 GMT-0500 (Eastern Standard Time): TokenExpiredError: jwt expired
+    at C:\Users\royco\India-tourism-App\India-Tours\india-tourism\tourism-agents\node_modules\jsonwebtoken\verify.js:190:21
+    at getSecret (C:\Users\royco\India-tourism-App\India-Tours\india-tourism\tourism-agents\node_modules\jsonwebtoken\verify.js:97:14)
+    at module.exports [as verify] (C:\Users\royco\India-tourism-App\India-Tours\india-tourism\tourism-agents\node_modules\jsonwebtoken\verify.js:101:10)
+    at verifyJsonWebTokenSignature (C:\Users\royco\India-tourism-App\India-Tours\india-tourism\tourism-agents\src\middlewares\userAuth.js:111:18)
+    at validateToken (C:\Users\royco\India-tourism-App\India-Tours\india-tourism\tourism-agents\src\middlewares\userAuth.js:78:5)
+    at checkRequestAuthenticated (C:\Users\royco\India-tourism-App\India-Tours\india-tourism\tourism-agents\src\middlewares\userAuth.js:71:9)
+    at Layer.handleRequest (C:\Users\royco\India-tourism-App\India-Tours\india-tourism\tourism-agents\node_modules\router\lib\layer.js:152:17)
+    at next (C:\Users\royco\India-tourism-App\India-Tours\india-tourism\tourism-agents\node_modules\router\lib\route.js:157:13)
+    at Route.dispatch (C:\Users\royco\India-tourism-App\India-Tours\india-tourism\tourism-agents\node_modules\router\lib\route.js:117:3)
+    at handle (C:\Users\royco\India-tourism-App\India-Tours\india-tourism\tourism-agents\node_modules\router\index.js:435:11)
+Sun Feb 22 2026 20:22:34 GMT-0500 (Eastern Standard Time): Error: Unsupported state or unable to authenticate data
+    at Decipheriv.final (node:internal/crypto/cipher:184:29)
+    at Object.decrypt (C:\Users\royco\India-tourism-App\India-Tours\india-tourism\tourism-agents\src\utilities\encryptionUtil.js:44:26)
+    at findWeatherDetailByState (C:\Users\royco\India-tourism-App\India-Tours\india-tourism\tourism-agents\src\controllers\weatherDetailController.js:23:42)
+    at Layer.handleRequest (C:\Users\royco\India-tourism-App\India-Tours\india-tourism\tourism-agents\node_modules\router\lib\layer.js:152:17)
+    at next (C:\Users\royco\India-tourism-App\India-Tours\india-tourism\tourism-agents\node_modules\router\lib\route.js:157:13)
+    at C:\Users\royco\India-tourism-App\India-Tours\india-tourism\tourism-agents\src\middlewares\userAuth.js:88:13
+    at C:\Users\royco\India-tourism-App\India-Tours\india-tourism\tourism-agents\src\middlewares\userAuth.js:112:16
+    at C:\Users\royco\India-tourism-App\India-Tours\india-tourism\tourism-agents\node_modules\jsonwebtoken\verify.js:261:12
+    at getSecret (C:\Users\royco\India-tourism-App\India-Tours\india-tourism\tourism-agents\node_modules\jsonwebtoken\verify.js:97:14)
+    at module.exports [as verify] (C:\Users\royco\India-tourism-App\India-Tours\india-tourism\tourism-agents\node_modules\jsonwebtoken\verify.js:101:10)
+Sun Feb 22 2026 20:41:40 GMT-0500 (Eastern Standard Time): Error: [GoogleGenerativeAI Error]: Error fetching from https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent: [403 Forbidden] Your API key was reported as leaked. Please use another API key.
+    at handleResponseNotOk (C:\Users\royco\India-tourism-App\India-Tours\india-tourism\tourism-agents\node_modules\@google\generative-ai\dist\index.js:434:11)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async makeRequest (C:\Users\royco\India-tourism-App\India-Tours\india-tourism\tourism-agents\node_modules\@google\generative-ai\dist\index.js:403:9)
+    at async generateContent (C:\Users\royco\India-tourism-App\India-Tours\india-tourism\tourism-agents\node_modules\@google\generative-ai\dist\index.js:867:22)
+    at async findWeatherDetailByState (C:\Users\royco\India-tourism-App\India-Tours\india-tourism\tourism-agents\src\controllers\weatherDetailController.js:29:22)
+Sun Feb 22 2026 20:45:41 GMT-0500 (Eastern Standard Time): Error: [GoogleGenerativeAI Error]: Error fetching from https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent: [400 Bad Request] API Key not found. Please pass a valid API key. [{"@type":"type.googleapis.com/google.rpc.ErrorInfo","reason":"API_KEY_INVALID","domain":"googleapis.com","metadata":{"service":"generativelanguage.googleapis.com"}},{"@type":"type.googleapis.com/google.rpc.LocalizedMessage","locale":"en-US","message":"API Key not found. Please pass a valid API key."}]
+    at handleResponseNotOk (C:\Users\royco\India-tourism-App\India-Tours\india-tourism\tourism-agents\node_modules\@google\generative-ai\dist\index.js:434:11)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async makeRequest (C:\Users\royco\India-tourism-App\India-Tours\india-tourism\tourism-agents\node_modules\@google\generative-ai\dist\index.js:403:9)
+    at async generateContent (C:\Users\royco\India-tourism-App\India-Tours\india-tourism\tourism-agents\node_modules\@google\generative-ai\dist\index.js:867:22)
+    at async findWeatherDetailByState (C:\Users\royco\India-tourism-App\India-Tours\india-tourism\tourism-agents\src\controllers\weatherDetailController.js:29:22)
+Sun Feb 22 2026 20:47:42 GMT-0500 (Eastern Standard Time): TokenExpiredError: jwt expired
+    at C:\Users\royco\India-tourism-App\India-Tours\india-tourism\tourism-agents\node_modules\jsonwebtoken\verify.js:190:21
+    at getSecret (C:\Users\royco\India-tourism-App\India-Tours\india-tourism\tourism-agents\node_modules\jsonwebtoken\verify.js:97:14)
+    at module.exports [as verify] (C:\Users\royco\India-tourism-App\India-Tours\india-tourism\tourism-agents\node_modules\jsonwebtoken\verify.js:101:10)
+    at verifyJsonWebTokenSignature (C:\Users\royco\India-tourism-App\India-Tours\india-tourism\tourism-agents\src\middlewares\userAuth.js:111:18)
+    at validateToken (C:\Users\royco\India-tourism-App\India-Tours\india-tourism\tourism-agents\src\middlewares\userAuth.js:78:5)
+    at checkRequestAuthenticated (C:\Users\royco\India-tourism-App\India-Tours\india-tourism\tourism-agents\src\middlewares\userAuth.js:71:9)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+Sun Feb 22 2026 20:49:45 GMT-0500 (Eastern Standard Time): TypeError [ERR_INVALID_ARG_TYPE]: The first argument must be of type string or an instance of Buffer, ArrayBuffer, or Array or an Array-like Object. Received function 
+    at Function.from (node:buffer:325:9)
+    at ServerResponse.send (C:\Users\royco\India-tourism-App\India-Tours\india-tourism\tourism-agents\node_modules\express\lib\response.js:182:22)
+    at findWeatherDetailByState (C:\Users\royco\India-tourism-App\India-Tours\india-tourism\tourism-agents\src\controllers\weatherDetailController.js:36:29)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+Sun Feb 22 2026 20:50:13 GMT-0500 (Eastern Standard Time): TypeError [ERR_INVALID_ARG_TYPE]: The first argument must be of type string or an instance of Buffer, ArrayBuffer, or Array or an Array-like Object. Received function 
+    at Function.from (node:buffer:325:9)
+    at ServerResponse.send (C:\Users\royco\India-tourism-App\India-Tours\india-tourism\tourism-agents\node_modules\express\lib\response.js:182:22)
+    at findWeatherDetailByState (C:\Users\royco\India-tourism-App\India-Tours\india-tourism\tourism-agents\src\controllers\weatherDetailController.js:36:29)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)

@@ -6,7 +6,7 @@ const UserService = require('../service/UserService');
 const axios = require('axios');
 const querystring = require('querystring');
 
- const subject = process.env.SIGNUP_EMAIL_SUBJECT;
+const subject = process.env.SIGNUP_EMAIL_SUBJECT;
 const body = process.env.LOGIN_EMAIL_BODY;
 
 const doLogin = async(req,res,retries = 3, delay = 1000) => {

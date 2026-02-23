@@ -483,8 +483,7 @@ const columns = [
     travellerAuthenticated &&  bookingData && bookingData.length >0 ? 
   <AuthenticateTraveller isOpen={travellerAuthenticated} 
   onClose={() => setTravellerAuthenticated(false)}
-    prepareBookingData = {prepareBookingData} bookingData={bookingData}
-    />
+   />
   :<div/>
 }
 

@@ -1,0 +1,17 @@
+/* Basic styling for the Aadhaar Login Button */
+.btn-aadhaar {
+    background-color: #f2a900; /* Example color */
+    color: rgb(54, 219, 39);
+    padding: 10px 20px;
+    border-radius: 5px;
+    text-decoration: none;
+    display: inline-block;
+}
+
+.aadhaar-login-button:hover {
+  background-color: #fbd914; /* Yellow hover */
+  color: #000000;
+  border-color: #003366;
+}
+
+

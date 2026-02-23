@@ -3,8 +3,8 @@
 /india-tourism/touroperator-frontend/node_modules
 /india-tourism/touroperator-backend/dist
 /india-tourism/touroperator-backend/.env
-
-
+/india-tourism/tourism-web/.env
+/india-tourism/server/.env
 
 # dependencies
 /india-tourism/touroperator-frontend/node_modules

@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
-  "scripts": {
+    "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [],
@@ -11,13 +11,25 @@
   "license": "ISC",
   "type": "commonjs",
   "dependencies": {
+    "@google/generative-ai": "^0.24.1",
     "@langchain/core": "^1.1.26",
     "@langchain/langgraph": "^1.1.5",
     "@langchain/openai": "^1.2.8",
     "@types/node": "^25.3.0",
+    "axios": "^1.13.5",
+    "cors": "^2.8.6",
     "dotenv": "^17.3.1",
+    "express": "^5.2.1",
+    "express-session": "^1.19.0",
+    "google-auth-library": "^10.5.0",
+    "jfile": "^1.1.12",
+    "jsonwebtoken": "^9.0.3",
+    "jwk-to-pem": "^2.0.7",
     "langchain": "^1.2.25",
+    "mongoose": "^9.2.1",
     "openai": "^6.22.0",
+    "passport": "^0.7.0",
+    "passport-saml": "^3.2.4",
     "ts-node": "^10.9.2",
     "zod": "^4.3.6"
   },
