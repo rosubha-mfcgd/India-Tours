@@ -19,7 +19,7 @@ const findWeatherDetailByState = async(req,res,retries = 3, delay = 1000) => {
     try{
         
         let prompt = `Provide the weather information with chances of rain or snowfall in ${cityName} , ${stateName} from ${startDate}-${endDate}`;
-        
+        console.log('prompt...',prompt);
         let geminiAIKey = process.env.GOOGLE_GEMINI_API_KEY;
        // console.log('geminiAIKey...',geminiAIKey)
         const genAI = new GoogleGenerativeAI(geminiAIKey);
@@ -31,8 +31,8 @@ const findWeatherDetailByState = async(req,res,retries = 3, delay = 1000) => {
         if(result){
              const response = await result.response;
              if(response){
-            const text = response.text;
-            console.log('text...',text)
+            const text = response.text();
+            console.log('response from Gemini AI...',text)
             res.status(200).send(text);
              }
         }
