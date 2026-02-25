@@ -1,5 +1,3 @@
-import { FilterQuery, UpdateQuery } from 'mongoose';
-
 import { ProductModel } from '../model/product';
 import { IProduct } from './AppEntityState';
 import { BaseRepository } from './BaseRepository';

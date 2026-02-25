@@ -352,19 +352,29 @@ export interface ICategory extends Document{
     websiteURL: String
   }
   export interface IReviews  extends Document{
-    tourManagerId:{
+    tourOperatorId: {
+        type: Number,
+      	ref: "User",
+      	required: true,
+   		 },
+    reviews:{
        type: String,
       required: true
     },
-    reviews:{
-       type: String,
+    rating:{
+       type: Number,
       required: true
     },
     username:{
        type: String,
       required: true
     },
-    email: String
+    email: String,
+    validReview: String,
+    reviewDate: {
+          type: Date,
+          required: true
+        }
            
   }
 

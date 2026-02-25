@@ -11,6 +11,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 require("../logNginx");
 const TourDetailService = require('../service/TourDetailService');
 const UserService = require('../service/UserService');
+const ReviewService = require('../service/ReviewService');
 const getRegisteredTourManagers = (req_1, res_1, ...args_1) => __awaiter(void 0, [req_1, res_1, ...args_1], void 0, function* (req, res, retries = 3, delay = 1000) {
     try {
         let tourManagers = yield new UserService().getRegisteredTourOperators();
@@ -45,4 +46,22 @@ const getCities = (req_1, res_1, ...args_1) => __awaiter(void 0, [req_1, res_1, 
         res.status(400).send({ "errormessage": "could not find any cities" });
     }
 });
-module.exports = { getRegisteredTourManagers, getCities };
+const getOperatorReviews = (req_1, res_1, ...args_1) => __awaiter(void 0, [req_1, res_1, ...args_1], void 0, function* (req, res, retries = 3, delay = 1000) {
+    let { tourManagerId, reviewDate } = req.body;
+    try {
+        let operatorReviews = yield new ReviewService().getReviews(tourManagerId, reviewDate);
+        if (operatorReviews) {
+            console.log('operatorReviews..', operatorReviews);
+            res.status(200).send(operatorReviews);
+        }
+    }
+    catch (err) {
+        if (retries > 0) {
+            yield new Promise(resolve => setTimeout(resolve, delay));
+            return getOperatorReviews(req, res, retries - 1, delay);
+        }
+        logNginx(err.stack);
+        res.status(400).send({ "errormessage": "could not find any reviews" });
+    }
+});
+module.exports = { getRegisteredTourManagers, getCities, getOperatorReviews };

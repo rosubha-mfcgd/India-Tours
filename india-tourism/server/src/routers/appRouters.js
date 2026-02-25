@@ -8,7 +8,7 @@ const {signupvalidate,validateOTP} = require("../controller/validations");
 const {getPoints} = require("../controller/userprofile");
 const {getCategories,getProducts,getToursByCategoryId,
     updateFavoriteCategory,getTourItenerariesForTrip,getRecommendedTours} = require("../controller/tripDetails");
-const {getRegisteredTourManagers, getCities} = require("../controller/tourManagers");
+const {getRegisteredTourManagers, getCities,getOperatorReviews} = require("../controller/tourManagers");
 const {performBookings, performBookingsByMobile,performUserBookings,
     getBookingsByBookingId,updateBookingsByBookingId} = require("../controller/tourBookings");
 const {getSearchOptions,getPreferences} = require("../controller/searchOptions");
@@ -56,6 +56,6 @@ router.post("/processImage",checkRequestAuthenticated,processImage);
 router.post("/create-intent",checkRequestAuthenticated,createPaymentIntent);
 router.post("/confirm-packagetour-cardpayment-success",checkRequestAuthenticated,confirmPackageTourCardPayment);
 router.post("/retrievePaymentIntent",checkRequestAuthenticated,retrievePaymentIntent);
-
+router.post("/getOperatorReviews",checkRequestAuthenticated,getOperatorReviews);
 
 module.exports = router

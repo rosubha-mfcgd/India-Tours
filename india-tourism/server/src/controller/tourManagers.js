@@ -2,7 +2,7 @@ require("../logNginx");
 
 const TourDetailService = require('../service/TourDetailService');
 const UserService = require('../service/UserService');
-
+const ReviewService = require('../service/ReviewService');
 
 const getRegisteredTourManagers=async(req,res,retries = 3, delay = 1000) =>{
     try{
@@ -49,4 +49,29 @@ const getCities = async(req,res,retries = 3, delay = 1000) =>{
 }
 }
 
-module.exports = {getRegisteredTourManagers,getCities}
+const getOperatorReviews = async(req,res,retries = 3, delay = 1000) =>{
+    let {tourManagerId,reviewDate} = req.body;
+  try{
+    let operatorReviews = await new ReviewService().getReviews(tourManagerId,reviewDate);
+  
+    if(operatorReviews)
+    {
+        console.log('operatorReviews..',operatorReviews);
+          res.status(200).send(
+                operatorReviews); 
+    }
+}catch(err)
+{
+     if(retries>0)
+        {
+          await new Promise(resolve => setTimeout(resolve, delay));
+          return getOperatorReviews(req,res,retries-1,delay);
+        }
+    logNginx(err.stack);
+     res.status(400).send(
+                {"errormessage":"could not find any reviews"});
+}
+}
+
+
+module.exports = {getRegisteredTourManagers,getCities,getOperatorReviews}
