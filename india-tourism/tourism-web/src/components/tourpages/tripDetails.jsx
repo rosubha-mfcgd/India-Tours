@@ -260,7 +260,9 @@ import {
             {
               showReview ? 
                 <OperatorReviews isOpen={showReview} onClose={() => setShowReview(false)} 
-                tourManagerId={tourManagerId}/>:<div/>
+                tourManagerId={tourDetails.tourManagerId} 
+                tourManagerName = {tourDetails.tourManagerName}
+                />:<div/>
             }        
        
         <div className="button-container">
@@ -278,6 +280,10 @@ import {
                          <button type="submit" 
                        class="button" 
                        onClick={()=>triggerEditBookingForm(tourDetails)}>Edit your Booking</button>
+
+                        <button type="submit" 
+                       class="button" 
+                       onClick={()=>setShowReview(true)}>Check Reviews</button>
               </div>
 
          </div>

@@ -1,7 +1,37 @@
 import { useEffect, useState} from "react";
 
+import {
+    TextField,
+    Button,
+    Table,
+    TableBody,
+    TableCell,
+    TableContainer,
+    TableHead,
+    TableRow,
+    Paper,
+    Modal,
+    Box,
+    IconButton,
+    Snackbar,
+    Fab,
+    Card,
+    Grid,
+    Typography,
+    CardMedia,
+    CardContent,
+    CircularProgress
+  } from "@mui/material";
+
+  import '../../styles/bookingForm.css';
+
+  import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
+import ExpandLessIcon from '@mui/icons-material/ExpandLess';
+  
 import {getOperatorReviews } from "../admin/admin";
-const OperatorReviews = ({ isOpen, onClose,tourManagerId})=>{
+
+
+const OperatorReviews = ({ isOpen, onClose,tourManagerId,tourManagerName})=>{
 
     const[reviews,setReviews] = useState([]);
 
@@ -65,11 +95,12 @@ return (
              <TableContainer sx={{boxShadow: 'none'}}>
                  <Table>
                   <TableBody>
+
                      <TableRow>
                         <TableCell>
                             <Typography variant="body2" color="text.secondary" 
                         sx={{whiteSpace: 'pre-wrap'}}>
-                        Reviews
+                        Reviews for {tourManagerName}
                         </Typography>
                         </TableCell>
                         </TableRow>
@@ -78,12 +109,15 @@ return (
               
 
                 reviews.map((review) => (
+                    <div>
                      <TableRow>
                         <TableCell>
                              <Typography variant="body2" color="text.secondary" sx={{whiteSpace: 'pre-wrap'}}>
                         {review.reviews}
                         </Typography>
                         </TableCell>
+                        </TableRow>
+                        <TableRow>
                           <TableCell>
                              <Typography variant="body2" color="text.secondary" sx={{whiteSpace: 'pre-wrap'}}>
                         {review.userName} {review.email} 
@@ -93,6 +127,7 @@ return (
                         </Typography>
                         </TableCell>
                         </TableRow>
+                        </div>
                 )):<div>
                      <TableRow>
                         <TableCell>
@@ -106,6 +141,12 @@ return (
                         </TableBody>
                         </Table>
              </TableContainer>
+
+               <div className="button-container-2">
+                 <div className='submit-container'>
+        <button onClick={onClose} class="button">Close</button>
+        </div>
+               </div>
         </div>
         </div>
         </div>

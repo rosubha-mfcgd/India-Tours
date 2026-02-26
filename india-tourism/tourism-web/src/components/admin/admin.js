@@ -570,7 +570,7 @@ export const getRecommendedTours = async() =>{
 }
 
 //Get specially highlighted tours 
-export const getOperatorReviews = async() =>{
+export const getOperatorReviews = async(data) =>{
      let res_data = "failed to fetch operator reviews";
      let access_token = await getApiAccessToken();
         if(access_token)  {
@@ -578,6 +578,7 @@ export const getOperatorReviews = async() =>{
             "Content-type": "application/json; charset=UTF-8",
             "Authorization":"Bearer "+access_token.data.access_token
             };
+            console.log('data...',data)
             let response =  await axios.post(
                         process.env.REACT_APP_SERVER_URI + "getOperatorReviews",
                         data, {headers});
