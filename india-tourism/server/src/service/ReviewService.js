@@ -1,4 +1,4 @@
-const { ReviewRepository } = require('../../dist/repository/ReviewRepository');
+const { ReviewsRepository } = require('../../dist/repository/ReviewRepository');
 
 require("../logNginx");
 
@@ -9,7 +9,7 @@ class ReviewService{
     }
       async getReviews(tourmanagerid,reviewDate)
        {
-             const reviewRepo = new ReviewRepository();
+             const reviewRepo = new ReviewsRepository();
              let reviews = [];
              try{
 
@@ -17,13 +17,14 @@ class ReviewService{
                reviews = reviewRepo.find({
 
                     tourOperatorId:Number(tourmanagerid), 
-                    startDate: {
+                    reviewDate: {
                         $gt: isoReviewDate
                     },
                     validReview: "Y"
                 });
-                 if(tourOperators && tourOperators.length >0){
-                     console.log('tourOperators...',tourOperators);
+                 if(reviews && reviews.length >0){
+                     console.log('tourOperators...',reviews);
+                     return reviews;
                   }
 
              }catch(err){

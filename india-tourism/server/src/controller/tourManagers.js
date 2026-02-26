@@ -51,6 +51,7 @@ const getCities = async(req,res,retries = 3, delay = 1000) =>{
 
 const getOperatorReviews = async(req,res,retries = 3, delay = 1000) =>{
     let {tourManagerId,reviewDate} = req.body;
+    console.log('tourManagerId,reviewDate....',tourManagerId,reviewDate)
   try{
     let operatorReviews = await new ReviewService().getReviews(tourManagerId,reviewDate);
   

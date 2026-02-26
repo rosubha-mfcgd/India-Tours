@@ -1,0 +1,272 @@
+"use strict";
+var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
+    function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
+    return new (P || (P = Promise))(function (resolve, reject) {
+        function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
+        function rejected(value) { try { step(generator["throw"](value)); } catch (e) { reject(e); } }
+        function step(result) { result.done ? resolve(result.value) : adopt(result.value).then(fulfilled, rejected); }
+        step((generator = generator.apply(thisArg, _arguments || [])).next());
+    });
+};
+var _a;
+const { CategoryRepository } = require('../../dist/repository/CategoryRepository');
+const { TourRepository } = require('../../dist/repository/TourRepository');
+const { TourItineraryRepository } = require('../../dist/repository/TourItineraryRepository');
+const { TourOperatorRepository } = require('../../dist/repository/TourOperatorRepository');
+const { ProductRepository } = require('../../dist/repository/ProductRepository');
+const { CityRepository } = require('../../dist/repository/CityRepository');
+const { StateRepository } = require('../../dist/repository/StateRepository');
+const { cityCache, stateCache, tourOperatorCache } = require('../utils/cacheMap');
+require("../logNginx");
+class TourDetailService {
+    constructor() {
+        this.errorMsg = "Message not found";
+    }
+    static getAllCities() {
+        return __awaiter(this, void 0, void 0, function* () {
+            let cities = [];
+            try {
+                const cityRepository = new CityRepository();
+                cities = yield cityRepository.findAll();
+                if (cities) {
+                    return cities;
+                }
+            }
+            catch (err) {
+                logNginx(err);
+            }
+            return [];
+        });
+    }
+    //Get list of all states
+    static getAllStates() {
+        return __awaiter(this, void 0, void 0, function* () {
+            let states = [];
+            try {
+                const stateRepository = new StateRepository();
+                states = yield stateRepository.findAll();
+                if (states) {
+                    return states;
+                }
+            }
+            catch (err) {
+                logNginx(err);
+            }
+            return [];
+        });
+    }
+    //Get list of trip categories - Hill Station, Sea beach ETC.
+    getCategories(productID) {
+        return __awaiter(this, void 0, void 0, function* () {
+            let categories = [];
+            try {
+                const categoryRepo = new CategoryRepository();
+                console.log('productID....', productID);
+                categories = yield categoryRepo.findAllSortedResultsByParams({ "productID": Number(productID) }, { favorite: -1 });
+                if (categories && categories.length > 0) {
+                    console.log('categories...', categories);
+                }
+            }
+            catch (err) {
+                // console.log(err.stack);
+                logNginx(err.stack);
+            }
+            return categories;
+        });
+    }
+    //Get list of products
+    getProducts() {
+        return __awaiter(this, void 0, void 0, function* () {
+            let products = [];
+            try {
+                const productRepo = new ProductRepository();
+                products = yield productRepo.findAllSortedResults({ favorite: -1 });
+                if (products && products.length > 0) {
+                    console.log('products...', products);
+                }
+            }
+            catch (err) {
+                logNginx(err.stack);
+            }
+            return products;
+        });
+    }
+    //Update category as favorite/not favorite so that the specific category shows up as first
+    updateCategoryAsFavorite(categoryId, status) {
+        return __awaiter(this, void 0, void 0, function* () {
+            let categories = '';
+            let result = '';
+            try {
+                const categoryRepo = new CategoryRepository();
+                console.log('category Id ...', categoryId);
+                categories = yield categoryRepo.findOne({ categoryID: categoryId });
+                if (categories) {
+                    console.log('categories....', categories);
+                    result = yield categoryRepo.update(categories._id, { favorite: status });
+                    if (result) {
+                        // console.log('categories with favorite....',JSON.stringify(result));
+                        result = yield categoryRepo.findOne({ categoryID: categoryId });
+                    }
+                }
+            }
+            catch (err) {
+                logNginx(err.stack);
+            }
+            return result;
+        });
+    }
+    //Get list of tours based on category ID
+    getToursByCategoryId(categoryId) {
+        return __awaiter(this, void 0, void 0, function* () {
+            let plannedTours = [];
+            try {
+                const tourRepository = new TourRepository();
+                plannedTours = yield tourRepository.aggregatePlannedTours([{ "category": Number(categoryId) },
+                    { "startDate": { $gt: new Date() } }]);
+                if (plannedTours && plannedTours.length > 0) {
+                    // console.log('plannedTours...',plannedTours);
+                    for (let plannedTour of plannedTours) {
+                        plannedTour["cityName"] = (cityCache.get(plannedTour.city)).name;
+                        plannedTour["stateName"] = (stateCache.get(plannedTour.state)).name;
+                    }
+                }
+            }
+            catch (err) {
+                logNginx(err.stack);
+            }
+            return plannedTours;
+        });
+    }
+    //Get list of recommended tours
+    getRecommendedTours() {
+        return __awaiter(this, void 0, void 0, function* () {
+            let plannedTours = [];
+            try {
+                const tourRepository = new TourRepository();
+                plannedTours = yield tourRepository.aggregatePlannedTours([{ "recommend": "Y" },
+                    { "startDate": { $gt: new Date() } }]);
+                if (plannedTours && plannedTours.length > 0) {
+                    // console.log('plannedTours...',plannedTours);
+                    for (let plannedTour of plannedTours) {
+                        plannedTour["cityName"] = (cityCache.get(plannedTour.city)).name;
+                        plannedTour["stateName"] = (stateCache.get(plannedTour.state)).name;
+                    }
+                }
+            }
+            catch (err) {
+                logNginx(err.stack);
+            }
+            return plannedTours;
+        });
+    }
+    //Get tour by tourid
+    getTourByTourId(tourId) {
+        return __awaiter(this, void 0, void 0, function* () {
+            let tour = null;
+            try {
+                const tourRepository = new TourRepository();
+                tour = yield tourRepository.findById(tourId);
+                if (tour) {
+                    return tour;
+                }
+            }
+            catch (err) {
+                console.log('Cannot find operator by tour id', tourId);
+                logNginx(err.stack);
+            }
+            return null;
+        });
+    }
+    //Get tour iternaries for  a specific trip
+    getTourItenriesForTrip(locationName, categoryId, tourManagerId, startDate, endDate) {
+        return __awaiter(this, void 0, void 0, function* () {
+            let itinerary = '';
+            const tourItineraryRepository = new TourItineraryRepository();
+            try {
+                const isoStartDate = new Date(startDate);
+                const isoEndDate = new Date(endDate);
+                isoStartDate.setUTCHours(0, 0, 0, 0);
+                isoEndDate.setUTCHours(0, 0, 0, 0);
+                console.log('Service reached...', isoStartDate, isoEndDate);
+                itinerary = yield tourItineraryRepository.
+                    findOne({
+                    categoryID: Number(categoryId),
+                    locationName: locationName,
+                    tourManagerId: tourManagerId,
+                    startDate: {
+                        $eq: isoStartDate
+                    },
+                    endDate: {
+                        $eq: isoEndDate
+                    }
+                });
+                if (itinerary) {
+                    console.log('found itinerary...', itinerary);
+                }
+            }
+            catch (err) {
+                console.log(err.stack);
+                logNginx(err.stack);
+            }
+            return itinerary;
+        });
+    }
+    //search the list of tour operators
+    static getTourManagers() {
+        return __awaiter(this, void 0, void 0, function* () {
+            let tourOperators = [];
+            try {
+                const tourOperatorRepository = new TourOperatorRepository();
+                tourOperators = yield tourOperatorRepository.find({});
+                if (tourOperators && tourOperators.length > 0) {
+                    console.log('tourOperators...', tourOperators);
+                }
+            }
+            catch (err) {
+                console.log(err.stack);
+                logNginx(err.stack);
+            }
+            return tourOperators;
+        });
+    }
+    //Search the list of cities
+    getCities() {
+        return __awaiter(this, void 0, void 0, function* () {
+            let cities = [];
+            try {
+                const cityRepository = new CityRepository();
+                cities = yield cityRepository.find({});
+                if (cities && cities.length > 0) {
+                    console.log('cities...', cities);
+                }
+            }
+            catch (err) {
+                console.log(err.stack);
+                logNginx(err.stack);
+            }
+            return cities;
+        });
+    }
+}
+_a = TourDetailService;
+(() => {
+    _a.getAllCities().then(cities => {
+        for (let city of cities) {
+            cityCache.set(city._id, city);
+        }
+        console.log('city list...', cityCache);
+    });
+    _a.getAllStates().then(states => {
+        for (let state of states) {
+            stateCache.set(state._id, state);
+        }
+        console.log('state list...', stateCache);
+    });
+    _a.getTourManagers().then(tourmanagers => {
+        for (let tourmanager of tourmanagers) {
+            tourOperatorCache.set(tourmanager._id, tourmanager);
+        }
+        console.log('tour operators list...', tourOperatorCache);
+    });
+})();
+module.exports = TourDetailService;

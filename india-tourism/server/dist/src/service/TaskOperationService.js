@@ -8,36 +8,33 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
-const { ReviewsRepository } = require('../../dist/repository/ReviewRepository');
+const { SearchOptionsRepository } = require('../../dist/repository/SearchOptionsRepository');
 require("../logNginx");
-class ReviewService {
+class TaskOperationService {
     constructor() {
         this.errorMsg = "Message not found";
     }
-    getReviews(tourmanagerid, reviewDate) {
+    getAllOptions(productID, categoryID) {
         return __awaiter(this, void 0, void 0, function* () {
-            const reviewRepo = new ReviewsRepository();
-            let reviews = [];
+            let options = [];
             try {
-                const isoReviewDate = new Date(reviewDate);
-                reviews = reviewRepo.find({
-                    tourOperatorId: Number(tourmanagerid),
-                    reviewDate: {
-                        $gt: isoReviewDate
-                    },
-                    validReview: "Y"
-                });
-                if (reviews && reviews.length > 0) {
-                    console.log('tourOperators...', reviews);
-                    return reviews;
+                const searchOptionsRepo = new SearchOptionsRepository();
+                console.log('productID....', productID);
+                console.log('categoryID....', categoryID);
+                options = yield searchOptionsRepo.findAllSortedResultsByParams({
+                    "productID": Number(productID),
+                    "categoryID": Number(categoryID)
+                }, { favorite: -1 });
+                if (options && options.length > 0) {
+                    console.log('options...', options);
                 }
             }
             catch (err) {
-                console.log(err.stack);
+                // console.log(err.stack);
                 logNginx(err.stack);
             }
-            return reviews;
+            return options;
         });
     }
 }
-module.exports = ReviewService;
+module.exports = TaskOperationService;

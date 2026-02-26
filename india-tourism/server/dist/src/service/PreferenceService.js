@@ -8,36 +8,31 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
-const { ReviewsRepository } = require('../../dist/repository/ReviewRepository');
+const { PreferenceRepository } = require('../../dist/repository/PreferenceRepository');
 require("../logNginx");
-class ReviewService {
+class PreferenceService {
     constructor() {
         this.errorMsg = "Message not found";
     }
-    getReviews(tourmanagerid, reviewDate) {
+    getPreferences() {
         return __awaiter(this, void 0, void 0, function* () {
-            const reviewRepo = new ReviewsRepository();
-            let reviews = [];
+            let preferences = [];
+            const preferenceRepo = new PreferenceRepository();
             try {
-                const isoReviewDate = new Date(reviewDate);
-                reviews = reviewRepo.find({
-                    tourOperatorId: Number(tourmanagerid),
-                    reviewDate: {
-                        $gt: isoReviewDate
-                    },
-                    validReview: "Y"
-                });
-                if (reviews && reviews.length > 0) {
-                    console.log('tourOperators...', reviews);
-                    return reviews;
+                //   console.log('productID....',productID)
+                // console.log('categoryID....',categoryID)
+                preferences = yield preferenceRepo.find({});
+                if (preferences && preferences.length > 0) {
+                    console.log('preferences...', preferences);
+                    return preferences;
                 }
             }
             catch (err) {
-                console.log(err.stack);
                 logNginx(err.stack);
+                console.log(err.stack);
             }
-            return reviews;
+            return [];
         });
     }
 }
-module.exports = ReviewService;
+module.exports = PreferenceService;
