@@ -5,6 +5,7 @@ import '../../styles/loginsignup.css';
 import SideBarNotification from '../navigationTabs/sideBarNotification';
 import { NavContext } from '../navigationContext/navigationContext';
 import { getImageById } from "../admin/admin";
+import OperatorReviews from "../modal/operatorReview";
 import {
     TextField,
     Button,
@@ -32,6 +33,8 @@ import {
   const navigate = useNavigate();
 
   const [image,setImage] = useState(null);
+
+  const[showReview, setShowReview] = useState(true);
         const goBack = () =>{
             navigate(-1);
         }
@@ -254,7 +257,11 @@ import {
                     width: "fit-content",
                     margin: "auto",
                   }}>
-                    
+            {
+              showReview ? 
+                <OperatorReviews isOpen={showReview} onClose={() => setShowReview(false)} 
+                tourManagerId={tourManagerId}/>:<div/>
+            }        
        
         <div className="button-container">
          <div className='submit-container'>

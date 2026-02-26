@@ -63,7 +63,48 @@ return (
       <div className="modal-content">
         <div>
              <TableContainer sx={{boxShadow: 'none'}}>
+                 <Table>
+                  <TableBody>
+                     <TableRow>
+                        <TableCell>
+                            <Typography variant="body2" color="text.secondary" 
+                        sx={{whiteSpace: 'pre-wrap'}}>
+                        Reviews
+                        </Typography>
+                        </TableCell>
+                        </TableRow>
+                         {
+             reviews && reviews.length>0  ?
+              
 
+                reviews.map((review) => (
+                     <TableRow>
+                        <TableCell>
+                             <Typography variant="body2" color="text.secondary" sx={{whiteSpace: 'pre-wrap'}}>
+                        {review.reviews}
+                        </Typography>
+                        </TableCell>
+                          <TableCell>
+                             <Typography variant="body2" color="text.secondary" sx={{whiteSpace: 'pre-wrap'}}>
+                        {review.userName} {review.email} 
+                        </Typography>
+                          <Typography variant="body2" color="text.secondary" sx={{whiteSpace: 'pre-wrap'}}>
+                        {review.reviewDate} 
+                        </Typography>
+                        </TableCell>
+                        </TableRow>
+                )):<div>
+                     <TableRow>
+                        <TableCell>
+                             <Typography variant="body2" color="text.secondary" sx={{whiteSpace: 'pre-wrap'}}>
+                        No reviews found yet
+                        </Typography>
+                        </TableCell>
+                        </TableRow>
+                </div>
+            }
+                        </TableBody>
+                        </Table>
              </TableContainer>
         </div>
         </div>
