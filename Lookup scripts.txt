@@ -594,3 +594,20 @@ db.preferences.insertMany([
     desc: "Sea Surfing"
 }
 ]);
+
+Reviews
+=========
+db.reviews.insertMany([
+  { tourOperatorId: 3, reviews: "Excellent service", rating: 4, userName: "Subhankar",email: "roy.cognizant.subhankar623@gmail.com",validReview:"Y",
+  reviewDate:new Date("2025-11-28T23:58:18Z")
+  },
+  { tourOperatorId: 3, reviews: "Poor service", rating: 1, userName: "Xavier",email: "xavier@gmail.com",validReview:"Y",
+  reviewDate:new Date("2025-12-28T23:58:18Z")
+  },
+  { tourOperatorId: 2, reviews: "Decent service", rating: 2, userName: "Subhankar",email: "roy.cognizant.subhankar623@gmail.com",validReview:"Y",
+  reviewDate:new Date("2026-01-28T23:58:18Z")
+  },
+  { tourOperatorId: 3, reviews: "Good service", rating: 3, userName: "Subhankar",email: "roy.cognizant.subhankar623@gmail.com",validReview:"Y",
+  reviewDate:new Date("2025-10-28T23:58:18Z")
+  }
+])

@@ -314,6 +314,7 @@ export const updateAsFavorite = async(data) =>{
 return res_data;
 }
 
+//Perform package bookings for customers
 export const performTripBooking = async(data) =>{
   let res_data = "failed to perform bookings";
      try{
@@ -342,7 +343,7 @@ export const performTripBooking = async(data) =>{
 }
 return res_data;
 }
-
+//Perform individual customer bookings by booking id
 export const performCustomUserTripBooking = async(data) =>{
   let res_data = "failed to create user bookings";
      try{
@@ -526,7 +527,7 @@ export const exchangeAuthToken = async(code,codeVerifier, tokenUri) =>{
 
     return res_data;
 }
-
+//Fetch images by imageid from SF Bucket
 export const getImageById = async(data,bucketname) =>{
      let res_data = "failed to process image";
      let access_token = await getApiAccessToken();
@@ -546,7 +547,7 @@ export const getImageById = async(data,bucketname) =>{
     }
      return res_data;
 }
-
+//Get specially highlighted tours 
 export const getRecommendedTours = async() =>{
      let res_data = "failed to fetch recommend tours";
      let access_token = await getApiAccessToken();
@@ -558,11 +559,33 @@ export const getRecommendedTours = async() =>{
             let response = await axios.get(
                 process.env.REACT_APP_SERVER_URI + "getRecommendedTours",
                 {headers});
+                
         if(response)
      {
         console.log('response....',response.data);
         res_data = response.data;
      }
+    }
+     return res_data;
+}
+
+//Get specially highlighted tours 
+export const getOperatorReviews = async() =>{
+     let res_data = "failed to fetch operator reviews";
+     let access_token = await getApiAccessToken();
+        if(access_token)  {
+            const headers = {
+            "Content-type": "application/json; charset=UTF-8",
+            "Authorization":"Bearer "+access_token.data.access_token
+            };
+            let response =  await axios.post(
+                        process.env.REACT_APP_SERVER_URI + "getOperatorReviews",
+                        data, {headers});
+         if(response)
+            {
+                console.log('response....',response.data);
+                res_data = response.data;
+            }
     }
      return res_data;
 }
