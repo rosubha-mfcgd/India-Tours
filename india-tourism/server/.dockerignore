@@ -1,7 +1,6 @@
 # Ignore common version control and environment files
 .git
 .gitignore
-.env
 .vscode
 .aws
 .ssh

@@ -42,7 +42,7 @@ This command lists the S3 buckets in your LocalStack environment.
 Test AWS IAM user :- TestAWSUser
 Account ID/alias - 157208622016/rosubha2025
 password-IndiaTours2025@
-
+MongoDB atlas account = roy.cognizant.subhankar623@gmail.com/IndiaTours2026@
 
 Convert Expo mobile app to desktop app
 ========================================
@@ -109,3 +109,97 @@ Stripe local CLI -
 stripe listen --forward-to localhost:8090/api/stripe-webhook
 stripe trigger payment_intent.succeeded
 
+Deployment strategy
+
+In the root directory of your Node.js project, create a file named Dockerfile (no extension, capital 'D'). 
+Add the following content, which uses a multi-stage approach for an optimized image 
+
+# Stage 1: Build environment (install dependencies) 
+FROM node:20-alpine AS build 
+WORKDIR /app 
+COPY package*.json ./ 
+RUN npm install --only=production 
+ 
+# Stage 2: Production environment (copy only necessary files) 
+FROM node:20-alpine 
+WORKDIR /app 
+COPY --from=build /app/node_modules ./node_modules 
+COPY . . 
+EXPOSE 3000 
+CMD ["npm", "start"] 
+
+Step 2: Create a .dockerignore file   
+
+In the same root directory, create a file named .dockerignore to prevent unnecessary files and local development dependencies (like node_modules and .git files) from being copied into your Docker image. This improves build speed and security 
+
+node_modules 
+npm-debug.log 
+.git 
+.gitignore 
+.env 
+build 
+dist 
+*.md 
+
+Build the Docker Image  
+
+Open your terminal in the project's root directory and run the following command to build the Docker image. 
+The -t flag tags your image with a name (e.g., my-node-app 
+
+docker build -t mitram-tourism-backend .
+
+ 
+
+Step 4: Run the Docker Container   
+
+Once the image is built, run your container using the docker run command. The -p flag maps a port on your host machine to a port inside the container (e.g., host port 80 to container port 3000) 
+
+docker run -p 80:3000 my-node-app 
+
+Your Node.js backend should now be running inside a Docker container. You can access it in your browser or with a tool like Postman at http://localhost:80 
+
+To run the container in the background (detached mode), add the -d flag to the command:   
+
+docker run -d -p 80:3000 my-node-app 
+
+ 
+
+ 
+
+Move MongoDB to server environment 
+
+Option 1: MongoDB Atlas on AWS (Easiest)  
+
+MongoDB Atlas offers a perpetual free tier, which is the recommended method for free hosting.  
+
+Run the command - mongosh "mongodb+srv://cluster0.ccld8bb.mongodb.net/" --apiVersion 1 --username admin
+passowrd-admin
+
+Free Limits: 512MB to 5GB storage, shared instance. 
+
+Steps: Create an Atlas account, choose AWS as the cloud provider, select a free-tier region, and whitelist your IP address 
+
+
+take a dump of copy from local mongodb:-
+mongodump --db toursdb
+Resore the dump to atlas db:-
+mongorestore --uri "mongodb+srv://admin:admin@cluster0.ccld8bb.mongodb.net/"
+ 
+
+Option 2: Self-Hosted on AWS EC2 (Free Tier)  
+
+Host your own MongoDB database on a free-tier EC2 instance.  
+
+Requirements: AWS Free Tier eligible EC2 instance (e.g., t2.micro or t3.micro for 12 months). 
+
+Steps: 
+
+Launch an Amazon Linux or Ubuntu EC2 instance. 
+
+Configure Security Groups to allow inbound traffic on port 27017. 
+
+Install MongoDB Community Edition via SSH. 
+
+Configure mongod.conf to allow remote connections (bindIp: 0.0.0.0) and enable authentication. 
+
+Secure the database by creating an admin use 

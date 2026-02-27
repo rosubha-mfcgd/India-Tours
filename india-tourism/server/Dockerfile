@@ -4,6 +4,7 @@ FROM node:22-alpine
 WORKDIR /usr/src/app
 # Copy package.json and package-lock.json to the working directory
 COPY package*.json ./
+COPY SERVER_LOGS/*.log ./
 # Install app dependencies
 RUN npm install
 # Copy the rest of the application source code
