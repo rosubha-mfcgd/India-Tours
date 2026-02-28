@@ -154,13 +154,13 @@ Step 4: Run the Docker Container
 
 Once the image is built, run your container using the docker run command. The -p flag maps a port on your host machine to a port inside the container (e.g., host port 80 to container port 3000) 
 
-docker run -p 80:3000 my-node-app 
+docker run -p 80:8090 mitram-tourism-backend 
 
 Your Node.js backend should now be running inside a Docker container. You can access it in your browser or with a tool like Postman at http://localhost:80 
 
 To run the container in the background (detached mode), add the -d flag to the command:   
 
-docker run -d -p 80:3000 my-node-app 
+docker run -d -p 80:8090 mitram-tourism-backend 
 
  
 
@@ -184,6 +184,8 @@ take a dump of copy from local mongodb:-
 mongodump --db toursdb
 Resore the dump to atlas db:-
 mongorestore --uri "mongodb+srv://admin:admin@cluster0.ccld8bb.mongodb.net/"
+
+
  
 
 Option 2: Self-Hosted on AWS EC2 (Free Tier)  
@@ -203,3 +205,9 @@ Install MongoDB Community Edition via SSH.
 Configure mongod.conf to allow remote connections (bindIp: 0.0.0.0) and enable authentication. 
 
 Secure the database by creating an admin use 
+
+
+Create a docker-compose file including keycloak services and backend application
+Run "docker compose up --build" to build the docker image.
+
+Execute image "docker run -p 80:8090 mitram-tourism-backend"

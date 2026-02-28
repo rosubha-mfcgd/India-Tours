@@ -96,7 +96,7 @@ app.use("/api", appRouter);
 
 // Connect to MongoDBl
 mongoose.connect(process.env.MONGO_DB_URI, 
-  { useNewUrlParser: true, useUnifiedTopology: true
+  {serverApi: { version: '1', strict: true, deprecationErrors: true } 
    });
 
 const conn = mongoose.connection;
@@ -327,6 +327,8 @@ app.post("/api/token", async(req,res) =>{
       catch(err)
         {
           logNginx(err.stack)
+          console.log(err.stack);
+          res.status(404).send("errormessage: cannot find auth keycloak token ");
         }
 });
 //This method finds the upcoming popular events using gemini AI

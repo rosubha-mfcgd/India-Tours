@@ -1,29 +1,46 @@
+version: '3.8'
 services:
-  api:
-    build:
-      context: .
-      dockerfile: Dockerfile
-    image: mitram-user-service-img:latest
+  # 2. Keycloak Service (Version 26+)
+   keycloak:
+    image: quay.io/keycloak/keycloak:latest
+    container_name: keycloak4
+    command: start-dev
+    environment:
+      KEYCLOAK_ADMIN: admin
+      KEYCLOAK_ADMIN_PASSWORD: admin
+      KC_HEALTH_ENABLED: "true"
+      KC_HOSTNAME_STRICT: "false"
+      KC_HOSTNAME_DEBUG: "true"
+    ports:
+      - "8080:8080"
+    volumes:
+      - keycloak_data:/opt/keycloak/data
+    networks:
+      - mitramtourism-net
+    restart: always
+  # 3. My Backend Application
+   mitramtourism-backend:
+    build: ./ # Path to your Dockerfile
+    container_name: mitramtourism-backend
+    environment:
+      KEYCLOAK_URL: http://keycloak:8080
+      # Use internal Docker network name for backend-to-keycloak comms
+      KEYCLOAK_ISSUER: http://keycloak:8080/realms/mitram-dev
     ports:
       - "8090:8090"
-    env_file:
-      - .env
     depends_on:
-      - mongo
+      - keycloak
     networks:
-      - app-network
-  mongo:
-    image: mongo:latest
-    container_name: mongo-tours
-    ports:
-      - "27017:27017"
-    volumes:
-      - mongo-data:/data/db
-    networks:
-      - app-network
+      - mitramtourism-net
+    restart: always
+    command: npm start
+
 networks:
-  app-network:
+  mitramtourism-net:
     driver: bridge
+  mitramkc-net: 
+    driver: bridge 
+
 volumes:
-  mongo-data:
-    driver: local
+  keycloak_db_data:
+  keycloak_data:
