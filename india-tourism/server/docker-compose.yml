@@ -6,11 +6,19 @@ services:
     container_name: keycloak4
     command: start-dev
     environment:
-      KEYCLOAK_ADMIN: admin
-      KEYCLOAK_ADMIN_PASSWORD: admin
+      KC_HOSTNAME: keycloak
+      KC_HOSTNAME_PORT: 8080
+      KC_HOSTNAME_STRICT_BACKCHANNEL: "true"
+      KC_BOOTSTRAP_ADMIN_USERNAME: admin
+      KC_BOOTSTRAP_ADMIN_PASSWORD: admin
       KC_HEALTH_ENABLED: "true"
       KC_HOSTNAME_STRICT: "false"
       KC_HOSTNAME_DEBUG: "true"
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://keycloak:8080/health/ready"]
+      interval: 15s
+      timeout: 2s
+      retries: 15
     ports:
       - "8080:8080"
     volumes:
@@ -23,7 +31,7 @@ services:
     build: ./ # Path to your Dockerfile
     container_name: mitramtourism-backend
     environment:
-      KEYCLOAK_URL: http://keycloak:8080
+      KEYCLOAK_URL: http://keycloak:8080/realms/mitram-dev
       # Use internal Docker network name for backend-to-keycloak comms
       KEYCLOAK_ISSUER: http://keycloak:8080/realms/mitram-dev
     ports:
@@ -38,9 +46,7 @@ services:
 networks:
   mitramtourism-net:
     driver: bridge
-  mitramkc-net: 
-    driver: bridge 
-
+  
 volumes:
   keycloak_db_data:
   keycloak_data:
