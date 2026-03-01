@@ -1,39 +1,32 @@
 version: '3.8'
 services:
-  # 2. Keycloak Service (Version 26+)
    keycloak:
     image: quay.io/keycloak/keycloak:latest
-    container_name: keycloak4
-    command: start-dev
+    container_name: keycloak6
     environment:
-      KC_HOSTNAME: keycloak
-      KC_HOSTNAME_PORT: 8080
-      KC_HOSTNAME_STRICT_BACKCHANNEL: "true"
-      KC_BOOTSTRAP_ADMIN_USERNAME: admin
-      KC_BOOTSTRAP_ADMIN_PASSWORD: admin
-      KC_HEALTH_ENABLED: "true"
-      KC_HOSTNAME_STRICT: "false"
-      KC_HOSTNAME_DEBUG: "true"
-    healthcheck:
-      test: ["CMD", "curl", "-f", "http://keycloak:8080/health/ready"]
-      interval: 15s
-      timeout: 2s
-      retries: 15
+     - KC_BOOTSTRAP_ADMIN_USERNAME=admin
+     - KC_BOOTSTRAP_ADMIN_PASSWORD=admin
+     - KC_HOSTNAME_STRICT=false
+     - KC_HTTP_ENABLED=true
+     - KEYCLOAK_IMPORT=/opt/keycloak/data/import/realm-config.json
     ports:
       - "8080:8080"
     volumes:
+      - ./import:/opt/keycloak/data/import
       - keycloak_data:/opt/keycloak/data
+    command: ["start-dev", "--import-realm"]
+    
     networks:
       - mitramtourism-net
-    restart: always
+    restart: unless-stopped
   # 3. My Backend Application
    mitramtourism-backend:
     build: ./ # Path to your Dockerfile
     container_name: mitramtourism-backend
     environment:
-      KEYCLOAK_URL: http://keycloak:8080/realms/mitram-dev
+     - OIDC_ISSUER_URL=http://keycloak:8080/realms/mitram-dev
       # Use internal Docker network name for backend-to-keycloak comms
-      KEYCLOAK_ISSUER: http://keycloak:8080/realms/mitram-dev
+     - OIDC_CLIENT_ID=mitram-tourism-client
     ports:
       - "8090:8090"
     depends_on:
@@ -48,5 +41,4 @@ networks:
     driver: bridge
   
 volumes:
-  keycloak_db_data:
   keycloak_data:

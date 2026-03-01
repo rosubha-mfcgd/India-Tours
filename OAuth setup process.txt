@@ -81,11 +81,13 @@ https://dev-da1syrfigotxjolb.jp.auth0.com/samlp/metadata/VcewOtRbRiHQS40WNiHOpNq
 VcewOtRbRiHQS40WNiHOpNqm1ohqp4RW
 Kolkata2026@123@
 
-docker run --name keycloak -p 8080:8080 -e KEYCLOAK_ADMIN=admin -e KEYCLOAK_ADMIN_PASSWORD=admin quay.io/keycloak/keycloak:latest start-dev
+docker run --name keycloak5 -p 8080:8080 -e KEYCLOAK_ADMIN=admin -e KEYCLOAK_ADMIN_PASSWORD=admin quay.io/keycloak/keycloak:latest start-dev
 
 docker run -it --name keycloak3 --entrypoint /bin/bash <image_name>
 
 docker start -ai keycloak2
+
+docker start -ai keycloak5
 
 
 docker run -d --name mitram-redis -p 6379:6379 redis:latest
