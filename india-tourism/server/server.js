@@ -308,7 +308,10 @@ app.post("/api/token", async(req,res) =>{
   let data = {
         client_id: process.env.AUTH_CLIENT_ID,
         client_secret: process.env.AUTH_CLIENT_SECRET,
-        grant_type: process.env.GRANT_TYPE
+        grant_type: "password",
+        username: process.env.AUTH_KEYCLOAK_USERNAME,
+        password: process.env.AUTH_KEYCLOAK_PASSWORD
+
     }
     
   try{

@@ -94,6 +94,9 @@ docker run -d --name mitram-redis -p 6379:6379 redis:latest
 docker exec -it mitram-redis redis-cli
 
 
+Create the user in keycloak admin console - mitram-dev/IndiaTours2026@
+
+
 http://localhost:8080/realms/mitram-dev/protocol/openid-connect/token
 
 keycloak secret - yNPZfWcvwJ5jVGjysyVzGjsiqc4b10Jc
