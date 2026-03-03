@@ -1,22 +1,39 @@
 version: '3.8'
 services:
+   postgres:
+    image: postgres:18
+    container_name: postgres_db
+    environment:
+      POSTGRES_DB: keycloakdb
+      POSTGRES_USER: admin
+      POSTGRES_PASSWORD: admin
+    volumes:
+      - postgres-data:/var/lib/postgresql
+    networks:
+      - mitramtourism-net
+      
    keycloak:
     image: quay.io/keycloak/keycloak:latest
     container_name: keycloak6
     environment:
-     - KC_BOOTSTRAP_ADMIN_USERNAME=admin
-     - KC_BOOTSTRAP_ADMIN_PASSWORD=admin
-     - KC_HOSTNAME_STRICT=false
-     - KC_HTTP_ENABLED=true
+      KC_BOOTSTRAP_ADMIN_USERNAME: admin
+      KC_BOOTSTRAP_ADMIN_PASSWORD: admin
+      KC_DB: postgres
+      KC_DB_URL: jdbc:postgresql://postgres/keycloakdb
+      KC_DB_USERNAME: admin
+      KC_DB_PASSWORD: admin
+      KC_PROXY: edge
     ports:
       - "8080:8080"
     volumes:
-      - ./import:/opt/keycloak/data/import
-      - keycloak_data:/opt/keycloak/data
-    command: ["start-dev", "--import-realm"]
+      - ./realm-config.json:/opt/keycloak/data/import/realm-config.json
+      - keycloak_data:/opt/keycloak/data/
+    command: start-dev
     networks:
       - mitramtourism-net
     restart: unless-stopped
+    depends_on:
+      - postgres
   
   # 3. My Backend Application
    mitramtourism-backend:
@@ -41,3 +58,4 @@ networks:
   
 volumes:
   keycloak_data:
+  postgres-data:

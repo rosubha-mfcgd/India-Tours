@@ -167,8 +167,12 @@ To run the container in the background (detached mode), add the -d flag to the c
 
 docker run -d -p 80:8090 mitram-tourism-backend 
 
- 
+Create the docker image for the react front endpoint
 
+ docker build -t mitram-tourism-web .
+
+Run the docker image for the react front endpoint
+docker run -dp 8000:8083 --name mitram-tourism-web mitram-tourism-web .
  
 
 Move MongoDB to server environment 
@@ -216,3 +220,6 @@ Create a docker-compose file including keycloak services and backend application
 Run "docker compose up --build" to build the docker image.
 
 Execute image "docker run -p 80:8090 mitram-tourism-backend"
+
+
+**********

@@ -3,7 +3,6 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
-    "@adityavijay21/upiqr": "^1.0.0",
     "@anon-aadhaar/react": "^2.4.3",
     "@craco/craco": "^7.1.0",
     "@emotion/react": "^11.14.0",
