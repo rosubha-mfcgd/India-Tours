@@ -1,9 +1,18 @@
 services:
-   web:
-    image: nginx:alpine
+  mitram-tourism-frontend:
+    build:
+      context: ./tourism-web/
+      dockerfile: Dockerfile
+    ports:
+      - 8083:80
+    container_name: mitram-tourism-web
     networks:
       - mitramtourism-net
-   postgres:
+    environment:
+      - REACT_APP_SERVER_URI=http://mitramtourism-backend:8090
+    restart: always
+  
+  postgres:
     image: postgres:18
     container_name: postgres_db
     environment:
@@ -14,8 +23,8 @@ services:
       - postgres-data:/var/lib/postgresql
     networks:
       - mitramtourism-net
-      
-   keycloak:
+  
+  keycloak:
     image: quay.io/keycloak/keycloak:latest
     container_name: keycloak6
     environment:
@@ -31,15 +40,21 @@ services:
       KC_HTTP_ENABLED: "true"
       KC_HEALTH_ENABLED: "true"
     ports:
-      - "8080:8080"
+      - 8080:8080
     volumes:
-      - ./realm-keycloak.json:/opt/keycloak/data/import/realm-config.json
+      - ./server/realm-keycloak.json:/opt/keycloak/data/import/realm-config.json
       - keycloak_data:/opt/keycloak/data/
-    command: ["start-dev", "--import-realm"]
+    command:
+      - start-dev
+      - --import-realm
     networks:
       - mitramtourism-net
     healthcheck:
-      test: ["CMD", "curl", "-f", "http://localhost:8080/auth/health/ready"]
+      test:
+        - CMD
+        - curl
+        - -f
+        - http://localhost:8080/auth/health/ready
       interval: 10s
       timeout: 5s
       retries: 5
@@ -47,26 +62,40 @@ services:
     depends_on:
       - postgres
   
-  # 3. My Backend Application
-   mitramtourism-backend:
-    build: ./ # Path to your Dockerfile
+  mitramtourism-backend:
+    build: ./server
     container_name: mitramtourism-backend
     environment:
-     - OIDC_ISSUER_URL=http://keycloak:8080/realms/mitram-dev
-      # Use internal Docker network name for backend-to-keycloak comms
-     - OIDC_CLIENT_ID=mitram-tourism-client
+      - OIDC_ISSUER_URL=http://keycloak:8080/realms/mitram-dev
+      - OIDC_CLIENT_ID=mitram-tourism-client
     ports:
-      - "8090:8090"
+      - 8090:8090
     depends_on:
       - keycloak
     networks:
       - mitramtourism-net
     restart: always
     command: npm start
-
+  
+  nginx:
+    image: nginx:alpine
+    container_name: nginx_reverse_proxy
+    ports:
+      - 80:80
+      - 443:443
+    volumes:
+      - ./nginx/nginx.conf:/etc/nginx/nginx.conf:ro
+    depends_on:
+      - mitram-tourism-frontend
+      - mitramtourism-backend
+    networks:
+      - mitramtourism-net
+  
+volumes:
+  keycloak_data:
+    driver: local
+  postgres-data:
+    driver: local
 networks:
   mitramtourism-net:
     external: true
-volumes:
-  keycloak_data:
-  postgres-data:

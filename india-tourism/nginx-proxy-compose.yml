@@ -1,0 +1,15 @@
+services:
+  nginx-proxy:
+    image: nginx:alpine
+    ports:
+      - "80:80"
+      # Optionally, "443:443" for HTTPS
+    volumes:
+      # Mount your custom Nginx configuration file
+      - ./nginx/nginx.conf:/etc/nginx/nginx.conf:ro
+    networks:
+      - mitramtourism-net
+
+networks:
+  mitramtourism-net:
+    external: true
