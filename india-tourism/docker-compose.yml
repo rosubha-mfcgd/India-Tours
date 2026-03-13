@@ -1,8 +1,6 @@
 services:
   mitram-tourism-frontend:
-    build:
-      context: ./tourism-web/
-      dockerfile: Dockerfile
+    build: ./tourism-web
     ports:
       - 8083:80
     container_name: mitram-tourism-web

@@ -11,10 +11,9 @@
 **/coverage
 **/venv
 **/env
-
 # Language-specific ignores (example for Node.js projects)
 node_modules
-
+archive
 # Ignore Docker and project management files not needed in the final image
 Dockerfile
 docker-compose*.yml

@@ -172,7 +172,11 @@ Create the docker image for the react front endpoint
  docker build -t mitram-tourism-web .
 
 Run the docker image for the react front endpoint
-docker run -dp 8000:8083 --name mitram-tourism-web mitram-tourism-web .
+docker run -d --name mitram-tourism-web -p 8000:8083 mitram-tourism-web
+
+create a docker network
+
+docker network create mitramtourism-net
  
 
 Move MongoDB to server environment 
