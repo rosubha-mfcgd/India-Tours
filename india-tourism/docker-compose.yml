@@ -1,8 +1,10 @@
 services:
   mitram-tourism-frontend:
-    build: ./tourism-web
-    ports:
-      - 8083:80
+    build: 
+      context: ./tourism-web
+      dockerfile: Dockerfile
+    #ports:
+     # - 8083:80
     container_name: mitram-tourism-web
     networks:
       - mitramtourism-net
@@ -61,13 +63,15 @@ services:
       - postgres
   
   mitramtourism-backend:
-    build: ./server
+    build: 
+      context: ./server
+      dockerfile: Dockerfile
     container_name: mitramtourism-backend
     environment:
       - OIDC_ISSUER_URL=http://keycloak:8080/realms/mitram-dev
       - OIDC_CLIENT_ID=mitram-tourism-client
-    ports:
-      - 8090:8090
+    #ports:
+     # - 8090:8090
     depends_on:
       - keycloak
     networks:
@@ -79,8 +83,8 @@ services:
     image: nginx:alpine
     container_name: nginx_reverse_proxy
     ports:
-      - 80:80
-      - 443:443
+      - "80:80"
+      - "443:443"
     volumes:
       - ./nginx/nginx.conf:/etc/nginx/nginx.conf:ro
     depends_on:
@@ -96,4 +100,5 @@ volumes:
     driver: local
 networks:
   mitramtourism-net:
+    driver: bridge
     external: true
