@@ -1,5 +1,9 @@
 # Stage 1: Build the React application
 FROM node:20-alpine AS build
+# You MUST declare the ARG here
+ARG REACT_APP_SERVER_URI 
+# Now it's available for the build command
+ENV REACT_APP_SERVER_URI=$REACT_APP_SERVER_URI
 WORKDIR /app
 COPY package*.json ./
 RUN npm install --legacy-peer-deps

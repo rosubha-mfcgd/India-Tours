@@ -439,6 +439,7 @@ return res_data;
  
 export const getApiAccessToken= async() =>{
   try{
+    console.log("api token....",process.env.REACT_APP_SERVER_URI + "token");
     const response = await axios.post(
         process.env.REACT_APP_SERVER_URI + "token"
     );

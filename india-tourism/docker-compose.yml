@@ -1,13 +1,16 @@
 services:
   mitram-tourism-frontend:
+    image: mitram-tourism-frontend:latest
     build: 
       context: ./tourism-web
+      args:
+      - REACT_APP_SERVER_URI=/api/ # Example
       dockerfile: Dockerfile
     container_name: mitram-tourism-web
+    env_file:
+      - ./tourism-web/tourismweb.env
     networks:
       - mitramtourism-net
-    environment:
-      - REACT_APP_SERVER_URI=http://mitramtourism-backend:8090
     restart: always
   
   postgres:
@@ -52,7 +55,7 @@ services:
         - CMD
         - curl
         - -f
-        - http://localhost:8080/auth/health/ready
+        - http://localhost:8080/health/ready
       interval: 10s
       timeout: 5s
       retries: 5
@@ -65,9 +68,10 @@ services:
       context: ./server
       dockerfile: Dockerfile
     container_name: mitramtourism-backend
-    environment:
-      - OIDC_ISSUER_URL=http://keycloak:8080/realms/mitram-dev
-      - OIDC_CLIENT_ID=mitram-tourism-client
+    ports:
+      - "8090:8090"
+    env_file:
+      - ./server/server.env
     depends_on:
       - mitram-tourism-frontend
       - keycloak

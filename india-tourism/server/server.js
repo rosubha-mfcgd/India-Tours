@@ -57,7 +57,7 @@ const GOOGLE_OAUTH_SCOPES = [
     credentials:true,  //access-control-allow-credentials:true
     methods: "GET, POST, PATCH, DELETE, PUT, OPTIONS",
     origin: ['http://localhost:8080', 'http://localhost:8083',
-      'http://localhost:80','http://localhost:81',
+      'http://localhost','http://localhost:81',
       'http://localhost:8090',
       'https://accounts.google.com'] ,// Whitelist the domains you want to allow
       allowedHeaders: "Content-Type, Authorization",
