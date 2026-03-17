@@ -35,7 +35,7 @@ services:
       KC_DB_URL: jdbc:postgresql://postgres/keycloakdb
       KC_DB_USERNAME: admin
       KC_DB_PASSWORD: admin
-      KC_HOSTNAME: http://localhost:8080
+      KC_HOSTNAME: http://keycloak6:8080
       KC_HOSTNAME_STRICT: "false"
       KC_HOSTNAME_BACKCHANNEL_DYNAMIC: "true"
       KC_HTTP_ENABLED: "true"
@@ -48,6 +48,8 @@ services:
     command:
       - start-dev
       - --import-realm
+      - --http-enabled=true
+      - --hostname-strict=false
     networks:
       - mitramtourism-net
     healthcheck:
