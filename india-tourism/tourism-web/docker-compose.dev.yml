@@ -1,0 +1,26 @@
+services:
+  mitram-tourism-frontend:
+    image: mitram-tourism-frontend:latest
+    build: 
+      context: ./
+      args:
+      - REACT_APP_SERVER_URI=/api/ # Example
+      dockerfile: Dockerfile
+    container_name: mitram-tourism-web
+    env_file:
+      - ./tourismweb.env.dev
+    networks:
+      - mitramtourism-net
+    restart: always
+volumes:
+  keycloak_data:
+    driver: local
+  postgres-data:
+    driver: local
+networks:
+  mitramtourism-net:
+    driver: bridge
+    external: true
+  touroperator-net:
+    driver: bridge
+    external: true

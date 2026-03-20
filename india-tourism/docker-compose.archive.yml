@@ -1,11 +1,18 @@
-name: mitram-app
-
-include:
-  - ./tourism-web/docker-compose.dev.yml
-  - ./server/docker-compose.dev.yml
-  - ./touroperator-frontend/docker-compose.dev.yml
-  - ./touroperator-backend/docker-compose.dev.yml
 services:
+  mitram-tourism-frontend:
+    image: mitram-tourism-frontend:latest
+    build: 
+      context: ./tourism-web
+      args:
+      - REACT_APP_SERVER_URI=/api/ # Example
+      dockerfile: Dockerfile
+    container_name: mitram-tourism-web
+    env_file:
+      - ./tourism-web/tourismweb.env
+    networks:
+      - mitramtourism-net
+    restart: always
+  
   postgres:
     image: postgres:18
     container_name: postgres_db
@@ -58,6 +65,23 @@ services:
     depends_on:
       - postgres
   
+  mitramtourism-backend:
+    build: 
+      context: ./server
+      dockerfile: Dockerfile
+    container_name: mitramtourism-backend
+    ports:
+      - "8090:8090"
+    env_file:
+      - ./server/server.env
+    depends_on:
+      - mitram-tourism-frontend
+      - keycloak
+    networks:
+      - mitramtourism-net
+    restart: always
+    command: npm start
+  
   nginx:
     image: nginx:alpine
     container_name: nginx_reverse_proxy
@@ -71,19 +95,6 @@ services:
       - mitramtourism-backend
     networks:
       - mitramtourism-net
-   
-  nginx2:
-    image: nginx:alpine
-    container_name: nginx_reverse_proxy_2
-    ports:
-      - "81:81" 
-    volumes:
-      - ./nginx/nginx2.conf:/etc/nginx/nginx2.conf:ro
-      - ./client/build:/usr/share/nginx2/html:ro # Mount built React files
-    depends_on:
-      - mitram-tourism-frontend
-    networks:
-      - touroperator-net
   
 volumes:
   keycloak_data:
@@ -92,8 +103,5 @@ volumes:
     driver: local
 networks:
   mitramtourism-net:
-    driver: bridge
-    external: true
-  touroperator-net:
     driver: bridge
     external: true

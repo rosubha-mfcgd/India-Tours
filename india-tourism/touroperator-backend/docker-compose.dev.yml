@@ -1,0 +1,20 @@
+services:
+  mitram-touroperator-backend:
+    build: 
+      context: ./
+      dockerfile: Dockerfile
+    container_name: mitram-touroperator-backend
+    ports:
+      - "3000:3000"
+    env_file:
+      - ./touroperator-backend.env.dev
+    depends_on:
+      - mitram-touroperator-frontend
+    networks:
+      - touroperator-net
+    restart: always
+    command: npm start
+networks:
+  touroperator-net:
+    driver: bridge
+    external: true

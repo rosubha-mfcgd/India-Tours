@@ -1,0 +1,30 @@
+services:
+  mitramtourism-backend:
+    build: 
+      context: ./
+      dockerfile: Dockerfile
+    container_name: mitramtourism-backend
+    ports:
+      - "8090:8090"
+    env_file:
+      - ./server.env.dev
+    depends_on:
+      - mitram-tourism-frontend
+      - keycloak
+    networks:
+      - mitramtourism-net
+    restart: always
+    command: npm start
+    
+volumes:
+  keycloak_data:
+    driver: local
+  postgres-data:
+    driver: local
+networks:
+  mitramtourism-net:
+    driver: bridge
+    external: true
+  touroperator-net:
+    driver: bridge
+    external: true

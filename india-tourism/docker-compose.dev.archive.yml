@@ -13,6 +13,18 @@ services:
       - mitramtourism-net
     restart: always
   
+  mitram-touroperator-frontend:
+    image: mitram-touroperator-frontend:latest
+    build: 
+      context: ./touroperator-frontend
+      args:
+      - REACT_APP_SERVER_URI=/api/ # Example
+      dockerfile: Dockerfile
+    container_name: mitram-touroperator-frontend
+    networks:
+      - touroperator-net
+    restart: always 
+  
   postgres:
     image: postgres:18
     container_name: postgres_db
@@ -81,6 +93,22 @@ services:
       - mitramtourism-net
     restart: always
     command: npm start
+    
+  mitramoperator-backend:
+    build: 
+      context: ./touroperator-backend
+      dockerfile: Dockerfile
+    container_name: mitramoperator-backend
+    ports:
+      - "8090:8090"
+    env_file:
+      - ./touroperator-backend/touroperator-backend.env.dev
+    depends_on:
+      - mitram-tourism-frontend
+    networks:
+      - touroperator-net
+    restart: always
+    command: npm start  
   
   nginx:
     image: nginx:alpine
@@ -92,9 +120,21 @@ services:
       - ./client/build:/usr/share/nginx/html:ro # Mount built React files
     depends_on:
       - mitram-tourism-frontend
-      - mitramtourism-backend
     networks:
-      - mitramtourism-net
+      - touroperator-net
+  
+  nginx2:
+    image: nginx:alpine
+    container_name: nginx_reverse_proxy_2
+    ports:
+      - "81:81" 
+    volumes:
+      - ./nginx/nginx2.conf:/etc/nginx/nginx2.conf:ro
+      - ./client/build:/usr/share/nginx2/html:ro # Mount built React files
+    depends_on:
+      - mitram-tourism-frontend
+    networks:
+      - touroperator-net 
   
 volumes:
   keycloak_data:
@@ -103,5 +143,8 @@ volumes:
     driver: local
 networks:
   mitramtourism-net:
+    driver: bridge
+    external: true
+  touroperator-net:
     driver: bridge
     external: true

@@ -1,0 +1,16 @@
+services:
+  mitram-touroperator-frontend:
+    image: mitram-touroperator-frontend:latest
+    build: 
+      context: ./
+      args:
+      - REACT_APP_SERVER_URI=/api/ # Example
+      dockerfile: Dockerfile
+    container_name: mitram-touroperator-frontend
+    networks:
+      - touroperator-net
+    restart: always 
+networks:
+  touroperator-net:
+    driver: bridge
+    external: true
