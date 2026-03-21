@@ -1,6 +1,7 @@
 # Use the official Nginx image as the base
 FROM nginx:stable-alpine
 # Remove the default config that shows the welcome page
+#RUN rm -rf ./*
 RUN rm /etc/nginx/conf.d/default.conf
 # Copy your custom Nginx configuration file to the container's configuration directory
 COPY nginx.conf /etc/nginx/conf.d/default.conf

@@ -15,7 +15,7 @@ RUN npm run build
 FROM nginx:alpine
 WORKDIR /usr/share/nginx/html
 # Remove default Nginx static files
-RUN rm -rf ./*
+#RUN rm -rf ./*
 # Copy the static build from the previous stage
 # Note: Use /app/build if using Create React App
 COPY --from=build /app/build .

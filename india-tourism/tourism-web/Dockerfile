@@ -18,7 +18,8 @@ WORKDIR /usr/share/nginx/html
 RUN rm -rf ./*
 # Copy the static build from the previous stage
 # Note: Use /app/build if using Create React App
-COPY --from=build /app/build .
+#COPY --from=build /app/build .
+COPY --from=build /app/build /usr/share/nginx/html
 # Expose port 80 (standard Nginx port)
 EXPOSE 80
 # Command to run Nginx and keep it in the foreground for Docker to manage
