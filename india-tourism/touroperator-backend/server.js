@@ -6,27 +6,30 @@ const cookieParser = require("cookie-parser");
 
 require("dotenv").config();
 
-const authRoutes = require("./routes/authRoutes");
-const categoryRoutes = require("./routes/categoryRoutes");
-const tourOperatorRoutes = require("./routes/tourOperatorRoutes"); // import the user routes
-const cityRoute = require('./routes/cityRoute');
-const stateRoute = require('./routes/stateRoute');
-const countryRoute = require('./routes/countryRoute');
-const tourRoute = require('./routes/tourRoutes');
-const imageRoute = require('./routes/imageRoutes');
-const bookingRoute = require('./routes/bookingRoute');
-const seedRoles = require("./utility/seedRoles"); // import the function
-const seedStates = require("./utility/seedStates"); // import all Indian states
-const seedCountries = require("./utility/seedcountries"); // import all Countries
+const authRoutes = require('./src/routes/authRoutes');
+const categoryRoutes = require('./src/routes/categoryRoutes');
+const tourOperatorRoutes = require('./src/routes/tourOperatorRoutes'); // import the user routes
+const cityRoute = require('./src/routes/cityRoute');
+const stateRoute = require('./src/routes/stateRoute');
+const countryRoute = require('./src/routes/countryRoute');
+const tourRoute = require('./src/routes/tourRoutes');
+const imageRoute = require('./src/routes/imageRoutes');
+const bookingRoute = require('./src/routes/bookingRoute');
+const seedRoles = require('./src/utility/seedRoles'); // import the function
+const seedStates = require('./src/utility/seedStates'); // import all Indian states
+const seedCountries = require('./src/utility/seedCountries'); // import all Countries
 
 const app = express();
 const PORT = process.env.PORT || 5000;
 
 // Middleware
 app.use(cors({
-  origin: "http://localhost:3000", // frontend URL
-  credentials: true,               // <--- IMPORTANT
-}));
+    credentials:true,  //access-control-allow-credentials:true
+    methods: "GET, POST, PATCH, DELETE, PUT, OPTIONS",
+    origin: ['http://localhost:3000', 'http://localhost:81'] ,// Whitelist the domains you want to allow
+      allowedHeaders: "Content-Type, Authorization",
+    optionSuccessStatus:200,
+ }));
 app.use(bodyParser.json());
 app.use(cookieParser());
 // Routes

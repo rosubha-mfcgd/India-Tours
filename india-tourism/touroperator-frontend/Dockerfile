@@ -13,13 +13,13 @@ RUN npm run build
 
 # Stage 2: Serve the application with Nginx
 FROM nginx:alpine
-WORKDIR /usr/share/nginx2/html
+WORKDIR /usr/share/nginx/html
 # Remove default Nginx static files
 RUN rm -rf ./*
 # Copy the static build from the previous stage
 # Note: Use /app/build if using Create React App
 COPY --from=build /app/build .
-# Expose port 81 (standard Nginx port)
-EXPOSE 81
+# Expose port 80 (standard Nginx port)
+EXPOSE 80
 # Command to run Nginx and keep it in the foreground for Docker to manage
 CMD ["nginx", "-g", "daemon off;"]

@@ -5,7 +5,7 @@ services:
       dockerfile: Dockerfile
     container_name: mitram-touroperator-backend
     ports:
-      - "3000:3000"
+      - "5000:5000"
     env_file:
       - ./touroperator-backend.env.dev
     depends_on:
