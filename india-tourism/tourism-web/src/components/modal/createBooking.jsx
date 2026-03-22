@@ -99,6 +99,7 @@ const CreateBooking = ({ isOpen, onClose,prepareBookingData,bookingData }) => {
                 }            
     }
 
+//This function will add tourist bookings
 const addTourist = async() =>{
     console.log('tourist data in addtourist...',touristData)
     if(touristData)
