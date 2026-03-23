@@ -9,5 +9,7 @@ COPY nginx.conf /etc/nginx/conf.d/default.conf
 # Expose port 80 for incoming traffic
 EXPOSE 80
 EXPOSE 81
+EXPOSE 8443
+EXPOSE 8444
 # The default command runs Nginx
 CMD ["nginx", "-g", "daemon off;"]

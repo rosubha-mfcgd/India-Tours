@@ -64,6 +64,8 @@ services:
     ports:
       - "80:80" 
       - "81:81"
+      - "8443:8443"
+      - "8444:8444"
     volumes:
       - ./nginx/nginx.conf:/etc/nginx/nginx.conf:ro
      # - ./client/build:/usr/share/nginx/html:ro # Mount built React files

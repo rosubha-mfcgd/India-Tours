@@ -340,7 +340,7 @@ const columns = [
       <Typography>Book your trip to {tourDetails.locationName} from {changeDateToWords(tourDetails.startDate)} - {changeDateToWords(tourDetails.endDate)}</Typography>
       </h2>
        </div>
-       {openBookingForm ?
+       {!openBookingForm ?
        <div className="right-section">
         <button className="right-button" onClick={()=>setOpenBookingForm(true)}>
           Add new Tourist
