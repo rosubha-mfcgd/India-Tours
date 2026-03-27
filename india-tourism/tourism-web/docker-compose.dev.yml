@@ -1,14 +1,14 @@
 services:
   mitram-tourism-frontend:
-    image: mitram-tourism-frontend:latest
     build: 
       context: ./
       args:
       - REACT_APP_SERVER_URI=/api/ # Example
       dockerfile: Dockerfile
-    container_name: mitram-tourism-web
+    image: ${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_PRIMARY_REGION}:mitram-tourism-frontend
     env_file:
-      - ./tourismweb.env.dev
+      - ./.env
+    container_name: mitram-tourism-web
     networks:
       - mitramtourism-net
     restart: always

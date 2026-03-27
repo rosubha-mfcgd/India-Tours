@@ -3,11 +3,12 @@ services:
     build: 
       context: ./
       dockerfile: Dockerfile
+    image: ${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_PRIMARY_REGION}:mitram-touroperator-backend
+    env_file:
+      - ./.env
     container_name: mitram-touroperator-backend
     ports:
       - "5000:5000"
-    env_file:
-      - ./touroperator-backend.env.dev
     depends_on:
       - mitram-touroperator-frontend
     networks:

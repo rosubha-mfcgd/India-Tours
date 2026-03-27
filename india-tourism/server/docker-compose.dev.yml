@@ -3,11 +3,12 @@ services:
     build: 
       context: ./
       dockerfile: Dockerfile
+    image: ${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_PRIMARY_REGION}:mitramtourism-backend
+    env_file:
+      - ./server.env.dev
     container_name: mitramtourism-backend
     ports:
       - "8090:8090"
-    env_file:
-      - ./server.env.dev
     depends_on:
       - mitram-tourism-frontend
       - keycloak

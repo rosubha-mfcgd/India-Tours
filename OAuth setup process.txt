@@ -264,3 +264,33 @@ though these options may incur costs beyond the free tier limits depending on us
 Docker hub setup in EC2
 
 Dockerhub name : mitramdocker/mitram-app-hub
+
+aws ecr get-login-password --region ap-south-1 | docker login --username AWS --password-stdin 157208622016.dkr.ecr.ap-south-1.amazonaws.com
+
+{
+    "Version": "2026-03-23",
+    "Statement": [
+        {
+            "Sid": "GetAuthorizationToken",
+            "Effect": "Allow",
+            "Action": ["ecr:GetAuthorizationToken"],
+            "Resource": "*"
+        },
+        {
+            "Sid": "ManageRepositoryContents",
+            "Effect": "Allow",
+            "Action": [
+                "ecr:BatchCheckLayerAvailability",
+                "ecr:GetDownloadUrlForLayer",
+                // ... (additional actions)
+            ],
+            "Resource": "arn:aws:ecr:ap-south-1:157208622016:repository/mitramdocker/mitram-app-hub"
+        }
+    ]
+}
+
+public access key - AKIASJGS5GPAJD5YRXSH
+secret access key- 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
+
+aws ecr get-login-password --region ap-south-1 | docker login --username AWS --password-stdin 157208622016.dkr.ecr.ap-south-1.amazonaws.com
+
