@@ -289,8 +289,7 @@ aws ecr get-login-password --region ap-south-1 | docker login --username AWS --p
     ]
 }
 
-public access key - AKIASJGS5GPAJD5YRXSH
-secret access key- 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
+
 
 aws ecr get-login-password --region ap-south-1 | docker login --username AWS --password-stdin 157208622016.dkr.ecr.ap-south-1.amazonaws.com
 
