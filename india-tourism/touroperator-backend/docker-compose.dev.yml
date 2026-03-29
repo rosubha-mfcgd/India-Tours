@@ -3,7 +3,7 @@ services:
     build: 
       context: ./
       dockerfile: Dockerfile
-    image: ${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_PRIMARY_REGION}:mitram-touroperator-backend
+    image: 157208622016.dkr.ecr.ap-south-1.amazonaws.com/mitramdocker/mitram-app-hub:mitram-touroperator-backend-latest
     env_file:
       - ./.env
     container_name: mitram-touroperator-backend

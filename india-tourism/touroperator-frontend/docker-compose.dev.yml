@@ -5,7 +5,7 @@ services:
       args:
       - REACT_APP_SERVER_URI=/api/ # Example
       dockerfile: Dockerfile
-    image: ${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_PRIMARY_REGION}:mitram-touroperator-frontend
+    image: 157208622016.dkr.ecr.ap-south-1.amazonaws.com/mitramdocker/mitram-app-hub:mitram-touroperator-frontend-latest
     env_file:
       - ./.env
     container_name: mitram-touroperator-frontend
