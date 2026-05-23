@@ -1,0 +1,35 @@
+{
+  "family": "mitram-tourism-backend",
+  "cpu": "256",
+  "memory": "512",
+  "networkMode": "bridge",
+  "requiresCompatibilities": ["EC2"],
+  "volumes": [],
+  "logConfiguration": {
+                "logDriver": "awslogs",
+                "options": {
+                    "awslogs-group": "/ecs/mitram-tourism-backend",
+                    "awslogs-region": "ap-south-1",
+                    "awslogs-stream-prefix": "ecs"
+                }
+            },
+  "tags": [{
+        "key": "Environment",
+        "value": "Development"
+    }],
+  "containerDefinitions": [
+    {
+      "name": "mitram-tourism-backend-container",
+      "image": "157208622016.dkr.ecr.ap-south-1.amazonaws.com/mitramdocker/mitram-app-hub:mitramtourism-backend-latest",
+      "portMappings": [
+        {
+          "containerPort": 8090,
+		  "hostPort": 8090,
+          "protocol": "tcp"
+        }
+      ],
+      "essential": true
+    }
+  ],
+  "executionRoleArn": "arn:aws:iam::157208622016:role/ecsTaskExecutionRole" 
+}

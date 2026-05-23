@@ -1,0 +1,30 @@
+{
+    "cluster": "mitram-backend-cluster-dev-0418",
+    "serviceName": "mitram-tourism-backend",
+    "taskDefinition": "mitram-tourism-backend:9",
+    "desiredCount": 1,
+    "capacityProviderStrategy": [
+        {
+            "capacityProvider": "mitram-asg-capacity-provider-0521",
+            "weight": 1,
+            "base": 1
+        }
+    ],
+    "deploymentConfiguration": {
+        "maximumPercent": 200,
+        "minimumHealthyPercent": 100
+		
+    },
+	"placementStrategy": [
+        {
+            "type": "spread",
+            "field": "attribute:ecs.availability-zone"
+        },
+        {
+            "type": "spread",
+            "field": "instanceId"
+        }
+    ],
+    "healthCheckGracePeriodSeconds": 60,
+    "schedulingStrategy": "REPLICA"
+}

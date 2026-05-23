@@ -9,6 +9,8 @@ services:
     env_file:
       - ./.env
     container_name: mitram-tourism-web
+    depends_on:
+      - mitramtourism-backend
     networks:
       - mitramtourism-net
     restart: always
