@@ -1,0 +1,19 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: mitram-tourism-frontend
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: mitram-tourism-frontend
+  template:
+    metadata:
+      labels:
+        app: mitram-tourism-frontend
+    spec:
+      containers:
+      - name: mitram-tourism-backend
+        image: 157208622016.dkr.ecr.ap-south-1.amazonaws.com/mitramdocker/mitram-app-hub:mitram-tourism-frontend:latest
+        ports:
+        - containerPort: 80

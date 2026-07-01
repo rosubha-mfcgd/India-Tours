@@ -1,0 +1,38 @@
+
+    {
+        "IamInstanceProfile": {
+            "Name": "eksInstanceRole"
+        },
+        "BlockDeviceMappings": [
+            {
+                "DeviceName": "/dev/xvda",
+                "Ebs": {
+                    "DeleteOnTermination": true,
+                    "VolumeSize": 20,
+                    "VolumeType": "gp3"
+                }
+            }
+        ],
+        "ImageId": "ami-0ab813bf689b0ec68",
+        "InstanceType": "t3.small",
+        "UserData": "IyEvYmluL2Jhc2gKL2V0Yy9la3MvYm9vdHN0cmFwLnNoIG1pdHJhbS10b3VyaXNtLWRldi1jbHVzdGVyCg==",
+        "TagSpecifications": [
+            {
+                "ResourceType": "instance",
+                "Tags": [
+                    {
+                        "Key": "Name",
+                        "Value": "eks-worker"
+                    },
+                    {
+                        "Key": "kubernetes.io/cluster/mitram-tourism-dev-cluster",
+                        "Value": "owned"
+                    }
+                ]
+            }
+        ],
+        "SecurityGroupIds": [
+            "sg-0b253a7c64e29e066"
+        ]
+    }
+

@@ -293,3 +293,13 @@ aws ecr get-login-password --region ap-south-1 | docker login --username AWS --p
 
 aws ecr get-login-password --region ap-south-1 | docker login --username AWS --password-stdin 157208622016.dkr.ecr.ap-south-1.amazonaws.com
 
+Docker taking forever to start
+
+Run cmd or powershell as admin
+wsl --terminate docker-desktop
+wsl --terminate docker-desktop-data
+wsl --unregister docker-desktop
+wsl --unregister docker-desktop-data
+
+wsl --update
+wsl --shutdown

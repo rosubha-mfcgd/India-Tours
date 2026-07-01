@@ -1,0 +1,23 @@
+apiVersion: eksctl.io/v1alpha5
+kind: ClusterConfig
+
+metadata:
+  name: mitram-private-eks
+  region: ap-south-1
+
+vpc:
+  subnets:
+    private:
+      ap-south-1a: { id: subnet-043859b0d156d31c8 }
+      ap-south-1b: { id: subnet-0e759d065702b7c55 }
+      ap-south-1c: { id: subnet-0f0f9840d5b2185d9 }
+
+nodeGroups:
+  - name: ng-private
+    instanceType: t3.micro
+    desiredCapacity: 2
+    privateNetworking: true
+
+
+
+

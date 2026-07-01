@@ -5,10 +5,9 @@ services:
       args:
       - REACT_APP_SERVER_URI=/api/ # Example
       dockerfile: Dockerfile
-    image: 157208622016.dkr.ecr.ap-south-1.amazonaws.com/mitramdocker/mitram-app-hub:mitram-tourism-frontend-latest
     env_file:
       - ./.env
-    container_name: mitram-tourism-web
+    container_name: mitram-tourism-frontend
     depends_on:
       - mitramtourism-backend
     networks:

@@ -66,7 +66,8 @@ services:
       - "8443:8443"
       - "8444:8444"
     volumes:
-      - ./nginx/nginx.conf:/etc/nginx/nginx.conf:ro
+      - ./nginx/conf.d:/etc/nginx/conf.d
+      #- ./mitram-tourism-frontend/build:/var/www/mitram-tourism-frontend/build:ro
      # - ./client/build:/usr/share/nginx/html:ro # Mount built React files
     depends_on:
       - mitram-tourism-frontend
@@ -77,6 +78,14 @@ services:
     networks:
       - mitramtourism-net
       - touroperator-net
+   
+  extra-service:
+    image: nginx:latest
+    container_name: extra_service
+    networks:
+    - mitramtourism-net
+
+
 volumes:
   keycloak_data:
     driver: local

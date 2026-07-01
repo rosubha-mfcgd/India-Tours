@@ -3,7 +3,6 @@ services:
     build: 
       context: ./
       dockerfile: Dockerfile
-    image: 157208622016.dkr.ecr.ap-south-1.amazonaws.com/mitramdocker/mitram-app-hub:mitramtourism-backend-latest
     env_file:
       - ./server.env.dev
     container_name: mitramtourism-backend
