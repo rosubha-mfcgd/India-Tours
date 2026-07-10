@@ -3,14 +3,11 @@ services:
     build: 
       context: ./
       dockerfile: Dockerfile
-    image: 157208622016.dkr.ecr.ap-south-1.amazonaws.com/mitramdocker/mitram-app-hub:mitram-touroperator-backend-latest
     env_file:
       - ./.env
     container_name: mitram-touroperator-backend
     ports:
       - "5000:5000"
-    depends_on:
-      - mitram-touroperator-frontend
     networks:
       - touroperator-net
     restart: always
