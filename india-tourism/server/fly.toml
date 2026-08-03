@@ -1,0 +1,22 @@
+# fly.toml app configuration file generated for mitram-server on 2026-07-19T14:20:38-04:00
+#
+# See https://fly.io/docs/reference/configuration/ for information about how to use this file.
+#
+
+app = "mitram-server"
+primary_region = "iad"
+
+[build]
+  dockerfile = "Dockerfile"
+
+[env]
+  NODE_ENV = "production"
+  DATABASE_URL = "postgres://postgres:password@mitram-postgres.internal:5432/postgres"
+  MONGO_DB_URI= "mongodb+srv://admin:admin@cluster0.ccld8bb.mongodb.net/toursdb?retryWrites=true&w=majority"
+
+[[services]]
+  internal_port = 8090
+  protocol = "tcp"
+
+  [[services.ports]]
+    port = 8090
