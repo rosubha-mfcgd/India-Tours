@@ -16,28 +16,6 @@ services:
       - postgres-data:/var/lib/postgresql
     networks:
       - mitramtourism-net
-  teamcity-server:
-    image: jetbrains/teamcity-server
-    ports:
-      - "8111:8111"
-    volumes:
-      - teamcity_data:/data/teamcity_server/datadir
-      - teamcity_logs:/opt/teamcity/logs
-    networks:
-      - mitramtourism-net
-  teamcity-agent:
-    image: jetbrains/teamcity-agent
-    environment:
-      - SERVER_URL=http://teamcity-server:8111
-    volumes:
-      - /var/run/docker.sock:/var/run/docker.sock
-    networks:
-      - mitramtourism-net
-    healthcheck:
-      test: ["CMD", "curl", "-f", "http://teamcity-server:8111/app/agents/protocols"]
-      interval: 10s
-      timeout: 5s
-      retries: 20
   keycloak:
     image: quay.io/keycloak/keycloak:latest
     container_name: keycloak7
@@ -77,7 +55,6 @@ services:
     restart: unless-stopped
     depends_on:
       - postgres
-  
   nginx:
     image: nginx:alpine
     container_name: nginx_reverse_proxy
@@ -99,7 +76,6 @@ services:
     networks:
       - mitramtourism-net
       - touroperator-net
-   
   extra-service:
     image: nginx:latest
     container_name: extra_service
@@ -119,6 +95,3 @@ networks:
   touroperator-net:
     driver: bridge
     external: true
-  teamcity-net:
-    driver: bridge
-    external: false
