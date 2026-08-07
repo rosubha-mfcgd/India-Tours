@@ -12,7 +12,6 @@ services:
       LETSENCRYPT_HOST: "mitramtourism.com"
       LETSENCRYPT_EMAIL: "roy.cognizant.subhankar623@gmail.com"
     container_name: mitram-tourism-frontend
-    container_name: mitram-tourism-frontend
     depends_on:
       - mitramtourism-backend
     networks:
