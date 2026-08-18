@@ -8,6 +8,13 @@ services:
     container_name: mitram-touroperator-backend
     ports:
       - "5000:5000"
+    environment:
+      VIRTUAL_HOST: "api.mitramtouroperator.com"
+      VIRTUAL_PORT: 5000
+      LETSENCRYPT_HOST: "api.mitramtouroperator.com"
+      LETSENCRYPT_EMAIL: "roy.cognizant.subhankar623@gmail.com"
+    expose:
+    - "5000"
     networks:
       - touroperator-net
     restart: always

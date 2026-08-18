@@ -1,5 +1,6 @@
 // Change the domain easily here, e.g., for production
-const API_DOMAIN = "http://localhost:5000/api";
+//const API_DOMAIN = "http://localhost:5000/api";
+const API_DOMAIN = "http://api.mitramtouroperator.com/api";
 
 const API = {
   auth: {

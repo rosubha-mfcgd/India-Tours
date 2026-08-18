@@ -9,7 +9,7 @@ services:
     networks:
       - mitramtourism-net
     environment:
-      - REACT_APP_SERVER_URI=http://mitramtourism-backend:8090
+      - REACT_APP_SERVER_URI=mitramtourism-backend:8090
     restart: always
   nginx-proxy:
     image: nginx:alpine

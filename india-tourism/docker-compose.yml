@@ -56,15 +56,18 @@ services:
     depends_on:
       - postgres
   nginx:
-    image: nginx:alpine
-    container_name: nginx_reverse_proxy
+    image: jwilder/nginx-proxy
+    container_name: nginx-proxy
     ports:
       - "80:80" 
       - "81:81"
       - "8443:8443"
       - "8444:8444"
     volumes:
-      - ./nginx/conf.d:/etc/nginx/conf.d
+      - /var/run/docker.sock:/tmp/docker.sock:ro
+      - /etc/nginx/certs:/etc/nginx/certs
+      - /etc/nginx/vhost.d:/etc/nginx/vhost.d
+      - /usr/share/nginx/html:/usr/share/nginx/html
       #- ./mitram-tourism-frontend/build:/var/www/mitram-tourism-frontend/build:ro
      # - ./client/build:/usr/share/nginx/html:ro # Mount built React files
     depends_on:
@@ -72,15 +75,19 @@ services:
       - mitramtourism-backend
       - mitram-touroperator-frontend
       - mitram-touroperator-backend
-    command: /bin/sh -c "rm -f /etc/nginx/conf.d/default.conf && nginx -g 'daemon off;'"
     networks:
       - mitramtourism-net
       - touroperator-net
   letsencrypt:
     image: jrcs/letsencrypt-nginx-proxy-companion
+    container_name: letsencrypt
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock:ro
       - /etc/nginx/certs:/etc/nginx/certs
+      - /etc/nginx/vhost.d:/etc/nginx/vhost.d
+      - /usr/share/nginx/html:/usr/share/nginx/html
+    environment:
+      NGINX_PROXY_CONTAINER: nginx-proxy
     networks:
       - mitramtourism-net
       - touroperator-net

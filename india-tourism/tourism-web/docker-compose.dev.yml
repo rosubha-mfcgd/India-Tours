@@ -2,9 +2,9 @@ services:
   mitram-tourism-frontend:
     build: 
       context: ./
-      args:
-      - REACT_APP_SERVER_URI=/api/ # Example
       dockerfile: Dockerfile
+      args:
+        REACT_APP_SERVER_URI: "http://api.mitramtourism.com/api/" # Exampleargs:
     env_file:
       - ./.env
     environment:

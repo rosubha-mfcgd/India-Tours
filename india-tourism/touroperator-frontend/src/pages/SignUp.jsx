@@ -23,7 +23,9 @@ export default function Signup() {
     e.preventDefault();
     setError(null);
     try {
-      const res = await axios.post('http://localhost:5000/api/auth/signup', form);
+      
+      //const res = await axios.post('http://localhost:5000/api/auth/signup', form);
+      const res = await axios.post('http://api.mitramtouroperator.com//api/auth/signup', form);
       login(res.data.token); // store JWT token
       navigate('/dashboard'); // redirect to dashboard
     } catch (err) {

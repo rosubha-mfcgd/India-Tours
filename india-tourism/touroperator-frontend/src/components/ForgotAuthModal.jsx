@@ -24,10 +24,14 @@ const ForgotAuthModal = ({ open, onClose, type }) => {
     setError("");
 
     try {
+      // const url =
+      //   type === "username"
+      //     ? "http://localhost:5000/api/auth/forgot-username"
+      //     : "http://localhost:5000/api/auth/forgot-password";
       const url =
         type === "username"
-          ? "http://localhost:5000/api/auth/forgot-username"
-          : "http://localhost:5000/api/auth/forgot-password";
+          ? "http://api.mitramtouroperator.com/api/auth/forgot-username"
+          : "http://api.mitramtouroperator.com/api/auth/forgot-password";
 
       const payload =
         type === "username"

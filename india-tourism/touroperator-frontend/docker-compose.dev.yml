@@ -2,12 +2,15 @@ services:
   mitram-touroperator-frontend:
     build: 
       context: ./
-      args:
-      - REACT_APP_SERVER_URI=/api/ # Example
       dockerfile: Dockerfile
-    image: 157208622016.dkr.ecr.ap-south-1.amazonaws.com/mitramdocker/mitram-app-hub:mitram-touroperator-frontend-latest
+      args:
+       REACT_APP_SERVER_URI: "http://api.mitramtouroperator.com/api/" # Example
     env_file:
       - ./.env
+    environment:
+      VIRTUAL_HOST: "mitramtouroperator.com"
+      LETSENCRYPT_HOST: "mitramtouroperator.com"
+      LETSENCRYPT_EMAIL: "roy.cognizant.subhankar623@gmail.com"
     container_name: mitram-touroperator-frontend
     depends_on:
       - mitram-touroperator-backend

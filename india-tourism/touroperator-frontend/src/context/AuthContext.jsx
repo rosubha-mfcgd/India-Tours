@@ -7,11 +7,12 @@ export const AuthContext = createContext();
 export const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(true); // loading while fetching user
-
+ 
   // ---------------- Fetch current logged-in user from backend
   const fetchUser = async () => {
     try {
-      const res = await axiosClient.get("/auth/getUser", { withCredentials: true });
+      const res = await axiosClient.get("/auth/getUser", 
+        {withCredentials: true });
       setUser(res.data);
     } catch (err) {
       setUser(null); // not logged in or session expired

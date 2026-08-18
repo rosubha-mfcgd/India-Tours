@@ -26,10 +26,19 @@ const PORT = process.env.PORT || 5000;
 app.use(cors({
     credentials:true,  //access-control-allow-credentials:true
     methods: "GET, POST, PATCH, DELETE, PUT, OPTIONS",
-    origin: ['http://localhost:3000', 'http://localhost:81'] ,// Whitelist the domains you want to allow
+    origin: ['http://mitramtouroperator.com','http://localhost:3000', 'http://localhost:81'] ,// Whitelist the domains you want to allow
       allowedHeaders: "Content-Type, Authorization",
     optionSuccessStatus:200,
  }));
+
+ app.use((req, res, next) => {
+  res.header("Access-Control-Allow-Origin", "http://mitramtouroperator.com");
+  res.header("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, OPTIONS");
+  res.header("Access-Control-Allow-Headers", "Content-Type, Authorization");
+  res.header("Access-Control-Allow-Credentials", "true");
+  if (req.method === "OPTIONS") return res.sendStatus(204);
+  next();
+});
 app.use(bodyParser.json());
 app.use(cookieParser());
 // Routes
