@@ -1,5 +1,5 @@
 # Use an official Node runtime as the parent image
-FROM node:22-alpine
+FROM node:20-slim
 # Set the working directory in the container
 WORKDIR /usr/src/app
 # Copy package.json and package-lock.json to the working directory

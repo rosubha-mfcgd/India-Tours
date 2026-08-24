@@ -22,3 +22,9 @@ docker-compose*.yml
 Makefile
 README.md
 *.md
+node_modules
+build
+dist
+.git
+.gitignore
+*.log

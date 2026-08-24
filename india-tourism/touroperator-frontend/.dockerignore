@@ -1,11 +1,11 @@
 # Ignore common version control and environment files
 .git
 .gitignore
-.env
 .vscode
 .aws
 .ssh
 .DS_Store
+.env
 
 # Ignore common build output directories
 **/build
@@ -28,5 +28,4 @@ dist
 .git
 .gitignore
 Dockerfile
-nginx.conf
 *.log

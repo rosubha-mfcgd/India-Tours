@@ -1,5 +1,7 @@
 const express = require("express");
 const router = express.Router();
+
+
 const { getUserDetails , register, login , forgotUsername , forgotPassword, resetPassword, createSuperAdmin, logout } = require("../controllers/authController");
 
 const { authenticate, authorizeRole } = require("../middleware/authMiddleware");

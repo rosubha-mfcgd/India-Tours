@@ -1,5 +1,6 @@
 services:
   mitram-touroperator-backend:
+    profiles: ["operator"]
     build: 
       context: ./
       dockerfile: Dockerfile

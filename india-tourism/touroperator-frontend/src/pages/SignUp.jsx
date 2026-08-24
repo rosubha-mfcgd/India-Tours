@@ -2,6 +2,7 @@ import React, { useState, useContext } from 'react';
 import { TextField, Button, Typography, Box, Paper, MenuItem } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
 import { AuthContext } from '../context/AuthContext';
+import { registerUser } from "../apiconfig/authApi";
 import axios from 'axios';
 
 export default function Signup() {
@@ -9,7 +10,10 @@ export default function Signup() {
     username: '',
     email: '',
     password: '',
-    role: 'TourOperator' // default role
+    roleID: 1, // default role,
+    firstName: '',
+    lastName: ''
+    
   });
   const [error, setError] = useState(null);
   const { login } = useContext(AuthContext);
@@ -24,11 +28,16 @@ export default function Signup() {
     setError(null);
     try {
       
-      //const res = await axios.post('http://localhost:5000/api/auth/signup', form);
-      const res = await axios.post('http://api.mitramtouroperator.com//api/auth/signup', form);
-      login(res.data.token); // store JWT token
-      navigate('/dashboard'); // redirect to dashboard
+     // const res = await axios.post('http://localhost:5000/api/auth/signup', form);
+      //const res = await axios.post('http://api.mitramtouroperator.com/api/auth/register', form);
+       const res = await registerUser(form);
+        if(res.data != null)
+        {   
+          login(res.data.token); // store JWT token
+          navigate('/dashboard'); // redirect to dashboard
+        }
     } catch (err) {
+      console.log(err.stack);
       setError(err.response?.data?.message || 'Signup failed');
     }
   };
@@ -70,13 +79,28 @@ export default function Signup() {
             select
             label="Role"
             name="role"
-            value={form.role}
+            value={form.roleID}
             onChange={handleChange}
             fullWidth
           >
             <MenuItem value="TourOperator">Tour Operator</MenuItem>
             <MenuItem value="Customer">Customer</MenuItem>
           </TextField>
+
+          <TextField
+                      label="First Name"
+                      name="firstName"
+                      value={form.firstName}
+                      onChange={handleChange}
+                      fullWidth
+                    />
+                    <TextField
+                      label="Last Name"
+                      name="lastName"
+                      value={form.lastName}
+                      onChange={handleChange}
+                      fullWidth
+                    />
           <Button type="submit" variant="contained" fullWidth>
             Sign Up
           </Button>

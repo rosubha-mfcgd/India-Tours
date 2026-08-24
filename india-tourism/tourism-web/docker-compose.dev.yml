@@ -1,5 +1,6 @@
 services:
   mitram-tourism-frontend:
+    profiles: ["tourism"]
     build: 
       context: ./
       dockerfile: Dockerfile

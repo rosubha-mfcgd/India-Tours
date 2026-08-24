@@ -6,6 +6,7 @@ include:
   - ./touroperator-backend/docker-compose.dev.yml
 services:
   postgres:
+    profiles: ["infra"]
     image: postgres:18
     container_name: postgres_db
     environment:
@@ -17,6 +18,7 @@ services:
     networks:
       - mitramtourism-net
   keycloak:
+    profiles: ["infra"]
     image: quay.io/keycloak/keycloak:latest
     container_name: keycloak7
     environment:
@@ -56,6 +58,7 @@ services:
     depends_on:
       - postgres
   nginx:
+    profiles: ["proxy"]
     image: jwilder/nginx-proxy
     container_name: nginx-proxy
     ports:
@@ -70,15 +73,11 @@ services:
       - /usr/share/nginx/html:/usr/share/nginx/html
       #- ./mitram-tourism-frontend/build:/var/www/mitram-tourism-frontend/build:ro
      # - ./client/build:/usr/share/nginx/html:ro # Mount built React files
-    depends_on:
-      - mitram-tourism-frontend
-      - mitramtourism-backend
-      - mitram-touroperator-frontend
-      - mitram-touroperator-backend
     networks:
       - mitramtourism-net
       - touroperator-net
   letsencrypt:
+    profiles: ["proxy"]
     image: jrcs/letsencrypt-nginx-proxy-companion
     container_name: letsencrypt
     volumes:
@@ -92,6 +91,7 @@ services:
       - mitramtourism-net
       - touroperator-net
   extra-service:
+    profiles: ["infra"]
     image: nginx:latest
     container_name: extra_service
     networks:
