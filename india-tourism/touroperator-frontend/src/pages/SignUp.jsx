@@ -78,13 +78,13 @@ export default function Signup() {
           <TextField
             select
             label="Role"
-            name="role"
+            name="roleID"
             value={form.roleID}
             onChange={handleChange}
             fullWidth
           >
-            <MenuItem value="TourOperator">Tour Operator</MenuItem>
-            <MenuItem value="Customer">Customer</MenuItem>
+            <MenuItem value="2">Tour Operator</MenuItem>
+            <MenuItem value="3">Customer</MenuItem>
           </TextField>
 
           <TextField
