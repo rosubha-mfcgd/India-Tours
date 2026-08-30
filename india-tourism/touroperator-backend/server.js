@@ -26,7 +26,7 @@ const PORT = process.env.PORT || 5000;
 app.use(cors({
     credentials:true,  //access-control-allow-credentials:true
     methods: "GET, POST, PATCH, DELETE, PUT, OPTIONS",
-    origin: ['http://mitramtouroperator.com','http://localhost:3000', 'http://localhost:81'] ,// Whitelist the domains you want to allow
+    origin: ['http://mitramtouroperator.tk','http://mitramtouroperator.com','http://localhost:3000', 'http://localhost:81'] ,// Whitelist the domains you want to allow
       allowedHeaders: "Content-Type, Authorization",
     optionSuccessStatus:200,
  }));

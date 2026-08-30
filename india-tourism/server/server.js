@@ -56,7 +56,7 @@ const GOOGLE_OAUTH_SCOPES = [
   const corsOptions ={
     credentials:true,  //access-control-allow-credentials:true
     methods: "GET, POST, PATCH, DELETE, PUT, OPTIONS",
-    origin: ['http://mitramtourism.com','http://localhost:8080', 'http://localhost:8083',
+    origin: ['http://mitramtourism.tk','http://mitramtourism.com','http://localhost:8080', 'http://localhost:8083',
       'http://localhost','http://localhost:81',
       'http://localhost:8090',
       'https://accounts.google.com'] ,// Whitelist the domains you want to allow

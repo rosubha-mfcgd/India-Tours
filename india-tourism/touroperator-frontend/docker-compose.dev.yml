@@ -5,12 +5,12 @@ services:
       context: ./
       dockerfile: Dockerfile
       args:
-       REACT_APP_SERVER_URI: "http://api.mitramtouroperator.com/api/" # Example
+       REACT_APP_SERVER_URI: "http://api.mitramtouroperator.tk/api/" # Example
     env_file:
       - ./.env
     environment:
-      VIRTUAL_HOST: "mitramtouroperator.com"
-      LETSENCRYPT_HOST: "mitramtouroperator.com"
+      VIRTUAL_HOST: "mitramtouroperator.tk"
+      LETSENCRYPT_HOST: "mitramtouroperator.tk"
       LETSENCRYPT_EMAIL: "roy.cognizant.subhankar623@gmail.com"
     container_name: mitram-touroperator-frontend
     depends_on:

@@ -1,7 +1,7 @@
 import axios from 'axios';
 const axiosClient = axios.create({
   //baseURL: "http://localhost:5000/api",
-  baseURL: "http://api.mitramtouroperator.com/api",
+  baseURL: "http://api.mitramtouroperator.tk/api",
   timeout: 10000,
   withCredentials: true, // include cookies automatically
 });
