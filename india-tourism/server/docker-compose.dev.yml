@@ -10,8 +10,8 @@ services:
     ports:
       - "8090:8090"
     environment:
-      VIRTUAL_HOST: "api.mitramtourism.tk"
-      LETSENCRYPT_HOST: "api.mitramtourism.tk"
+      VIRTUAL_HOST: "api.mitramtourism.com"
+      LETSENCRYPT_HOST: "api.mitramtourism.com"
       LETSENCRYPT_EMAIL: "roy.cognizant.subhankar623@gmail.com"
     depends_on:
       - keycloak

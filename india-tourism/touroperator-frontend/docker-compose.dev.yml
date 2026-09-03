@@ -5,7 +5,7 @@ services:
       context: ./
       dockerfile: Dockerfile
       args:
-       REACT_APP_SERVER_URI: "http://api.mitramtouroperator.tk/api/" # Example
+       REACT_APP_SERVER_URI: "http://api.mitramtouroperator.com/api/" # Example
     env_file:
       - ./.env
     environment:

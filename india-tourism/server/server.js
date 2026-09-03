@@ -1,9 +1,12 @@
 const express = require('express');
-
+const multer  = require('multer');
 
 const querystring = require('querystring');
 
 const session = require('express-session');
+// 1. Configure where to save uploaded files (e.g., an 'uploads/' folder)
+const storage = multer.memoryStorage(); // Stores file as a Buffer in memory
+const upload = multer({ storage: storage });
 //loads environment variables from .env file into process.env
 require("dotenv").config();
 const crypto = require("crypto")
@@ -17,6 +20,7 @@ const cors = require('cors');
 //const cookieParser = require("cookie-parser");
 const { env } = require('process');
 const fs = require('fs');
+const fspromise = require('node:fs/promises');
 const { GoogleGenerativeAI } = require('@google/generative-ai');
 const app = express();
 const passport = require('passport');
@@ -33,6 +37,7 @@ const GOOGLE_CLIENT_SECRET = process.env.CLIENT_SECRET;
 const GOOGLE_CALLBACK_URL = process.env.GOOGLE_OAUTH_CALLBACK_URL;
 const GOOGLE_ACCESS_TOKEN_URL = process.env.GOOGLE_ACCESS_TOKEN_URL;
 const GOOGLE_REDIRECT_URL = process.env.GOOGLE_OAUTH_CALLBACK_URL;
+const IDENTITY_DOC_UPLOAD_URL = process.env.IDENTITY_DOC_UPLOAD_URL;
 const API_CLIENT_ID = process.env.API_CLIENT_ID;
 const API_CLIENT_SECRET = process.env.API_CLIENT_SECRET;
 const GRANT_TYPE = process.env.GRANT_TYPE;
@@ -443,6 +448,55 @@ app.get("/api/getImageFromDB/:fileId/:bucketname",checkRequestAuthenticated, asy
       });
 
 })
+
+// 'myFile' must match the field name (key) sent from your frontend
+app.post('/uploadIdFile', upload.single('idFile'), async(req, res) => {
+  try {
+    // Multer attaches the file details to the `req.file` object
+    if (!req.file) {
+      return res.status(400).send('No file uploaded.');
+    }
+
+    console.log('File metadata received:', req.file);
+// 1. Get the raw Node.js Buffer
+    const rawFileBuffer = req.file.buffer;
+    const base64File = rawFileBuffer.toString('base64');
+     // 1. Create a new FormData instance
+  const payloadformData = new FormData();
+  payloadformData.append('file',req.file);
+  payloadformData.append('base64',base64File);
+  payloadformData.append('yob',req.yearOfBirth);
+  payloadformData.append('full_name',req.full_name);
+    
+    const response = await axios.post(IDENTITY_DOC_UPLOAD_URL, payloadformData,{
+       'Authorization': 'Bearer YOUR_API_TOKEN'
+
+  });
+
+  console.log('Success:', response.data);
+    /* 
+       req.file will look something like this:
+       {
+         fieldname: 'myFile',
+         originalname: 'resume.pdf',
+         mimetype: 'application/pdf',
+         destination: 'uploads/',
+         filename: '8437947bf9e8a...',
+         size: 125432
+       }
+    */
+
+    res.status(200).json({
+      message: 'File uploaded successfully!',
+      fileName: req.file.originalname
+    });
+    
+  } catch (error) {
+    res.status(500).send(error.message);
+  }
+});
+
+
 //Initiates Payment process
 app.post('/api/create-payment-intent', async (req, res) => {
   try{
