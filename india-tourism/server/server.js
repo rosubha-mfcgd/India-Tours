@@ -450,7 +450,7 @@ app.get("/api/getImageFromDB/:fileId/:bucketname",checkRequestAuthenticated, asy
 })
 
 // 'myFile' must match the field name (key) sent from your frontend
-app.post('/uploadIdFile', upload.single('idFile'), async(req, res) => {
+app.post('/api/uploadIdFile', upload.single('idFile'), async(req, res) => {
   try {
     // Multer attaches the file details to the `req.file` object
     if (!req.file) {

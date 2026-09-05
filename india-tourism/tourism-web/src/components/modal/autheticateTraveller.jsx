@@ -70,7 +70,7 @@ const [selectedFile, setSelectedFile] = useState(null);
     // Create a FormData object and append the file
     const formData = new FormData();
     formData.append(
-      'myFile', // Name of the field for the server to pick up
+      'idFile', // Name of the field for the server to pick up
       selectedFile,
       selectedFile.name
     );
