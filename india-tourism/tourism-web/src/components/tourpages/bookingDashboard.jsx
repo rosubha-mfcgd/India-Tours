@@ -476,9 +476,7 @@ const columns = [
    
     <CreateBooking isOpen={openBookingForm} onClose={() => setOpenBookingForm(false)}
     prepareBookingData = {prepareBookingData} bookingData={bookingData}
-    />
-        
-        :<div/>
+    />:<div/>
 }
 
 {

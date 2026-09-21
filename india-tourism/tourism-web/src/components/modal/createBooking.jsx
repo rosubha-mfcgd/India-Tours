@@ -3,6 +3,7 @@ import QRCode from 'react-qr-code';
 import '../../styles/bookingForm.css';
 import { useEffect, useState} from "react";
 import {validateInitBookingData} from "../admin/utility";
+import { useDeviceType } from '../admin/checkDeviceType';
 import failure_animation from '../Assets/images/failure_animation.gif';
 import { styled } from '@mui/material/styles';
 import {
@@ -13,25 +14,17 @@ import {
     TableCell,
     TableContainer,
     TableHead,
-    TableRow,
-    Paper,
-    Modal,
     Box,
-    Snackbar,
-    Card,
-    Grid,
+    TableRow,
+    IconButton,
+    Collapse,
     OutlinedInput,
     Typography,
-    CardMedia,
-    CardContent,
-    FormGroup,
     FormControl,  
     Input,
     Switch,
     Select,
     InputLabel,
-    
-    TextareaAutosize,
     Dialog,
     DialogTitle,
     DialogContent,
@@ -39,7 +32,9 @@ import {
     DialogActions,
     MenuItem
   } from "@mui/material";
-
+  import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
+import ChevronRightIcon from '@mui/icons-material/ChevronRight';
+ 
   
 const CreateBooking = ({ isOpen, onClose,prepareBookingData,bookingData }) => {
   
@@ -50,9 +45,13 @@ const CreateBooking = ({ isOpen, onClose,prepareBookingData,bookingData }) => {
     ageGroup: '',
     gender: ''
   });
-   const[displayErrorDialog,setDisplayErrorDialog] = useState(false);
-     const[errorMessage,setErrorMessage] = useState('');
-      const [dialogOpen, setDialogOpen] = useState(false);
+ const[displayErrorDialog,setDisplayErrorDialog] = useState(false);
+ // 1. Manage the collapsed state
+  const [isCollapsed, setIsCollapsed] = useState(false);
+    
+ const[errorMessage,setErrorMessage] = useState('');
+ const [dialogOpen, setDialogOpen] = useState(false);
+ const deviceType = useDeviceType();
  const touristNo = bookingData.length+1;
  //Update the booking payload with fields for each tourist
     const updateBooking = async(event) =>{
@@ -122,15 +121,20 @@ const addTourist = async() =>{
       }
     }
 }
+
+
+
+
 useEffect(()=>{
-setTouristData({ name: '', email: '', mobile: '', ageGroup: '',gender: ''})
+   
+    setTouristData({ name: '', email: '', mobile: '', ageGroup: '',gender: ''})
 },[touristNo])
 
   if (!isOpen) return null;
   return (
     
    <div  className="modal-overlay">
-      <div className="modal-content">
+      <div className={deviceType === 'mobile' ? "modal-content-mobile" : "modal-content-mobile"}>
         <div>
             {displayErrorDialog?
         <Dialog
@@ -229,6 +233,26 @@ setTouristData({ name: '', email: '', mobile: '', ageGroup: '',gender: ''})
                               onChange = {updateBooking}
                                />
                                 </FormControl>
+                                </TableCell>
+                                <TableCell>
+                                  <Box 
+                                  sx={{ display: 'flex', alignItems: 'flex-start', position: 'relative' }}>
+                                   <IconButton
+          onClick={onClose}
+          sx={{
+            position: 'absolute',
+            left: -20,
+            top: 20,
+            zIndex: 1300,
+            bgcolor: 'primary.main',
+            color: 'white',
+            '&:hover': { bgcolor: 'primary.dark' },
+            boxShadow: 2,
+          }}
+          size="small"
+        >
+          {isCollapsed ? <ChevronRightIcon /> : <ChevronLeftIcon />}
+        </IconButton></Box>
                                 </TableCell>
                                  </TableRow>
                                  <TableRow>
