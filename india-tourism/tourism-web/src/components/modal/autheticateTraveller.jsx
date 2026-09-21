@@ -5,6 +5,7 @@ import '../../styles/aadharAuth.css';
 import { useEffect, useState} from "react";
 import { AnonAadhaarProvider } from "@anon-aadhaar/react";
 import { LogInWithAnonAadhaar, useAnonAadhaar } from "@anon-aadhaar/react";
+import { useDeviceType } from '../admin/checkDeviceType';
 import {validateBookingData} from "../admin/utility";
 import failure_animation from '../Assets/images/failure_animation.gif';
 import { styled } from '@mui/material/styles';
@@ -52,7 +53,7 @@ const AuthenticateTraveller = ({ isOpen, onClose}) => {
 const [selectedFile, setSelectedFile] = useState(null);
   const [message, setMessage] = useState('');
    const [anonAadhaar] = useAnonAadhaar();
-   
+   const deviceType = useDeviceType();
    // Handle file selection
   const onFileChange = (event) => {
     // Access the selected file(s) using event.target.files
@@ -133,7 +134,7 @@ if (!isOpen) return null;
     wasm_url: "/aadhar_validation/aadhaar-verifier.wasm",
   }}>
     <div  className="modal-overlay">
-      <div className="modal-content">
+      <div className={deviceType === 'mobile' ? "modal-content-mobile" : "modal-content-mobile"}>
       <div>
         <h1>Upload Aadhar card for atleast one traveller</h1>
         <div>
