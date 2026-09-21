@@ -266,7 +266,7 @@ useEffect(()=>{
                       id="ageGroup" name="ageGroup"
                       label="ageGroup"
                        value={touristData.ageGroup} sx={{ borderRadius: 'inherit',
-                        backgroundColor: 'rgba(109, 101, 101, 0.53)', width:'100%'
+                        backgroundColor: 'rgba(109, 101, 101, 0.53)', width:'50%'
                         }} onChange = {updateBooking} fullWidth
                        >
                       <MenuItem value={"Minor"}>Minor</MenuItem>
@@ -283,7 +283,7 @@ useEffect(()=>{
                             style={{ color: '#0c0000ff' }} 
                             variant="outlined" >Gender</InputLabel>              
                     <Select  sx={{ borderRadius: 'inherit',
-                    backgroundColor: 'rgba(109, 101, 101, 0.53)', width:'100%' }}
+                    backgroundColor: 'rgba(109, 101, 101, 0.53)', width:'50%' }}
                      labelId="select-label"
                       id="gender" name="gender"
                       label="gender"
