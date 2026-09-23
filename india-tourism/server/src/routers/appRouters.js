@@ -18,6 +18,7 @@ const {findUser,updateProfile} = require('../controller/userprofile')
 const {checkRequestAuthenticated} = require("../middlewares/userAuth")
 const {processImage} = require("../controller/imageProcessor");
 const {confirmPackageTourCardPayment, createPaymentIntent,retrievePaymentIntent} = require("../controller/paymenthandler");
+const {validateMobile,validateAadhar} = require("../controller/eKYCValidation");
 const router = express.Router();
 
 
@@ -58,4 +59,6 @@ router.post("/confirm-packagetour-cardpayment-success",checkRequestAuthenticated
 router.post("/retrievePaymentIntent",checkRequestAuthenticated,retrievePaymentIntent);
 router.post("/getOperatorReviews",checkRequestAuthenticated,getOperatorReviews);
 router.post("/uploadIdentityDocs",checkRequestAuthenticated,uploadIdentityDocs);
+router.post("/validateAadhar",checkRequestAuthenticated,validateAadhar);
+router.post("/validateMobile",checkRequestAuthenticated,validateMobile);
 module.exports = router

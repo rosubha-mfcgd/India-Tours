@@ -27,6 +27,7 @@ const getCircularReplacer = () => {
         return value;
     };
 };
+//validates the token from keycloak
 function findjsonWebKeys() {
     return __awaiter(this, void 0, void 0, function* () {
         const config = yield axios.get(process.env.OIDC_ENDPOINT_JWKS_URL);

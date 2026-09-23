@@ -7,6 +7,8 @@ const reviewSchema = new Schema<IReviews>({
         type: Number,
       	ref: "User",
       	required: true,
+        default: 0,
+         set: v => (Number.isNaN(v) ? 0 : v) // Prevents NaN from breaking the cast
    		 },
     reviews:{
        type: String,
