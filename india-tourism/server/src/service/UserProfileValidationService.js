@@ -27,6 +27,7 @@ class UserProfileValidationService{
             let data = {"@entity":"in.co.sandbox.kyc.digilocker.user.verification.request",
                 "mobile":mobile
             }
+            console.log('data....',data)
                 let userProfileValidResponse = await axios.post(
                 kyc_validate_uri,data,{headers}
             );
@@ -47,7 +48,13 @@ class UserProfileValidationService{
                                 return false;
                             }
                         }
+                    }else{
+                         console.log('mobile is not linked to your aadhar');
+                                return false;
                     }
+            }else{
+                 console.log('mobile is not linked to your aadhar');
+                                return false;
             }
 
             }
@@ -55,7 +62,8 @@ class UserProfileValidationService{
         }catch(err){
             logNginx(err);
              console.error('Error while validating mobile:::', err.stack);
-              throw err;
+              //throw err;
+              return false;
         }
          return false;
   }
@@ -92,28 +100,38 @@ async validateAadhar(aadhaar_number)
                         {
                            if(userProfileValidResponse.data.data.user_exists)
                             {
-                                console.log('aadhaar_number is not valid');
+                                console.log('aadhaar_number is valid');
                                 return true;
                             } else{
+
+                                console.log('aadhaar number is not valid')
                                 return false;
                             }
                         }
+                    }else
+                    {
+                         console.log('aadhaar number is not valid');
+                                return false;
                     }
             }
+            else{
+                    console.log('aadhaar number is not valid');
+                                return false;
+                }
 
             }
 
         }catch(err){
             logNginx(err);
              console.error('Error while validating aadhar:::', err.stack);
-              throw err;
+              return false;
         }
          return false;
   }
 
 
 
-
+//Fetch auth token for KYC validation
  async getAuthTokenForKycValidation()
   {
     let auth_uri = process.env.KYC_AUTH_TOKEN_URI;

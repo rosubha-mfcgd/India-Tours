@@ -74,9 +74,6 @@ export const validateInitBookingData =async (bookingData) =>{
   }
 
 
-
-
-
   export const calculateTotalPages = async(dataSize,itemPerPage) =>{
     return Math.ceil(dataSize / itemPerPage);
   }

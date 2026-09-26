@@ -1,0 +1,63 @@
+{
+  "clientId": "mitram-tourism-client",
+  "name": "",
+  "description": "",
+  "rootUrl": "http://localhost:8090/api/",
+  "adminUrl": "http://localhost:8090/api/",
+  "baseUrl": "",
+  "surrogateAuthRequired": false,
+  "enabled": true,
+  "alwaysDisplayInConsole": false,
+  "clientAuthenticatorType": "client-secret",
+  "secret": "6gX95bBcOz2JSe1hHIHfSg72mxbQduVhLfZOda7Dr1iKlBu8Uc0QmmwrNzDxIhfFKPyUnLCsSTOVG926IzLzQc",
+  "redirectUris": [
+    "http://localhost:8090/api/"
+  ],
+  "webOrigins": [],
+  "notBefore": 0,
+  "bearerOnly": false,
+  "consentRequired": false,
+  "standardFlowEnabled": true,
+  "implicitFlowEnabled": false,
+  "directAccessGrantsEnabled": true,
+  "serviceAccountsEnabled": true,
+  "publicClient": false,
+  "frontchannelLogout": true,
+  "protocol": "openid-connect",
+  "attributes": {
+    "realm_client": "false",
+    "oidc.ciba.grant.enabled": "false",
+    "client.secret.creation.time": "1790214553",
+    "backchannel.logout.session.required": "true",
+    "standard.token.exchange.enabled": "true",
+    "oauth2.jwt.authorization.grant.enabled": "false",
+    "post.logout.redirect.uris": "http://localhost:8090/api/",
+    "oauth2.device.authorization.grant.enabled": "false",
+    "backchannel.logout.revoke.offline.tokens": "false",
+    "dpop.bound.access.tokens": "false"
+  },
+  "authenticationFlowBindingOverrides": {},
+  "fullScopeAllowed": true,
+  "nodeReRegistrationTimeout": -1,
+  "defaultClientScopes": [
+    "web-origins",
+    "service_account",
+    "acr",
+    "profile",
+    "roles",
+    "basic",
+    "email"
+  ],
+  "optionalClientScopes": [
+    "address",
+    "phone",
+    "organization",
+    "offline_access",
+    "microprofile-jwt"
+  ],
+  "access": {
+    "view": true,
+    "configure": true,
+    "manage": true
+  }
+}

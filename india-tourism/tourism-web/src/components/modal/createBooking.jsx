@@ -5,6 +5,7 @@ import { useEffect, useState} from "react";
 import {validateInitBookingData} from "../admin/utility";
 import { useDeviceType } from '../admin/checkDeviceType';
 import failure_animation from '../Assets/images/failure_animation.gif';
+import {validateMobile,validateAadhar } from "../admin/admin";
 import { styled } from '@mui/material/styles';
 import {
     TextField,
@@ -42,15 +43,19 @@ const CreateBooking = ({ isOpen, onClose,prepareBookingData,bookingData }) => {
     name: '',
     email: '',
     mobile: '',
+    aadhar: '',
     ageGroup: '',
     gender: ''
   });
  const[displayErrorDialog,setDisplayErrorDialog] = useState(false);
  // 1. Manage the collapsed state
   const [isCollapsed, setIsCollapsed] = useState(false);
-    
+ const [showAadhar,setShowAadhar] = useState(false);   
  const[errorMessage,setErrorMessage] = useState('');
  const [dialogOpen, setDialogOpen] = useState(false);
+
+
+
  const deviceType = useDeviceType();
  const touristNo = bookingData.length+1;
  //Update the booking payload with fields for each tourist
@@ -94,8 +99,53 @@ const CreateBooking = ({ isOpen, onClose,prepareBookingData,bookingData }) => {
                   return errMsg;
                 }
                 else{
-                  return null;
-                }            
+                    let req_mobile_data = {"mobile":touristData.mobile};
+                    console.log('request data...',req_mobile_data);
+
+                    let isMobileValid = await validateMobile(req_mobile_data);
+                    let isAadharValid = false;
+                    if(showAadhar)
+                    {
+                       let req_aadhar_data = {"aadhaar_number":touristData.aadhar};
+                       console.log('request data...',req_aadhar_data);
+                        isAadharValid = await validateAadhar(req_aadhar_data); 
+                    }
+                    if(isMobileValid)
+                    {
+                      console.log('is Mobile Valid...',isMobileValid);
+                      let user_exists = isMobileValid.userExists;
+                      if(!user_exists)
+                      {
+                          console.log('Cannot validate by mobile');
+                          errMsg = 'This mobile number cannot be verified. You can also opt for aadhar verification';
+                          setShowAadhar(true);
+                          return errMsg;
+                      }else{
+                        console.log('Mobile number '+touristData.mobile+ 'is linked to Aadhar and valid');
+                          return null;
+                      }
+                    }else {
+
+                      if(showAadhar && isAadharValid)
+                      {                   
+                          console.log('is Aadhar Valid...',isAadharValid);
+                          let user_exists = isAadharValid.userExists;
+                          
+                          if(!user_exists)
+                            {
+                                console.log('Cannot validate by aadhar');
+                                errMsg = 'You cannot be validated by your Aadhar number.';
+                                setShowAadhar(true);
+                                return errMsg;
+                            }
+                          
+                      }else{
+                      errMsg = 'Invalid mobile Number and Aadhar number provided';
+                        return errMsg;
+                      }
+                      }
+               }
+                             
     }
 
 //This function will add tourist bookings
@@ -111,23 +161,19 @@ const addTourist = async() =>{
             setDialogOpen(true);
             
           }else{
-        prepareBookingData(touristData);
-        if(touristData && touristData.length>0)
-        {
+             prepareBookingData(touristData);
+          if(touristData && touristData.length>0)
+          {
             
             console.log('bookingdata...',touristData);
             
-        }
+          }
       }
     }
 }
-
-
-
-
 useEffect(()=>{
    
-    setTouristData({ name: '', email: '', mobile: '', ageGroup: '',gender: ''})
+    setTouristData({ name: '', email: '', mobile: '',aadhar: '', ageGroup: '',gender: ''})
 },[touristNo])
 
   if (!isOpen) return null;
@@ -255,6 +301,25 @@ useEffect(()=>{
         </IconButton></Box>
                                 </TableCell>
                                  </TableRow>
+                                 {showAadhar &&  (<TableRow><TableCell>
+                               <FormControl style={{ marginLeft: 5 }}>
+                               
+                            <InputLabel 
+                            style={{ color: '#0c0000ff' }} 
+                            variant="outlined">Aadhar Number</InputLabel>
+                            <OutlinedInput id="aadhar" name="aadhar" 
+                            value={touristData.aadhar}  inputProps={{
+                             maxLength: 10,
+                               }}  sx={{
+                              backgroundColor: 'rgba(109, 101, 101, 0.53)' ,
+                             borderRadius: 50, // Fully rounded (pill shape)
+                             width: '500px'
+                              }}
+                              onChange = {updateBooking}
+                               />
+                                </FormControl>
+                                </TableCell>
+                                </TableRow>)}
                                  <TableRow>
                                     <TableCell>
                   <FormControl  variant="outlined" sx={{ borderRadius: '20px' }} fullWidth> 

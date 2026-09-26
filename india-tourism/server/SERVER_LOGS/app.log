@@ -1,5 +1,5 @@
 
-Sun Sep 20 2026 21:40:25 GMT-0400 (Eastern Daylight Saving Time): CastError: Cast to Number failed for value "NaN" (type number) at path "tourOperatorId" for model "Reviews"
+Fri Sep 25 2026 21:35:37 GMT-0400 (Eastern Daylight Saving Time): CastError: Cast to Number failed for value "NaN" (type number) at path "tourOperatorId" for model "Reviews"
     at SchemaNumber.cast (C:\Users\royco\India-tourism-App\India-Tours\india-tourism\server\node_modules\mongoose\lib\schema\number.js:381:11)
     at SchemaType.applySetters (C:\Users\royco\India-tourism-App\India-Tours\india-tourism\server\node_modules\mongoose\lib\schemaType.js:1255:12)
     at SchemaNumber.castForQuery (C:\Users\royco\India-tourism-App\India-Tours\india-tourism\server\node_modules\mongoose\lib\schema\number.js:435:16)
@@ -10,210 +10,8 @@ Sun Sep 20 2026 21:40:25 GMT-0400 (Eastern Daylight Saving Time): CastError: Cas
     at model.Query.exec (C:\Users\royco\India-tourism-App\India-Tours\india-tourism\server\node_modules\mongoose\lib\query.js:4456:80)
     at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
     at async getOperatorReviews (C:\Users\royco\India-tourism-App\India-Tours\india-tourism\server\src\controller\tourManagers.js:56:27)
-Sun Sep 20 2026 21:41:28 GMT-0400 (Eastern Daylight Saving Time): CastError: Cast to Number failed for value "NaN" (type number) at path "tourOperatorId" for model "Reviews"
-    at SchemaNumber.cast (C:\Users\royco\India-tourism-App\India-Tours\india-tourism\server\node_modules\mongoose\lib\schema\number.js:381:11)
-    at SchemaType.applySetters (C:\Users\royco\India-tourism-App\India-Tours\india-tourism\server\node_modules\mongoose\lib\schemaType.js:1255:12)
-    at SchemaNumber.castForQuery (C:\Users\royco\India-tourism-App\India-Tours\india-tourism\server\node_modules\mongoose\lib\schema\number.js:435:16)
-    at cast (C:\Users\royco\India-tourism-App\India-Tours\india-tourism\server\node_modules\mongoose\lib\cast.js:390:32)
-    at Query.cast (C:\Users\royco\India-tourism-App\India-Tours\india-tourism\server\node_modules\mongoose\lib\query.js:4907:12)
-    at Query._castConditions (C:\Users\royco\India-tourism-App\India-Tours\india-tourism\server\node_modules\mongoose\lib\query.js:2325:10)
-    at model.Query._find (C:\Users\royco\India-tourism-App\India-Tours\india-tourism\server\node_modules\mongoose\lib\query.js:2352:8)
-    at model.Query.exec (C:\Users\royco\India-tourism-App\India-Tours\india-tourism\server\node_modules\mongoose\lib\query.js:4456:80)
-    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
-    at async getOperatorReviews (C:\Users\royco\India-tourism-App\India-Tours\india-tourism\server\src\controller\tourManagers.js:56:27)
-Sun Sep 20 2026 21:43:09 GMT-0400 (Eastern Daylight Saving Time): CastError: Cast to Number failed for value "NaN" (type number) at path "tourOperatorId" for model "Reviews"
-    at SchemaNumber.cast (C:\Users\royco\India-tourism-App\India-Tours\india-tourism\server\node_modules\mongoose\lib\schema\number.js:381:11)
-    at SchemaType.applySetters (C:\Users\royco\India-tourism-App\India-Tours\india-tourism\server\node_modules\mongoose\lib\schemaType.js:1255:12)
-    at SchemaNumber.castForQuery (C:\Users\royco\India-tourism-App\India-Tours\india-tourism\server\node_modules\mongoose\lib\schema\number.js:435:16)
-    at cast (C:\Users\royco\India-tourism-App\India-Tours\india-tourism\server\node_modules\mongoose\lib\cast.js:390:32)
-    at Query.cast (C:\Users\royco\India-tourism-App\India-Tours\india-tourism\server\node_modules\mongoose\lib\query.js:4907:12)
-    at Query._castConditions (C:\Users\royco\India-tourism-App\India-Tours\india-tourism\server\node_modules\mongoose\lib\query.js:2325:10)
-    at model.Query._find (C:\Users\royco\India-tourism-App\India-Tours\india-tourism\server\node_modules\mongoose\lib\query.js:2352:8)
-    at model.Query.exec (C:\Users\royco\India-tourism-App\India-Tours\india-tourism\server\node_modules\mongoose\lib\query.js:4456:80)
-    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
-    at async getOperatorReviews (C:\Users\royco\India-tourism-App\India-Tours\india-tourism\server\src\controller\tourManagers.js:56:27)
-Sun Sep 20 2026 22:34:59 GMT-0400 (Eastern Daylight Saving Time): CastError: Cast to Number failed for value "NaN" (type number) at path "tourOperatorId" for model "Reviews"
-    at SchemaNumber.cast (C:\Users\royco\India-tourism-App\India-Tours\india-tourism\server\node_modules\mongoose\lib\schema\number.js:381:11)
-    at SchemaType.applySetters (C:\Users\royco\India-tourism-App\India-Tours\india-tourism\server\node_modules\mongoose\lib\schemaType.js:1255:12)
-    at SchemaNumber.castForQuery (C:\Users\royco\India-tourism-App\India-Tours\india-tourism\server\node_modules\mongoose\lib\schema\number.js:435:16)
-    at cast (C:\Users\royco\India-tourism-App\India-Tours\india-tourism\server\node_modules\mongoose\lib\cast.js:390:32)
-    at Query.cast (C:\Users\royco\India-tourism-App\India-Tours\india-tourism\server\node_modules\mongoose\lib\query.js:4907:12)
-    at Query._castConditions (C:\Users\royco\India-tourism-App\India-Tours\india-tourism\server\node_modules\mongoose\lib\query.js:2325:10)
-    at model.Query._find (C:\Users\royco\India-tourism-App\India-Tours\india-tourism\server\node_modules\mongoose\lib\query.js:2352:8)
-    at model.Query.exec (C:\Users\royco\India-tourism-App\India-Tours\india-tourism\server\node_modules\mongoose\lib\query.js:4456:80)
-    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
-    at async getOperatorReviews (C:\Users\royco\India-tourism-App\India-Tours\india-tourism\server\src\controller\tourManagers.js:56:27)
-Sun Sep 20 2026 22:36:23 GMT-0400 (Eastern Daylight Saving Time): CastError: Cast to Number failed for value "NaN" (type number) at path "tourOperatorId" for model "Reviews"
-    at SchemaNumber.cast (C:\Users\royco\India-tourism-App\India-Tours\india-tourism\server\node_modules\mongoose\lib\schema\number.js:381:11)
-    at SchemaType.applySetters (C:\Users\royco\India-tourism-App\India-Tours\india-tourism\server\node_modules\mongoose\lib\schemaType.js:1255:12)
-    at SchemaNumber.castForQuery (C:\Users\royco\India-tourism-App\India-Tours\india-tourism\server\node_modules\mongoose\lib\schema\number.js:435:16)
-    at cast (C:\Users\royco\India-tourism-App\India-Tours\india-tourism\server\node_modules\mongoose\lib\cast.js:390:32)
-    at Query.cast (C:\Users\royco\India-tourism-App\India-Tours\india-tourism\server\node_modules\mongoose\lib\query.js:4907:12)
-    at Query._castConditions (C:\Users\royco\India-tourism-App\India-Tours\india-tourism\server\node_modules\mongoose\lib\query.js:2325:10)
-    at model.Query._find (C:\Users\royco\India-tourism-App\India-Tours\india-tourism\server\node_modules\mongoose\lib\query.js:2352:8)
-    at model.Query.exec (C:\Users\royco\India-tourism-App\India-Tours\india-tourism\server\node_modules\mongoose\lib\query.js:4456:80)
-    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
-    at async getOperatorReviews (C:\Users\royco\India-tourism-App\India-Tours\india-tourism\server\src\controller\tourManagers.js:56:27)
-Sun Sep 20 2026 23:35:54 GMT-0400 (Eastern Daylight Saving Time): CastError: Cast to Number failed for value "NaN" (type number) at path "tourOperatorId" for model "Reviews"
-    at SchemaNumber.cast (C:\Users\royco\India-tourism-App\India-Tours\india-tourism\server\node_modules\mongoose\lib\schema\number.js:381:11)
-    at SchemaType.applySetters (C:\Users\royco\India-tourism-App\India-Tours\india-tourism\server\node_modules\mongoose\lib\schemaType.js:1255:12)
-    at SchemaNumber.castForQuery (C:\Users\royco\India-tourism-App\India-Tours\india-tourism\server\node_modules\mongoose\lib\schema\number.js:435:16)
-    at cast (C:\Users\royco\India-tourism-App\India-Tours\india-tourism\server\node_modules\mongoose\lib\cast.js:390:32)
-    at Query.cast (C:\Users\royco\India-tourism-App\India-Tours\india-tourism\server\node_modules\mongoose\lib\query.js:4907:12)
-    at Query._castConditions (C:\Users\royco\India-tourism-App\India-Tours\india-tourism\server\node_modules\mongoose\lib\query.js:2325:10)
-    at model.Query._find (C:\Users\royco\India-tourism-App\India-Tours\india-tourism\server\node_modules\mongoose\lib\query.js:2352:8)
-    at model.Query.exec (C:\Users\royco\India-tourism-App\India-Tours\india-tourism\server\node_modules\mongoose\lib\query.js:4456:80)
-    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
-    at async getOperatorReviews (C:\Users\royco\India-tourism-App\India-Tours\india-tourism\server\src\controller\tourManagers.js:56:27)
-Mon Sep 21 2026 19:50:25 GMT-0400 (Eastern Daylight Saving Time): CastError: Cast to Number failed for value "NaN" (type number) at path "tourOperatorId" for model "Reviews"
-    at SchemaNumber.cast (C:\Users\royco\India-tourism-App\India-Tours\india-tourism\server\node_modules\mongoose\lib\schema\number.js:381:11)
-    at SchemaType.applySetters (C:\Users\royco\India-tourism-App\India-Tours\india-tourism\server\node_modules\mongoose\lib\schemaType.js:1255:12)
-    at SchemaNumber.castForQuery (C:\Users\royco\India-tourism-App\India-Tours\india-tourism\server\node_modules\mongoose\lib\schema\number.js:435:16)
-    at cast (C:\Users\royco\India-tourism-App\India-Tours\india-tourism\server\node_modules\mongoose\lib\cast.js:390:32)
-    at Query.cast (C:\Users\royco\India-tourism-App\India-Tours\india-tourism\server\node_modules\mongoose\lib\query.js:4907:12)
-    at Query._castConditions (C:\Users\royco\India-tourism-App\India-Tours\india-tourism\server\node_modules\mongoose\lib\query.js:2325:10)
-    at model.Query._find (C:\Users\royco\India-tourism-App\India-Tours\india-tourism\server\node_modules\mongoose\lib\query.js:2352:8)
-    at model.Query.exec (C:\Users\royco\India-tourism-App\India-Tours\india-tourism\server\node_modules\mongoose\lib\query.js:4456:80)
-    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
-    at async getOperatorReviews (C:\Users\royco\India-tourism-App\India-Tours\india-tourism\server\src\controller\tourManagers.js:56:27)
-Tue Sep 22 2026 22:29:57 GMT-0400 (Eastern Daylight Saving Time): TypeError: Cannot destructure property 'mobile' of 'req.body' as it is undefined.
-    at validateMobile (C:\Users\royco\India-tourism-App\India-Tours\india-tourism\server\src\controller\eKYCValidation.js:9:12)
-    at Layer.handleRequest (C:\Users\royco\India-tourism-App\India-Tours\india-tourism\server\node_modules\router\lib\layer.js:152:17)
-    at next (C:\Users\royco\India-tourism-App\India-Tours\india-tourism\server\node_modules\router\lib\route.js:157:13)
-    at C:\Users\royco\India-tourism-App\India-Tours\india-tourism\server\src\middlewares\userAuth.js:88:13
-    at C:\Users\royco\India-tourism-App\India-Tours\india-tourism\server\src\middlewares\userAuth.js:112:16
-    at C:\Users\royco\India-tourism-App\India-Tours\india-tourism\server\node_modules\jsonwebtoken\verify.js:261:12
-    at getSecret (C:\Users\royco\India-tourism-App\India-Tours\india-tourism\server\node_modules\jsonwebtoken\verify.js:97:14)
-    at module.exports [as verify] (C:\Users\royco\India-tourism-App\India-Tours\india-tourism\server\node_modules\jsonwebtoken\verify.js:101:10)
-    at verifyJsonWebTokenSignature (C:\Users\royco\India-tourism-App\India-Tours\india-tourism\server\src\middlewares\userAuth.js:111:18)
-    at validateToken (C:\Users\royco\India-tourism-App\India-Tours\india-tourism\server\src\middlewares\userAuth.js:78:5)
-Tue Sep 22 2026 22:31:11 GMT-0400 (Eastern Daylight Saving Time): TypeError: UserProfileValidationService is not a constructor
-    at validateMobile (C:\Users\royco\India-tourism-App\India-Tours\india-tourism\server\src\controller\eKYCValidation.js:11:43)
-    at Layer.handleRequest (C:\Users\royco\India-tourism-App\India-Tours\india-tourism\server\node_modules\router\lib\layer.js:152:17)
-    at next (C:\Users\royco\India-tourism-App\India-Tours\india-tourism\server\node_modules\router\lib\route.js:157:13)
-    at C:\Users\royco\India-tourism-App\India-Tours\india-tourism\server\src\middlewares\userAuth.js:88:13
-    at C:\Users\royco\India-tourism-App\India-Tours\india-tourism\server\src\middlewares\userAuth.js:112:16
-    at C:\Users\royco\India-tourism-App\India-Tours\india-tourism\server\node_modules\jsonwebtoken\verify.js:261:12
-    at getSecret (C:\Users\royco\India-tourism-App\India-Tours\india-tourism\server\node_modules\jsonwebtoken\verify.js:97:14)
-    at module.exports [as verify] (C:\Users\royco\India-tourism-App\India-Tours\india-tourism\server\node_modules\jsonwebtoken\verify.js:101:10)
-    at verifyJsonWebTokenSignature (C:\Users\royco\India-tourism-App\India-Tours\india-tourism\server\src\middlewares\userAuth.js:111:18)
-    at validateToken (C:\Users\royco\India-tourism-App\India-Tours\india-tourism\server\src\middlewares\userAuth.js:78:5)
-Tue Sep 22 2026 22:35:18 GMT-0400 (Eastern Daylight Saving Time): TokenExpiredError: jwt expired
-    at C:\Users\royco\India-tourism-App\India-Tours\india-tourism\server\node_modules\jsonwebtoken\verify.js:190:21
-    at getSecret (C:\Users\royco\India-tourism-App\India-Tours\india-tourism\server\node_modules\jsonwebtoken\verify.js:97:14)
-    at module.exports [as verify] (C:\Users\royco\India-tourism-App\India-Tours\india-tourism\server\node_modules\jsonwebtoken\verify.js:101:10)
-    at verifyJsonWebTokenSignature (C:\Users\royco\India-tourism-App\India-Tours\india-tourism\server\src\middlewares\userAuth.js:111:18)
-    at validateToken (C:\Users\royco\India-tourism-App\India-Tours\india-tourism\server\src\middlewares\userAuth.js:78:5)
-    at checkRequestAuthenticated (C:\Users\royco\India-tourism-App\India-Tours\india-tourism\server\src\middlewares\userAuth.js:71:9)
-    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
-Tue Sep 22 2026 22:36:37 GMT-0400 (Eastern Daylight Saving Time): TypeError: UserProfileValidationService is not a constructor
-    at validateMobile (C:\Users\royco\India-tourism-App\India-Tours\india-tourism\server\src\controller\eKYCValidation.js:11:43)
-    at Layer.handleRequest (C:\Users\royco\India-tourism-App\India-Tours\india-tourism\server\node_modules\router\lib\layer.js:152:17)
-    at next (C:\Users\royco\India-tourism-App\India-Tours\india-tourism\server\node_modules\router\lib\route.js:157:13)
-    at C:\Users\royco\India-tourism-App\India-Tours\india-tourism\server\src\middlewares\userAuth.js:88:13
-    at C:\Users\royco\India-tourism-App\India-Tours\india-tourism\server\src\middlewares\userAuth.js:112:16
-    at C:\Users\royco\India-tourism-App\India-Tours\india-tourism\server\node_modules\jsonwebtoken\verify.js:261:12
-    at getSecret (C:\Users\royco\India-tourism-App\India-Tours\india-tourism\server\node_modules\jsonwebtoken\verify.js:97:14)
-    at module.exports [as verify] (C:\Users\royco\India-tourism-App\India-Tours\india-tourism\server\node_modules\jsonwebtoken\verify.js:101:10)
-    at verifyJsonWebTokenSignature (C:\Users\royco\India-tourism-App\India-Tours\india-tourism\server\src\middlewares\userAuth.js:111:18)
-    at validateToken (C:\Users\royco\India-tourism-App\India-Tours\india-tourism\server\src\middlewares\userAuth.js:78:5)
-Tue Sep 22 2026 22:43:09 GMT-0400 (Eastern Daylight Saving Time): TokenExpiredError: jwt expired
-    at C:\Users\royco\India-tourism-App\India-Tours\india-tourism\server\node_modules\jsonwebtoken\verify.js:190:21
-    at getSecret (C:\Users\royco\India-tourism-App\India-Tours\india-tourism\server\node_modules\jsonwebtoken\verify.js:97:14)
-    at module.exports [as verify] (C:\Users\royco\India-tourism-App\India-Tours\india-tourism\server\node_modules\jsonwebtoken\verify.js:101:10)
-    at verifyJsonWebTokenSignature (C:\Users\royco\India-tourism-App\India-Tours\india-tourism\server\src\middlewares\userAuth.js:111:18)
-    at validateToken (C:\Users\royco\India-tourism-App\India-Tours\india-tourism\server\src\middlewares\userAuth.js:78:5)
-    at checkRequestAuthenticated (C:\Users\royco\India-tourism-App\India-Tours\india-tourism\server\src\middlewares\userAuth.js:71:9)
-    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
-Tue Sep 22 2026 22:43:54 GMT-0400 (Eastern Daylight Saving Time): TokenExpiredError: jwt expired
-    at C:\Users\royco\India-tourism-App\India-Tours\india-tourism\server\node_modules\jsonwebtoken\verify.js:190:21
-    at getSecret (C:\Users\royco\India-tourism-App\India-Tours\india-tourism\server\node_modules\jsonwebtoken\verify.js:97:14)
-    at module.exports [as verify] (C:\Users\royco\India-tourism-App\India-Tours\india-tourism\server\node_modules\jsonwebtoken\verify.js:101:10)
-    at verifyJsonWebTokenSignature (C:\Users\royco\India-tourism-App\India-Tours\india-tourism\server\src\middlewares\userAuth.js:111:18)
-    at validateToken (C:\Users\royco\India-tourism-App\India-Tours\india-tourism\server\src\middlewares\userAuth.js:78:5)
-    at checkRequestAuthenticated (C:\Users\royco\India-tourism-App\India-Tours\india-tourism\server\src\middlewares\userAuth.js:71:9)
-    at Layer.handleRequest (C:\Users\royco\India-tourism-App\India-Tours\india-tourism\server\node_modules\router\lib\layer.js:152:17)
-    at next (C:\Users\royco\India-tourism-App\India-Tours\india-tourism\server\node_modules\router\lib\route.js:157:13)
-    at Route.dispatch (C:\Users\royco\India-tourism-App\India-Tours\india-tourism\server\node_modules\router\lib\route.js:117:3)
-    at handle (C:\Users\royco\India-tourism-App\India-Tours\india-tourism\server\node_modules\router\index.js:435:11)
-Tue Sep 22 2026 22:44:06 GMT-0400 (Eastern Daylight Saving Time): TokenExpiredError: jwt expired
-    at C:\Users\royco\India-tourism-App\India-Tours\india-tourism\server\node_modules\jsonwebtoken\verify.js:190:21
-    at getSecret (C:\Users\royco\India-tourism-App\India-Tours\india-tourism\server\node_modules\jsonwebtoken\verify.js:97:14)
-    at module.exports [as verify] (C:\Users\royco\India-tourism-App\India-Tours\india-tourism\server\node_modules\jsonwebtoken\verify.js:101:10)
-    at verifyJsonWebTokenSignature (C:\Users\royco\India-tourism-App\India-Tours\india-tourism\server\src\middlewares\userAuth.js:111:18)
-    at validateToken (C:\Users\royco\India-tourism-App\India-Tours\india-tourism\server\src\middlewares\userAuth.js:78:5)
-    at checkRequestAuthenticated (C:\Users\royco\India-tourism-App\India-Tours\india-tourism\server\src\middlewares\userAuth.js:71:9)
-    at Layer.handleRequest (C:\Users\royco\India-tourism-App\India-Tours\india-tourism\server\node_modules\router\lib\layer.js:152:17)
-    at next (C:\Users\royco\India-tourism-App\India-Tours\india-tourism\server\node_modules\router\lib\route.js:157:13)
-    at Route.dispatch (C:\Users\royco\India-tourism-App\India-Tours\india-tourism\server\node_modules\router\lib\route.js:117:3)
-    at handle (C:\Users\royco\India-tourism-App\India-Tours\india-tourism\server\node_modules\router\index.js:435:11)
-Tue Sep 22 2026 22:44:53 GMT-0400 (Eastern Daylight Saving Time): ReferenceError: getAuthTokenForKycValidation is not defined
-Tue Sep 22 2026 22:44:53 GMT-0400 (Eastern Daylight Saving Time): ReferenceError: getAuthTokenForKycValidation is not defined
-    at UserProfileValidationService.validatePhoneNumber (C:\Users\royco\India-tourism-App\India-Tours\india-tourism\server\src\service\UserProfileValidationService.js:14:30)
-    at validateMobile (C:\Users\royco\India-tourism-App\India-Tours\india-tourism\server\src\controller\eKYCValidation.js:12:57)
-    at Layer.handleRequest (C:\Users\royco\India-tourism-App\India-Tours\india-tourism\server\node_modules\router\lib\layer.js:152:17)
-    at next (C:\Users\royco\India-tourism-App\India-Tours\india-tourism\server\node_modules\router\lib\route.js:157:13)
-    at C:\Users\royco\India-tourism-App\India-Tours\india-tourism\server\src\middlewares\userAuth.js:88:13
-    at C:\Users\royco\India-tourism-App\India-Tours\india-tourism\server\src\middlewares\userAuth.js:112:16
-    at C:\Users\royco\India-tourism-App\India-Tours\india-tourism\server\node_modules\jsonwebtoken\verify.js:261:12
-    at getSecret (C:\Users\royco\India-tourism-App\India-Tours\india-tourism\server\node_modules\jsonwebtoken\verify.js:97:14)
-    at module.exports [as verify] (C:\Users\royco\India-tourism-App\India-Tours\india-tourism\server\node_modules\jsonwebtoken\verify.js:101:10)
-    at verifyJsonWebTokenSignature (C:\Users\royco\India-tourism-App\India-Tours\india-tourism\server\src\middlewares\userAuth.js:111:18)
-Tue Sep 22 2026 22:50:06 GMT-0400 (Eastern Daylight Saving Time): ReferenceError: getAuthTokenForKycValidation is not defined
-Tue Sep 22 2026 22:50:06 GMT-0400 (Eastern Daylight Saving Time): ReferenceError: getAuthTokenForKycValidation is not defined
-    at UserProfileValidationService.validatePhoneNumber (C:\Users\royco\India-tourism-App\India-Tours\india-tourism\server\src\service\UserProfileValidationService.js:14:30)
-    at validateMobile (C:\Users\royco\India-tourism-App\India-Tours\india-tourism\server\src\controller\eKYCValidation.js:12:57)
-    at Layer.handleRequest (C:\Users\royco\India-tourism-App\India-Tours\india-tourism\server\node_modules\router\lib\layer.js:152:17)
-    at next (C:\Users\royco\India-tourism-App\India-Tours\india-tourism\server\node_modules\router\lib\route.js:157:13)
-    at C:\Users\royco\India-tourism-App\India-Tours\india-tourism\server\src\middlewares\userAuth.js:88:13
-    at C:\Users\royco\India-tourism-App\India-Tours\india-tourism\server\src\middlewares\userAuth.js:112:16
-    at C:\Users\royco\India-tourism-App\India-Tours\india-tourism\server\node_modules\jsonwebtoken\verify.js:261:12
-    at getSecret (C:\Users\royco\India-tourism-App\India-Tours\india-tourism\server\node_modules\jsonwebtoken\verify.js:97:14)
-    at module.exports [as verify] (C:\Users\royco\India-tourism-App\India-Tours\india-tourism\server\node_modules\jsonwebtoken\verify.js:101:10)
-    at verifyJsonWebTokenSignature (C:\Users\royco\India-tourism-App\India-Tours\india-tourism\server\src\middlewares\userAuth.js:111:18)
-Tue Sep 22 2026 22:51:38 GMT-0400 (Eastern Daylight Saving Time): ReferenceError: getAuthTokenForKycValidation is not defined
-Tue Sep 22 2026 22:51:38 GMT-0400 (Eastern Daylight Saving Time): ReferenceError: getAuthTokenForKycValidation is not defined
-    at UserProfileValidationService.validatePhoneNumber (C:\Users\royco\India-tourism-App\India-Tours\india-tourism\server\src\service\UserProfileValidationService.js:14:30)
-    at validateMobile (C:\Users\royco\India-tourism-App\India-Tours\india-tourism\server\src\controller\eKYCValidation.js:12:57)
-    at Layer.handleRequest (C:\Users\royco\India-tourism-App\India-Tours\india-tourism\server\node_modules\router\lib\layer.js:152:17)
-    at next (C:\Users\royco\India-tourism-App\India-Tours\india-tourism\server\node_modules\router\lib\route.js:157:13)
-    at C:\Users\royco\India-tourism-App\India-Tours\india-tourism\server\src\middlewares\userAuth.js:88:13
-    at C:\Users\royco\India-tourism-App\India-Tours\india-tourism\server\src\middlewares\userAuth.js:112:16
-    at C:\Users\royco\India-tourism-App\India-Tours\india-tourism\server\node_modules\jsonwebtoken\verify.js:261:12
-    at getSecret (C:\Users\royco\India-tourism-App\India-Tours\india-tourism\server\node_modules\jsonwebtoken\verify.js:97:14)
-    at module.exports [as verify] (C:\Users\royco\India-tourism-App\India-Tours\india-tourism\server\node_modules\jsonwebtoken\verify.js:101:10)
-    at verifyJsonWebTokenSignature (C:\Users\royco\India-tourism-App\India-Tours\india-tourism\server\src\middlewares\userAuth.js:111:18)
-Tue Sep 22 2026 23:29:29 GMT-0400 (Eastern Daylight Saving Time): ReferenceError: x_api_key is not defined
-Tue Sep 22 2026 23:29:29 GMT-0400 (Eastern Daylight Saving Time): ReferenceError: x_api_key is not defined
-    at UserProfileValidationService.validatePhoneNumber (C:\Users\royco\India-tourism-App\India-Tours\india-tourism\server\src\service\UserProfileValidationService.js:21:31)
-    at validateMobile (C:\Users\royco\India-tourism-App\India-Tours\india-tourism\server\src\controller\eKYCValidation.js:12:57)
-    at Layer.handleRequest (C:\Users\royco\India-tourism-App\India-Tours\india-tourism\server\node_modules\router\lib\layer.js:152:17)
-    at next (C:\Users\royco\India-tourism-App\India-Tours\india-tourism\server\node_modules\router\lib\route.js:157:13)
-    at C:\Users\royco\India-tourism-App\India-Tours\india-tourism\server\src\middlewares\userAuth.js:88:13
-    at C:\Users\royco\India-tourism-App\India-Tours\india-tourism\server\src\middlewares\userAuth.js:112:16
-    at C:\Users\royco\India-tourism-App\India-Tours\india-tourism\server\node_modules\jsonwebtoken\verify.js:261:12
-    at getSecret (C:\Users\royco\India-tourism-App\India-Tours\india-tourism\server\node_modules\jsonwebtoken\verify.js:97:14)
-    at module.exports [as verify] (C:\Users\royco\India-tourism-App\India-Tours\india-tourism\server\node_modules\jsonwebtoken\verify.js:101:10)
-    at verifyJsonWebTokenSignature (C:\Users\royco\India-tourism-App\India-Tours\india-tourism\server\src\middlewares\userAuth.js:111:18)
-Tue Sep 22 2026 23:29:30 GMT-0400 (Eastern Daylight Saving Time): AxiosError: Request failed with status code 400
-Tue Sep 22 2026 23:31:13 GMT-0400 (Eastern Daylight Saving Time): ReferenceError: x_api_key is not defined
-Tue Sep 22 2026 23:31:13 GMT-0400 (Eastern Daylight Saving Time): ReferenceError: x_api_key is not defined
-    at UserProfileValidationService.validatePhoneNumber (C:\Users\royco\India-tourism-App\India-Tours\india-tourism\server\src\service\UserProfileValidationService.js:21:31)
-    at validateMobile (C:\Users\royco\India-tourism-App\India-Tours\india-tourism\server\src\controller\eKYCValidation.js:12:57)
-    at Layer.handleRequest (C:\Users\royco\India-tourism-App\India-Tours\india-tourism\server\node_modules\router\lib\layer.js:152:17)
-    at next (C:\Users\royco\India-tourism-App\India-Tours\india-tourism\server\node_modules\router\lib\route.js:157:13)
-    at C:\Users\royco\India-tourism-App\India-Tours\india-tourism\server\src\middlewares\userAuth.js:88:13
-    at C:\Users\royco\India-tourism-App\India-Tours\india-tourism\server\src\middlewares\userAuth.js:112:16
-    at C:\Users\royco\India-tourism-App\India-Tours\india-tourism\server\node_modules\jsonwebtoken\verify.js:261:12
-    at getSecret (C:\Users\royco\India-tourism-App\India-Tours\india-tourism\server\node_modules\jsonwebtoken\verify.js:97:14)
-    at module.exports [as verify] (C:\Users\royco\India-tourism-App\India-Tours\india-tourism\server\node_modules\jsonwebtoken\verify.js:101:10)
-    at verifyJsonWebTokenSignature (C:\Users\royco\India-tourism-App\India-Tours\india-tourism\server\src\middlewares\userAuth.js:111:18)
-Tue Sep 22 2026 23:31:14 GMT-0400 (Eastern Daylight Saving Time): AxiosError: Request failed with status code 400
-Tue Sep 22 2026 23:35:48 GMT-0400 (Eastern Daylight Saving Time): AxiosError: Request failed with status code 400
-Tue Sep 22 2026 23:37:14 GMT-0400 (Eastern Daylight Saving Time): AxiosError: Request failed with status code 400
-Tue Sep 22 2026 23:41:00 GMT-0400 (Eastern Daylight Saving Time): AxiosError: Request failed with status code 400
-Tue Sep 22 2026 23:48:18 GMT-0400 (Eastern Daylight Saving Time): AxiosError: Request failed with status code 403
-Tue Sep 22 2026 23:48:18 GMT-0400 (Eastern Daylight Saving Time): AxiosError: Request failed with status code 403
+Fri Sep 25 2026 22:13:27 GMT-0400 (Eastern Daylight Saving Time): AxiosError: Request failed with status code 404
+Fri Sep 25 2026 22:13:27 GMT-0400 (Eastern Daylight Saving Time): AxiosError: Request failed with status code 404
     at settle (C:\Users\royco\India-tourism-App\India-Tours\india-tourism\server\node_modules\axios\dist\node\axios.cjs:2031:12)
     at Unzip.handleStreamEnd (C:\Users\royco\India-tourism-App\India-Tours\india-tourism\server\node_modules\axios\dist\node\axios.cjs:3148:11)
     at Unzip.emit (node:events:530:35)
@@ -223,8 +21,8 @@ Tue Sep 22 2026 23:48:18 GMT-0400 (Eastern Daylight Saving Time): AxiosError: Re
     at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
     at async UserProfileValidationService.validatePhoneNumber (C:\Users\royco\India-tourism-App\India-Tours\india-tourism\server\src\service\UserProfileValidationService.js:30:48)
     at async validateMobile (C:\Users\royco\India-tourism-App\India-Tours\india-tourism\server\src\controller\eKYCValidation.js:12:22)
-Tue Sep 22 2026 23:53:18 GMT-0400 (Eastern Daylight Saving Time): AxiosError: Request failed with status code 403
-Tue Sep 22 2026 23:53:18 GMT-0400 (Eastern Daylight Saving Time): AxiosError: Request failed with status code 403
+Fri Sep 25 2026 22:20:19 GMT-0400 (Eastern Daylight Saving Time): AxiosError: Request failed with status code 404
+Fri Sep 25 2026 22:20:19 GMT-0400 (Eastern Daylight Saving Time): AxiosError: Request failed with status code 404
     at settle (C:\Users\royco\India-tourism-App\India-Tours\india-tourism\server\node_modules\axios\dist\node\axios.cjs:2031:12)
     at Unzip.handleStreamEnd (C:\Users\royco\India-tourism-App\India-Tours\india-tourism\server\node_modules\axios\dist\node\axios.cjs:3148:11)
     at Unzip.emit (node:events:530:35)
@@ -232,10 +30,10 @@ Tue Sep 22 2026 23:53:18 GMT-0400 (Eastern Daylight Saving Time): AxiosError: Re
     at process.processTicksAndRejections (node:internal/process/task_queues:90:21)
     at Axios.request (C:\Users\royco\India-tourism-App\India-Tours\india-tourism\server\node_modules\axios\dist\node\axios.cjs:4258:41)
     at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
-    at async UserProfileValidationService.validatePhoneNumber (C:\Users\royco\India-tourism-App\India-Tours\india-tourism\server\src\service\UserProfileValidationService.js:30:48)
+    at async UserProfileValidationService.validatePhoneNumber (C:\Users\royco\India-tourism-App\India-Tours\india-tourism\server\src\service\UserProfileValidationService.js:31:48)
     at async validateMobile (C:\Users\royco\India-tourism-App\India-Tours\india-tourism\server\src\controller\eKYCValidation.js:12:22)
-Wed Sep 23 2026 00:02:51 GMT-0400 (Eastern Daylight Saving Time): AxiosError: Request failed with status code 403
-Wed Sep 23 2026 00:02:51 GMT-0400 (Eastern Daylight Saving Time): AxiosError: Request failed with status code 403
+Fri Sep 25 2026 22:59:04 GMT-0400 (Eastern Daylight Saving Time): AxiosError: Request failed with status code 404
+Fri Sep 25 2026 22:59:04 GMT-0400 (Eastern Daylight Saving Time): AxiosError: Request failed with status code 404
     at settle (C:\Users\royco\India-tourism-App\India-Tours\india-tourism\server\node_modules\axios\dist\node\axios.cjs:2031:12)
     at Unzip.handleStreamEnd (C:\Users\royco\India-tourism-App\India-Tours\india-tourism\server\node_modules\axios\dist\node\axios.cjs:3148:11)
     at Unzip.emit (node:events:530:35)
@@ -243,27 +41,21 @@ Wed Sep 23 2026 00:02:51 GMT-0400 (Eastern Daylight Saving Time): AxiosError: Re
     at process.processTicksAndRejections (node:internal/process/task_queues:90:21)
     at Axios.request (C:\Users\royco\India-tourism-App\India-Tours\india-tourism\server\node_modules\axios\dist\node\axios.cjs:4258:41)
     at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
-    at async UserProfileValidationService.validatePhoneNumber (C:\Users\royco\India-tourism-App\India-Tours\india-tourism\server\src\service\UserProfileValidationService.js:30:48)
+    at async UserProfileValidationService.validatePhoneNumber (C:\Users\royco\India-tourism-App\India-Tours\india-tourism\server\src\service\UserProfileValidationService.js:31:48)
     at async validateMobile (C:\Users\royco\India-tourism-App\India-Tours\india-tourism\server\src\controller\eKYCValidation.js:12:22)
-Wed Sep 23 2026 00:07:28 GMT-0400 (Eastern Daylight Saving Time): AxiosError: Request failed with status code 403
-Wed Sep 23 2026 00:07:28 GMT-0400 (Eastern Daylight Saving Time): AxiosError: Request failed with status code 403
-    at settle (C:\Users\royco\India-tourism-App\India-Tours\india-tourism\server\node_modules\axios\dist\node\axios.cjs:2031:12)
-    at Unzip.handleStreamEnd (C:\Users\royco\India-tourism-App\India-Tours\india-tourism\server\node_modules\axios\dist\node\axios.cjs:3148:11)
-    at Unzip.emit (node:events:530:35)
-    at endReadableNT (node:internal/streams/readable:1698:12)
-    at process.processTicksAndRejections (node:internal/process/task_queues:90:21)
-    at Axios.request (C:\Users\royco\India-tourism-App\India-Tours\india-tourism\server\node_modules\axios\dist\node\axios.cjs:4258:41)
+Fri Sep 25 2026 23:30:33 GMT-0400 (Eastern Daylight Saving Time): AxiosError: Request failed with status code 404
+Fri Sep 25 2026 23:33:46 GMT-0400 (Eastern Daylight Saving Time): CastError: Cast to Number failed for value "NaN" (type number) at path "tourOperatorId" for model "Reviews"
+    at SchemaNumber.cast (C:\Users\royco\India-tourism-App\India-Tours\india-tourism\server\node_modules\mongoose\lib\schema\number.js:381:11)
+    at SchemaType.applySetters (C:\Users\royco\India-tourism-App\India-Tours\india-tourism\server\node_modules\mongoose\lib\schemaType.js:1255:12)
+    at SchemaNumber.castForQuery (C:\Users\royco\India-tourism-App\India-Tours\india-tourism\server\node_modules\mongoose\lib\schema\number.js:435:16)
+    at cast (C:\Users\royco\India-tourism-App\India-Tours\india-tourism\server\node_modules\mongoose\lib\cast.js:390:32)
+    at Query.cast (C:\Users\royco\India-tourism-App\India-Tours\india-tourism\server\node_modules\mongoose\lib\query.js:4907:12)
+    at Query._castConditions (C:\Users\royco\India-tourism-App\India-Tours\india-tourism\server\node_modules\mongoose\lib\query.js:2325:10)
+    at model.Query._find (C:\Users\royco\India-tourism-App\India-Tours\india-tourism\server\node_modules\mongoose\lib\query.js:2352:8)
+    at model.Query.exec (C:\Users\royco\India-tourism-App\India-Tours\india-tourism\server\node_modules\mongoose\lib\query.js:4456:80)
     at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
-    at async UserProfileValidationService.validatePhoneNumber (C:\Users\royco\India-tourism-App\India-Tours\india-tourism\server\src\service\UserProfileValidationService.js:30:48)
-    at async validateMobile (C:\Users\royco\India-tourism-App\India-Tours\india-tourism\server\src\controller\eKYCValidation.js:12:22)
-Wed Sep 23 2026 00:37:04 GMT-0400 (Eastern Daylight Saving Time): AxiosError: Request failed with status code 401
-Wed Sep 23 2026 00:37:04 GMT-0400 (Eastern Daylight Saving Time): AxiosError: Request failed with status code 401
-    at settle (C:\Users\royco\India-tourism-App\India-Tours\india-tourism\server\node_modules\axios\dist\node\axios.cjs:2031:12)
-    at Unzip.handleStreamEnd (C:\Users\royco\India-tourism-App\India-Tours\india-tourism\server\node_modules\axios\dist\node\axios.cjs:3148:11)
-    at Unzip.emit (node:events:530:35)
-    at endReadableNT (node:internal/streams/readable:1698:12)
-    at process.processTicksAndRejections (node:internal/process/task_queues:90:21)
-    at Axios.request (C:\Users\royco\India-tourism-App\India-Tours\india-tourism\server\node_modules\axios\dist\node\axios.cjs:4258:41)
-    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
-    at async UserProfileValidationService.validatePhoneNumber (C:\Users\royco\India-tourism-App\India-Tours\india-tourism\server\src\service\UserProfileValidationService.js:30:48)
-    at async validateMobile (C:\Users\royco\India-tourism-App\India-Tours\india-tourism\server\src\controller\eKYCValidation.js:12:22)
+    at async getOperatorReviews (C:\Users\royco\India-tourism-App\India-Tours\india-tourism\server\src\controller\tourManagers.js:56:27)
+Fri Sep 25 2026 23:34:33 GMT-0400 (Eastern Daylight Saving Time): AxiosError: Request failed with status code 404
+Fri Sep 25 2026 23:36:36 GMT-0400 (Eastern Daylight Saving Time): AxiosError: Request failed with status code 404
+Fri Sep 25 2026 23:38:57 GMT-0400 (Eastern Daylight Saving Time): AxiosError: Request failed with status code 404
+Fri Sep 25 2026 23:38:59 GMT-0400 (Eastern Daylight Saving Time): AxiosError: Request failed with status code 404

@@ -690,8 +690,72 @@ export const confirmStripePayment = async(data)=>{
     return res_data;
 }
 
+export const validateMobile= async(data) =>{
+   let res_data = "failed to fetch client secret";
+    try{
+        let access_token = await getApiAccessToken();
+
+      if(access_token){
+         console.log('access_token found for user Auth...',access_token.data)
+         console.log('here i am calling validate mobile....');
+        const response = await axios.post(
+            process.env.REACT_APP_SERVER_URI+'validateMobile',
+          data, 
+       {    
+            headers: {
+                "Content-type": "application/json; charset=UTF-8",
+                "Authorization":"Bearer "+access_token.data.access_token,
+                 }}
+          );     
+          
+      if(response)
+        {
+            console.log('response from mobile validation...',response)
+            res_data = await response.data;
+           
+         } 
+    }
+   }catch(err){
+         console.log(err.stack)
+         console.error('Error from mobile validation:::', err);
+        // throw err;
+    }
+    return res_data;
+}
 
 
+export const validateAadhar= async(data) =>{
+   let res_data = "failed to validate aadhar";
+    try{
+        let access_token = await getApiAccessToken();
+
+      if(access_token){
+         console.log('access_token found for user Auth...',access_token.data)
+         console.log('here i am calling validate Aadhar....');
+        const response = await axios.post(
+            process.env.REACT_APP_SERVER_URI+'validateAadhar',
+          data, 
+       {    
+            headers: {
+                "Content-type": "application/json; charset=UTF-8",
+                "Authorization":"Bearer "+access_token.data.access_token,
+                 }}
+          );     
+          
+      if(response)
+        {
+            console.log('response from aadhar validation...',response)
+            res_data = await response.data;
+           
+         } 
+    }
+   }catch(err){
+         console.log(err.stack)
+         console.error('Error from aadhar validation:::', err);
+        // throw err;
+    }
+    return res_data;
+}
 
 
 export const keycloakConfig = {
