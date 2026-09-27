@@ -137,3 +137,14 @@ min-width: '100vw';
   flex-grow: 1; /* Allow main content to take up remaining space */
   padding: 10px; /* Add some padding for content */
 }
+
+.desktop-fixed-header {
+  position: fixed;
+  top: 70px;
+  right: 0;
+}
+.mobile-fixed-header {
+  position: fixed;
+  top: 70px;
+  right: 0;
+}

@@ -31,11 +31,12 @@ import {
     DialogContent,
     DialogContentText,
     DialogActions,
-    MenuItem
+    MenuItem,
+    CircularProgress
   } from "@mui/material";
   import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
-import ChevronRightIcon from '@mui/icons-material/ChevronRight';
- 
+  import ChevronRightIcon from '@mui/icons-material/ChevronRight';
+  import { NavContext } from '../navigationContext/navigationContext';
   
 const CreateBooking = ({ isOpen, onClose,prepareBookingData,bookingData }) => {
   
@@ -53,8 +54,8 @@ const CreateBooking = ({ isOpen, onClose,prepareBookingData,bookingData }) => {
  const [showAadhar,setShowAadhar] = useState(false);   
  const[errorMessage,setErrorMessage] = useState('');
  const [dialogOpen, setDialogOpen] = useState(false);
-
-
+const [ageGrpFlag,setAgeGrpFlag] = useState(false);
+const [loading, setLoading] = useState(false);
 
  const deviceType = useDeviceType();
  const touristNo = bookingData.length+1;
@@ -63,7 +64,14 @@ const CreateBooking = ({ isOpen, onClose,prepareBookingData,bookingData }) => {
       
     const { name, value, type, checked } = event.target;
         
-      setTouristData(prevData=>({
+    if(name === 'ageGroup' && value === 'Minor')
+    {
+       setAgeGrpFlag(true);
+    }
+    else{
+        setAgeGrpFlag(false);
+      }
+     setTouristData(prevData=>({
         ...prevData,
         [name]: type === 'checkbox' ? checked : value,
       }));
@@ -73,8 +81,7 @@ const CreateBooking = ({ isOpen, onClose,prepareBookingData,bookingData }) => {
         
       }
     }
-
-    //Opens or close the dialog box for error message validations
+  //Opens or close the dialog box for error message validations
    const handleClickOpenOrClose = () => {
         
         setDialogOpen(!dialogOpen);
@@ -154,21 +161,25 @@ const addTourist = async() =>{
     console.log('tourist data in addtourist...',touristData)
     if(touristData)
     {
+      setLoading(true);
          let errMsg =  await validateFields();
          if(errMsg)
           {
             setErrorMessage(errMsg);
             setDisplayErrorDialog(true)
             setDialogOpen(true);
+            setLoading(false);
             
           }else{
              prepareBookingData(touristData);
-          if(touristData && touristData.length>0)
-          {
-            
-            console.log('bookingdata...',touristData);
-            
-          }
+          
+             if(touristData && touristData.length>0)
+              {
+                
+                console.log('bookingdata...',touristData);
+                
+              }
+          setLoading(false);
       }
     }
 }
@@ -183,8 +194,8 @@ useEffect(()=>{
    <div  className="modal-overlay">
       <div className={deviceType === 'mobile' ? "modal-content-mobile" : "modal-content-mobile"}>
         <div>
-            {displayErrorDialog?
-        <Dialog
+            {displayErrorDialog &&
+        (<Dialog
         open={dialogOpen}
         onClose={handleClickOpenOrClose}
         aria-labelledby="dialog-title"
@@ -206,7 +217,8 @@ useEffect(()=>{
           {dialogOpen &&(
           <img src={failure_animation} alt="" width="40" height="40"/>)}
         </DialogActions>
-      </Dialog>:<div></div>}
+      </Dialog>)}
+    
              <TableContainer sx={{boxShadow: 'none'}}>
                 
                 <Table>
@@ -240,7 +252,30 @@ useEffect(()=>{
                             </FormControl>
                              </TableCell>
                              </TableRow>
-                             <TableRow>
+                            
+                            <TableRow>
+                             <TableCell>
+                              <FormControl  variant="outlined" sx={{ borderRadius: '20px' }} fullWidth> 
+                                  <InputLabel 
+                                        style={{ color: '#0c0000ff' }} 
+                                        variant="outlined" >Age Group</InputLabel>               
+                                <Select
+                                  labelId="select-label"
+                                  id="ageGroup" name="ageGroup"
+                                  label="ageGroup"
+                                  value={touristData.ageGroup} sx={{ borderRadius: 'inherit',
+                                    backgroundColor: 'rgba(109, 101, 101, 0.53)', width:'50%'
+                                    }} onChange = {updateBooking} fullWidth
+                                  >
+                                  <MenuItem value={"Minor"}>Minor(Age &lt;18 yrs.)</MenuItem>
+                                  <MenuItem value={"Adult"}>Adult(Age &gt;18 && (&lt;60) yrs.)</MenuItem>
+                                  <MenuItem value={"SeniorCitizen"}>Senior Citizen(Age &gt;60 yrs.)</MenuItem>
+                                </Select>
+                              </FormControl>
+                            </TableCell>
+                            </TableRow>
+                            {!ageGrpFlag &&
+                             (<TableRow>
                              <TableCell>
                               <FormControl>
                                 
@@ -260,31 +295,10 @@ useEffect(()=>{
                             />
                             </FormControl>
                                  </TableCell>
-                                 </TableRow>
-                            <TableRow>
-                                                <TableCell>
-                              <FormControl  variant="outlined" sx={{ borderRadius: '20px' }} fullWidth> 
-                                  <InputLabel 
-                                        style={{ color: '#0c0000ff' }} 
-                                        variant="outlined" >Age Group</InputLabel>               
-                                <Select
-                                  labelId="select-label"
-                                  id="ageGroup" name="ageGroup"
-                                  label="ageGroup"
-                                  value={touristData.ageGroup} sx={{ borderRadius: 'inherit',
-                                    backgroundColor: 'rgba(109, 101, 101, 0.53)', width:'50%'
-                                    }} onChange = {updateBooking} fullWidth
-                                  >
-                                  <MenuItem value={"Minor"}>Minor(&lt;18)</MenuItem>
-                                  <MenuItem value={"Adult"}>Adult(&gt;18 && (&lt;60))</MenuItem>
-                                  <MenuItem value={"SeniorCitizen"}>Senior Citizen(&gt;60)</MenuItem>
-                                </Select>
-                              </FormControl>
-                            </TableCell>
-                            </TableRow>
+                                 </TableRow>)}
 
-
-                                 <TableRow> 
+                             {!ageGrpFlag &&
+                                 (<TableRow> 
                                    <TableCell>
                                <FormControl style={{ marginLeft: 5 }}>
                                
@@ -302,6 +316,12 @@ useEffect(()=>{
                               onChange = {updateBooking}
                                />
                                 </FormControl>
+                                  {
+                                       loading &&
+                                      (
+                                         <CircularProgress/>
+                                       )
+                                  }
                                 </TableCell>
                         {showAadhar &&  (
                                   <TableCell>
@@ -344,7 +364,8 @@ useEffect(()=>{
           {isCollapsed ? <ChevronRightIcon /> : <ChevronLeftIcon />}
         </IconButton></Box>
                                 </TableCell>
-                                </TableRow>
+                                </TableRow>)}
+  
                                   <TableRow>
                  <TableCell>
                   <FormControl  variant="outlined" sx={{ borderRadius: '20px' }} fullWidth> 

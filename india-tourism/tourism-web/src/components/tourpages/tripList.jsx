@@ -2,7 +2,7 @@ import React, { useContext, useEffect,useState } from "react";
 
 import '../../styles/loginsignup.css';
 import { getTripList,getTourManagers,getImageById } from "../admin/admin";
-
+import { useDeviceType } from '../admin/checkDeviceType';
  import {
       Box,
      Card,
@@ -35,7 +35,7 @@ const TripList = ({access_token,categoryId,cityList,showDetails}) =>{
    const [anchorEl, setAnchorEl] = useState(null);
    const {triggerSorting,sortTrip} = useContext(NavContext);
     const { notification,loading, setLoading} = useContext(NavContext);
-   
+    const deviceType = useDeviceType();
    const open = Boolean(anchorEl);
 
    function toggleSideBarForSorting()
@@ -206,8 +206,8 @@ const TripList = ({access_token,categoryId,cityList,showDetails}) =>{
                                 Number(tour.packageCost)<=(Number(priceValue)) && 
                             Number(tripLength)<=Number(triplengthValue) && (
                                 tourManagerMap.get(tour.tourOperator._id) && 
-                                ((tourManagerMap.get(tour.tourOperator._id)).citycode == cityvalue)||
-                        (tourManagerMap.get(tour.tourManagerId).citycode == '0')
+                                ((tourManagerMap.get(tour.tourOperator._id)).citycode === cityvalue)||
+                        (tourManagerMap.get(tour.tourManagerId).citycode === '0')
                         ))
                             {
                                 selectedTours.push(tour);
@@ -338,7 +338,7 @@ const TripList = ({access_token,categoryId,cityList,showDetails}) =>{
             </Box>
             {
             sortTrip ? 
-            <div style={{position: 'fixed', top:70,right:0}} >
+            <div className={deviceType === 'mobile' ? "mobile-fixed-header" : "mobile-fixed-header"} >
                 <SideBarFilter selectedValue={selectedValue} setSelectedValue={setSelectedValue} 
                 priceValue={priceValue} setPriceValue={setPriceValue} 
                 cityList={cityList}
