@@ -59,3 +59,87 @@ Fri Sep 25 2026 23:34:33 GMT-0400 (Eastern Daylight Saving Time): AxiosError: Re
 Fri Sep 25 2026 23:36:36 GMT-0400 (Eastern Daylight Saving Time): AxiosError: Request failed with status code 404
 Fri Sep 25 2026 23:38:57 GMT-0400 (Eastern Daylight Saving Time): AxiosError: Request failed with status code 404
 Fri Sep 25 2026 23:38:59 GMT-0400 (Eastern Daylight Saving Time): AxiosError: Request failed with status code 404
+Sat Sep 26 2026 12:23:54 GMT-0400 (Eastern Daylight Saving Time): CastError: Cast to Number failed for value "NaN" (type number) at path "tourOperatorId" for model "Reviews"
+    at SchemaNumber.cast (C:\Users\royco\India-tourism-App\India-Tours\india-tourism\server\node_modules\mongoose\lib\schema\number.js:381:11)
+    at SchemaType.applySetters (C:\Users\royco\India-tourism-App\India-Tours\india-tourism\server\node_modules\mongoose\lib\schemaType.js:1255:12)
+    at SchemaNumber.castForQuery (C:\Users\royco\India-tourism-App\India-Tours\india-tourism\server\node_modules\mongoose\lib\schema\number.js:435:16)
+    at cast (C:\Users\royco\India-tourism-App\India-Tours\india-tourism\server\node_modules\mongoose\lib\cast.js:390:32)
+    at Query.cast (C:\Users\royco\India-tourism-App\India-Tours\india-tourism\server\node_modules\mongoose\lib\query.js:4907:12)
+    at Query._castConditions (C:\Users\royco\India-tourism-App\India-Tours\india-tourism\server\node_modules\mongoose\lib\query.js:2325:10)
+    at model.Query._find (C:\Users\royco\India-tourism-App\India-Tours\india-tourism\server\node_modules\mongoose\lib\query.js:2352:8)
+    at model.Query.exec (C:\Users\royco\India-tourism-App\India-Tours\india-tourism\server\node_modules\mongoose\lib\query.js:4456:80)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async getOperatorReviews (C:\Users\royco\India-tourism-App\India-Tours\india-tourism\server\src\controller\tourManagers.js:56:27)
+Sat Sep 26 2026 12:31:06 GMT-0400 (Eastern Daylight Saving Time): AxiosError: Request failed with status code 404
+Sat Sep 26 2026 12:31:08 GMT-0400 (Eastern Daylight Saving Time): AxiosError: Request failed with status code 404
+Sat Sep 26 2026 17:34:21 GMT-0400 (Eastern Daylight Saving Time): AxiosError: Request failed with status code 404
+Sat Sep 26 2026 17:34:53 GMT-0400 (Eastern Daylight Saving Time): AxiosError: Request failed with status code 404
+Sun Sep 27 2026 09:38:37 GMT-0400 (Eastern Daylight Saving Time): AxiosError: Request failed with status code 500
+    at settle (C:\Users\royco\India-tourism-App\India-Tours\india-tourism\server\node_modules\axios\dist\node\axios.cjs:2031:12)
+    at IncomingMessage.handleStreamEnd (C:\Users\royco\India-tourism-App\India-Tours\india-tourism\server\node_modules\axios\dist\node\axios.cjs:3148:11)
+    at IncomingMessage.emit (node:events:530:35)
+    at endReadableNT (node:internal/streams/readable:1698:12)
+    at process.processTicksAndRejections (node:internal/process/task_queues:90:21)
+    at Axios.request (C:\Users\royco\India-tourism-App\India-Tours\india-tourism\server\node_modules\axios\dist\node\axios.cjs:4258:41)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async C:\Users\royco\India-tourism-App\India-Tours\india-tourism\server\server.js:321:5
+Sun Sep 27 2026 09:38:38 GMT-0400 (Eastern Daylight Saving Time): AxiosError: Request failed with status code 500
+    at settle (C:\Users\royco\India-tourism-App\India-Tours\india-tourism\server\node_modules\axios\dist\node\axios.cjs:2031:12)
+    at IncomingMessage.handleStreamEnd (C:\Users\royco\India-tourism-App\India-Tours\india-tourism\server\node_modules\axios\dist\node\axios.cjs:3148:11)
+    at IncomingMessage.emit (node:events:530:35)
+    at endReadableNT (node:internal/streams/readable:1698:12)
+    at process.processTicksAndRejections (node:internal/process/task_queues:90:21)
+    at Axios.request (C:\Users\royco\India-tourism-App\India-Tours\india-tourism\server\node_modules\axios\dist\node\axios.cjs:4258:41)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async C:\Users\royco\India-tourism-App\India-Tours\india-tourism\server\server.js:321:5
+Sun Sep 27 2026 09:38:38 GMT-0400 (Eastern Daylight Saving Time): AxiosError: Request failed with status code 500
+    at settle (C:\Users\royco\India-tourism-App\India-Tours\india-tourism\server\node_modules\axios\dist\node\axios.cjs:2031:12)
+    at IncomingMessage.handleStreamEnd (C:\Users\royco\India-tourism-App\India-Tours\india-tourism\server\node_modules\axios\dist\node\axios.cjs:3148:11)
+    at IncomingMessage.emit (node:events:530:35)
+    at endReadableNT (node:internal/streams/readable:1698:12)
+    at process.processTicksAndRejections (node:internal/process/task_queues:90:21)
+    at Axios.request (C:\Users\royco\India-tourism-App\India-Tours\india-tourism\server\node_modules\axios\dist\node\axios.cjs:4258:41)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async C:\Users\royco\India-tourism-App\India-Tours\india-tourism\server\server.js:321:5
+Sun Sep 27 2026 10:56:26 GMT-0400 (Eastern Daylight Saving Time): Error: socket hang up
+    at AxiosError.from (C:\Users\royco\India-tourism-App\India-Tours\india-tourism\server\node_modules\axios\dist\node\axios.cjs:857:14)
+    at RedirectableRequest.handleRequestError (C:\Users\royco\India-tourism-App\India-Tours\india-tourism\server\node_modules\axios\dist\node\axios.cjs:3169:25)
+    at RedirectableRequest.emit (node:events:518:28)
+    at eventHandlers.<computed> (C:\Users\royco\India-tourism-App\India-Tours\india-tourism\server\node_modules\follow-redirects\index.js:49:24)
+    at ClientRequest.emit (node:events:518:28)
+    at emitErrorEvent (node:_http_client:104:11)
+    at Socket.socketOnEnd (node:_http_client:542:5)
+    at Socket.emit (node:events:530:35)
+    at endReadableNT (node:internal/streams/readable:1698:12)
+    at process.processTicksAndRejections (node:internal/process/task_queues:90:21)
+    at Axios.request (C:\Users\royco\India-tourism-App\India-Tours\india-tourism\server\node_modules\axios\dist\node\axios.cjs:4258:41)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async C:\Users\royco\India-tourism-App\India-Tours\india-tourism\server\server.js:321:5
+Sun Sep 27 2026 10:56:27 GMT-0400 (Eastern Daylight Saving Time): Error: socket hang up
+    at AxiosError.from (C:\Users\royco\India-tourism-App\India-Tours\india-tourism\server\node_modules\axios\dist\node\axios.cjs:857:14)
+    at RedirectableRequest.handleRequestError (C:\Users\royco\India-tourism-App\India-Tours\india-tourism\server\node_modules\axios\dist\node\axios.cjs:3169:25)
+    at RedirectableRequest.emit (node:events:518:28)
+    at eventHandlers.<computed> (C:\Users\royco\India-tourism-App\India-Tours\india-tourism\server\node_modules\follow-redirects\index.js:49:24)
+    at ClientRequest.emit (node:events:518:28)
+    at emitErrorEvent (node:_http_client:104:11)
+    at Socket.socketOnEnd (node:_http_client:542:5)
+    at Socket.emit (node:events:530:35)
+    at endReadableNT (node:internal/streams/readable:1698:12)
+    at process.processTicksAndRejections (node:internal/process/task_queues:90:21)
+    at Axios.request (C:\Users\royco\India-tourism-App\India-Tours\india-tourism\server\node_modules\axios\dist\node\axios.cjs:4258:41)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async C:\Users\royco\India-tourism-App\India-Tours\india-tourism\server\server.js:321:5
+Sun Sep 27 2026 10:56:27 GMT-0400 (Eastern Daylight Saving Time): Error: socket hang up
+    at AxiosError.from (C:\Users\royco\India-tourism-App\India-Tours\india-tourism\server\node_modules\axios\dist\node\axios.cjs:857:14)
+    at RedirectableRequest.handleRequestError (C:\Users\royco\India-tourism-App\India-Tours\india-tourism\server\node_modules\axios\dist\node\axios.cjs:3169:25)
+    at RedirectableRequest.emit (node:events:518:28)
+    at eventHandlers.<computed> (C:\Users\royco\India-tourism-App\India-Tours\india-tourism\server\node_modules\follow-redirects\index.js:49:24)
+    at ClientRequest.emit (node:events:518:28)
+    at emitErrorEvent (node:_http_client:104:11)
+    at Socket.socketOnEnd (node:_http_client:542:5)
+    at Socket.emit (node:events:530:35)
+    at endReadableNT (node:internal/streams/readable:1698:12)
+    at process.processTicksAndRejections (node:internal/process/task_queues:90:21)
+    at Axios.request (C:\Users\royco\India-tourism-App\India-Tours\india-tourism\server\node_modules\axios\dist\node\axios.cjs:4258:41)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async C:\Users\royco\India-tourism-App\India-Tours\india-tourism\server\server.js:321:5

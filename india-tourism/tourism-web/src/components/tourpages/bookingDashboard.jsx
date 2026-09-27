@@ -85,6 +85,7 @@ const [clientSecret, setClientSecret] = useState(null);
 const columns = [
           { field: 'name', headerName: 'Name' },
           { field: 'mobile', headerName: 'Mobile' },
+          { field: 'aadhar', headerName: 'Aadhar #' },
           { field: 'email', headerName: 'Email' },
           { field: 'ageGroup', headerName: 'AgeGroup' },
           { field: 'gender', headerName: 'Gender' }
@@ -471,24 +472,15 @@ const columns = [
       
            
 {
-    openBookingForm ? 
-
-   
-    <CreateBooking isOpen={openBookingForm} onClose={() => setOpenBookingForm(false)}
-    prepareBookingData = {prepareBookingData} bookingData={bookingData}
-    />:<div/>
+    openBookingForm && (
+       <CreateBooking isOpen={openBookingForm} onClose={() => setOpenBookingForm(false)}
+          prepareBookingData = {prepareBookingData} bookingData={bookingData}
+        />)
 }
 
-{
-    travellerAuthenticated &&  bookingData && bookingData.length >0 ? 
-  <AuthenticateTraveller isOpen={travellerAuthenticated} 
-  onClose={() => setTravellerAuthenticated(false)}
-   />
-  :<div/>
-}
 
  {
-          bookingData && bookingData.length >0 ?
+          bookingData && bookingData.length >0 && (
         <div className="button-container-2">
 
           <div className='submit-container'>
@@ -497,20 +489,18 @@ const columns = [
                           class="button"
                         >Go Back</button>
 
-                <button type="submit" 
-                       class="button" onClick={()=>{setTravellerAuthenticated(true)}}>Validate</button>
-                {travellerAuthenticated ?
+                
                 <div>
                 <button type="submit" 
                        class="button" onClick={()=>{confirmSubmitMode('ADV')}}>Make Advance Payment</button>
 
             <button type="submit" 
                        class="button" onClick={()=>{confirmSubmitMode('FULL')}}>Confirm your booking</button>
-                </div>:<div/>
-                }  
+                </div>)
+                
         </div>
         
-        </div>:<div/>
+        </div>)
     }
 
 

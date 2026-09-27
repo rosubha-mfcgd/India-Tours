@@ -186,8 +186,7 @@ const BookingForm = ({access_token,tourDetails,triggerDisplayBookings,triggerEdi
     //Validate the booking data
     const validateFields= async() =>{
        let errMsg = null;
-       
-                 console.log('booking to be validated....',bookingData)
+       console.log('booking to be validated....',bookingData)
               errMsg =  await validateBookingData(bookingData);
               if(errMsg)
                 {
@@ -263,8 +262,8 @@ const BookingForm = ({access_token,tourDetails,triggerDisplayBookings,triggerEdi
               
                     <div className="original-content">
                     
-{displayErrorDialog?
-        <Dialog
+{displayErrorDialog && 
+       ( <Dialog
         open={dialogOpen}
         onClose={handleClickOpenOrClose}
         aria-labelledby="dialog-title"
@@ -283,12 +282,11 @@ const BookingForm = ({access_token,tourDetails,triggerDisplayBookings,triggerEdi
           <Button onClick={handleClickOpenOrClose} autoFocus>
            OK
           </Button>
-          {dialogOpen?
-          <img src={failure_animation} alt="" width="40" height="40"/>:
-          <div></div>}
+          {dialogOpen && 
+          (<img src={failure_animation} alt="" width="40" height="40"/>)}
         </DialogActions>
-      </Dialog>:<div></div>}
-        {startBooking ?
+      </Dialog>)}
+        {startBooking && (
          
               <TableContainer sx={{boxShadow: 'none'}}>
                 <Table sx={{alignContent:'center', justifyContent: 'center'}}>
@@ -313,7 +311,8 @@ const BookingForm = ({access_token,tourDetails,triggerDisplayBookings,triggerEdi
                           />    
                          </TableCell>
                          <TableCell sx={{border:"none"}}>
-                           <CustomButton noOfTourist={noOfTourist} setNoOfTourist={setNoOfTourist} 
+                           <CustomButton noOfTourist={noOfTourist} 
+                           setNoOfTourist={setNoOfTourist} 
                            />
                           </TableCell>     
                         </TableRow>
@@ -321,10 +320,10 @@ const BookingForm = ({access_token,tourDetails,triggerDisplayBookings,triggerEdi
                     </TableBody>
                 </Table>
             </TableContainer>
-           :<div></div>
+           )
         }
      {
-        openBookingForm ?
+        openBookingForm && (
         <div  display="flex"
       justifyContent="center"
       alignItems="center"
@@ -364,77 +363,58 @@ const BookingForm = ({access_token,tourDetails,triggerDisplayBookings,triggerEdi
                 onClick={()=>removeTourist(tourist.key)}
              />
                </Typography>
-
-              
-                </h2>
+            </h2>
                  <TableContainer sx={{boxShadow: 'none'}}>
-                                                <Table>
-                                                    <TableBody>
-                                                      <TableRow>
-                                                        <TableCell>
-                <FormControl variant="outlined" fullWidth>
-             
-                <InputLabel htmlFor="component-outlined"
-                fullWidth>Name</InputLabel>
-                <OutlinedInput id="name" name="name" 
-                defaultValue={tourist.value.name}  
-                inputProps={{
-                    maxLength: 20,
-                }}
-                 sx={{
-                  backgroundColor: 'rgba(109, 101, 101, 0.53)' ,
-                 borderRadius: 50, // Fully rounded (pill shape)
-                 width: '500px',
-                }}
-                />
-                </FormControl>
-                 </TableCell>
+                        <Table>
+                           <TableBody>
+                               <TableRow>
+                                  <TableCell>
+                                <FormControl variant="outlined" fullWidth>
+                            
+                                <InputLabel htmlFor="component-outlined"
+                                fullWidth>Name</InputLabel>
+                                <OutlinedInput id="name" name="name" 
+                                defaultValue={tourist.value.name}  
+                                inputProps={{
+                                    maxLength: 20,
+                                }}
+                                sx={{
+                                  backgroundColor: 'rgba(109, 101, 101, 0.53)' ,
+                                borderRadius: 50, // Fully rounded (pill shape)
+                                width: '500px',
+                                }}
+                                />
+                                </FormControl>
+                       </TableCell>
                  </TableRow>
+                 
                  <TableRow>
-                 <TableCell>
-                  <FormControl>
+                    <TableCell>
+                        <FormControl>
                     
-                <InputLabel 
-                style={{ color: '#0c0000ff', }} 
-                variant="outlined" fullWidth>Email</InputLabel>
-                <OutlinedInput id="email" name="email" 
-                 defaultValue={tourist.value.email}  inputProps={{
-                      maxLength: 50,
-                    }}
-                  sx={{
-                 backgroundColor: 'rgba(109, 101, 101, 0.53)' ,
-                 borderRadius: 50, // Fully rounded (pill shape)
-                 width: '500px'
-                  }}
-                />
+                            <InputLabel 
+                            style={{ color: '#0c0000ff', }} 
+                            variant="outlined" fullWidth>Email</InputLabel>
+                            <OutlinedInput id="email" name="email" 
+                            defaultValue={tourist.value.email}  inputProps={{
+                                  maxLength: 50,
+                                }}
+                              sx={{
+                            backgroundColor: 'rgba(109, 101, 101, 0.53)' ,
+                            borderRadius: 50, // Fully rounded (pill shape)
+                            width: '500px'
+                              }}
+                            />
                 </FormControl>
-                     </TableCell>
-                     </TableRow>
-                     <TableRow> 
-                       <TableCell>
-                   <FormControl style={{ marginLeft: 5 }}>
-                   
-                <InputLabel 
-                style={{ color: '#0c0000ff' }} 
-                variant="outlined" fullWidth>Mobile</InputLabel>
-                <OutlinedInput id="mobile" name="mobile" 
-                defaultValue={tourist.value.mobile}  inputProps={{
-                 maxLength: 10,
-                   }}  sx={{
-                  backgroundColor: 'rgba(109, 101, 101, 0.53)' ,
-                 borderRadius: 50, // Fully rounded (pill shape)
-                 width: '500px'
-                  }}
-                   />
-                    </FormControl>
-                    </TableCell>
-                     </TableRow>
-                     <TableRow>
+                </TableCell>
+              </TableRow>
+
+               <TableRow>
                         <TableCell>
-      <FormControl fullWidth variant="outlined" sx={{ borderRadius: '20px' }}> 
-           <InputLabel 
-                style={{ color: '#0c0000ff' }} 
-                variant="outlined" fullWidth>Age Group</InputLabel>               
+                            <FormControl fullWidth variant="outlined" sx={{ borderRadius: '20px' }}> 
+                               <InputLabel 
+                        style={{ color: '#0c0000ff' }} 
+                        variant="outlined" fullWidth>Age Group</InputLabel>               
         <Select
           labelId="select-label"
           id="ageGroup" name="ageGroup"
@@ -443,13 +423,54 @@ const BookingForm = ({access_token,tourDetails,triggerDisplayBookings,triggerEdi
             backgroundColor: 'rgba(109, 101, 101, 0.53)' 
             }} 
            >
-          <MenuItem value={"Minor"}>Minor</MenuItem>
-          <MenuItem value={"Adult"}>Adult</MenuItem>
-          <MenuItem value={"SeniorCitizen"}>Senior Citizen</MenuItem>
+              <MenuItem value={"Minor"}>Minor (less than 18 yrs.)</MenuItem>
+              <MenuItem value={"Adult"}>Adult (18 yrs.-60 yrs.)</MenuItem>
+              <MenuItem value={"SeniorCitizen"}>Senior Citizen(above 60 yrs.)</MenuItem>
         </Select>
       </FormControl>
      </TableCell>
      </TableRow>
+     
+                <TableRow> 
+                   <TableCell>
+                      <FormControl style={{ marginLeft: 5 }}>
+                      
+                    <InputLabel 
+                    style={{ color: '#0c0000ff' }} 
+                    variant="outlined" fullWidth>Mobile</InputLabel>
+                    <OutlinedInput id="mobile" name="mobile" 
+                    defaultValue={tourist.value.mobile}  inputProps={{
+                    maxLength: 10,
+                      }}  sx={{
+                      backgroundColor: 'rgba(109, 101, 101, 0.53)' ,
+                    borderRadius: 50, // Fully rounded (pill shape)
+                    width: '500px'
+                      }}
+                      />
+                        </FormControl>
+                    </TableCell>
+                     </TableRow>
+
+              <TableRow> 
+                <TableCell>
+                   <FormControl style={{ marginLeft: 5 }}>
+                <InputLabel 
+                style={{ color: '#0c0000ff' }} 
+                variant="outlined" fullWidth>Aadhar #</InputLabel>
+                <OutlinedInput id="aadhar" name="aadhar" 
+                defaultValue={tourist.value.aadhar}  inputProps={{
+                 maxLength: 10,
+                   }}  sx={{
+                  backgroundColor: 'rgba(109, 101, 101, 0.53)' ,
+                 borderRadius: 50, // Fully rounded (pill shape)
+                 width: '500px'
+                  }}
+                   />
+                </FormControl>
+                </TableCell>
+              </TableRow>
+
+                    
      <TableRow>
      <TableCell>
       <FormControl fullWidth variant="outlined" sx={{ borderRadius: '20px' }}> 
@@ -474,11 +495,12 @@ const BookingForm = ({access_token,tourDetails,triggerDisplayBookings,triggerEdi
       </TableContainer>
       </div>
        )):<div></div>
-          }</Paper></div>:<div></div>
+          }</Paper></div>)
         }
-        { startBooking && touristCount && touristCount.length >0? 
+        {
+         startBooking && touristCount && touristCount.length >0 &&
        
-        <div className="button-container">
+        (<div className="button-container">
          <div className='submit-container'>
                     <button type="submit" 
                         class="button"
@@ -487,16 +509,17 @@ const BookingForm = ({access_token,tourDetails,triggerDisplayBookings,triggerEdi
                     <button type="submit" 
                        class="button" onClick={submitBookings}>Submit your Booking</button>
         </div>
-      </div>
-       :<div></div>
+      </div>)
+       
     }
          </div>
-         {notification ?
+         {notification &&
+                    (
                         <div style={{position: 'fixed', top:70,right:0}} >    
                         <SideBarNotification/> 
                      </div> 
-                     :<div></div>
-                      }
+                    )
+        }
          </div> 
          </div> 
     );

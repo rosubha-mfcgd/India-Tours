@@ -81,7 +81,7 @@ const confirmPackageTourCardPayment = async(req,res,retries = 5, delay = 1000) =
     try{
       console.log('paymentIntent found from stripe dashboard....',paymentIntentId);
         // Access the last 4 digits and brand
-       
+       console.log('paid amount ....',paidamount);
         // Store this information in your database or use it for business logic
         console.log('Payment succeeded. Card brand Last 4 digits:',last4carddigits,brand);
         let tourbookingService = new TourBookingService();
@@ -102,7 +102,7 @@ const confirmPackageTourCardPayment = async(req,res,retries = 5, delay = 1000) =
     }catch(err){
           if(retries>0)
                 {
-                     console.log('retry attempted...')
+                  console.log('retry attempted...')
                   await new Promise(resolve => setTimeout(resolve, delay));
                   return confirmPackageTourCardPayment(req,res,retries-1,delay);
                 }

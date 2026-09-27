@@ -139,7 +139,8 @@ const CreateBooking = ({ isOpen, onClose,prepareBookingData,bookingData }) => {
                                 return errMsg;
                             }
                           
-                      }else{
+                      }
+                      else{
                       errMsg = 'Invalid mobile Number and Aadhar number provided';
                         return errMsg;
                       }
@@ -202,9 +203,8 @@ useEffect(()=>{
           <Button onClick={handleClickOpenOrClose} autoFocus>
            OK
           </Button>
-          {dialogOpen?
-          <img src={failure_animation} alt="" width="40" height="40"/>:
-          <div></div>}
+          {dialogOpen &&(
+          <img src={failure_animation} alt="" width="40" height="40"/>)}
         </DialogActions>
       </Dialog>:<div></div>}
              <TableContainer sx={{boxShadow: 'none'}}>
@@ -261,6 +261,29 @@ useEffect(()=>{
                             </FormControl>
                                  </TableCell>
                                  </TableRow>
+                            <TableRow>
+                                                <TableCell>
+                              <FormControl  variant="outlined" sx={{ borderRadius: '20px' }} fullWidth> 
+                                  <InputLabel 
+                                        style={{ color: '#0c0000ff' }} 
+                                        variant="outlined" >Age Group</InputLabel>               
+                                <Select
+                                  labelId="select-label"
+                                  id="ageGroup" name="ageGroup"
+                                  label="ageGroup"
+                                  value={touristData.ageGroup} sx={{ borderRadius: 'inherit',
+                                    backgroundColor: 'rgba(109, 101, 101, 0.53)', width:'50%'
+                                    }} onChange = {updateBooking} fullWidth
+                                  >
+                                  <MenuItem value={"Minor"}>Minor(&lt;18)</MenuItem>
+                                  <MenuItem value={"Adult"}>Adult(&gt;18 && (&lt;60))</MenuItem>
+                                  <MenuItem value={"SeniorCitizen"}>Senior Citizen(&gt;60)</MenuItem>
+                                </Select>
+                              </FormControl>
+                            </TableCell>
+                            </TableRow>
+
+
                                  <TableRow> 
                                    <TableCell>
                                <FormControl style={{ marginLeft: 5 }}>
@@ -280,6 +303,27 @@ useEffect(()=>{
                                />
                                 </FormControl>
                                 </TableCell>
+                        {showAadhar &&  (
+                                  <TableCell>
+                                    <strong> OR </strong>
+                               <FormControl style={{ marginLeft: 5 }}>
+                               
+                            <InputLabel 
+                            style={{ color: '#0c0000ff' }} 
+                            variant="outlined">Aadhar Number</InputLabel>
+                            <OutlinedInput id="aadhar" name="aadhar" 
+                            value={touristData.aadhar}  inputProps={{
+                             maxLength: 10,
+                               }}  sx={{
+                              backgroundColor: 'rgba(109, 101, 101, 0.53)' ,
+                             borderRadius: 50, // Fully rounded (pill shape)
+                             width: '500px'
+                              }}
+                              onChange = {updateBooking}
+                               />
+                                </FormControl>
+                                </TableCell>
+                                )}
                                 <TableCell>
                                   <Box 
                                   sx={{ display: 'flex', alignItems: 'flex-start', position: 'relative' }}>
@@ -300,48 +344,8 @@ useEffect(()=>{
           {isCollapsed ? <ChevronRightIcon /> : <ChevronLeftIcon />}
         </IconButton></Box>
                                 </TableCell>
-                                 </TableRow>
-                                 {showAadhar &&  (<TableRow><TableCell>
-                               <FormControl style={{ marginLeft: 5 }}>
-                               
-                            <InputLabel 
-                            style={{ color: '#0c0000ff' }} 
-                            variant="outlined">Aadhar Number</InputLabel>
-                            <OutlinedInput id="aadhar" name="aadhar" 
-                            value={touristData.aadhar}  inputProps={{
-                             maxLength: 10,
-                               }}  sx={{
-                              backgroundColor: 'rgba(109, 101, 101, 0.53)' ,
-                             borderRadius: 50, // Fully rounded (pill shape)
-                             width: '500px'
-                              }}
-                              onChange = {updateBooking}
-                               />
-                                </FormControl>
-                                </TableCell>
-                                </TableRow>)}
-                                 <TableRow>
-                                    <TableCell>
-                  <FormControl  variant="outlined" sx={{ borderRadius: '20px' }} fullWidth> 
-                       <InputLabel 
-                            style={{ color: '#0c0000ff' }} 
-                            variant="outlined" >Age Group</InputLabel>               
-                    <Select
-                      labelId="select-label"
-                      id="ageGroup" name="ageGroup"
-                      label="ageGroup"
-                       value={touristData.ageGroup} sx={{ borderRadius: 'inherit',
-                        backgroundColor: 'rgba(109, 101, 101, 0.53)', width:'50%'
-                        }} onChange = {updateBooking} fullWidth
-                       >
-                      <MenuItem value={"Minor"}>Minor</MenuItem>
-                      <MenuItem value={"Adult"}>Adult</MenuItem>
-                      <MenuItem value={"SeniorCitizen"}>Senior Citizen</MenuItem>
-                    </Select>
-                  </FormControl>
-                 </TableCell>
-                 </TableRow>
-                 <TableRow>
+                                </TableRow>
+                                  <TableRow>
                  <TableCell>
                   <FormControl  variant="outlined" sx={{ borderRadius: '20px' }} fullWidth> 
                         <InputLabel 
@@ -368,11 +372,6 @@ useEffect(()=>{
           <div className='submit-container'>
         <button onClick={addTourist} class="button">Add Tourist</button>
         </div>
-        <div className='submit-container'>
-        <button onClick={onClose} class="button">Close</button>
-        
-        </div>
-        
         </div>
        </div>
        

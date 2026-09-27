@@ -1,6 +1,6 @@
 import  { useState, useEffect } from 'react';
 // Import the UPI QR library
-import QRCode from 'react-qr-code';
+import { QRCodeSVG } from 'qrcode.react';
 
 
 import {
@@ -14,15 +14,19 @@ import {
 const PaymentQRCodeGenerator = ({ isOpen, onClose, amount, onswitch,tourManagerName,location }) => {
   
   //const [qrCode, setQrCode] = useState('');
-  let upiId = 'shop@ybl';
-  let name = 'Tourism Payment';
+  // let upiId = 'shop@ybl';
+  // let name = 'Tourism Payment';
+   let upiId = 'subhankar@upi';
+   let merchantname = tourManagerName;
+   let name = 'Tourism Payment';
+   let transactionNote = 'Localhost test payment';
     // Define payment details
-  const upiDetails = `upi://pay?pa=${upiId}&pn=${encodeURIComponent(name)}&am=${amount}&cu=INR`;
+  const upiDetails = `upi://pay?pa=${upiId}&pn=${encodeURIComponent(merchantname)}&am=${amount}&cu=INR&tn=${encodeURIComponent(transactionNote)}`;
   
-  let merchantID = 'PGTESTPAYUAT';
-  let SALT_KEY = '099eb0cd-02cf-4e2a-8aca-3e6c6aff0399';
-  let salt_index = 1;
-  let sandbox_URL = 'https://api-preprod.phonepe.com/apis/pg-sandbox/pg/v1/pay';
+  // let merchantID = 'PGTESTPAYUAT';
+  // let SALT_KEY = '099eb0cd-02cf-4e2a-8aca-3e6c6aff0399';
+  // let salt_index = 1;
+  // let sandbox_URL = 'https://api-preprod.phonepe.com/apis/pg-sandbox/pg/v1/pay';
 
   if (!isOpen) return null;
   return (
@@ -43,7 +47,7 @@ const PaymentQRCodeGenerator = ({ isOpen, onClose, amount, onswitch,tourManagerN
     }}>
    <div className="modal">
       <div className="modal-content">
-        <h2>Scan to Pay via UPI</h2>
+        <h2>Scan to Pay via BHIM UPI</h2>
         <p>Thank you for your purchase.</p>
           <Card className="card"
                      >
@@ -51,7 +55,7 @@ const PaymentQRCodeGenerator = ({ isOpen, onClose, amount, onswitch,tourManagerN
                     {/* <CardMedia component= "img"  height="100"
                     image = {qrCode} alt="shop@ybl" 
                     /> */}
-                     <QRCode value={upiDetails} size={256} />
+                     <QRCodeSVG value={upiDetails} size={256} />
                                      
                     <CardContent>
                       <Typography variant="body2" color="text.secondary" 
