@@ -6,6 +6,8 @@ import SideBarNotification from '../navigationTabs/sideBarNotification';
 import { NavContext } from '../navigationContext/navigationContext';
 import { getImageById } from "../admin/admin";
 import OperatorReviews from "../modal/operatorReview";
+import plus from '../Assets/images/plus.png';
+import { Pressable, Text,  Alert,View, Image,  StyleSheet, ScrollView } from 'react-native';
 import {
     TextField,
     Button,
@@ -91,18 +93,13 @@ import {
 
     return (
      
-        <div style={{ display: 'flex', flexDirection: 'column', 
-        justifycontent: 'center',
-        alignitems: 'center',
-        gap: '20px' }}>
+  
         <div className="grid-container">
-      <div className="grid-item">
-        <Grid item xs = {10} sm={4}></Grid>
-      </div>
+      
         {loading ?
           <div>
-                        <Box
-                           sx={{
+           <Box
+            sx={{
                              display: 'flex',
                              justifyContent: 'center',
                              alignItems: 'center',
@@ -114,9 +111,9 @@ import {
                           </div>:
         
         
-        image ?
-            <div className="grid-item">
-            <Grid item xs = {10} sm={4}>
+        image &&
+            <div className="div-align-center">
+        
               
                  <Card className="card">
                     <CardMedia
@@ -142,7 +139,7 @@ import {
               
                 <div>
                     <TableContainer sx={{boxShadow: 'none'}}>
-                 <Table>
+                 <Table sx={{ '& .MuiTableCell-root': { borderBottom: 'none' } }}>
                     <TableBody>
                        
                         <TableRow>
@@ -150,19 +147,35 @@ import {
                         <Typography variant="body2" style={{ color: '#FFFFFF' }}>
                         LocationName   
                         </Typography>
-                    </TableCell>
-                     <TableCell>
+                        </TableCell>
+                         <TableCell>
+                          <Typography variant="body2" style={{ color: '#FFFFFF' }}>
+                          <strong>{tourDetails.locationName}</strong>    
+                          </Typography>
+                      </TableCell>
+                       <TableCell>
                         <Typography variant="body2" style={{ color: '#FFFFFF' }}>
                        Trip Length 
                         </Typography>  
                     </TableCell>
-                    
-                     <TableCell>
+                           <TableCell>
+                          <Typography variant="body2" style={{ color: '#FFFFFF' }}>
+                          <strong>{tourDetails.triplength}</strong>    
+                          </Typography>
+                      </TableCell>
+                        </TableRow>
+                       
+                        <TableRow>
+                      <TableCell>
                         <Typography variant="body2" style={{ color: '#FFFFFF' }}>
                        Trip Type
                         </Typography>  
                     </TableCell>
-
+                         <TableCell>
+                        <Typography variant="body2" style={{ color: '#FFFFFF' }}>
+                        <strong> {tourDetails.domesticOrInternational}  </strong>
+                        </Typography>  
+                    </TableCell>
                     <TableCell>
                         <Typography variant="body2" style={{ color: '#FFFFFF' }}>
                        Start Date
@@ -170,32 +183,14 @@ import {
                     </TableCell>
                     <TableCell>
                         <Typography variant="body2" style={{ color: '#FFFFFF' }}>
-                       End Date
+                        <strong> {changeDateToWords(new Date(tourDetails.startDate))}</strong>  
                         </Typography>  
                     </TableCell>
-
                     </TableRow>
                     <TableRow>
-                      <TableCell>
-                          <Typography variant="body2" style={{ color: '#FFFFFF' }}>
-                          <strong>{tourDetails.locationName}</strong>    
-                          </Typography>
-                      </TableCell>
-
-                        <TableCell>
-                          <Typography variant="body2" style={{ color: '#FFFFFF' }}>
-                          <strong>{tourDetails.triplength}</strong>    
-                          </Typography>
-                      </TableCell>
-
-                      <TableCell>
+                    <TableCell>
                         <Typography variant="body2" style={{ color: '#FFFFFF' }}>
-                        <strong> {tourDetails.domesticOrInternational}  </strong>
-                        </Typography>  
-                    </TableCell>
-                      <TableCell>
-                        <Typography variant="body2" style={{ color: '#FFFFFF' }}>
-                        <strong> {changeDateToWords(new Date(tourDetails.startDate))}</strong>  
+                       End Date
                         </Typography>  
                     </TableCell>
                     <TableCell>
@@ -203,18 +198,27 @@ import {
                         <strong> {changeDateToWords(new Date(tourDetails.endDate))}</strong>  
                         </Typography>  
                     </TableCell>
-                    </TableRow>
-                                  
                     
-                      <TableRow>
-                      <TableCell>
+                    <TableCell>
                          <Typography variant="body2" style={{ color: '#FFFFFF' }}>
                       Package Cost/person
                         </Typography>   
                     </TableCell>
+                      <TableCell>
+                         <Typography variant="body2" style={{ color: '#FFFFFF' }}>
+                       <strong>{tourDetails.currency} {tourDetails.package_cost}</strong> 
+                        </Typography>
+                    </TableCell>
+                  </TableRow>
+                 <TableRow>
                     <TableCell>
                          <Typography variant="body2" style={{ color: '#FFFFFF' }}>
                       Max Tourist
+                        </Typography>
+                    </TableCell>
+                    <TableCell>
+                         <Typography variant="body2" style={{ color: '#FFFFFF' }}>
+                       <strong>{tourDetails.max_tourist}</strong> 
                         </Typography>
                     </TableCell>
                      <TableCell>
@@ -222,33 +226,37 @@ import {
                         Seats left    
                         </Typography>
                     </TableCell>
-                    </TableRow>
-                    <TableRow>
-                      <TableCell>
-                         <Typography variant="body2" style={{ color: '#FFFFFF' }}>
-                       <strong>{tourDetails.currency} {tourDetails.package_cost}</strong> 
-                        </Typography>
-                    </TableCell>
-                     <TableCell>
-                         <Typography variant="body2" style={{ color: '#FFFFFF' }}>
-                       <strong>{tourDetails.max_tourist}</strong> 
-                        </Typography>
-                    </TableCell>
-                     
-                       <TableCell>
+                    <TableCell>
                          <Typography variant="body2" style={{ color: '#FFFFFF' }}>
                           <strong>{tourDetails.seats_left}</strong>    
                         </Typography>
                     </TableCell>
                     </TableRow>
-                   
+                                       
                     <TableRow>
                      <TableCell>
                         <Typography variant="body2" style={{ color: '#FFFFFF' }}>
                       Itinerary Details: <strong>{tourDetails.itinerary} </strong>
                         </Typography>   
                     </TableCell>
+                     <TableCell>
+                        {/* <Typography variant="body2" style={{ color: '#FFFFFF' }}>
+                      Itinerary Details: <strong>{tourDetails.itinerary} </strong>
+                        </Typography>    */}
+                         <Image
+                                    style={{
+                                  borderColor: 'red',
+                                  borderWidth: 0,
+                                  height: 40,
+                                  width: 40,
+                                   resizeMode: 'contain'
+                        
+                                }}
+                                    source={plus} id="add" 
+                                    />
+                    </TableCell>
                    </TableRow>
+                  
                   </TableBody>
                   </Table>
                   </TableContainer>
@@ -291,19 +299,18 @@ import {
         </div> 
         
            
-                 </Grid>
-                    {notification ?
+
+                    {notification &&
                                 <div style={{position: 'fixed', top:70,right:0}} >    
                                 <SideBarNotification/> 
                              </div> 
-                             :<div></div>
-                              }
-            </div>:<div></div>
+                    }
+            </div>
                             }
                      
         </div>
         
-        </div>
+       
     );
   }
 

@@ -6,6 +6,16 @@
     color: #fff;
     width: 100%;
   }
+
+  .navbar-mobile {
+    display: flex;
+    justify-content: space-between;
+     flex-direction: 'column'; 
+    align-items: center;
+    background-color: #F5F5F5;
+    color: #fff;
+    width: 100%;
+  }
   
   .navbar-left .logo {
     font-size: 1.5rem;
@@ -87,6 +97,10 @@
   /* Example CSS */
     .navbar-sectioned-list-container {
       width: 100%;
+      flex-direction: 'column';
+    }
+     .navbar-sectioned-list-container-mobile {
+      width: 60%;
       flex-direction: 'column';
     }
 

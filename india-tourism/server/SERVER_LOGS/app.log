@@ -149,3 +149,93 @@ Sun Sep 27 2026 16:17:34 GMT-0400 (Eastern Daylight Saving Time): AxiosError: Re
 Sun Sep 27 2026 16:17:36 GMT-0400 (Eastern Daylight Saving Time): AxiosError: Request failed with status code 404
 Sun Sep 27 2026 16:19:27 GMT-0400 (Eastern Daylight Saving Time): AxiosError: Request failed with status code 404
 Sun Sep 27 2026 16:19:29 GMT-0400 (Eastern Daylight Saving Time): AxiosError: Request failed with status code 404
+Sun Oct 04 2026 16:18:30 GMT-0400 (Eastern Daylight Saving Time): MongooseError: Operation `cities.find()` buffering timed out after 10000ms
+Sun Oct 04 2026 16:18:30 GMT-0400 (Eastern Daylight Saving Time): MongooseError: Operation `states.find()` buffering timed out after 10000ms
+Sun Oct 04 2026 16:18:30 GMT-0400 (Eastern Daylight Saving Time): MongooseError: Operation `users.find()` buffering timed out after 10000ms
+    at Timeout.<anonymous> (C:\Users\royco\India-tourism-App\India-Tours\india-tourism\server\node_modules\mongoose\lib\drivers\node-mongodb-native\collection.js:187:23)
+    at listOnTimeout (node:internal/timers:594:17)
+    at process.processTimers (node:internal/timers:529:7)
+Mon Oct 05 2026 17:58:02 GMT-0400 (Eastern Daylight Saving Time): AggregateError
+    at AxiosError.from (C:\Users\royco\India-tourism-App\India-Tours\india-tourism\server\node_modules\axios\dist\node\axios.cjs:857:14)
+    at RedirectableRequest.handleRequestError (C:\Users\royco\India-tourism-App\India-Tours\india-tourism\server\node_modules\axios\dist\node\axios.cjs:3169:25)
+    at RedirectableRequest.emit (node:events:518:28)
+    at eventHandlers.<computed> (C:\Users\royco\India-tourism-App\India-Tours\india-tourism\server\node_modules\follow-redirects\index.js:49:24)
+    at ClientRequest.emit (node:events:518:28)
+    at emitErrorEvent (node:_http_client:104:11)
+    at Socket.socketErrorListener (node:_http_client:518:5)
+    at Socket.emit (node:events:518:28)
+    at emitErrorNT (node:internal/streams/destroy:170:8)
+    at emitErrorCloseNT (node:internal/streams/destroy:129:3)
+    at Axios.request (C:\Users\royco\India-tourism-App\India-Tours\india-tourism\server\node_modules\axios\dist\node\axios.cjs:4258:41)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async C:\Users\royco\India-tourism-App\India-Tours\india-tourism\server\server.js:321:5
+Mon Oct 05 2026 17:58:02 GMT-0400 (Eastern Daylight Saving Time): AggregateError
+    at AxiosError.from (C:\Users\royco\India-tourism-App\India-Tours\india-tourism\server\node_modules\axios\dist\node\axios.cjs:857:14)
+    at RedirectableRequest.handleRequestError (C:\Users\royco\India-tourism-App\India-Tours\india-tourism\server\node_modules\axios\dist\node\axios.cjs:3169:25)
+    at RedirectableRequest.emit (node:events:518:28)
+    at eventHandlers.<computed> (C:\Users\royco\India-tourism-App\India-Tours\india-tourism\server\node_modules\follow-redirects\index.js:49:24)
+    at ClientRequest.emit (node:events:518:28)
+    at emitErrorEvent (node:_http_client:104:11)
+    at Socket.socketErrorListener (node:_http_client:518:5)
+    at Socket.emit (node:events:518:28)
+    at emitErrorNT (node:internal/streams/destroy:170:8)
+    at emitErrorCloseNT (node:internal/streams/destroy:129:3)
+    at Axios.request (C:\Users\royco\India-tourism-App\India-Tours\india-tourism\server\node_modules\axios\dist\node\axios.cjs:4258:41)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async C:\Users\royco\India-tourism-App\India-Tours\india-tourism\server\server.js:321:5
+Mon Oct 05 2026 17:58:02 GMT-0400 (Eastern Daylight Saving Time): AggregateError
+    at AxiosError.from (C:\Users\royco\India-tourism-App\India-Tours\india-tourism\server\node_modules\axios\dist\node\axios.cjs:857:14)
+    at RedirectableRequest.handleRequestError (C:\Users\royco\India-tourism-App\India-Tours\india-tourism\server\node_modules\axios\dist\node\axios.cjs:3169:25)
+    at RedirectableRequest.emit (node:events:518:28)
+    at eventHandlers.<computed> (C:\Users\royco\India-tourism-App\India-Tours\india-tourism\server\node_modules\follow-redirects\index.js:49:24)
+    at ClientRequest.emit (node:events:518:28)
+    at emitErrorEvent (node:_http_client:104:11)
+    at Socket.socketErrorListener (node:_http_client:518:5)
+    at Socket.emit (node:events:518:28)
+    at emitErrorNT (node:internal/streams/destroy:170:8)
+    at emitErrorCloseNT (node:internal/streams/destroy:129:3)
+    at Axios.request (C:\Users\royco\India-tourism-App\India-Tours\india-tourism\server\node_modules\axios\dist\node\axios.cjs:4258:41)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async C:\Users\royco\India-tourism-App\India-Tours\india-tourism\server\server.js:321:5
+Mon Oct 05 2026 19:46:54 GMT-0400 (Eastern Daylight Saving Time): AggregateError
+    at AxiosError.from (C:\Users\royco\India-tourism-App\India-Tours\india-tourism\server\node_modules\axios\dist\node\axios.cjs:857:14)
+    at RedirectableRequest.handleRequestError (C:\Users\royco\India-tourism-App\India-Tours\india-tourism\server\node_modules\axios\dist\node\axios.cjs:3169:25)
+    at RedirectableRequest.emit (node:events:518:28)
+    at eventHandlers.<computed> (C:\Users\royco\India-tourism-App\India-Tours\india-tourism\server\node_modules\follow-redirects\index.js:49:24)
+    at ClientRequest.emit (node:events:518:28)
+    at emitErrorEvent (node:_http_client:104:11)
+    at Socket.socketErrorListener (node:_http_client:518:5)
+    at Socket.emit (node:events:518:28)
+    at emitErrorNT (node:internal/streams/destroy:170:8)
+    at emitErrorCloseNT (node:internal/streams/destroy:129:3)
+    at Axios.request (C:\Users\royco\India-tourism-App\India-Tours\india-tourism\server\node_modules\axios\dist\node\axios.cjs:4258:41)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async C:\Users\royco\India-tourism-App\India-Tours\india-tourism\server\server.js:321:5
+Mon Oct 05 2026 19:46:54 GMT-0400 (Eastern Daylight Saving Time): AggregateError
+    at AxiosError.from (C:\Users\royco\India-tourism-App\India-Tours\india-tourism\server\node_modules\axios\dist\node\axios.cjs:857:14)
+    at RedirectableRequest.handleRequestError (C:\Users\royco\India-tourism-App\India-Tours\india-tourism\server\node_modules\axios\dist\node\axios.cjs:3169:25)
+    at RedirectableRequest.emit (node:events:518:28)
+    at eventHandlers.<computed> (C:\Users\royco\India-tourism-App\India-Tours\india-tourism\server\node_modules\follow-redirects\index.js:49:24)
+    at ClientRequest.emit (node:events:518:28)
+    at emitErrorEvent (node:_http_client:104:11)
+    at Socket.socketErrorListener (node:_http_client:518:5)
+    at Socket.emit (node:events:518:28)
+    at emitErrorNT (node:internal/streams/destroy:170:8)
+    at emitErrorCloseNT (node:internal/streams/destroy:129:3)
+    at Axios.request (C:\Users\royco\India-tourism-App\India-Tours\india-tourism\server\node_modules\axios\dist\node\axios.cjs:4258:41)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async C:\Users\royco\India-tourism-App\India-Tours\india-tourism\server\server.js:321:5
+Mon Oct 05 2026 19:46:54 GMT-0400 (Eastern Daylight Saving Time): AggregateError
+    at AxiosError.from (C:\Users\royco\India-tourism-App\India-Tours\india-tourism\server\node_modules\axios\dist\node\axios.cjs:857:14)
+    at RedirectableRequest.handleRequestError (C:\Users\royco\India-tourism-App\India-Tours\india-tourism\server\node_modules\axios\dist\node\axios.cjs:3169:25)
+    at RedirectableRequest.emit (node:events:518:28)
+    at eventHandlers.<computed> (C:\Users\royco\India-tourism-App\India-Tours\india-tourism\server\node_modules\follow-redirects\index.js:49:24)
+    at ClientRequest.emit (node:events:518:28)
+    at emitErrorEvent (node:_http_client:104:11)
+    at Socket.socketErrorListener (node:_http_client:518:5)
+    at Socket.emit (node:events:518:28)
+    at emitErrorNT (node:internal/streams/destroy:170:8)
+    at emitErrorCloseNT (node:internal/streams/destroy:129:3)
+    at Axios.request (C:\Users\royco\India-tourism-App\India-Tours\india-tourism\server\node_modules\axios\dist\node\axios.cjs:4258:41)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async C:\Users\royco\India-tourism-App\India-Tours\india-tourism\server\server.js:321:5

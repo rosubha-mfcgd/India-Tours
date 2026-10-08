@@ -17,6 +17,7 @@ import {
    import Collapse from '@mui/material/Collapse';
 import { getCategories,updateAsFavorite,getImageById,getRecommendedTours} 
 from "../admin/admin";
+import { useDeviceType } from '../admin/checkDeviceType';
 import { NavContext } from '../navigationContext/navigationContext';
 import SideBarNotification from './sideBarNotification'
 import FavoriteIcon from '@mui/icons-material/Favorite';
@@ -30,6 +31,7 @@ const NavBar = ({access_token,triggerDisplayOptionsByCatId,
     
     const navigate = useNavigate();
      const location = useLocation();
+      const deviceType = useDeviceType();
     const { notification,loading, setLoading} = useContext(NavContext);
     const [images, setImages] = useState([]);
     const [tourimages, setTourimages] = useState([]);
@@ -230,7 +232,8 @@ const NavBar = ({access_token,triggerDisplayOptionsByCatId,
                     </IconButton>  */}
                     
             <Collapse in={packageTripSectionOpen} timeout="auto" unmountOnExit>
-             <div className="navbar-sectioned-list-container">
+             <div className={deviceType === 'mobile' ? "navbar-sectioned-list-container-mobile":
+             "navbar-sectioned-list-container"}>
                 
                 {
                 recommendedTripSections && recommendedTripSections.length>0 ?
