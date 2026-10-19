@@ -14,13 +14,15 @@ import TripDetails from "./tripDetails";
 import PreviewForm from "./previewbooking";
 import CustomBookingForm from "./custombookingForm"; 
 import EditBookingForm from "./editbookingForm";
-import { getCities } from "../admin/admin";
+import { getCities,openAdminPage } from "../admin/admin";
 import { WhatsAppWidget } from 'react-whatsapp-widget';
 import 'react-whatsapp-widget/dist/index.css'; // Import the default styles
 
 const Welcome =()=>{
 
      const location = useLocation();
+    
+    
      const { name,email,mobile,access_token} = location.state || {};
      
      const [showTrips,setShowTrips] = useState(false);
@@ -102,7 +104,13 @@ const Welcome =()=>{
         {
          
           setProductID(productId);
-          setShowCategories(true);
+          if(productId !== 4)
+          {
+            setShowCategories(true);
+          }else{
+            //console.log('REACT_APP_TOUR_OPERATOR_ADMIN_URL...',process.env.REACT_APP_TOUR_OPERATOR_ADMIN_URL);
+            openAdminPage();
+          }
         }else{
           setShowCategories(false);
         }

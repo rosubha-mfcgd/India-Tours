@@ -223,5 +223,7 @@ const getTourManagerById = async(req,res,retries = 3, delay = 1000) =>{
                 {"errormessage":"could not find planned operator for operator id ",tourManagerId});
     }
 }
+
+
 module.exports = {getCategories,getToursByCategoryId,updateFavoriteCategory,
     getProducts,getTourManagers,getTourItenerariesForTrip,getRecommendedTours}

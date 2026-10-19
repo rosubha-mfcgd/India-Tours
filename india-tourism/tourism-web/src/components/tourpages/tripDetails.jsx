@@ -52,6 +52,19 @@ import {
             return detailFieldArr;
             }
         }
+    
+      function removeNextLineCharacterFromString(mixedString)
+      {
+       // This targets both \r and \n, and collapses multiple back-to-back newlines into a single space
+        const cleanString = mixedString.replace(/\n/g, " ");
+
+        console.log(cleanString);
+        // Output: "Line1 Line2 Line3"
+        return cleanString;
+      }
+
+
+
         function changeDateToWords(dateObject)
      {
         const date = new Date(dateObject);
@@ -94,7 +107,7 @@ import {
     return (
      
   
-        <div className="grid-container">
+        <div>
       
         {loading ?
           <div>
@@ -114,153 +127,203 @@ import {
         image &&
             <div className="div-align-center">
         
-              
-                 <Card className="card">
-                    <CardMedia
+         
+      <CardMedia
         component="img"
-        style={{ height: "200px",width: "350px" }}
-        image={image}
+        style={{ height: "200px",width: "350px" , objectFit: 'cover', // or 'contain'
+    objectPosition: 'center',
+    display: 'block',
+    margin: '0 auto'}}
+    image={image}
         alt={tourDetails.locationName}
       />
-           </Card>
-            <Typography variant="body2" style={{ color: '#FFFFFF' }}>
+           <Grid 
+  container 
+  columnSpacing={1}
+  justifyContent="center"  /* Centers horizontally */
+  alignItems="center"      /* Centers vertically */
+  >
+            <Grid item xs={6}>
+                     <Typography variant="body2" style={{ color: '#FFFFFF' }}>
                            {tourDetails.description}
                          </Typography>
+                 </Grid>
+                 </Grid>
+                 <Grid 
+  container 
+  columnSpacing={1}
+  justifyContent="center"  /* Centers horizontally */
+  alignItems="center"      /* Centers vertically */
+   >
+                     <Grid item xs={6}>
             <Typography variant="body2" style={{ color: '#FFFFFF' }}>
                           This tour is operated by :- <strong>{tourDetails.tourManagerName}</strong>
-                         </Typography>
+                      </Typography>
+                   </Grid>
+                   </Grid>
+                   <Grid 
+  container 
+  columnSpacing={1}
+  justifyContent="center"  /* Centers horizontally */
+  alignItems="center"      /* Centers vertically */
+  >
+                  <Grid item xs={6}>
             <Typography variant="body2" style={{ color: '#FFFFFF' }}>
                 Operator Contact :- <strong>{tourDetails.contact}</strong>
              </Typography>
+             </Grid>
+             </Grid>
+             <Grid 
+  container 
+  columnSpacing={1} 
+  justifyContent="center" 
+  alignItems="center"     
+  >
+             <Grid item xs={6}>
+             
              <Typography variant="body2" style={{ color: '#FFFFFF' }}>
                     Operator secondary Contact :- {tourDetails.secondarycontact}
              </Typography>
-
-              
-                <div>
-                    <TableContainer sx={{boxShadow: 'none'}}>
-                 <Table sx={{ '& .MuiTableCell-root': { borderBottom: 'none' } }}>
-                    <TableBody>
-                       
-                        <TableRow>
-                    <TableCell>
+             </Grid>   
+             </Grid>          
+                 <Grid 
+  container 
+  columnSpacing={1} 
+  justifyContent="center"  
+  alignItems="center"
+  style={{ minHeight: '10vh' }}      
+  >
+   <Grid item xs={6}>
                         <Typography variant="body2" style={{ color: '#FFFFFF' }}>
                         LocationName   
                         </Typography>
-                        </TableCell>
-                         <TableCell>
+                       </Grid>
+                         <Grid item xs={6}>
                           <Typography variant="body2" style={{ color: '#FFFFFF' }}>
                           <strong>{tourDetails.locationName}</strong>    
                           </Typography>
-                      </TableCell>
-                       <TableCell>
+                     </Grid>
+                       <Grid item xs={6}>
                         <Typography variant="body2" style={{ color: '#FFFFFF' }}>
                        Trip Length 
                         </Typography>  
-                    </TableCell>
-                           <TableCell>
+                     </Grid>
+                      <Grid item xs={6}>
                           <Typography variant="body2" style={{ color: '#FFFFFF' }}>
                           <strong>{tourDetails.triplength}</strong>    
                           </Typography>
-                      </TableCell>
-                        </TableRow>
+                      </Grid>
                        
-                        <TableRow>
-                      <TableCell>
+                    <Grid item xs={6}>
                         <Typography variant="body2" style={{ color: '#FFFFFF' }}>
                        Trip Type
                         </Typography>  
-                    </TableCell>
-                         <TableCell>
+                    </Grid>
+                    <Grid item xs={6}>
                         <Typography variant="body2" style={{ color: '#FFFFFF' }}>
                         <strong> {tourDetails.domesticOrInternational}  </strong>
                         </Typography>  
-                    </TableCell>
-                    <TableCell>
+                    </Grid>
+                    </Grid>
+                    <Grid 
+  container 
+  columnSpacing={1}
+ justifyContent="center"  /* Centers horizontally */
+  alignItems="center"      /* Centers vertically */
+ >
+                    <Grid item xs={6}>
                         <Typography variant="body2" style={{ color: '#FFFFFF' }}>
                        Start Date
                         </Typography>  
-                    </TableCell>
-                    <TableCell>
+                    </Grid>
+                    <Grid item xs={6}>
                         <Typography variant="body2" style={{ color: '#FFFFFF' }}>
                         <strong> {changeDateToWords(new Date(tourDetails.startDate))}</strong>  
                         </Typography>  
-                    </TableCell>
-                    </TableRow>
-                    <TableRow>
-                    <TableCell>
+                    </Grid>
+                    <Grid item xs={6}>
                         <Typography variant="body2" style={{ color: '#FFFFFF' }}>
                        End Date
                         </Typography>  
-                    </TableCell>
-                    <TableCell>
+                    </Grid>
+                               
+                    <Grid item xs={6}>
                         <Typography variant="body2" style={{ color: '#FFFFFF' }}>
                         <strong> {changeDateToWords(new Date(tourDetails.endDate))}</strong>  
                         </Typography>  
-                    </TableCell>
-                    
-                    <TableCell>
+                   </Grid>
+            </Grid>
+<Grid 
+  container 
+  columnSpacing={1}
+  justifyContent="center"  /* Centers horizontally */
+  alignItems="center"      /* Centers vertically */
+  style={{ minHeight: '10vh' }} 
+  >
+                     <Grid item xs={6}>
                          <Typography variant="body2" style={{ color: '#FFFFFF' }}>
                       Package Cost/person
                         </Typography>   
-                    </TableCell>
-                      <TableCell>
+                    </Grid>
+                       <Grid item xs={6}>
                          <Typography variant="body2" style={{ color: '#FFFFFF' }}>
                        <strong>{tourDetails.currency} {tourDetails.package_cost}</strong> 
                         </Typography>
-                    </TableCell>
-                  </TableRow>
-                 <TableRow>
-                    <TableCell>
+                    </Grid>
+                    <Grid item xs={6}>
                          <Typography variant="body2" style={{ color: '#FFFFFF' }}>
                       Max Tourist
                         </Typography>
-                    </TableCell>
-                    <TableCell>
+                    </Grid>
+                    <Grid item xs={6}>
                          <Typography variant="body2" style={{ color: '#FFFFFF' }}>
                        <strong>{tourDetails.max_tourist}</strong> 
                         </Typography>
-                    </TableCell>
-                     <TableCell>
+                    </Grid>
+                     <Grid item xs={6}>
                          <Typography variant="body2" style={{ color: '#FFFFFF' }}>
                         Seats left    
                         </Typography>
-                    </TableCell>
-                    <TableCell>
+                    </Grid>
+                    <Grid item xs={6}>
                          <Typography variant="body2" style={{ color: '#FFFFFF' }}>
                           <strong>{tourDetails.seats_left}</strong>    
                         </Typography>
-                    </TableCell>
-                    </TableRow>
-                                       
-                    <TableRow>
-                     <TableCell>
+                   </Grid>
+</Grid>
+
+<Grid 
+  container 
+  columnSpacing={1}
+  justifyContent="center"  /* Centers horizontally */
+  alignItems="center"      /* Centers vertically */
+       
+ >
+
+                   <Grid >
                         <Typography variant="body2" style={{ color: '#FFFFFF' }}>
-                      Itinerary Details: <strong>{tourDetails.itinerary} </strong>
-                        </Typography>   
-                    </TableCell>
-                     <TableCell>
-                        {/* <Typography variant="body2" style={{ color: '#FFFFFF' }}>
-                      Itinerary Details: <strong>{tourDetails.itinerary} </strong>
-                        </Typography>    */}
-                         <Image
+                      Itinerary Details: 
+                        </Typography>  
+                         <Typography variant="body2" style={{ color: '#FFFFFF' }}>
+                           {tourDetails.itinerary.split('\n').map((line,index)=>(
+                          <p key={index}><strong>{removeNextLineCharacterFromString(line)}</strong></p>
+                      ))}    
+                        </Typography> 
+                    </Grid>
+                     
+                     {/* <Grid item xs={6}>
+                           <Image
                                     style={{
                                   borderColor: 'red',
                                   borderWidth: 0,
                                   height: 40,
                                   width: 40,
-                                   resizeMode: 'contain'
-                        
                                 }}
                                     source={plus} id="add" 
                                     />
-                    </TableCell>
-                   </TableRow>
-                  
-                  </TableBody>
-                  </Table>
-                  </TableContainer>
-                  </div>
+                    </Grid> */}
+                  </Grid>
+                 
                   <div className = "center-container" style={{
                     width: "fit-content",
                     margin: "auto",

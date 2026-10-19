@@ -435,7 +435,11 @@ export const updateBookingsByBookingId = async(data) =>{
 return res_data;
 }
 
-
+export const openAdminPage = async() =>{
+     const tourOperatorUrl = process.env.REACT_APP_TOUR_OPERATOR_ADMIN_URL;
+      console.log('tourOperatorUrl...',tourOperatorUrl);
+      window.open(tourOperatorUrl, "_blank", "noopener,noreferrer");
+}
  
 export const getApiAccessToken= async() =>{
   try{
