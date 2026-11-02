@@ -1,6 +1,7 @@
 import React, { useState,useContext, useEffect } from "react";  
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import NavBar from '../navigationTabs/navBar';
+import PersonalTrip from '../navigationTabs/personalTrip';
 import Product from '../navigationTabs/products';
 import DisplayOptions from '../navigationTabs/showOptions'
 import Header from '../header/header';
@@ -32,6 +33,7 @@ const Welcome =()=>{
      const [showCategories,setShowCategories] = useState(false);
      const [previewbooking,setPreviewbooking] = useState(false);
      const [searchOptions,setSearchOptions] = useState(false);
+     const [personalTrip,setPersonalTrip] = useState(false);
     const [userBooking,setUserBooking] = useState(false);
      const [cityList,setCityList] = useState([]);
      const[tripListParam,setTripListParam] = useState('');
@@ -49,6 +51,8 @@ const Welcome =()=>{
     console.log('showCategories....',showCategories);
     console.log('previewbooking....',previewbooking);
     
+
+
     const triggerDisplayOptionsByCatId = (categoryId) =>{
       console.log('categoryId....',categoryId)
       setShowTripDetails(false);
@@ -78,6 +82,13 @@ const Welcome =()=>{
 
         }
      }
+     const triggerPersonalTrip = async() =>{
+       setShowCategories(false);
+          setPersonalTrip(true);
+         setShowTrips(false);
+     }
+
+
     const triggerDisplayBookings = async(data,tourDetailInfo) =>{
       
        console.log('data is...',data);
@@ -299,7 +310,8 @@ const triggerEditBookingForm = async(tourDetailInfo) =>{
              <NavBar access_token={access_token} 
              showDetails={showDetails}
              triggerDisplayOptionsByCatId={triggerDisplayOptionsByCatId} 
-             productID={productID} cityList={cityList}/>
+             productID={productID} cityList={cityList} 
+             triggerPersonalTrip={triggerPersonalTrip}/>
              :(searchOptions)?
              <DisplayOptions access_token={access_token} productID={productID} 
              categoryID={categoryID} triggerDisplayTasksByOptionID={triggerDisplayTasksByOptionID}/>
@@ -312,7 +324,11 @@ const triggerEditBookingForm = async(tourDetailInfo) =>{
             : (userBooking)?
             <CustomBookingForm access_token={access_token} cityList = {cityList}
             triggerDisplayOptionsByCatId={triggerDisplayOptionsByCatId}/>
-            : <Product access_token={access_token} 
+            :(personalTrip)? 
+            <PersonalTrip access_token={access_token} cityList = {cityList}
+            setShowCategories={setShowCategories} setPersonalTrip = {setPersonalTrip}
+            />
+            :<Product access_token={access_token} 
              triggerDisplayTripsByProductId={triggerDisplayTripsByProductId} />
          }
           </Layout>

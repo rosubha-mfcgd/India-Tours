@@ -11,7 +11,7 @@ import Loading from "../Utilities/Loading/Loading.js";
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import { useNavigate } from 'react-router-dom';
 import {signupUser,loginUser,getAuthAccessToken} from '../admin/admin';
-
+import { useDeviceType } from '../admin/checkDeviceType';
 
 import {
     TextField,  
@@ -46,7 +46,7 @@ const LoginSignup =() => {
         const [buttonclick, setButtonclick] = useState(false);
         const [errorMessage, setErrorMessage] = useState('');
         const clientId = process.env.REACT_APP_CLIENT_ID;
-        
+        const deviceType = useDeviceType();
      const handleNameChange  = (event) =>{
             setName(event.target.value);
             }
@@ -207,51 +207,88 @@ const LoginSignup =() => {
                <div className = "container">
                
                         <div className='header'>
-                            <div className='text'>{action}</div>
+                            <div className="text">Mitram-{action}</div>
                             
                             <div className='underline'></div>
 
                         </div>
-                         {errorMessage ? 
-                         (<div className='error-div-at-top'>{errorMessage}</div>):
-                        (<div></div>)
+                         {errorMessage && 
+                         (<div className='error-div-at-top'>{errorMessage}</div>)
                     }
-                        <div className='inputs'>
+                        <div className="inputs">
                         
                         {
                         action === 'Sign Up'?
-
-                        
                         <div>
-                            <div className='input'>
-                            <img src={user_icon} alt=""/>
+                            <div className={deviceType === 'mobile' ? "input" : "input"}>
+                            <img src={user_icon} height={30} alt=""/>
                             <TextField label="Name" value = {name} onChange = {handleNameChange} 
-                            variant="outlined"/>
+                            variant="outlined" sx={{
+                                 width: '100%',
+    maxWidth: '320px', // Standard mobile input width
+        '& .MuiOutlinedInput-root': {
+          borderRadius: '100px', // Forces the borders into a pill shape
+          paddingLeft: '8px',    // Extra inner spacing for the curves
+          paddingRight: '8px',
+          },
+    }}/>
                         </div>
-                        <div className='input'>
-                            <img src={mobile_icon} alt=""/>
+                        <div className= "input">
+                            <img src={mobile_icon} height={30} alt=""/>
                             <TextField label="Mobile" value = {mobile} onChange = {handleMobileChange} 
-                            variant="outlined"/>
+                            variant="outlined" sx={{
+                                   width: '100%',
+    maxWidth: '320px', // Standard mobile input width
+        '& .MuiOutlinedInput-root': {
+          borderRadius: '80px', // Forces the borders into a pill shape
+          paddingLeft: '8px',    // Extra inner spacing for the curves
+          paddingRight: '8px',
+        },
+    }}/>
                         </div>
-                        <div className='input' >
-                            <img src={email_icon} alt=""/>
+                        <div className={deviceType === 'mobile' ? "input" : "input"} >
+                            <img src={email_icon} height={30} alt=""/>
                             <TextField label="Email" value = {email} onChange = {handleEmailChange} 
-                            variant="outlined"/>
+                            variant="outlined" sx={{
+                                   width: '100%',
+    maxWidth: '320px', // Standard mobile input width
+        '& .MuiOutlinedInput-root': {
+          borderRadius: '100px', // Forces the borders into a pill shape
+          paddingLeft: '8px',    // Extra inner spacing for the curves
+          paddingRight: '8px',
+        },
+    }}/>
                         </div>
                     </div>:
                         <div>
-                            <div className='input'>
-                            <img src={mobile_icon} alt=""/>
+                            <div className={deviceType === 'mobile' ? "input-mobile" : "input-mobile"}>
+                            <img src={mobile_icon} height={30} alt=""/>
                             <TextField label="Mobile" value = {mobile} onChange = {handleMobileChange} 
-                            variant="outlined"/>
+                            variant="outlined" sx={{
+                                   width: '100%',
+    maxWidth: '320px', // Standard mobile input width
+        '& .MuiOutlinedInput-root': {
+          borderRadius: '100px', // Forces the borders into a pill shape
+          paddingLeft: '8px',    // Extra inner spacing for the curves
+          paddingRight: '8px',
+        },
+    }}/>
                         </div>
                         <br/>
                         <div ALIGN = "center">OR</div>
                         <br/>
-                        <div className='input' >
-                            <img src={email_icon} alt=""/>
+                        <div className={deviceType === 'mobile' ? "input-mobile" : "input-mobile"} >
+                            <img src={email_icon} height={30} alt=""/>
                             <TextField label="Email" value = {email} onChange = {handleEmailChange} 
-                            variant="outlined"/>
+                            variant="outlined" sx={{
+                                   width: '100%',
+    maxWidth: '320px', // Standard mobile input width
+        '& .MuiOutlinedInput-root': {
+          borderRadius: '100px', // Forces the borders into a pill shape
+          paddingLeft: '8px',    // Extra inner spacing for the curves
+          paddingRight: '8px',
+        },
+    }}/>
                         </div>
                         </div>
                         }
@@ -270,14 +307,14 @@ const LoginSignup =() => {
                         </div>:<br/>
                         }
 
-                        {action === 'Login'?
+                        {action === 'Login' &&
                         <div className='submit-container'>
                     <div className="submit" onClick={loginUsertoApp}>Send Otp</div>
                     <div className={action==="Login"?"submit gray":"submit"} 
                         onClick={()=>{setAction("Sign Up");
                         navigate('-1');
                     }}>Cancel</div>
-                    </div>:<div></div>
+                    </div>
                         }
                     </div>
                     )}

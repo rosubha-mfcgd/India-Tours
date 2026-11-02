@@ -1,0 +1,76 @@
+.searchbar{
+    display: 'flex'; 
+        gap: '10px'; 
+        align-Items: 'center'; 
+        flex-Wrap: 'wrap';
+        flex-Direction: 'column';
+        margin-Bottom: '20px';
+        padding: '15px';
+        background-Color: '#f5f5f5';
+        border-Radius: '8px'
+}
+
+/* Style the input text box */
+.custom-input-style {
+  padding: 10px 14px;
+  border: 2px solid #3b82f6;
+  border-radius: 8px;
+  font-size: 16px;
+  outline: none;
+  gap: '16px';
+}
+
+/* Style the main calendar popup container */
+.custom-calendar-style {
+  border-radius: 12px;
+  box-shadow: 0px 4px 20px rgba(0, 0, 0, 0.1);
+  font-family: 'Arial', sans-serif;
+  border: none;
+}
+
+/* Change the background color of the header (month/year section) */
+.react-datepicker__header {
+  background-color: #f3f4f6;
+  border-bottom: 1px solid #e5e7eb;
+}
+
+/* Change style for the currently selected day */
+.react-datepicker__day--selected {
+  background-color: #3b82f6 !important;
+  color: white !important;
+  border-radius: 50%;
+}
+
+/* Change style for days on hover */
+.react-datepicker__day:hover {
+  background-color: #e0f2fe;
+  border-radius: 50%;
+}
+
+.button{
+float:right;
+    margin:2px;
+}
+.select.custom-expanded {
+    -webkit-appearance: none; /* Removes native Chrome/Safari styling */
+    -moz-appearance: none;    /* Removes native Firefox styling */
+    appearance: none;         /* Removes standard styling */
+    
+    padding-right: 40px;      /* Makes room for a larger, custom arrow */
+    background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://w3.org" viewBox="0 0 24 24" fill="black"><path d="M7 10l5 5 5-5z"/></svg>');
+    background-repeat: no-repeat;
+    background-position: right 12px center;
+    background-size: 20px;    /* Expands the size of the arrow icon */
+     width: 100%;
+  padding: 10px;
+}
+
+.select-dropdown{
+    width: '100%';
+    padding: '12px';
+    font-Size: '16px';
+    border-Radius: '4px';
+    border: '1px solid rgba(0, 0, 0, 0.23)';
+    outline: 'none';
+    box-Sizing: 'border-box'
+}

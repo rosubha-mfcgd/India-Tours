@@ -35,7 +35,7 @@ import {
   const navigate = useNavigate();
 
   const [image,setImage] = useState(null);
-
+  const [showItinerary, setShowItinerary] = useState(false);
   const[showReview, setShowReview] = useState(true);
         const goBack = () =>{
             navigate(-1);
@@ -62,10 +62,13 @@ import {
         // Output: "Line1 Line2 Line3"
         return cleanString;
       }
+      
+      function handleItinerary() 
+      {
+          showItinerary ? setShowItinerary(false):setShowItinerary(true);
+      }
 
-
-
-        function changeDateToWords(dateObject)
+      function changeDateToWords(dateObject)
      {
         const date = new Date(dateObject);
         console.log('date....',date)
@@ -302,13 +305,33 @@ import {
 
                    <Grid >
                         <Typography variant="body2" style={{ color: '#FFFFFF' }}>
-                      Itinerary Details: 
-                        </Typography>  
+                      Itinerary Details: {
+                          showItinerary ?
+                          <Button
+                              variant="text" // Or 'contained', 'outlined'
+                              href="#"
+                              onClick={handleItinerary}
+                            >
+                              Hide
+                            </Button>:
+                            <Button
+                              variant="text" // Or 'contained', 'outlined'
+                              href="#"
+                              onClick={handleItinerary}
+                            >
+                             Show
+                            </Button>
+                        } 
+                        </Typography> 
+                        
+                        
+                        {showItinerary &&
                          <Typography variant="body2" style={{ color: '#FFFFFF' }}>
                            {tourDetails.itinerary.split('\n').map((line,index)=>(
                           <p key={index}><strong>{removeNextLineCharacterFromString(line)}</strong></p>
                       ))}    
                         </Typography> 
+                      }
                     </Grid>
                      
                      {/* <Grid item xs={6}>

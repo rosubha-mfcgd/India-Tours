@@ -9,6 +9,7 @@ import {
     Box,
     Card,
     Grid,
+    Link,
     Typography,
     CardMedia,
     CardContent,
@@ -21,12 +22,11 @@ import { useDeviceType } from '../admin/checkDeviceType';
 import { NavContext } from '../navigationContext/navigationContext';
 import SideBarNotification from './sideBarNotification'
 import FavoriteIcon from '@mui/icons-material/Favorite';
-
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
 
-const NavBar = ({access_token,triggerDisplayOptionsByCatId,
-    productID,showDetails}) =>{
+const NavBar = ({access_token,showDetails,triggerDisplayOptionsByCatId,
+    productID,cityList,triggerPersonalTrip}) =>{
 
     
     const navigate = useNavigate();
@@ -39,13 +39,13 @@ const NavBar = ({access_token,triggerDisplayOptionsByCatId,
      const[recommendedtours,setRecommendedtours] = useState([])
      
     const [sections, setSections] = useState([])
-      const [personalTripItems, setPersonalTripItems] = useState([])
+    const [personalTripItems, setPersonalTripItems] = useState([])
     const [personalTripsections, setPersonalTripsections] = useState([])
     const [recommendedTripSections, setRecommendedTripSections] = useState([])
-     const [packageTripSectionOpen, setPackageTripSectionOpen] = useState(true);
-     const [personalTripSectionOpen, setpersonalTripSectionOpen] = useState(true);
+    const [packageTripSectionOpen, setPackageTripSectionOpen] = useState(true);
+    const [personalTripSectionOpen, setpersonalTripSectionOpen] = useState(true);
 
-      const [personalTripOpen, setPersonalTripOpen] = useState(true);
+      
  
   const handleToggle = () => {
     setPackageTripSectionOpen(!packageTripSectionOpen);
@@ -87,10 +87,10 @@ const NavBar = ({access_token,triggerDisplayOptionsByCatId,
                         console.log('could not update favorite')
                     }
        }
-
+       //Fetches the category image from file id
        const getCategoryImageFromFileId = async(imageid,bucketname) =>{
 
-        console.log('image id is.... ',imageid)
+                console.log('image id is.... ',imageid)
                    if(imageid != null){
                     
                        let imageData = await getImageById(imageid,bucketname);
@@ -174,10 +174,7 @@ const NavBar = ({access_token,triggerDisplayOptionsByCatId,
                             data:recommendedtours}])
                        setLoading(false);
                     }
-                    
-                   
-                   
-                };
+        };
 
               
                 if(items && items.length===0)
@@ -241,9 +238,16 @@ const NavBar = ({access_token,triggerDisplayOptionsByCatId,
                     <div key={recommendedTripSection.title} className="navbar-section-group">
                         
                              <header className="app-header">
-                                <div className="header-content">
+                                <Grid container spacing={2}>
+                                <Grid size={{ xs: 12, md: 6 }} className="header-content">
                            <h1>{recommendedTripSection.title}</h1>
-                           </div>
+                           </Grid>
+                           <Grid>
+                           <Link variant="contained" onClick={()=>triggerPersonalTrip()}>
+                                    Click here to plan your solo/family trip
+                            </Link>
+                           </Grid>
+                            </Grid>
                            </header>
                             
                          <Grid container spacing={0.5}  

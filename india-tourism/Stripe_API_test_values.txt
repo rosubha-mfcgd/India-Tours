@@ -1,0 +1,28 @@
+To test your Stripe integration, you must use Stripe Sandboxes or Test Mode, authenticated with your Test API Keys (which begin with sk_test_ or pk_test_). This allows you to simulate transactions safely without moving actual currency.
+
+💳 Standard Test Card Numbers
+
+Use the following credit card numbers in your test environment to simulate specific payment responses. For any of these cards, you can use any future Expiration Date and any 3-digit CVC code.
+
+Card Number	Card Brand	Simulated Result
+4242 4242 4242 4242	Visa	Successful Payment
+5555 5555 5555 4444	Mastercard	Successful Payment
+4000 0000 0000 0027	Visa	Declined: Your card has expired.
+4000 0000 0000 0010	Visa	Declined: Insufficient funds.
+4000 0000 0000 3021	Visa	Triggers 3D Secure (3DS) authentication flow.
+
+
+🛠️ Other Test Data & Magic Values
+
+Stripe utilizes specialized "magic tokens" to test specific API features beyond basic card processing:
+• Stripe Billing (Subscriptions): Use Test Clocks to fast-forward time in your sandbox, allowing you to test trial expirations, annual renewals, and subscription billing cycles without waiting in real time.
+• Identity Verification: Use a Date of Birth of 1901-01-01 to simulate a successful check, or 1900-01-01 to trigger an OFAC block simulator. Use Social Security Number (SSN) 000000000 to pass instantly.
+• Stripe Tax: Use the Tax ID 000000000 to verify a successful business tax setup, and 111111111 to simulate a verification failure.
+• Bank Redirects & ACH: Use standard routing numbers combined with mock account numbers like 000123456789 to test successful ACH Direct Debits.
+
+💻 Generating Custom Test Datasets
+
+If you need to seed your sandbox with bulk structural test objects (like mock customer accounts or product listings):
+1. Dashboard Export: Go to your production dashboard, export your catalogs as a CSV, and parse them programmatically using a Stripe SDK.
+2. Stripe CLI Scripting: You can log in using stripe login and use terminal scripts to seed your sandbox programmatically:bash
+stripe products create --name "Premium Plan" --description "Test Subscription"
