@@ -95,16 +95,7 @@ const customStyles = {
         placeholder="Enter the city/town you want to visit..."
         style={{ padding: '8px', flex: '1', minWidth: '150px' }}
       /> */}
-      <FormLabel 
-        htmlFor="destination-choice"
-        sx={{ 
-          color: 'purple', 
-           
-        }}
-      >
-        Choose your travel destination:
-      </FormLabel>
-
+      
       {/* Native Input linked to the Datalist */}
    <Select
            id="from-city-select"
@@ -113,7 +104,7 @@ const customStyles = {
            onChange={handleChange}
            isClearable
            isSearchable={true} // Enables type assist
-           placeholder="Type to search..."
+           placeholder="Choose your travel destination:..."
            noOptionsMessage={() => "Source city not found"}
            styles={customStyles}
          />

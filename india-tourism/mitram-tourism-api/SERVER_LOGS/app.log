@@ -1,0 +1,17 @@
+
+Sat Nov 07 2026 13:13:38 GMT-0500 (Eastern Standard Time): TokenExpiredError: jwt expired
+    at C:\Users\royco\India-tourism-App\India-Tours\india-tourism\mitram-tourism-api\node_modules\jsonwebtoken\verify.js:190:21
+    at getSecret (C:\Users\royco\India-tourism-App\India-Tours\india-tourism\mitram-tourism-api\node_modules\jsonwebtoken\verify.js:97:14)
+    at module.exports [as verify] (C:\Users\royco\India-tourism-App\India-Tours\india-tourism\mitram-tourism-api\node_modules\jsonwebtoken\verify.js:101:10)
+    at verifyJsonWebTokenSignature (C:\Users\royco\India-tourism-App\India-Tours\india-tourism\mitram-tourism-api\src\middlewares\userAuth.js:111:18)
+    at validateToken (C:\Users\royco\India-tourism-App\India-Tours\india-tourism\mitram-tourism-api\src\middlewares\userAuth.js:78:5)
+    at checkRequestAuthenticated (C:\Users\royco\India-tourism-App\India-Tours\india-tourism\mitram-tourism-api\src\middlewares\userAuth.js:71:9)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+Sat Nov 07 2026 13:35:17 GMT-0500 (Eastern Standard Time): TokenExpiredError: jwt expired
+    at C:\Users\royco\India-tourism-App\India-Tours\india-tourism\mitram-tourism-api\node_modules\jsonwebtoken\verify.js:190:21
+    at getSecret (C:\Users\royco\India-tourism-App\India-Tours\india-tourism\mitram-tourism-api\node_modules\jsonwebtoken\verify.js:97:14)
+    at module.exports [as verify] (C:\Users\royco\India-tourism-App\India-Tours\india-tourism\mitram-tourism-api\node_modules\jsonwebtoken\verify.js:101:10)
+    at verifyJsonWebTokenSignature (C:\Users\royco\India-tourism-App\India-Tours\india-tourism\mitram-tourism-api\src\middlewares\userAuth.js:111:18)
+    at validateToken (C:\Users\royco\India-tourism-App\India-Tours\india-tourism\mitram-tourism-api\src\middlewares\userAuth.js:78:5)
+    at checkRequestAuthenticated (C:\Users\royco\India-tourism-App\India-Tours\india-tourism\mitram-tourism-api\src\middlewares\userAuth.js:71:9)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
