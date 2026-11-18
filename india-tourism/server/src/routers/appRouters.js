@@ -10,7 +10,8 @@ const {getCategories,getProducts,getToursByCategoryId,
     updateFavoriteCategory,getTourItenerariesForTrip,getRecommendedTours} = require("../controller/tripDetails");
 const {getRegisteredTourManagers, getCities,getOperatorReviews,uploadIdentityDocs} = require("../controller/tourManagers");
 const {performBookings, performBookingsByMobile,performUserBookings,
-    getBookingsByBookingId,updateBookingsByBookingId} = require("../controller/tourBookings");
+    getBookingsByBookingId,updateBookingsByBookingId,performHotelSearchFromZentrum} = 
+    require("../controller/tourBookings");
 const {getSearchOptions,getPreferences} = require("../controller/searchOptions");
 const { sendConfirmation } = require('../controller/sendCommunication');
 const {resendOTP,getKeycloakAuthToken} = require('../controller/loginuser');
@@ -61,4 +62,5 @@ router.post("/getOperatorReviews",checkRequestAuthenticated,getOperatorReviews);
 router.post("/uploadIdentityDocs",checkRequestAuthenticated,uploadIdentityDocs);
 router.post("/validateAadhar",checkRequestAuthenticated,validateAadhar);
 router.post("/validateMobile",checkRequestAuthenticated,validateMobile);
+router.post("/searchHotelByParam", checkRequestAuthenticated,performHotelSearchFromZentrum)
 module.exports = router

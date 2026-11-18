@@ -2,6 +2,7 @@
 const TourBookingService = require('../service/TourBookingService');
 const UserBookingService = require('../service/UserBookingService');
 const TourDetailService = require('../service/TourDetailService');
+const { default: axios } = require('axios');
 require("../logNginx");
 //Creates a booking record for a list of tourists
 const performBookings = async(req,res,retries = 3, delay = 1000) =>{
@@ -145,6 +146,7 @@ const performBookings = async(req,res,retries = 3, delay = 1000) =>{
        }
     }
     
+
 //Update bookings by booking id
      const updateBookingsByBookingId = async(req,res,retries = 3, delay = 1000) =>{
 
@@ -224,10 +226,50 @@ const performBookings = async(req,res,retries = 3, delay = 1000) =>{
        }
        
     }
+const performHotelSearchFromZentrum = async(req,res,retries = 3, delay = 1000) =>{
+  const {travelDestination,checkInDate,checkOutDate,noOfTourists} = req.body;
+
+  try{
+    let data = {"travelDestination":travelDestination,
+      "checkInDate":checkInDate, "checkOutDate":checkOutDate,
+      "noOfTourists":noOfTourists
+    };
+
+     await axios.post(process.env.ZENTRUM_SEARCH_HOTEL_URL, querystring.stringify(data),
+        {
+            headers:{
+            'Content-Type': 'application/*+json',
+            'accept': 'application/json',
+            'apiKey': process.env.ZENTRUMHUB_API_KEY,
+            'accountId':process.env.ZENTRUMHUB_ACCOUNT_ID
+
+            }}).then(
+            response => {
+                console.log('response data....',response.data)
+                res.status(200).send(response.data);
+            }
+            );
+
+
+
+
+  }catch(err){
+    logNginx(err.stack);
+      if(retries>0)
+            {
+                console.log('retry attempted...')
+              await new Promise(resolve => setTimeout(resolve, delay));
+              return performHotelSearchFromZentrum(req,res,retries-1,delay);
+            }
+          logNginx(err.stack);
+        res.status(400).send(
+                {"errormessage":"could not search hotel by bookingId "+bookingId});
+       }
+  }
 
     
     module.exports = {performBookings,performBookingsByMobile,getBookingsByBookingId,
-      updateBookingsByBookingId,performUserBookings}
+      updateBookingsByBookingId,performUserBookings,performHotelSearchFromZentrum}
 
     
 

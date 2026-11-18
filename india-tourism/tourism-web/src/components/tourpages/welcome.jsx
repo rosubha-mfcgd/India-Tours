@@ -241,7 +241,7 @@ const triggerEditBookingForm = async(tourDetailInfo) =>{
             const timer = setTimeout(() =>{
                 
         const getCityList = async () =>{
-         if(cityList.length === 0){
+         if(cityList && cityList.length === 0){
               let cities = await getCities();
               if(cities){
                 console.log('cities...',cities);

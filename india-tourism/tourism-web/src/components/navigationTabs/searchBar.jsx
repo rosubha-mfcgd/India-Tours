@@ -46,12 +46,16 @@ const SearchBar = ({access_token, dataList}) =>{
 
      // 1. Define state to manage the selected value
   const [selectedDest, setSelectedDest] = useState(31);
+
+  const [touristCount, setTouristCount] = useState(1);
+  const [childtouristCount, setChildTouristCount] = useState(1);
      // Managing state using Day.js
   const [startDate, setStartDate] = useState(null);
   const [endDate, setEndDate] = useState(null);
   const [startDateOpen, setStartDateOpen] = useState(false);
   const [endDateOpen, setEndDateOpen] = useState(false);
-
+  const noOfTouristList=[{value:1,label:1},{value:2,label:2},{value:3,label:3},{value:4,label:4},{value:5,label:5},
+    {value:6,label:6},{value:7,label:7},{value:8,label:8},{value:9,label:9},{value:10,label:10}];
    // 3. Handle change event when an option is selected
   const handleChange = (selectedOption) => {
       if (selectedOption) {
@@ -62,6 +66,25 @@ const SearchBar = ({access_token, dataList}) =>{
   
   };
 
+    // 3. Handle change event when an option is selected
+  const setTouristNumber = (selectedOption) => {
+      if (selectedOption) {
+         console.log("Selected City ID:", selectedOption.value);
+        console.log("Selected City Name:", selectedOption.label);
+    }
+    setTouristCount(selectedOption);
+  
+  };
+
+      // 3. Handle change event when an option is selected
+  const setChildTouristNumber = (selectedOption) => {
+      if (selectedOption) {
+         console.log("Selected City ID:", selectedOption.value);
+        console.log("Selected City Name:", selectedOption.label);
+    }
+    setTouristCount(selectedOption);
+  
+  };
   // 1. Define your custom styles object
 const customStyles = {
   // Styles for the text that shows inside the select input box
@@ -160,6 +183,22 @@ const customStyles = {
       calendarClassName="custom-calendar-style"
       />
       </div>
+      <div>
+        <Select
+           id="no-of=tpurists-select"
+           options={noOfTouristList}
+           value={touristCount}
+           onChange={setTouristNumber}
+           isClearable
+           isSearchable={true} // Enables typesist
+           placeholder="Select number of adult tourists:..."
+           noOptionsMessage={() => "No of tourist not found"}
+           styles={customStyles}
+         />
+
+      </div>
+
+       
       <div>
            <button type="submit" 
                        class="button" 

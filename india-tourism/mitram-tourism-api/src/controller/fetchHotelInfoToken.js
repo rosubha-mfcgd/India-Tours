@@ -29,20 +29,20 @@ try{
     "destinationCountryCode": "US",
     "travelPurpose": "Leisure"};
 
-        await axios.post(process.env.ZENTRUMHUB_HOTEL_INIT_URL, data,
-        {
-            headers:{
-            'Content-Type': 'application/*+json',
-            'accept': 'application/json',
-            'apiKey': process.env.ZENTRUMHUB_API_KEY,
-            'accountId':process.env.ZENTRUMHUB_ACCOUNT_ID
+        // await axios.post(process.env.ZENTRUMHUB_HOTEL_INIT_URL, querystring.stringify(data),
+        // {
+        //     headers:{
+        //     'Content-Type': 'application/*+json',
+        //     'accept': 'application/json',
+        //     'apiKey': process.env.ZENTRUMHUB_API_KEY,
+        //     'accountId':process.env.ZENTRUMHUB_ACCOUNT_ID
 
-            }}).then(
-            response => {
-                console.log('response data....',response.data)
-                res.status(200).send(response.data);
-            }
-            );
+        //     }}).then(
+        //     response => {
+        //         console.log('response data....',response.data)
+        //         res.status(200).send(response.data);
+        //     }
+        //     );
 
     }catch(err){
     console.error('Error while fetching token:::', err.stack);

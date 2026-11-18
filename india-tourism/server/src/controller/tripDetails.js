@@ -145,7 +145,6 @@ const getToursByCategoryId = async(req,res,retries = 3, delay = 1000) =>{
 }
 
 const getTourItenerariesForTrip = async(req,res,retries = 3, delay = 1000) =>{
-   
     try{
 
         let {locationName,categoryID,tourManagerId,startDate,endDate} = req.body;

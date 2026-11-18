@@ -11,6 +11,9 @@ const iv = crypto.randomBytes(16);
 
 //loads environment variables from .env file into process.env
 require("dotenv").config();
+
+// Load the exact same Master Key from your .env file
+const MASTER_KEY = Buffer.from(process.env.MASTER_KEY, 'hex');
 function encrypt(text) {
   // Create a cipher object with the algorithm, key, and IV
   let cipher = crypto.createCipheriv(algorithm, Buffer.from(key), iv);
@@ -28,13 +31,21 @@ function encrypt(text) {
  * @param {object} text - An object containing the IV and encrypted data in hexadecimal format.
  * @returns {string} The decrypted string.
  */
-function decrypt(encryptedHex) {
-  // Convert the IV and encrypted data back to Buffers
-  const encryptedBuffer = Buffer.from(encryptedHex, 'hex');
-  const decipher = crypto.createDecipheriv('aes-256-cbc', Buffer.from(key, 'hex'), Buffer.from(iv, 'hex'));
+function decrypt(encryptedBase64Url,decryption_algo) {
+ const raw = Buffer.from(encryptedBase64Url, 'base64url');
 
-  let decrypted = decipher.update(encryptedBuffer);
- // decrypted = Buffer.concat([decrypted, decipher.final()]);
+  // Unpack the embedded IV, AuthTag, and Ciphertext
+  const iv = raw.subarray(0, 12);
+  const authTag = raw.subarray(12, 28);
+  const ciphertext = raw.subarray(28);
+
+  const decipher = crypto.createDecipheriv(decryption_algo, MASTER_KEY, iv);
+  decipher.setAuthTag(authTag);
+
+  const decrypted = Buffer.concat([
+    decipher.update(ciphertext),
+    decipher.final(),
+  ]);
 
   return decrypted.toString('utf8');
 }
