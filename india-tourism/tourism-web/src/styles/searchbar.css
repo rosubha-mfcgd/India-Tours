@@ -74,3 +74,14 @@ float:right;
     outline: 'none';
     box-Sizing: 'border-box'
 }
+.form-grid {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 16px;
+}
+
+.field-group {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}

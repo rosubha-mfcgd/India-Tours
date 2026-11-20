@@ -49,13 +49,39 @@ const SearchBar = ({access_token, dataList}) =>{
 
   const [touristCount, setTouristCount] = useState(1);
   const [childtouristCount, setChildTouristCount] = useState(1);
+
+  const [rating, setRating] = useState(4);
      // Managing state using Day.js
   const [startDate, setStartDate] = useState(null);
   const [endDate, setEndDate] = useState(null);
   const [startDateOpen, setStartDateOpen] = useState(false);
   const [endDateOpen, setEndDateOpen] = useState(false);
-  const noOfTouristList=[{value:1,label:1},{value:2,label:2},{value:3,label:3},{value:4,label:4},{value:5,label:5},
-    {value:6,label:6},{value:7,label:7},{value:8,label:8},{value:9,label:9},{value:10,label:10}];
+  const noOfTouristList=[{value:1,label:1},
+    {value:2,label:2},
+    {value:3,label:3},
+    {value:4,label:4},
+    {value:5,label:5},
+    {value:6,label:6},
+    {value:7,label:7},
+    {value:8,label:8},
+    {value:9,label:9},
+    {value:10,label:10}];
+
+     const noOfChildList=[{value:1,label:1},
+    {value:2,label:2},
+    {value:3,label:3},
+    {value:4,label:4},
+    {value:5,label:5},
+    {value:6,label:6},
+    {value:7,label:7},
+    {value:8,label:8},
+    {value:9,label:9},
+    {value:10,label:10}];
+
+    const starRatings=[{value:3.5,label:3.5},
+    {value:4.0,label:4.0},
+    {value:4.5,label:4.5},
+    {value:5,label:5}];
    // 3. Handle change event when an option is selected
   const handleChange = (selectedOption) => {
       if (selectedOption) {
@@ -79,10 +105,19 @@ const SearchBar = ({access_token, dataList}) =>{
       // 3. Handle change event when an option is selected
   const setChildTouristNumber = (selectedOption) => {
       if (selectedOption) {
-         console.log("Selected City ID:", selectedOption.value);
-        console.log("Selected City Name:", selectedOption.label);
+         console.log("Selected child tourist ID:", selectedOption.value);
+        console.log("Selected child tourist value:", selectedOption.label);
     }
-    setTouristCount(selectedOption);
+    setChildTouristCount(selectedOption);
+  
+  };
+
+  const setHotelRatings = (selectedOption) => {
+      if (selectedOption) {
+         console.log("Selected Rating id:", selectedOption.value);
+        console.log("Selected Rating name:", selectedOption.label);
+    }
+    setRating(selectedOption);
   
   };
   // 1. Define your custom styles object
@@ -109,8 +144,8 @@ const customStyles = {
         return (<div className="searchbar">
                  {/* Field 1: Text Input */}
  <LocalizationProvider dateAdapter={AdapterDayjs}>
-    <div style={{ display: 'flex', gap: '20px', alignItems: 'center' }}>
-        <div>
+    <div class="form-grid">
+        <div class="field-group">
     {/* <TextField 
         id="search-input" 
         label="Enter the city/town you want to visit..." 
@@ -136,7 +171,7 @@ const customStyles = {
       
       
     </div>
-      <div>  
+      <div class="field-group">  
        
      <DatePicker
         label="Check-in Date"
@@ -160,7 +195,7 @@ const customStyles = {
       calendarClassName="custom-calendar-style"
       />
     </div>
-    <div>
+    <div class="field-group">
       <DatePicker
         label="Check-out Date"
         value={endDate}
@@ -183,9 +218,9 @@ const customStyles = {
       calendarClassName="custom-calendar-style"
       />
       </div>
-      <div>
+      <div class="field-group">
         <Select
-           id="no-of=tpurists-select"
+           id="no-of-tourists-select"
            options={noOfTouristList}
            value={touristCount}
            onChange={setTouristNumber}
@@ -199,17 +234,47 @@ const customStyles = {
       </div>
 
        
-      <div>
+      <div class="field-group">
            <button type="submit" 
                        class="button" 
                        >Search Hotel</button>
       </div>
 
-       <div>
+     
+       <div class="field-group">
+           <Select
+           id="no-of=childs-select"
+           options={noOfChildList}
+           value={childtouristCount}
+           onChange={setChildTouristNumber}
+           isClearable
+           isSearchable={true} // Enables typesist
+           placeholder="Select number of childs travelling:..."
+           noOptionsMessage={() => "No of tourist not found"}
+           styles={customStyles}
+         />
+       </div>
+       <div class="field-group">
+           <Select
+           id="hotel-rating-select"
+           options={starRatings}
+           value={rating}
+           onChange={setHotelRatings}
+           isClearable
+           isSearchable={true} // Enables typesist
+           placeholder="Select your hotel rating:..."
+           noOptionsMessage={() => "Hotel rating not found"}
+           styles={customStyles}
+         />
+       </div>
+         <div class="field-group">
            <button type="submit" 
                        class="button" 
                        >My Transit Options</button>
       </div>
+       {/* <div className="row-2">
+
+       </div> */}
       </div>
     </LocalizationProvider>
 

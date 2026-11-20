@@ -23,3 +23,27 @@ Tue Nov 17 2026 22:19:34 GMT-0500 (Eastern Standard Time): TokenExpiredError: jw
     at validateToken (C:\Users\royco\India-tourism-App\India-Tours\india-tourism\mitram-tourism-api\src\middlewares\userAuth.js:78:5)
     at checkRequestAuthenticated (C:\Users\royco\India-tourism-App\India-Tours\india-tourism\mitram-tourism-api\src\middlewares\userAuth.js:71:9)
     at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+Wed Nov 18 2026 22:18:33 GMT-0500 (Eastern Standard Time): TokenExpiredError: jwt expired
+    at C:\Users\royco\India-tourism-App\India-Tours\india-tourism\mitram-tourism-api\node_modules\jsonwebtoken\verify.js:190:21
+    at getSecret (C:\Users\royco\India-tourism-App\India-Tours\india-tourism\mitram-tourism-api\node_modules\jsonwebtoken\verify.js:97:14)
+    at module.exports [as verify] (C:\Users\royco\India-tourism-App\India-Tours\india-tourism\mitram-tourism-api\node_modules\jsonwebtoken\verify.js:101:10)
+    at verifyJsonWebTokenSignature (C:\Users\royco\India-tourism-App\India-Tours\india-tourism\mitram-tourism-api\src\middlewares\userAuth.js:111:18)
+    at validateToken (C:\Users\royco\India-tourism-App\India-Tours\india-tourism\mitram-tourism-api\src\middlewares\userAuth.js:78:5)
+    at checkRequestAuthenticated (C:\Users\royco\India-tourism-App\India-Tours\india-tourism\mitram-tourism-api\src\middlewares\userAuth.js:71:9)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+Wed Nov 18 2026 22:24:36 GMT-0500 (Eastern Standard Time): TokenExpiredError: jwt expired
+    at C:\Users\royco\India-tourism-App\India-Tours\india-tourism\mitram-tourism-api\node_modules\jsonwebtoken\verify.js:190:21
+    at getSecret (C:\Users\royco\India-tourism-App\India-Tours\india-tourism\mitram-tourism-api\node_modules\jsonwebtoken\verify.js:97:14)
+    at module.exports [as verify] (C:\Users\royco\India-tourism-App\India-Tours\india-tourism\mitram-tourism-api\node_modules\jsonwebtoken\verify.js:101:10)
+    at verifyJsonWebTokenSignature (C:\Users\royco\India-tourism-App\India-Tours\india-tourism\mitram-tourism-api\src\middlewares\userAuth.js:111:18)
+    at validateToken (C:\Users\royco\India-tourism-App\India-Tours\india-tourism\mitram-tourism-api\src\middlewares\userAuth.js:78:5)
+    at checkRequestAuthenticated (C:\Users\royco\India-tourism-App\India-Tours\india-tourism\mitram-tourism-api\src\middlewares\userAuth.js:71:9)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+Thu Nov 19 2026 19:11:17 GMT-0500 (Eastern Standard Time): TokenExpiredError: jwt expired
+    at C:\Users\royco\India-tourism-App\India-Tours\india-tourism\mitram-tourism-api\node_modules\jsonwebtoken\verify.js:190:21
+    at getSecret (C:\Users\royco\India-tourism-App\India-Tours\india-tourism\mitram-tourism-api\node_modules\jsonwebtoken\verify.js:97:14)
+    at module.exports [as verify] (C:\Users\royco\India-tourism-App\India-Tours\india-tourism\mitram-tourism-api\node_modules\jsonwebtoken\verify.js:101:10)
+    at verifyJsonWebTokenSignature (C:\Users\royco\India-tourism-App\India-Tours\india-tourism\mitram-tourism-api\src\middlewares\userAuth.js:111:18)
+    at validateToken (C:\Users\royco\India-tourism-App\India-Tours\india-tourism\mitram-tourism-api\src\middlewares\userAuth.js:78:5)
+    at checkRequestAuthenticated (C:\Users\royco\India-tourism-App\India-Tours\india-tourism\mitram-tourism-api\src\middlewares\userAuth.js:71:9)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
