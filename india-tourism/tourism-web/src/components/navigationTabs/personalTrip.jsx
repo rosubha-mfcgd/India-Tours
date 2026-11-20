@@ -30,7 +30,7 @@ const PersonalTrip = ({access_token,setShowCategories,cityList}) =>{
     
         const [showHotel,setShowHotel] = useState(false);
          const [dataList,setDataList] = useState([]);
-        
+        const [loading,setLoading] = useState(false);
         useEffect (()=>{
             cityList.push({value:0,label:'Choose your city'})
              // 1. Transform the entire array at once using .map()
@@ -42,12 +42,29 @@ const PersonalTrip = ({access_token,setShowCategories,cityList}) =>{
             setDataList(formattedCities);
            },[cityList]);
     return (
-
+         <div className="navbar-grid">
+            {
+              loading ? 
+                ( 
+                                 <Box
+                      sx={{
+                        display: 'flex',
+                        justifyContent: 'center',
+                        alignItems: 'center',
+                        minHeight: '100vh', // Optional: Centers vertically within the viewport
+                      }}
+                    >
+                                <CircularProgress/>
+                                </Box>)
+                                :
         <div className="navbar">
             {dataList && dataList.length>0 &&
             <SearchBar access_token={access_token} dataList={dataList}/>
             }
         </div>
+        }
+        </div>
+
     )
     }
 export default PersonalTrip;
