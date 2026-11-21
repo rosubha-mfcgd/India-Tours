@@ -4,19 +4,20 @@ const querystring = require('querystring');
 const apputil = require('../utils/appUtility');
 const searchHotelByGeoCodeAndAvailableDates = async (req,res,retries = 3, delay = 1000) => {
     try{
-        const {travelDestination,checkInDate,checkOutDate,noOfTourists} = req.body;
+        const {travelDestination,checkInDate,checkOutDate,noOfTourists,
+            childTourists,hotelrating} = req.body;
         let req_data = {
-    "countryCode": "IN",
-    "cityName": travelDestination,
-    "checkin": checkInDate,
-    "checkout": checkOutDate,
-    "currency": "INR",
-    "guestNationality": "IN",
-    "occupancies": [
-      { "adults": noOfTourists, "childrens":[0] }
+        "countryCode": "IN",
+        "cityName": travelDestination,
+        "checkin": checkInDate,
+        "checkout": checkOutDate,
+        "currency": "INR",
+        "guestNationality": "IN",
+        "occupancies": [
+        { "adults": noOfTourists, "childrens":[childTourists] }
     ]
   }
-
+  
     // Load the exact same Master Key from your .env file
   
     let hotel_api_key = apputil.decrypt(process.env.HOTEL_API_KEY,"aes-256-gcm")
