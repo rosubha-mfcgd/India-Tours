@@ -51,9 +51,6 @@ try{
 }
 const getKeycloakAuthToken = async(req,res,retries = 3, delay = 1000) => {
 
-  // let { email,mobile,access_token } = req.body;
-
- //    let isLoggedin = null;
   let data = {
       client_id: process.env.AUTH_CLIENT_ID,
       client_secret: process.env.AUTH_CLIENT_SECRET,

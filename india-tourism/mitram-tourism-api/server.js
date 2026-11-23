@@ -1,25 +1,52 @@
 const express = require('express');
 const crypto = require('crypto');
-
+const querystring = require('querystring');
+const axios = require('axios');
 // Generate a 32-byte (256-bit) master key (store this securely in your .env file)
 
 const app = express();
+const cors = require('cors');
+const session = require('express-session');
 //loads environment variables from .env file into process.env
 require("dotenv").config();
-// ✅ Place middleware BEFORE your routes
-app.use(express.json());
-app.use(express.urlencoded({ extended: true }));
+
 const PORT = process.env.PORT || 3050;
 const masterKey = crypto.randomBytes(32);
 //Route for handling user registration and login
 const appRouter = require("./src/routers/hotelInfoRouters.js");
+
+// Define a base route
+
+  const corsOptions ={
+    credentials:true,  //access-control-allow-credentials:true
+    methods: "GET, POST, PATCH, DELETE, PUT, OPTIONS",
+    origin: ['http://mitramtourism.tk','http://mitramtourism.com',
+      'http://localhost:8080', 'http://localhost:8083',
+      'http://localhost','http://localhost:81',
+      'http://localhost:8090',
+      'https://accounts.google.com'] ,// Whitelist the domains you want to allow
+      allowedHeaders: "Content-Type, Authorization",
+    optionSuccessStatus:200,
+ }
+ app.use(cors(corsOptions));
+// ✅ Place middleware BEFORE your routes
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
+app.use(session({secret:'xcfsaqarpl',// A secret used to sign the session ID cookie
+  resave: false ,// Don't save session if unmodified
+  saveUninitialized: true,// Don't save uninitialized sessions
+  cookie: { maxAge: 3600000 } // Example: session expires in 1 hour
+}));
 //code for using implemented routes
 app.use("/api", appRouter);
-// Define a base route
+const secretKey = 'xcfsaqarpl'; 
+const options = {
+    expiresIn: '1h' // Token expires in 1 hour
+};
+
 app.get('/', (req, res) => {
   res.send('Hello World from Express!');
 });
-
 app.post('/api/encrypt',(req,res) =>{
   const {decodedValue, enc_algo} = req.body;
   try{
@@ -73,6 +100,37 @@ app.post('/api/decrypt',(req,res) =>{
         res.status(400).send(
                 {"error":"Failed to decrypt"});
   }
+});
+
+//This function generates the oAuth token for API calls
+app.post("/api/token", async(req,res) =>{
+//Comment out the Auth token generation from AWS Cognito 
+  //Implement the token generation from keycloak - free token generation
+  let data = {
+        client_id: process.env.AUTH_CLIENT_ID,
+        client_secret: process.env.AUTH_CLIENT_SECRET,
+        grant_type: process.env.GRANT_TYPE
+    }
+    
+  try{
+    console.log('generating keycloak token....');
+    await axios.post(process.env.AUTH_SERVER_URI,querystring.stringify(data),
+    {
+          headers:{
+            'Content-Type': 'application/x-www-form-urlencoded',
+            }}).then(
+            response => {
+                console.log('response data....',response.data)
+                res.status(200).send(response.data);
+            }
+          );
+        }
+      catch(err)
+        {
+          logNginx(err.stack)
+          console.log(err.stack);
+          res.status(404).send("errormessage: cannot find auth keycloak token ");
+        }
 });
 // Start the server
 app.listen(PORT, () => {
