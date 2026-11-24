@@ -12,6 +12,8 @@ class HotelResultFilterService{
            console.log('hotel filter results')
             let result_hotels = hotelSearchResult.hotels;
             console.log('hotel search result is....', result_hotels);
+
+                       
             return result_hotels
         }catch(err){
             console.log(err.stack);
@@ -19,6 +21,8 @@ class HotelResultFilterService{
         }
          return [];
        }
-      
+   
+       
+
 }
 module.exports = HotelResultFilterService
