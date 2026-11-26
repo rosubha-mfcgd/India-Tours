@@ -1,12 +1,13 @@
 const express = require('express');
 const multer  = require('multer');
-
+const app = express();
 const querystring = require('querystring');
 
 const session = require('express-session');
 // 1. Configure where to save uploaded files (e.g., an 'uploads/' folder)
 const storage = multer.memoryStorage(); // Stores file as a Buffer in memory
 const upload = multer({ storage: storage });
+const { Readable } = require('stream');
 //loads environment variables from .env file into process.env
 require("dotenv").config();
 const crypto = require("crypto")
@@ -22,7 +23,7 @@ const { env } = require('process');
 const fs = require('fs');
 const fspromise = require('node:fs/promises');
 const { GoogleGenerativeAI } = require('@google/generative-ai');
-const app = express();
+
 const passport = require('passport');
 const SamlStrategy = require('passport-saml').Strategy;
 const bodyParser = require('body-parser');
@@ -115,7 +116,10 @@ const db = conn.db;
   bucket = new GridFSBucket(db, {
     bucketName: 'tourImages',
   });
-
+ // Create a new GridFSBucket instance
+  cateogrybucket = new GridFSBucket(db, {
+    bucketName: 'categoryImages',
+  })
 });
 
 app.post("/api/signup", async(req,res) =>{
@@ -404,6 +408,37 @@ else{
   }
 })
 
+// 1. UPLOAD ROUTE
+app.post('/api/upload', upload.single('image'), (req, res) => {
+  if (!req.file) {
+    return res.status(400).json({ error: 'No image file provided' });
+  }
+
+  // Convert buffer to a readable stream
+  const readableStream = Readable.from(req.file.buffer);
+
+  // Open an upload stream to GridFS
+  const uploadStream = cateogrybucket.openUploadStream(req.file.originalname, {
+    metadata: {
+      contentType: req.file.mimetype,
+    },
+  });
+
+  // Pipe the file stream into GridFS
+  readableStream.pipe(uploadStream);
+
+  uploadStream.on('error', (error) => {
+    return res.status(500).json({ error: 'Error uploading file', details: error });
+  });
+
+  uploadStream.on('finish', () => {
+    res.status(201).json({
+      message: 'Image uploaded successfully',
+      fileId: uploadStream.id,
+      filename: req.file.originalname,
+    });
+  });
+});
 
 app.post('/api/validateTokenWithSession',checkRequestAuthenticated,async(req,res) =>{
   let { access_token } = req.body;

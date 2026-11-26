@@ -14,7 +14,8 @@ const searchHotelByGeoCodeAndAvailableDates = async (req,res,retries = 3, delay 
         "guestNationality": "IN",
         "occupancies": [
         { "adults": noOfTourists, "childrens":[childTourists] }
-    ]
+           ],
+        "limit": 30
   }
   
       // Load the exact same Master Key from your .env file

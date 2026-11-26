@@ -42,11 +42,10 @@ import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import { DateField } from '@mui/x-date-pickers/DateField';
 import { DatePicker } from '@mui/x-date-pickers/DatePicker';
 import dayjs from 'dayjs';
-const SearchBar = ({access_token, dataList}) =>{
+const SearchBar = ({access_token, dataList,prepareSearchData}) =>{
 
      // 1. Define state to manage the selected value
   const [selectedDest, setSelectedDest] = useState(31);
-
   const [touristCount, setTouristCount] = useState(1);
   const [childtouristCount, setChildTouristCount] = useState(1);
 
@@ -83,13 +82,13 @@ const SearchBar = ({access_token, dataList}) =>{
     {value:4.5,label:4.5},
     {value:5,label:5}];
    // 3. Handle change event when an option is selected
-  const handleChange = (selectedOption) => {
+  const handleDestChange = (selectedOption) => {
       if (selectedOption) {
          console.log("Selected City ID:", selectedOption.value);
         console.log("Selected City Name:", selectedOption.label);
     }
     setSelectedDest(selectedOption);
-  
+    
   };
 
     // 3. Handle change event when an option is selected
@@ -112,6 +111,8 @@ const SearchBar = ({access_token, dataList}) =>{
   
   };
 
+ 
+
   const setHotelRatings = (selectedOption) => {
       if (selectedOption) {
          console.log("Selected Rating id:", selectedOption.value);
@@ -120,6 +121,16 @@ const SearchBar = ({access_token, dataList}) =>{
     setRating(selectedOption);
   
   };
+
+  const handleHotelSearch = (e) =>{
+    e.preventDefault();
+    console.log('Search data forming ...')
+    prepareSearchData({ selectedDest,
+     startDate, endDate,
+      touristCount,childtouristCount,
+      rating});
+  }
+  
   // 1. Define your custom styles object
 const customStyles = {
   // Styles for the text that shows inside the select input box
@@ -159,7 +170,7 @@ const customStyles = {
            id="from-city-select"
            options={dataList}
            value={selectedDest}
-           onChange={handleChange}
+           onChange={handleDestChange}
            isClearable
            isSearchable={true} // Enables type assist
            placeholder="Choose your travel destination:..."
@@ -236,7 +247,7 @@ const customStyles = {
        
       <div class="field-group">
            <button type="submit" 
-                       class="button" 
+                       class="button" onClick={handleHotelSearch}
                        >Search Hotel</button>
       </div>
 

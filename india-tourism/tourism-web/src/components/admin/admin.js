@@ -440,7 +440,7 @@ export const openAdminPage = async() =>{
       console.log('tourOperatorUrl...',tourOperatorUrl);
       window.open(tourOperatorUrl, "_blank", "noopener,noreferrer");
 }
- 
+//This token is for accessing api endpoints for basic APIs
 export const getApiAccessToken= async() =>{
   try{
     console.log("api token....",process.env.REACT_APP_SERVER_URI + "token");
@@ -460,6 +460,25 @@ catch(err){
 }
 }
 
+//This token is for accessing api endpoints on mitram-tourism-api calling 3rd party search/booking APIs
+export const getApiAccessTokenForAggregatorAPISearch = async() =>{
+  try{
+    console.log("api token....",process.env.REACT_APP_MITRAM_TOURISM_API_URI + "token");
+    const response = await axios.post(
+        process.env.REACT_APP_MITRAM_TOURISM_API_URI + "token"
+    );
+    if(response){
+        console.log('access_token....',response.data);
+        return response;
+    }else{
+        return "token not found";
+    }
+}
+catch(err){
+    console.error('Error while fetching token:::', err.stack);
+    throw err;
+}
+}
 //Produces auth token to validate the request
 export const getAuthAccessToken = async() =>{
 
@@ -573,6 +592,32 @@ export const getRecommendedTours = async() =>{
     }
      return res_data;
 }
+
+
+export const searchHotelsForSearchParam = async(data) =>{
+    let res_data = "failed to search hotels";
+    let access_token = await getApiAccessTokenForAggregatorAPISearch();
+
+    if(access_token)
+    {
+          const headers = {
+            "Content-type": "application/json; charset=UTF-8",
+            "Authorization":"Bearer "+access_token.data.access_token
+            };
+            let response = await axios.post(
+                process.env.REACT_APP_MITRAM_TOURISM_API_URI + "searchHotel",
+                data,
+                {headers});
+                
+        if(response)
+        {
+            console.log('response....',response.data);
+            res_data = response.data;
+        }
+    }
+        return res_data;
+    }
+
 
 //Get specially highlighted tours 
 export const getOperatorReviews = async(data) =>{
