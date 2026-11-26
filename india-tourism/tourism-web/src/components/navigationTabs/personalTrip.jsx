@@ -183,7 +183,18 @@ const PersonalTrip = ({access_token,setShowCategories,cityList}) =>{
               </div>
               
             ))
+            
         }
+        {hotelList && hotelList.length>0 &&
+         <div className="button-container">
+         <div className='submit-container'>
+                    <button type="submit" onClick={()=>{
+                        triggerDisplayOptionsByCatId(tourDetails.categoryId)}}
+                        class="button"
+                        >Go Back</button>
+        </div>
+        </div>
+      }
        </Box>
         </div>
 
