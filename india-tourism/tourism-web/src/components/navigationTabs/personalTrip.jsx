@@ -16,9 +16,10 @@ import {
     Typography,
     CardMedia,
     CardContent,
+    Collapse,
     CircularProgress
   } from "@mui/material";
-   import Collapse from '@mui/material/Collapse';
+ 
 import { getCategories,updateAsFavorite,getImageById,getRecommendedTours,
   searchHotelsForSearchParam
 } 
@@ -43,9 +44,15 @@ const PersonalTrip = ({access_token,setShowCategories,cityList}) =>{
         const [hotelList, setHotelList] = useState([]);
         const [checkinDate, setCheckinDate] = useState('');
         const [checkoutDate, setCheckoutDate] = useState('');
-        
+        const [searchMessage, setSearchMessage] = useState('');
         const deviceType = useDeviceType();
 
+        const resetSearch = (e)=>{
+          console.log('here...')
+            setSearchMessage('');
+            setShowSearchBar(true);
+            setHotelList([]);
+        }
 
         const formSearchData = (dataFromSearchComp)=>{
            console.log('searchData is..',dataFromSearchComp) 
@@ -95,13 +102,17 @@ const PersonalTrip = ({access_token,setShowCategories,cityList}) =>{
                 
                  let hotelsearchResult =  await searchHotelsForSearchParam(searchdata);
                   
-                  if(hotelsearchResult)
+                  if(hotelsearchResult && Array.isArray(hotelsearchResult))
                   {
                       console.log('hotelsearchResult...',hotelsearchResult);
                     setHotelList(hotelsearchResult);
                     setLoading(false);
                     setShowSearchBar(false)
                   
+                  }else{
+                    setLoading(false);
+                    setShowSearchBar(false);
+                    setSearchMessage(hotelsearchResult);
                   }
                 
               };
@@ -142,20 +153,20 @@ const PersonalTrip = ({access_token,setShowCategories,cityList}) =>{
             prepareSearchData={formSearchData}/>
             }
             <Box
-      sx={{
-        display: 'grid',
-        // 1 col on mobile, 2 on small tablets, 3 on medium, max 5 on desktop
-        gridTemplateColumns: {
-          xs: '1fr',
-          sm: 'repeat(2, 1fr)',
-          md: 'repeat(3, 1fr)',
-          lg: 'repeat(5, 1fr)',
-        },
-        gap: 2.5, // Uniform horizontal & vertical gap between cards
+              sx={{
+                display: 'grid',
+                // 1 col on mobile, 2 on small tablets, 3 on medium, max 5 on desktop
+                gridTemplateColumns: {
+                  xs: '1fr',
+                  sm: 'repeat(2, 1fr)',
+                  md: 'repeat(3, 1fr)',
+                  lg: 'repeat(5, 1fr)',
+                },
+                gap: 2.5, // Uniform horizontal & vertical gap between cards
       }}>
         {
 
-          hotelList && hotelList.length>0 && 
+           hotelList && Array.isArray(hotelList)  && hotelList.length>0 ? 
             hotelList.map((item) => (
                
               <div>
@@ -182,15 +193,25 @@ const PersonalTrip = ({access_token,setShowCategories,cityList}) =>{
                       
               </div>
               
-            ))
+            )):searchMessage ?
+            <div>
+         
+              <Typography variant="body2" 
+              color="text.secondary">
+              {searchMessage}</Typography>
+
+                    <button type="submit" 
+                        class="button"
+                        >Go Back</button>
+             
+              </div>:<div/>
             
         }
         {hotelList && hotelList.length>0 &&
          <div className="button-container">
          <div className='submit-container'>
-                    <button type="submit" onClick={()=>{
-                        triggerDisplayOptionsByCatId(tourDetails.categoryId)}}
-                        class="button"
+                    <button type="submit" 
+                        class="button" onClick = {resetSearch}
                         >Go Back</button>
         </div>
         </div>

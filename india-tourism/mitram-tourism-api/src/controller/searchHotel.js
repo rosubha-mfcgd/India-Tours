@@ -55,9 +55,9 @@ const searchHotelByGeoCodeAndAvailableDates = async (req,res,retries = 3, delay 
         res.writeHead(200, { 'Content-Type': 'application/json' }); 
         res.write(JSON.stringify(hotelResults));
       }else{
-        //console.log('Json string....', JSON.stringify(search_result))
+        console.log('No results available');
         res.writeHead(200, { 'Content-Type': 'application/json' }); 
-        res.write("No results available");
+        res.write("No hotels available for your search criteria above.");
       }
     }
         
